@@ -72,16 +72,38 @@
     closeDialogButton: document.querySelector("#closeDialogButton")
   };
 
-  function init() {
+  async function init() {
     validateQuestions();
     populateCategories();
     loadPreferences();
     updateStartStats();
     configureSpeechRecognition();
     bindEvents();
-
-    elements.timerProgress.style.strokeDasharray = `${TIMER_CIRCUMFERENCE}`;
+  
+    elements.timerProgress.style.strokeDasharray =
+      `${TIMER_CIRCUMFERENCE}`;
+  
     elements.timerProgress.style.strokeDashoffset = "0";
+  
+    await testSupabaseConnection();
+  }
+
+  async function testSupabaseConnection() {
+    try {
+      const { error } = await supabaseClient
+        .from("leaderboard")
+        .select("display_name")
+        .limit(1);
+  
+      if (error) {
+        console.error("Supabase connection failed:", error);
+        return;
+      }
+  
+      console.log("Supabase connection successful");
+    } catch (error) {
+      console.error("Unable to contact Supabase:", error);
+    }
   }
 
   function validateQuestions() {
