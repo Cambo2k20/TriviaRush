@@ -2102,38 +2102,14 @@
     };
 
     try {
-      let result =
+      const { error } =
         await supabaseClient.rpc(
-          "submit_game_result_v2",
+          "submit_game_result",
           parameters
         );
 
-      /*
-       * Keep the game usable before the Phase 2 SQL
-       * migration has been installed. The legacy RPC
-       * still saves the aggregate score, but period and
-       * category filters will not include that game.
-       */
-      if (
-        result.error &&
-        isMissingRpcError(
-          result.error,
-          "submit_game_result_v2"
-        )
-      ) {
-        console.warn(
-          "Phase 2 result history RPC is missing. Falling back to the legacy score RPC."
-        );
-
-        result =
-          await supabaseClient.rpc(
-            "submit_game_result",
-            parameters
-          );
-      }
-
-      if (result.error) {
-        throw result.error;
+      if (error) {
+        throw error;
       }
 
       console.log(
