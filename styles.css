@@ -1008,17 +1008,20 @@ dialog ol {
 }
 
 .account-dialog {
-  width: min(580px, calc(100% - 32px));
+  width: min(620px, calc(100% - 24px));
+  max-height: min(860px, calc(100vh - 24px));
+  overflow-y: auto;
 }
 
 .account-heading {
   display: flex;
   align-items: flex-start;
   gap: 16px;
+  padding-right: 30px;
 }
 
 .account-heading h2 {
-  margin-bottom: 4px;
+  margin: 0 0 4px;
 }
 
 .account-heading p {
@@ -1061,18 +1064,63 @@ dialog ol {
   font-size: 1.5rem;
 }
 
-.account-email-field {
+#accountIdentifier {
+  display: block;
+  margin-top: 3px;
+  color: var(--cyan);
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.account-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 5px;
+  border: 1px solid var(--outline);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.account-tab {
+  min-height: 44px;
+  border: 0;
+  border-radius: 11px;
+  color: var(--muted);
+  cursor: pointer;
+  font-weight: 800;
+  background: transparent;
+}
+
+.account-tab.active {
+  color: #10142a;
+  background: var(--cyan);
+}
+
+.account-view {
+  display: grid;
+  gap: 14px;
+}
+
+.account-view[hidden],
+.account-tabs[hidden] {
+  display: none !important;
+}
+
+.account-field {
   display: grid;
   gap: 8px;
 }
 
-.account-email-field label {
+.account-field label {
   color: var(--muted);
   font-size: 0.8rem;
   font-weight: 700;
 }
 
-.account-email-field input {
+.account-field input {
   width: 100%;
   min-height: 52px;
   padding: 0 16px;
@@ -1082,25 +1130,75 @@ dialog ol {
   background: #202a59;
 }
 
-.account-email-field input:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
+.account-field input:focus {
+  border-color: rgba(62, 231, 219, 0.7);
+}
+
+.account-field input[readonly] {
+  opacity: 0.72;
+  cursor: default;
+}
+
+.account-section {
+  display: grid;
+  gap: 14px;
+}
+
+.account-section-heading h3 {
+  margin: 0 0 3px;
+  font-family: "Baloo 2", sans-serif;
+  font-size: 1.25rem;
+}
+
+.account-section-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.account-divider {
+  height: 1px;
+  margin: 4px 0;
+  background: var(--outline);
 }
 
 .account-actions {
-  margin-top: 16px;
   display: grid;
   gap: 10px;
 }
 
-.account-actions .primary-button,
-.account-actions .secondary-button {
+.account-view .primary-button,
+.account-view .secondary-button,
+.account-view .danger-button {
   width: 100%;
+  min-height: 52px;
   justify-content: center;
 }
 
+.text-button {
+  min-height: 40px;
+  padding: 0;
+  border: 0;
+  color: var(--cyan);
+  cursor: pointer;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: transparent;
+}
+
+.danger-button {
+  border: 1px solid rgba(255, 101, 119, 0.45);
+  border-radius: 14px;
+  color: #ffd9de;
+  cursor: pointer;
+  font-weight: 800;
+  background: rgba(255, 101, 119, 0.14);
+}
+
 .account-help {
-  margin: 16px 0 0;
+  margin: 0;
   color: var(--muted);
   font-size: 0.78rem;
   line-height: 1.55;
@@ -1108,7 +1206,7 @@ dialog ol {
 
 .account-status {
   min-height: 24px;
-  margin: 14px 0 0;
+  margin: 16px 0 0;
   color: var(--cyan);
   font-size: 0.85rem;
   font-weight: 700;
@@ -1117,6 +1215,11 @@ dialog ol {
 
 .account-status.error {
   color: var(--red);
+}
+
+.account-dialog [data-account-control]:disabled {
+  opacity: 0.55;
+  cursor: wait;
 }
 
 @media (max-width: 580px) {
@@ -1129,13 +1232,19 @@ dialog ol {
     padding: 0;
     justify-content: center;
   }
-}
 
-#accountIdentifier {
-  display: block;
-  margin-top: 3px;
-  color: var(--cyan);
-  font-size: 0.9rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  .account-dialog {
+    width: calc(100% - 14px);
+    max-height: calc(100vh - 14px);
+    padding: 24px 18px;
+  }
+
+  .account-heading {
+    gap: 12px;
+  }
+
+  .account-icon {
+    width: 44px;
+    height: 44px;
+  }
 }

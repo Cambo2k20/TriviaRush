@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=3">
+  <link rel="stylesheet" href="styles.css?v=4">
 </head>
 <body>
   <div class="background-orb orb-one" aria-hidden="true"></div>
@@ -195,103 +195,314 @@
       ×
     </button>
 
-    <div class="account-player">
-      <span>Current player</span>
+    <div class="account-heading">
+      <span class="account-icon" aria-hidden="true">👤</span>
 
-      <strong id="accountPlayerName">
-        Guest player
-      </strong>
-
-      <small id="accountIdentifier">
-        #----
-      </small>
+      <div>
+        <h2>Player account</h2>
+        <p id="accountDescription">
+          Create an account or sign in to protect your leaderboard progress.
+        </p>
+      </div>
     </div>
 
     <div class="account-player">
       <span>Current player</span>
-
-      <strong id="accountPlayerName">
-        Guest player
-      </strong>
+      <strong id="accountPlayerName">Guest player</strong>
+      <small id="accountIdentifier">#----</small>
     </div>
 
-    <div class="account-email-field">
-      <label for="accountUsername">
-        Username
-      </label>
-
-      <input
-        id="accountUsername"
-        type="text"
-        autocomplete="username"
-        placeholder="Leaderboard username"
-        minlength="3"
-        maxlength="24"
-      >
-    </div>
-
-    <div class="account-email-field">
-      <label for="accountEmail">
-        Email address
-      </label>
-
-      <input
-        id="accountEmail"
-        type="email"
-        inputmode="email"
-        autocomplete="email"
-        placeholder="name@example.com"
-        maxlength="254"
-      >
-    </div>
-
-    <div class="account-email-field">
-      <label for="accountPassword">
-        Password
-      </label>
-
-      <input
-        id="accountPassword"
-        type="password"
-        autocomplete="current-password"
-        placeholder="At least 8 characters"
-        minlength="8"
-        maxlength="128"
-      >
-    </div>
-
-    <div class="account-actions">
+    <div id="accountAuthTabs" class="account-tabs" role="tablist" aria-label="Account options">
       <button
-        id="createAccountButton"
-        class="primary-button"
+        id="showCreateAccountButton"
+        class="account-tab active"
         type="button"
+        role="tab"
+        aria-selected="true"
+        data-account-control
       >
         Create account
       </button>
 
       <button
-        id="signInButton"
-        class="secondary-button"
+        id="showSignInButton"
+        class="account-tab"
         type="button"
+        role="tab"
+        aria-selected="false"
+        data-account-control
       >
         Sign in
       </button>
+    </div>
+
+    <section id="createAccountForm" class="account-view">
+      <div class="account-field">
+        <label for="createUsername">Username</label>
+        <input
+          id="createUsername"
+          type="text"
+          autocomplete="username"
+          placeholder="Leaderboard username"
+          minlength="3"
+          maxlength="24"
+          data-account-control
+        >
+      </div>
+
+      <div class="account-field">
+        <label for="createEmail">Email address</label>
+        <input
+          id="createEmail"
+          type="email"
+          inputmode="email"
+          autocomplete="email"
+          placeholder="name@example.com"
+          maxlength="254"
+          data-account-control
+        >
+      </div>
+
+      <button
+        id="createAccountButton"
+        class="primary-button"
+        type="button"
+        data-account-control
+      >
+        Create account
+      </button>
+
+      <p class="account-help">
+        We will send a verification link first. After opening it,
+        return here to choose your password. Passwords are never
+        stored in this page or in browser storage.
+      </p>
+    </section>
+
+    <section id="signInForm" class="account-view" hidden>
+      <div class="account-field">
+        <label for="signInEmail">Email address</label>
+        <input
+          id="signInEmail"
+          type="email"
+          inputmode="email"
+          autocomplete="email"
+          placeholder="name@example.com"
+          maxlength="254"
+          data-account-control
+        >
+      </div>
+
+      <div class="account-field">
+        <label for="signInPassword">Password</label>
+        <input
+          id="signInPassword"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Your password"
+          minlength="8"
+          maxlength="128"
+          data-account-control
+        >
+      </div>
+
+      <div class="account-actions">
+        <button
+          id="signInButton"
+          class="primary-button"
+          type="button"
+          data-account-control
+        >
+          Sign in
+        </button>
+
+        <button
+          id="forgotPasswordButton"
+          class="text-button"
+          type="button"
+          data-account-control
+        >
+          Forgot password?
+        </button>
+      </div>
+    </section>
+
+    <section id="accountSetupForm" class="account-view" hidden>
+      <div class="account-section-heading">
+        <h3>Finish account setup</h3>
+        <p>Your email is verified. Choose the password for this account.</p>
+      </div>
+
+      <div class="account-field">
+        <label for="setupPassword">Password</label>
+        <input
+          id="setupPassword"
+          type="password"
+          autocomplete="new-password"
+          placeholder="At least 8 characters"
+          minlength="8"
+          maxlength="128"
+          data-account-control
+        >
+      </div>
+
+      <div class="account-field">
+        <label for="setupPasswordConfirm">Confirm password</label>
+        <input
+          id="setupPasswordConfirm"
+          type="password"
+          autocomplete="new-password"
+          placeholder="Enter the same password again"
+          minlength="8"
+          maxlength="128"
+          data-account-control
+        >
+      </div>
+
+      <button
+        id="finishAccountSetupButton"
+        class="primary-button"
+        type="button"
+        data-account-control
+      >
+        Finish account setup
+      </button>
+    </section>
+
+    <section id="manageAccountForm" class="account-view" hidden>
+      <div class="account-section">
+        <div class="account-section-heading">
+          <h3>Profile</h3>
+          <p>Your public username can change. Your player number never changes.</p>
+        </div>
+
+        <div class="account-field">
+          <label for="manageEmail">Email address</label>
+          <input
+            id="manageEmail"
+            type="email"
+            autocomplete="email"
+            readonly
+          >
+        </div>
+
+        <div class="account-field">
+          <label for="manageUsername">Username</label>
+          <input
+            id="manageUsername"
+            type="text"
+            autocomplete="username"
+            minlength="3"
+            maxlength="24"
+            data-account-control
+          >
+        </div>
+
+        <button
+          id="saveUsernameButton"
+          class="secondary-button"
+          type="button"
+          data-account-control
+        >
+          Save username
+        </button>
+      </div>
+
+      <div class="account-divider" aria-hidden="true"></div>
+
+      <div class="account-section">
+        <div class="account-section-heading">
+          <h3>Security</h3>
+          <p>Changing your password does not affect your username or scores.</p>
+        </div>
+
+        <div class="account-field">
+          <label for="newPassword">New password</label>
+          <input
+            id="newPassword"
+            type="password"
+            autocomplete="new-password"
+            placeholder="At least 8 characters"
+            minlength="8"
+            maxlength="128"
+            data-account-control
+          >
+        </div>
+
+        <div class="account-field">
+          <label for="newPasswordConfirm">Confirm new password</label>
+          <input
+            id="newPasswordConfirm"
+            type="password"
+            autocomplete="new-password"
+            placeholder="Enter the same password again"
+            minlength="8"
+            maxlength="128"
+            data-account-control
+          >
+        </div>
+
+        <button
+          id="changePasswordButton"
+          class="secondary-button"
+          type="button"
+          data-account-control
+        >
+          Change password
+        </button>
+      </div>
 
       <button
         id="signOutButton"
-        class="secondary-button"
+        class="danger-button"
         type="button"
-        hidden
+        data-account-control
       >
         Sign out
       </button>
-    </div>
+    </section>
 
-    <p class="account-help">
-      Your username is shown publicly on the leaderboard.
-      Your email remains private and is used to sign in and
-      recover your account.
-    </p>
+    <section id="passwordRecoveryForm" class="account-view" hidden>
+      <div class="account-section-heading">
+        <h3>Choose a new password</h3>
+        <p>The recovery link has been accepted. Set a new password below.</p>
+      </div>
+
+      <div class="account-field">
+        <label for="recoveryPassword">New password</label>
+        <input
+          id="recoveryPassword"
+          type="password"
+          autocomplete="new-password"
+          placeholder="At least 8 characters"
+          minlength="8"
+          maxlength="128"
+          data-account-control
+        >
+      </div>
+
+      <div class="account-field">
+        <label for="recoveryPasswordConfirm">Confirm new password</label>
+        <input
+          id="recoveryPasswordConfirm"
+          type="password"
+          autocomplete="new-password"
+          placeholder="Enter the same password again"
+          minlength="8"
+          maxlength="128"
+          data-account-control
+        >
+      </div>
+
+      <button
+        id="completeRecoveryButton"
+        class="primary-button"
+        type="button"
+        data-account-control
+      >
+        Save new password
+      </button>
+    </section>
 
     <p
       id="accountStatus"
@@ -326,6 +537,6 @@
   </dialog>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="questions.js?v=3"></script>
-  <script src="app.js?v=7"></script>
+  <script src="app.js?v=8"></script>
 </body>
 </html>
