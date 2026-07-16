@@ -292,9 +292,13 @@
   }
 
   function resetGame() {
-    const categoryQuestions = state.selectedCategory === "All categories"
-      ? [...QUESTIONS]
-      : QUESTIONS.filter((question) => question.category === state.selectedCategory);
+    const categoryQuestions =
+      state.selectedCategory === "All categories"
+        ? [...QUESTIONS]
+        : QUESTIONS.filter(
+            (question) =>
+              question.category === state.selectedCategory
+          );
 
     state.pool = shuffle(categoryQuestions);
     state.currentQuestion = null;
@@ -306,8 +310,11 @@
     state.answered = 0;
     state.remainingMs = GAME_SECONDS * 1000;
     state.locked = false;
+    state.scoreSaved = false;
+    state.responseTimes = [];
 
     updateHud();
+
     elements.feedback.textContent = "";
     elements.newHighScore.hidden = true;
   }
@@ -393,60 +400,139 @@
   }
 
   function selectAnswer(index) {
-    if (state.locked || !state.currentQuestion || state.remainingMs <= 0) {
+    if (
+      state.locked ||
+      !state.currentQuestion ||
+      state.remainingMs <= 0
+    ) {
       return;
     }
 
     state.locked = true;
+
     stopRecognition();
     stopSpeaking();
 
-    const buttons = [...elements.answerGrid.querySelectorAll(".answer-button")];
-    const isCorrect = index === state.currentQuestion.correct;
+    const buttons = [
+      ...elements.answerGrid.querySelectorAll(
+        ".answer-button"
+      )
+    ];
+
+    const isCorrect =
+      index === state.currentQuestion.correct;
+
+    const responseMs = Math.round(
+      performance.now() -
+        state.questionStartedAt
+    );
+
+    state.responseTimes.push(responseMs);
     state.answered += 1;
 
-    buttons.forEach((button, buttonIndex) => {
-      button.disabled = true;
-      if (buttonIndex === state.currentQuestion.correct) {
-        button.classList.add("correct");
+    buttons.forEach(
+      (button, buttonIndex) => {
+        button.disabled = true;
+
+        if (
+          buttonIndex ===
+          state.currentQuestion.correct
+        ) {
+          button.classList.add("correct");
+        }
+
+        if (
+          !isCorrect &&
+          buttonIndex === index
+        ) {
+          button.classList.add("wrong");
+        }
       }
-      if (!isCorrect && buttonIndex === index) {
-        button.classList.add("wrong");
-      }
-    });
+    );
 
     if (isCorrect) {
       state.correct += 1;
       state.streak += 1;
-      state.bestStreak = Math.max(state.bestStreak, state.streak);
 
-      const responseMs = performance.now() - state.questionStartedAt;
-      const speedBonus = Math.max(0, 100 - Math.floor(responseMs / 60));
-      const multiplier = Math.min(3, 1 + Math.floor((state.streak - 1) / 3) * 0.5);
-      const points = Math.round((100 + speedBonus) * multiplier);
+      state.bestStreak = Math.max(
+        state.bestStreak,
+        state.streak
+      );
+
+      const speedBonus = Math.max(
+        0,
+        100 -
+          Math.floor(responseMs / 60)
+      );
+
+      const multiplier = Math.min(
+        3,
+        1 +
+          Math.floor(
+            (state.streak - 1) / 3
+          ) *
+            0.5
+      );
+
+      const points = Math.round(
+        (100 + speedBonus) *
+          multiplier
+      );
+
       state.score += points;
 
-      elements.feedback.textContent = `Correct! +${points}`;
-      elements.feedback.className = "feedback correct";
+      elements.feedback.textContent =
+        `Correct! +${points}`;
+
+      elements.feedback.className =
+        "feedback correct";
+
       playSuccessSound();
 
       if (state.hostEnabled) {
-        speak(randomItem(["Correct.", "That's right.", "Nice one.", "You got it."]));
+        speak(
+          randomItem([
+            "Correct.",
+            "That's right.",
+            "Nice one.",
+            "You got it."
+          ])
+        );
       }
     } else {
       state.streak = 0;
-      elements.feedback.textContent = `The answer was ${state.currentQuestion.answers[state.currentQuestion.correct]}.`;
-      elements.feedback.className = "feedback wrong";
+
+      elements.feedback.textContent =
+        `The answer was ${
+          state.currentQuestion.answers[
+            state.currentQuestion.correct
+          ]
+        }.`;
+
+      elements.feedback.className =
+        "feedback wrong";
+
       playWrongSound();
 
       if (state.hostEnabled) {
-        speak(`Not this time. The answer was ${state.currentQuestion.answers[state.currentQuestion.correct]}.`);
+        speak(
+          `Not this time. The answer was ${
+            state.currentQuestion.answers[
+              state.currentQuestion.correct
+            ]
+          }.`
+        );
       }
     }
 
     updateHud();
-    window.setTimeout(nextQuestion, QUESTION_DELAY_MS);
+
+    window.setTimeout(
+      nextQuestion,
+      QUESTION_DELAY_MS
+    );
   }
+
 
   function passQuestion() {
     if (state.locked || state.remainingMs <= 0) {
@@ -467,43 +553,246 @@
     elements.streakValue.textContent = String(state.streak);
   }
 
-  function endGame() {
+  async function endGame() {
     cancelAnimationFrame(state.timerFrame);
+
     state.timerFrame = null;
     state.remainingMs = 0;
     state.locked = true;
+
     stopRecognition();
     stopSpeaking();
 
-    const previousHighScore = readNumber("triviaRushHighScore");
-    const previousBestStreak = readNumber("triviaRushBestStreak");
-    const isNewHighScore = state.score > previousHighScore;
+    const previousHighScore = readNumber(
+      "triviaRushHighScore"
+    );
+
+    const previousBestStreak = readNumber(
+      "triviaRushBestStreak"
+    );
+
+    const isNewHighScore =
+      state.score > previousHighScore;
 
     if (isNewHighScore) {
-      localStorage.setItem("triviaRushHighScore", String(state.score));
-    }
-    if (state.bestStreak > previousBestStreak) {
-      localStorage.setItem("triviaRushBestStreak", String(state.bestStreak));
+      localStorage.setItem(
+        "triviaRushHighScore",
+        String(state.score)
+      );
     }
 
-    const accuracy = state.answered === 0 ? 0 : Math.round((state.correct / state.answered) * 100);
-    const resultCopy = getResultCopy(state.correct, accuracy);
+    if (
+      state.bestStreak >
+      previousBestStreak
+    ) {
+      localStorage.setItem(
+        "triviaRushBestStreak",
+        String(state.bestStreak)
+      );
+    }
 
-    elements.finalScore.textContent = state.score.toLocaleString();
-    elements.correctTotal.textContent = String(state.correct);
-    elements.answeredTotal.textContent = String(state.answered);
-    elements.accuracyTotal.textContent = `${accuracy}%`;
-    elements.bestStreakTotal.textContent = String(state.bestStreak);
-    elements.resultTitle.textContent = resultCopy.title;
-    elements.resultMessage.textContent = resultCopy.message;
-    elements.newHighScore.hidden = !isNewHighScore;
+    const accuracy =
+      state.answered === 0
+        ? 0
+        : Math.round(
+            (state.correct /
+              state.answered) *
+              100
+          );
+
+    const resultCopy = getResultCopy(
+      state.correct,
+      accuracy
+    );
+
+    elements.finalScore.textContent =
+      state.score.toLocaleString();
+
+    elements.correctTotal.textContent =
+      String(state.correct);
+
+    elements.answeredTotal.textContent =
+      String(state.answered);
+
+    elements.accuracyTotal.textContent =
+      `${accuracy}%`;
+
+    elements.bestStreakTotal.textContent =
+      String(state.bestStreak);
+
+    elements.resultTitle.textContent =
+      resultCopy.title;
+
+    elements.resultMessage.textContent =
+      resultCopy.message;
+
+    elements.newHighScore.hidden =
+      !isNewHighScore;
 
     updateStartStats();
+
     showScreen(elements.resultsScreen);
+
     playFinishSound();
 
+    await saveGameResult();
+
+    await loadLeaderboard();
+
     if (state.hostEnabled) {
-      speak(`Time. You scored ${state.score} points with ${state.correct} correct answers.`);
+      speak(
+        `Time. You scored ${state.score} points with ${state.correct} correct answers.`
+      );
+    }
+  }
+
+  async function saveGameResult() {
+    if (state.scoreSaved) {
+      return;
+    }
+
+    if (!state.user || !state.profile) {
+      console.warn(
+        "The result was not saved because no player is signed in."
+      );
+
+      elements.resultMessage.textContent +=
+        " Your result could not be saved because no player account was available.";
+
+      return;
+    }
+
+    if (state.answered < 1) {
+      console.warn(
+        "The result was not saved because no questions were answered."
+      );
+
+      elements.resultMessage.textContent +=
+        " No result was saved because no questions were answered.";
+
+      return;
+    }
+
+    state.scoreSaved = true;
+
+    const incorrectAnswers =
+      state.answered - state.correct;
+
+    const averageResponseMs =
+      state.responseTimes.length === 0
+        ? null
+        : Math.round(
+            state.responseTimes.reduce(
+              (total, responseTime) =>
+                total + responseTime,
+              0
+            ) / state.responseTimes.length
+          );
+
+    const category =
+      state.selectedCategory ===
+      "All categories"
+        ? "mixed"
+        : state.selectedCategory;
+
+    try {
+      const { error } =
+        await supabaseClient.rpc(
+          "submit_game_result",
+          {
+            p_questions_answered:
+              state.answered,
+
+            p_correct_answers:
+              state.correct,
+
+            p_incorrect_answers:
+              incorrectAnswers,
+
+            p_score:
+              state.score,
+
+            p_best_streak:
+              state.bestStreak,
+
+            p_average_response_ms:
+              averageResponseMs,
+
+            p_duration_seconds:
+              GAME_SECONDS,
+
+            p_game_mode:
+              "rush_60",
+
+            p_category:
+              category
+          }
+        );
+
+      if (error) {
+        throw error;
+      }
+
+      console.log(
+        "Game result saved successfully."
+      );
+
+      elements.resultMessage.textContent +=
+        " Your result was saved to the global leaderboard.";
+    } catch (error) {
+      state.scoreSaved = false;
+
+      console.error(
+        "Could not save game result:",
+        error
+      );
+
+      elements.resultMessage.textContent +=
+        " Your result could not be saved to the global leaderboard.";
+    }
+  }
+
+  async function loadLeaderboard() {
+    try {
+      const { data, error } =
+        await supabaseClient
+          .from("leaderboard")
+          .select(`
+            leaderboard_rank,
+            display_name,
+            games_played,
+            total_questions,
+            total_correct,
+            total_incorrect,
+            accuracy_percent,
+            total_score,
+            high_score,
+            best_streak
+          `)
+          .order(
+            "leaderboard_rank",
+            { ascending: true }
+          )
+          .limit(20);
+
+      if (error) {
+        throw error;
+      }
+
+      console.log(
+        "Global leaderboard loaded successfully."
+      );
+
+      console.table(data);
+
+      return data;
+    } catch (error) {
+      console.error(
+        "Could not load the global leaderboard:",
+        error
+      );
+
+      return [];
     }
   }
 
