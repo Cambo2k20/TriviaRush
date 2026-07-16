@@ -445,10 +445,49 @@
   }
 
   function updateAccountUI() {
-    if (
-      !elements.accountButtonText ||
-      !elements.accountPlayerName
-    ) {
+    const requiredElements = {
+      accountButtonText:
+        elements.accountButtonText,
+
+      accountPlayerName:
+        elements.accountPlayerName,
+
+      accountDescription:
+        elements.accountDescription,
+
+      accountUsername:
+        elements.accountUsername,
+
+      accountEmail:
+        elements.accountEmail,
+
+      accountPassword:
+        elements.accountPassword,
+
+      createAccountButton:
+        elements.createAccountButton,
+
+      signInButton:
+        elements.signInButton,
+
+      signOutButton:
+        elements.signOutButton,
+
+      accountStatus:
+        elements.accountStatus
+    };
+
+    const missingElements =
+      Object.entries(requiredElements)
+        .filter(([, element]) => !element)
+        .map(([name]) => name);
+
+    if (missingElements.length > 0) {
+      console.error(
+        "Account interface elements are missing:",
+        missingElements
+      );
+
       return;
     }
 
@@ -469,13 +508,8 @@
     elements.accountPlayerName.textContent =
       playerName;
 
-    if (
-      state.profile?.display_name &&
-      elements.accountUsername
-    ) {
-      elements.accountUsername.value =
-        state.profile.display_name;
-    }
+    elements.accountUsername.value =
+      state.profile?.display_name || "";
 
     if (isPermanentAccount) {
       elements.accountDescription.textContent =
@@ -487,15 +521,26 @@
       elements.accountEmail.disabled = true;
 
       elements.createAccountButton.textContent =
-        "Update username or password";
+        "Update account";
 
-      elements.signInButton.hidden = true;
-      elements.signOutButton.hidden = false;
+      elements.createAccountButton.hidden =
+        false;
 
-      if (!elements.accountStatus.textContent) {
+      elements.signInButton.hidden =
+        true;
+
+      elements.signOutButton.hidden =
+        false;
+
+      if (
+        !elements.accountStatus.textContent
+      ) {
         elements.accountStatus.textContent =
           `Signed in as ${state.user.email}.`;
       }
+
+      elements.accountStatus.className =
+        "account-status";
 
       return;
     }
@@ -503,20 +548,31 @@
     elements.accountDescription.textContent =
       "Create an account to protect your leaderboard progress, or sign in to an existing account.";
 
-    elements.accountEmail.disabled = false;
+    elements.accountEmail.disabled =
+      false;
 
     elements.createAccountButton.textContent =
       "Create account";
 
-    elements.signInButton.hidden = false;
-    elements.signOutButton.hidden = true;
+    elements.createAccountButton.hidden =
+      false;
 
-    if (!elements.accountStatus.textContent) {
+    elements.signInButton.hidden =
+      false;
+
+    elements.signOutButton.hidden =
+      true;
+
+    if (
+      !elements.accountStatus.textContent
+    ) {
       elements.accountStatus.textContent =
         "You are currently playing as a guest.";
     }
-  }
 
+    elements.accountStatus.className =
+      "account-status";
+  }
 
 
   function getAuthRedirectUrl() {
