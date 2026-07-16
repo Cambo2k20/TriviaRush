@@ -7,6 +7,10 @@
   const QUESTIONS = Array.isArray(window.TRIVIA_QUESTIONS) ? window.TRIVIA_QUESTIONS : [];
   const SUPABASE_URL = "https://kgdnuzasbeavpqharbpf.supabase.co";
   const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_R-AJK-addd0bcjUtfzAOqQ_88GYxN_O";
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
   const state = {
     pool: [],
     currentQuestion: null,
