@@ -196,23 +196,46 @@
     </button>
 
     <div class="account-heading">
-      <span class="account-icon" aria-hidden="true">👤</span>
+      <span class="account-icon" aria-hidden="true">
+        👤
+      </span>
 
       <div>
         <h2>Player account</h2>
+
         <p id="accountDescription">
-          Save your leaderboard progress so it can be restored on another device.
+          Create an account to protect your leaderboard progress.
         </p>
       </div>
     </div>
 
     <div class="account-player">
       <span>Current player</span>
-      <strong id="accountPlayerName">Guest player</strong>
+
+      <strong id="accountPlayerName">
+        Guest player
+      </strong>
     </div>
 
     <div class="account-email-field">
-      <label for="accountEmail">Email address</label>
+      <label for="accountUsername">
+        Username
+      </label>
+
+      <input
+        id="accountUsername"
+        type="text"
+        autocomplete="username"
+        placeholder="Leaderboard username"
+        minlength="3"
+        maxlength="24"
+      >
+    </div>
+
+    <div class="account-email-field">
+      <label for="accountEmail">
+        Email address
+      </label>
 
       <input
         id="accountEmail"
@@ -224,27 +247,52 @@
       >
     </div>
 
+    <div class="account-email-field">
+      <label for="accountPassword">
+        Password
+      </label>
+
+      <input
+        id="accountPassword"
+        type="password"
+        autocomplete="current-password"
+        placeholder="At least 8 characters"
+        minlength="8"
+        maxlength="128"
+      >
+    </div>
+
     <div class="account-actions">
       <button
-        id="linkEmailButton"
+        id="createAccountButton"
         class="primary-button"
         type="button"
       >
-        Save this player's progress
+        Create account
       </button>
 
       <button
-        id="magicLinkButton"
+        id="signInButton"
         class="secondary-button"
         type="button"
       >
-        Sign in to an existing account
+        Sign in
+      </button>
+
+      <button
+        id="signOutButton"
+        class="secondary-button"
+        type="button"
+        hidden
+      >
+        Sign out
       </button>
     </div>
 
     <p class="account-help">
-      Saving links this player's scores to your email. Use the sign-in option
-      when returning on another browser or device.
+      Your username appears on the public leaderboard.
+      Your email address remains private and is used to
+      sign in and recover your account.
     </p>
 
     <p
@@ -267,15 +315,15 @@
     <h2>How to play</h2>
 
     <p>
-      Answer as many trivia questions as possible before the
-      60-second timer reaches zero.
+      Answer as many questions as possible before
+      the 60-second timer reaches zero.
     </p>
 
     <ul>
-      <li>Tap an answer or use keys 1, 2 and 3.</li>
+      <li>Tap an answer or press 1, 2 or 3.</li>
       <li>Press P to pass a question.</li>
-      <li>Press V to answer using your microphone.</li>
-      <li>Build a streak to increase your score multiplier.</li>
+      <li>Press V to use voice input.</li>
+      <li>Build streaks to increase your score.</li>
     </ul>
   </dialog>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

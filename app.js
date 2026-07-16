@@ -162,18 +162,29 @@
         "#accountPlayerName"
       ),
 
+    accountUsername:
+      document.querySelector(
+        "#accountUsername"
+      ),
+
     accountEmail:
       document.querySelector("#accountEmail"),
 
-    linkEmailButton:
+    accountPassword:
       document.querySelector(
-        "#linkEmailButton"
+        "#accountPassword"
       ),
 
-    magicLinkButton:
+    createAccountButton:
       document.querySelector(
-        "#magicLinkButton"
+        "#createAccountButton"
       ),
+
+    signInButton:
+      document.querySelector("#signInButton"),
+
+    signOutButton:
+      document.querySelector("#signOutButton"),
 
     accountStatus:
       document.querySelector("#accountStatus"),
@@ -196,7 +207,6 @@
     loadPreferences();
     updateStartStats();
     configureSpeechRecognition();
-    bindEvents();
 
     elements.timerProgress.style.strokeDasharray =
       `${TIMER_CIRCUMFERENCE}`;
@@ -204,9 +214,15 @@
     elements.timerProgress.style.strokeDashoffset =
       "0";
 
+    /*
+    * Initialise authentication before attaching the
+    * account controls. This prevents the account window
+    * opening before state.user is ready.
+    */
     await initialisePlayer();
 
     updateAccountUI();
+    bindEvents();
 
     await testSupabaseConnection();
   }
@@ -429,7 +445,14 @@
   }
 
   function updateAccountUI() {
-    const hasPermanentEmail =
+    if (
+      !elements.accountButtonText ||
+      !elements.accountPlayerName
+    ) {
+      return;
+    }
+
+    const isPermanentAccount =
       Boolean(
         state.user?.email &&
         !state.user?.is_anonymous
@@ -446,48 +469,55 @@
     elements.accountPlayerName.textContent =
       playerName;
 
-    if (hasPermanentEmail) {
+    if (
+      state.profile?.display_name &&
+      elements.accountUsername
+    ) {
+      elements.accountUsername.value =
+        state.profile.display_name;
+    }
+
+    if (isPermanentAccount) {
       elements.accountDescription.textContent =
-        "Your leaderboard progress is protected and can be restored using your email magic link.";
+        "Your leaderboard progress is protected by your account.";
 
       elements.accountEmail.value =
         state.user.email;
 
-      elements.accountEmail.disabled =
-        true;
+      elements.accountEmail.disabled = true;
 
-      elements.linkEmailButton.hidden =
-        true;
+      elements.createAccountButton.textContent =
+        "Update username or password";
 
-      elements.magicLinkButton.hidden =
-        true;
+      elements.signInButton.hidden = true;
+      elements.signOutButton.hidden = false;
 
-      elements.accountStatus.textContent =
-        `Account saved as ${state.user.email}.`;
-
-      elements.accountStatus.className =
-        "account-status";
+      if (!elements.accountStatus.textContent) {
+        elements.accountStatus.textContent =
+          `Signed in as ${state.user.email}.`;
+      }
 
       return;
     }
 
     elements.accountDescription.textContent =
-      "Save this player's scores with an email, or sign in to an account you previously saved.";
+      "Create an account to protect your leaderboard progress, or sign in to an existing account.";
 
-    elements.accountEmail.disabled =
-      false;
+    elements.accountEmail.disabled = false;
 
-    elements.linkEmailButton.hidden =
-      false;
+    elements.createAccountButton.textContent =
+      "Create account";
 
-    elements.magicLinkButton.hidden =
-      false;
+    elements.signInButton.hidden = false;
+    elements.signOutButton.hidden = true;
 
     if (!elements.accountStatus.textContent) {
       elements.accountStatus.textContent =
         "You are currently playing as a guest.";
     }
   }
+
+
 
   function getAuthRedirectUrl() {
     const redirectUrl =
@@ -498,6 +528,58 @@
 
     return redirectUrl.toString();
   }
+
+  async function saveProfileUsername(
+    username
+  ) {
+    if (!state.user) {
+      throw new Error(
+        "No authenticated player is available."
+      );
+    }
+
+    let result;
+
+    if (state.profile) {
+      result = await supabaseClient
+        .from("profiles")
+        .update({
+          display_name: username
+        })
+        .eq("id", state.user.id)
+        .select("id, display_name")
+        .single();
+    } else {
+      result = await supabaseClient
+        .from("profiles")
+        .insert({
+          id: state.user.id,
+          display_name: username
+        })
+        .select("id, display_name")
+        .single();
+    }
+
+    if (result.error) {
+      if (result.error.code === "23505") {
+        throw new Error(
+          "That username is already being used."
+        );
+      }
+
+      throw result.error;
+    }
+
+    state.profile = result.data;
+
+    localStorage.setItem(
+      "triviaRushPlayerName",
+      username
+    );
+
+    return state.profile;
+  }
+
 
   function readAccountEmail() {
     const email =
@@ -524,22 +606,83 @@
     return email;
   }
 
+  function readAccountUsername() {
+    const username =
+      elements.accountUsername.value.trim();
+
+    if (
+      username.length < 3 ||
+      username.length > 24
+    ) {
+      elements.accountStatus.textContent =
+        "Username must contain between 3 and 24 characters.";
+
+      elements.accountStatus.className =
+        "account-status error";
+
+      return null;
+    }
+
+    return username;
+  }
+
+  function readAccountPassword() {
+    const password =
+      elements.accountPassword.value;
+
+    if (password.length < 8) {
+      elements.accountStatus.textContent =
+        "Password must contain at least 8 characters.";
+
+      elements.accountStatus.className =
+        "account-status error";
+
+      return null;
+    }
+
+    return password;
+  }
+
   function setAccountBusy(isBusy) {
-    elements.accountEmail.disabled =
-      isBusy ||
+    const isPermanentAccount =
       Boolean(
         state.user?.email &&
         !state.user?.is_anonymous
       );
 
-    elements.linkEmailButton.disabled =
+    elements.accountUsername.disabled =
       isBusy;
 
-    elements.magicLinkButton.disabled =
+    elements.accountEmail.disabled =
+      isBusy || isPermanentAccount;
+
+    elements.accountPassword.disabled =
+      isBusy;
+
+    elements.createAccountButton.disabled =
+      isBusy;
+
+    elements.signInButton.disabled =
+      isBusy;
+
+    elements.signOutButton.disabled =
       isBusy;
   }
 
-  async function linkEmailToCurrentPlayer() {
+  async function createAccount() {
+    const username =
+      readAccountUsername();
+
+    const email =
+      readAccountEmail();
+
+    const password =
+      readAccountPassword();
+
+    if (!username || !email || !password) {
+      return;
+    }
+
     if (!state.user) {
       elements.accountStatus.textContent =
         "The player account is not ready.";
@@ -550,72 +693,82 @@
       return;
     }
 
-    if (!state.user.is_anonymous) {
-      updateAccountUI();
-      return;
-    }
-
-    const profileReady =
-      await ensurePlayerProfile();
-
-    if (!profileReady) {
-      return;
-    }
-
-    const email =
-      readAccountEmail();
-
-    if (!email) {
-      return;
-    }
-
     setAccountBusy(true);
 
     elements.accountStatus.textContent =
-      "Sending your confirmation email…";
+      "Creating your account…";
 
     elements.accountStatus.className =
       "account-status";
 
     try {
-      const { error } =
-        await supabaseClient.auth.updateUser(
-          {
-            email
-          },
-          {
-            emailRedirectTo:
-              getAuthRedirectUrl()
+      await saveProfileUsername(username);
+
+      /*
+      * Anonymous users must verify their email before
+      * Supabase allows a password to be attached.
+      */
+      if (state.user.is_anonymous) {
+        const { error } =
+          await supabaseClient.auth.updateUser(
+            {
+              email
+            },
+            {
+              emailRedirectTo:
+                getAuthRedirectUrl()
+            }
+          );
+
+        if (error) {
+          throw error;
+        }
+
+        elements.accountStatus.textContent =
+          "Verification email sent. Open the email link, return to Trivia Rush, enter your password again and press “Finish account setup”.";
+
+        elements.createAccountButton.textContent =
+          "Finish account setup";
+
+        return;
+      }
+
+      const { data, error } =
+        await supabaseClient.auth.updateUser({
+          password,
+          data: {
+            display_name: username
           }
-        );
+        });
 
       if (error) {
         throw error;
       }
 
+      state.user =
+        data.user || state.user;
+
+      await saveProfileUsername(username);
+
+      elements.accountPassword.value = "";
+
       elements.accountStatus.textContent =
-        "Check your email and open the confirmation link. Your existing scores will remain attached to this player.";
+        "Account created successfully. Your leaderboard progress is now protected.";
 
       elements.accountStatus.className =
         "account-status";
+
+      updateAccountUI();
     } catch (error) {
       console.error(
-        "Could not link email:",
+        "Could not create account:",
         error
       );
 
-      const emailAlreadyUsed =
-        error?.message
-          ?.toLowerCase()
-          .includes("already");
-
       elements.accountStatus.textContent =
-        emailAlreadyUsed
-          ? "That email already belongs to an account. Use “Sign in to an existing account” instead."
-          : `Email could not be linked: ${
-              error?.message ||
-              String(error)
-            }`;
+        `Account could not be created: ${
+          error?.message || String(error)
+        }`;
 
       elements.accountStatus.className =
         "account-status error";
@@ -624,55 +777,107 @@
     }
   }
 
-  async function sendExistingAccountMagicLink() {
+  async function signInToAccount() {
     const email =
       readAccountEmail();
 
-    if (!email) {
+    const password =
+      readAccountPassword();
+
+    if (!email || !password) {
       return;
     }
 
     setAccountBusy(true);
 
     elements.accountStatus.textContent =
-      "Sending your sign-in link…";
+      "Signing in…";
 
     elements.accountStatus.className =
       "account-status";
 
     try {
-      const { error } =
+      const { data, error } =
         await supabaseClient.auth
-          .signInWithOtp({
+          .signInWithPassword({
             email,
-            options: {
-              emailRedirectTo:
-                getAuthRedirectUrl(),
-
-              shouldCreateUser:
-                false
-            }
+            password
           });
 
       if (error) {
         throw error;
       }
 
+      state.user = data.user;
+      state.profile = null;
+
+      await loadPlayerProfile();
+
+      elements.accountPassword.value = "";
+
       elements.accountStatus.textContent =
-        "Check your email and open the sign-in link. This page will restore the player attached to that account.";
+        "Signed in successfully. Your saved leaderboard progress has been restored.";
 
       elements.accountStatus.className =
         "account-status";
+
+      updateAccountUI();
     } catch (error) {
       console.error(
-        "Could not send magic link:",
+        "Could not sign in:",
         error
       );
 
       elements.accountStatus.textContent =
-        `The sign-in link could not be sent: ${
-          error?.message ||
-          String(error)
+        "Sign-in failed. Check your email address and password.";
+
+      elements.accountStatus.className =
+        "account-status error";
+    } finally {
+      setAccountBusy(false);
+    }
+  }
+
+  async function signOutAccount() {
+    setAccountBusy(true);
+
+    try {
+      const { error } =
+        await supabaseClient.auth.signOut();
+
+      if (error) {
+        throw error;
+      }
+
+      state.user = null;
+      state.profile = null;
+
+      localStorage.removeItem(
+        "triviaRushPlayerName"
+      );
+
+      await initialisePlayer();
+
+      elements.accountUsername.value = "";
+      elements.accountEmail.value = "";
+      elements.accountPassword.value = "";
+
+      elements.accountStatus.textContent =
+        "Signed out. You are now playing as a new guest.";
+
+      elements.accountStatus.className =
+        "account-status";
+
+      updateAccountUI();
+    } catch (error) {
+      console.error(
+        "Could not sign out:",
+        error
+      );
+
+      elements.accountStatus.textContent =
+        `Could not sign out: ${
+          error?.message || String(error)
         }`;
 
       elements.accountStatus.className =
@@ -779,20 +984,29 @@
         closeAccountDialog
       );
 
-    elements.linkEmailButton?.addEventListener(
+    elements.createAccountButton
+      ?.addEventListener(
+        "click",
+        createAccount
+      );
+
+    elements.signInButton?.addEventListener(
       "click",
-      linkEmailToCurrentPlayer
+      signInToAccount
     );
 
-    elements.magicLinkButton?.addEventListener(
+    elements.signOutButton?.addEventListener(
       "click",
-      sendExistingAccountMagicLink
+      signOutAccount
     );
 
     elements.accountDialog?.addEventListener(
       "click",
       (event) => {
-        if (event.target === elements.accountDialog) {
+        if (
+          event.target ===
+          elements.accountDialog
+        ) {
           closeAccountDialog();
         }
       }
@@ -816,7 +1030,10 @@
     elements.howToDialog?.addEventListener(
       "click",
       (event) => {
-        if (event.target === elements.howToDialog) {
+        if (
+          event.target ===
+          elements.howToDialog
+        ) {
           elements.howToDialog.close();
         }
       }
