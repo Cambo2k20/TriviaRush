@@ -161,6 +161,11 @@
       document.querySelector(
         "#accountPlayerName"
       ),
+    
+    accountIdentifier:
+      document.querySelector(
+        "#accountIdentifier"
+      ),
 
     accountUsername:
       document.querySelector(
@@ -300,13 +305,16 @@
   async function loadPlayerProfile() {
     if (!state.user) {
       state.profile = null;
+      updateAccountUI();
       return null;
     }
 
     const { data, error } =
       await supabaseClient
         .from("profiles")
-        .select("id, display_name")
+        .select(
+          "id, display_name, account_number"
+        )
         .eq("id", state.user.id)
         .maybeSingle();
 
@@ -315,6 +323,13 @@
     }
 
     state.profile = data ?? null;
+
+    if (state.profile?.display_name) {
+      localStorage.setItem(
+        "triviaRushPlayerName",
+        state.profile.display_name
+      );
+    }
 
     updateAccountUI();
 
@@ -443,20 +458,45 @@
 
     elements.accountDialog.close();
   }
-  function updateAccountUI() {
-    const isPermanentAccount = Boolean(
-      state.user?.email &&
-      !state.user?.is_anonymous
-    );
 
-    const passwordSetupComplete = Boolean(
-      state.user?.user_metadata
-        ?.password_setup_complete
-    );
+  function formatAccountIdentifier(
+    accountNumber
+  ) {
+    const parsedNumber =
+      Number(accountNumber);
+
+    if (
+      !Number.isInteger(parsedNumber) ||
+      parsedNumber < 1
+    ) {
+      return "#----";
+    }
+
+    return `#${String(
+      parsedNumber
+    ).padStart(4, "0")}`;
+  }
+
+  function updateAccountUI() {
+    const isPermanentAccount =
+      Boolean(
+        state.user?.email &&
+        !state.user?.is_anonymous
+      );
+
+    const passwordSetupPending =
+      localStorage.getItem(
+        "triviaRushPendingPasswordSetup"
+      ) === "true";
 
     const playerName =
       state.profile?.display_name ||
       "Guest player";
+
+    const accountIdentifier =
+      formatAccountIdentifier(
+        state.profile?.account_number
+      );
 
     if (elements.accountButtonText) {
       elements.accountButtonText.textContent =
@@ -469,26 +509,28 @@
         playerName;
     }
 
+    if (elements.accountIdentifier) {
+      elements.accountIdentifier.textContent =
+        accountIdentifier;
+    }
+
     if (
       elements.accountUsername &&
-      document.activeElement !==
-        elements.accountUsername
+      !elements.accountUsername.value
     ) {
       elements.accountUsername.value =
         state.profile?.display_name || "";
     }
 
-    if (!elements.accountDialog) {
+    if (!elements.accountDescription) {
       return;
     }
 
     if (isPermanentAccount) {
-      if (elements.accountDescription) {
-        elements.accountDescription.textContent =
-          passwordSetupComplete
-            ? "Your leaderboard progress is protected by your account."
-            : "Your email is verified. Set a password to finish creating your account.";
-      }
+      elements.accountDescription.textContent =
+        passwordSetupPending
+          ? "Your email has been verified. Enter a password to finish creating your account."
+          : "Your leaderboard progress is protected by your account.";
 
       if (elements.accountEmail) {
         elements.accountEmail.value =
@@ -498,14 +540,24 @@
           true;
       }
 
-      if (elements.createAccountButton) {
-        elements.createAccountButton.textContent =
-          passwordSetupComplete
-            ? "Update account"
-            : "Finish account setup";
+      if (elements.accountUsername) {
+        elements.accountUsername.disabled =
+          false;
+      }
 
+      if (elements.accountPassword) {
+        elements.accountPassword.disabled =
+          false;
+      }
+
+      if (elements.createAccountButton) {
         elements.createAccountButton.hidden =
           false;
+
+        elements.createAccountButton.textContent =
+          passwordSetupPending
+            ? "Finish account setup"
+            : "Update account";
       }
 
       if (elements.signInButton) {
@@ -522,23 +574,22 @@
         elements.accountStatus &&
         !elements.accountStatus.textContent
       ) {
-        elements.accountStatus.textContent =
-          passwordSetupComplete
-            ? `Signed in as ${state.user.email}.`
-            : "Your email is verified. Enter a password and press “Finish account setup”.";
-      }
-
-      if (elements.accountStatus) {
-        elements.accountStatus.className =
-          "account-status";
+        setAccountStatus(
+          passwordSetupPending
+            ? "Email verified. Choose your password to complete account setup."
+            : `Signed in as ${state.user.email}.`
+        );
       }
 
       return;
     }
 
-    if (elements.accountDescription) {
-      elements.accountDescription.textContent =
-        "Create an account to protect your leaderboard progress, or sign in to an existing account.";
+    elements.accountDescription.textContent =
+      "Create an account to protect your leaderboard progress, or sign in to an existing account.";
+
+    if (elements.accountUsername) {
+      elements.accountUsername.disabled =
+        false;
     }
 
     if (elements.accountEmail) {
@@ -546,12 +597,17 @@
         false;
     }
 
-    if (elements.createAccountButton) {
-      elements.createAccountButton.textContent =
-        "Create account";
+    if (elements.accountPassword) {
+      elements.accountPassword.disabled =
+        false;
+    }
 
+    if (elements.createAccountButton) {
       elements.createAccountButton.hidden =
         false;
+
+      elements.createAccountButton.textContent =
+        "Create account";
     }
 
     if (elements.signInButton) {
@@ -568,13 +624,9 @@
       elements.accountStatus &&
       !elements.accountStatus.textContent
     ) {
-      elements.accountStatus.textContent =
-        "You are currently playing as a guest.";
-    }
-
-    if (elements.accountStatus) {
-      elements.accountStatus.className =
-        "account-status";
+      setAccountStatus(
+        "You are currently playing as a guest."
+      );
     }
   }
 
@@ -601,22 +653,34 @@
     let result;
 
     if (state.profile) {
+      /*
+      * Only update the display name.
+      * account_number is deliberately untouched.
+      */
       result = await supabaseClient
         .from("profiles")
         .update({
           display_name: username
         })
         .eq("id", state.user.id)
-        .select("id, display_name")
+        .select(
+          "id, display_name, account_number"
+        )
         .single();
     } else {
+      /*
+      * Supabase assigns account_number automatically
+      * from the database sequence.
+      */
       result = await supabaseClient
         .from("profiles")
         .insert({
           id: state.user.id,
           display_name: username
         })
-        .select("id, display_name")
+        .select(
+          "id, display_name, account_number"
+        )
         .single();
     }
 
@@ -637,8 +701,12 @@
       username
     );
 
+    updateAccountUI();
+
     return state.profile;
   }
+
+
   function setAccountStatus(
     message,
     isError = false
@@ -783,20 +851,60 @@
         isBusy;
     }
   }
-  async function createAccount() {
-    const username =
-      readAccountUsername();
 
-    const email =
-      readAccountEmail();
+  function isNetworkLoadError(error) {
+      const message =
+        String(
+          error?.message ||
+          error ||
+          ""
+        ).toLowerCase();
 
-    const password =
-      readAccountPassword();
-
-    if (!username || !email || !password) {
-      return;
+      return (
+        error instanceof TypeError ||
+        message.includes("load failed") ||
+        message.includes("failed to fetch") ||
+        message.includes(
+          "network request failed"
+        ) ||
+        message.includes("networkerror")
+      );
     }
 
+  async function runAuthRequest(
+    operation
+  ) {
+    let lastError = null;
+
+    for (
+      let attempt = 1;
+      attempt <= 2;
+      attempt += 1
+    ) {
+      try {
+        return await operation();
+      } catch (error) {
+        lastError = error;
+
+        if (
+          !isNetworkLoadError(error) ||
+          attempt === 2
+        ) {
+          throw error;
+        }
+
+        /*
+        * Retry once after a short delay in case
+        * Safari or the network dropped the request.
+        */
+        await wait(1200);
+      }
+    }
+
+    throw lastError;
+  }
+
+  async function createAccount() {
     if (!state.user) {
       setAccountStatus(
         "The player account is not ready. Reload the page and try again.",
@@ -806,26 +914,52 @@
       return;
     }
 
-    setAccountBusy(true);
-    setAccountStatus("Creating your account…");
+    if (!navigator.onLine) {
+      setAccountStatus(
+        "Your device appears to be offline. Reconnect to the internet and try again.",
+        true
+      );
 
-    try {
-      await saveProfileUsername(username);
+      return;
+    }
 
-      if (state.user.is_anonymous) {
+    const username =
+      readAccountUsername();
+
+    if (!username) {
+      return;
+    }
+
+    const isPermanentAccount =
+      Boolean(
+        state.user.email &&
+        !state.user.is_anonymous
+      );
+
+    if (isPermanentAccount) {
+      const password =
+        readAccountPassword();
+
+      if (!password) {
+        return;
+      }
+
+      setAccountBusy(true);
+
+      setAccountStatus(
+        "Saving your account…"
+      );
+
+      try {
         const { data, error } =
-          await supabaseClient.auth.updateUser(
-            {
-              email,
-              data: {
-                display_name: username,
-                password_setup_complete: false
-              }
-            },
-            {
-              emailRedirectTo:
-                getAuthRedirectUrl()
-            }
+          await runAuthRequest(
+            () =>
+              supabaseClient.auth.updateUser({
+                password,
+                data: {
+                  display_name: username
+                }
+              })
           );
 
         if (error) {
@@ -835,36 +969,97 @@
         state.user =
           data.user || state.user;
 
+        await saveProfileUsername(
+          username
+        );
+
+        localStorage.removeItem(
+          "triviaRushPendingPasswordSetup"
+        );
+
         if (elements.accountPassword) {
           elements.accountPassword.value =
             "";
         }
 
         setAccountStatus(
-          "Verification email sent. Open the link in that email, return to Trivia Rush, then enter a password and press “Finish account setup”."
+          "Account saved successfully. Your leaderboard progress is protected."
         );
 
         updateAccountUI();
-        return;
+      } catch (error) {
+        console.error(
+          "Could not finish account setup:",
+          error
+        );
+
+        if (isNetworkLoadError(error)) {
+          setAccountStatus(
+            "Trivia Rush could not contact Supabase. Open the game directly in Safari or Chrome, disable any content blocker or VPN for this site, switch network if possible, reload and try again.",
+            true
+          );
+        } else {
+          setAccountStatus(
+            `Account could not be saved: ${
+              error?.message ||
+              String(error)
+            }`,
+            true
+          );
+        }
+      } finally {
+        setAccountBusy(false);
       }
 
-      const { data, error } =
-        await supabaseClient.auth.updateUser({
-          password,
-          data: {
-            display_name: username,
-            password_setup_complete: true
-          }
-        });
+      return;
+    }
+
+    const email =
+      readAccountEmail();
+
+    const password =
+      readAccountPassword();
+
+    if (!email || !password) {
+      return;
+    }
+
+    setAccountBusy(true);
+
+    setAccountStatus(
+      "Sending your verification email…"
+    );
+
+    try {
+      await saveProfileUsername(
+        username
+      );
+
+      localStorage.setItem(
+        "triviaRushPendingPasswordSetup",
+        "true"
+      );
+
+      const { error } =
+        await runAuthRequest(
+          () =>
+            supabaseClient.auth.updateUser(
+              {
+                email,
+                data: {
+                  display_name: username
+                }
+              },
+              {
+                emailRedirectTo:
+                  getAuthRedirectUrl()
+              }
+            )
+        );
 
       if (error) {
         throw error;
       }
-
-      state.user =
-        data.user || state.user;
-
-      await saveProfileUsername(username);
 
       if (elements.accountPassword) {
         elements.accountPassword.value =
@@ -872,25 +1067,42 @@
       }
 
       setAccountStatus(
-        "Account saved successfully. Your leaderboard progress is now protected."
+        "Verification email sent. Open the link in your email, return to Trivia Rush, enter your password again and press “Finish account setup”."
       );
 
-      updateAccountUI();
+      if (elements.createAccountButton) {
+        elements.createAccountButton.textContent =
+          "Waiting for email verification";
+      }
     } catch (error) {
       console.error(
-        "Could not create or update account:",
+        "Could not create account:",
         error
       );
 
-      const message =
-        error?.message || String(error);
-
-      setAccountStatus(
-        message.toLowerCase().includes("already")
-          ? "That email or username is already in use. Sign in instead, or choose another username."
-          : `Account could not be saved: ${message}`,
-        true
+      localStorage.removeItem(
+        "triviaRushPendingPasswordSetup"
       );
+
+      if (isNetworkLoadError(error)) {
+        setAccountStatus(
+          "The connection to Supabase failed. Open Trivia Rush directly in Safari or Chrome rather than an in-app browser, disable content blockers or VPNs temporarily, switch between Wi-Fi and mobile data, then reload and retry.",
+          true
+        );
+      } else {
+        const message =
+          error?.message ||
+          String(error);
+
+        setAccountStatus(
+          message
+            .toLowerCase()
+            .includes("already")
+            ? "That email is already linked to an account. Use Sign in instead."
+            : `Account could not be created: ${message}`,
+          true
+        );
+      }
     } finally {
       setAccountBusy(false);
     }
