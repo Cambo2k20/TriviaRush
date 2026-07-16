@@ -38,42 +38,156 @@
 
   const elements = {
     screens: [...document.querySelectorAll(".screen")],
-    startScreen: document.querySelector("#startScreen"),
-    countdownScreen: document.querySelector("#countdownScreen"),
-    gameScreen: document.querySelector("#gameScreen"),
-    resultsScreen: document.querySelector("#resultsScreen"),
-    startButton: document.querySelector("#startButton"),
-    playAgainButton: document.querySelector("#playAgainButton"),
-    homeButton: document.querySelector("#homeButton"),
-    categorySelect: document.querySelector("#categorySelect"),
-    startHighScore: document.querySelector("#startHighScore"),
-    startBestStreak: document.querySelector("#startBestStreak"),
-    countdownNumber: document.querySelector("#countdownNumber"),
-    scoreValue: document.querySelector("#scoreValue"),
-    streakValue: document.querySelector("#streakValue"),
-    timerValue: document.querySelector("#timerValue"),
-    timerProgress: document.querySelector("#timerProgress"),
-    categoryBadge: document.querySelector("#categoryBadge"),
-    questionNumber: document.querySelector("#questionNumber"),
-    questionText: document.querySelector("#questionText"),
-    answerGrid: document.querySelector("#answerGrid"),
-    passButton: document.querySelector("#passButton"),
-    voiceButton: document.querySelector("#voiceButton"),
-    voiceButtonText: document.querySelector("#voiceButtonText"),
-    feedback: document.querySelector("#feedback"),
-    finalScore: document.querySelector("#finalScore"),
-    correctTotal: document.querySelector("#correctTotal"),
-    answeredTotal: document.querySelector("#answeredTotal"),
-    accuracyTotal: document.querySelector("#accuracyTotal"),
-    bestStreakTotal: document.querySelector("#bestStreakTotal"),
-    resultTitle: document.querySelector("#resultTitle"),
-    resultMessage: document.querySelector("#resultMessage"),
-    newHighScore: document.querySelector("#newHighScore"),
-    soundToggle: document.querySelector("#soundToggle"),
-    hostToggle: document.querySelector("#hostToggle"),
-    howToButton: document.querySelector("#howToButton"),
-    howToDialog: document.querySelector("#howToDialog"),
-    closeDialogButton: document.querySelector("#closeDialogButton")
+
+    startScreen:
+      document.querySelector("#startScreen"),
+
+    countdownScreen:
+      document.querySelector("#countdownScreen"),
+
+    gameScreen:
+      document.querySelector("#gameScreen"),
+
+    resultsScreen:
+      document.querySelector("#resultsScreen"),
+
+    startButton:
+      document.querySelector("#startButton"),
+
+    playAgainButton:
+      document.querySelector("#playAgainButton"),
+
+    homeButton:
+      document.querySelector("#homeButton"),
+
+    categorySelect:
+      document.querySelector("#categorySelect"),
+
+    startHighScore:
+      document.querySelector("#startHighScore"),
+
+    startBestStreak:
+      document.querySelector("#startBestStreak"),
+
+    countdownNumber:
+      document.querySelector("#countdownNumber"),
+
+    scoreValue:
+      document.querySelector("#scoreValue"),
+
+    streakValue:
+      document.querySelector("#streakValue"),
+
+    timerValue:
+      document.querySelector("#timerValue"),
+
+    timerProgress:
+      document.querySelector("#timerProgress"),
+
+    categoryBadge:
+      document.querySelector("#categoryBadge"),
+
+    questionNumber:
+      document.querySelector("#questionNumber"),
+
+    questionText:
+      document.querySelector("#questionText"),
+
+    answerGrid:
+      document.querySelector("#answerGrid"),
+
+    passButton:
+      document.querySelector("#passButton"),
+
+    voiceButton:
+      document.querySelector("#voiceButton"),
+
+    voiceButtonText:
+      document.querySelector("#voiceButtonText"),
+
+    feedback:
+      document.querySelector("#feedback"),
+
+    finalScore:
+      document.querySelector("#finalScore"),
+
+    correctTotal:
+      document.querySelector("#correctTotal"),
+
+    answeredTotal:
+      document.querySelector("#answeredTotal"),
+
+    accuracyTotal:
+      document.querySelector("#accuracyTotal"),
+
+    bestStreakTotal:
+      document.querySelector("#bestStreakTotal"),
+
+    resultTitle:
+      document.querySelector("#resultTitle"),
+
+    resultMessage:
+      document.querySelector("#resultMessage"),
+
+    newHighScore:
+      document.querySelector("#newHighScore"),
+
+    soundToggle:
+      document.querySelector("#soundToggle"),
+
+    hostToggle:
+      document.querySelector("#hostToggle"),
+
+    accountButton:
+      document.querySelector("#accountButton"),
+
+    accountButtonText:
+      document.querySelector("#accountButtonText"),
+
+    accountDialog:
+      document.querySelector("#accountDialog"),
+
+    closeAccountDialogButton:
+      document.querySelector(
+        "#closeAccountDialogButton"
+      ),
+
+    accountDescription:
+      document.querySelector(
+        "#accountDescription"
+      ),
+
+    accountPlayerName:
+      document.querySelector(
+        "#accountPlayerName"
+      ),
+
+    accountEmail:
+      document.querySelector("#accountEmail"),
+
+    linkEmailButton:
+      document.querySelector(
+        "#linkEmailButton"
+      ),
+
+    magicLinkButton:
+      document.querySelector(
+        "#magicLinkButton"
+      ),
+
+    accountStatus:
+      document.querySelector("#accountStatus"),
+
+    howToButton:
+      document.querySelector("#howToButton"),
+
+    howToDialog:
+      document.querySelector("#howToDialog"),
+
+    closeDialogButton:
+      document.querySelector(
+        "#closeDialogButton"
+      )
   };
 
   async function init() {
@@ -87,13 +201,20 @@
     elements.timerProgress.style.strokeDasharray =
       `${TIMER_CIRCUMFERENCE}`;
 
-    elements.timerProgress.style.strokeDashoffset = "0";
+    elements.timerProgress.style.strokeDashoffset =
+      "0";
 
     await initialisePlayer();
+
+    updateAccountUI();
+
     await testSupabaseConnection();
   }
 
   async function initialisePlayer() {
+    let setupStage =
+      "checking the existing session";
+
     try {
       const {
         data: { session },
@@ -107,10 +228,15 @@
       let activeSession = session;
 
       if (!activeSession) {
+        setupStage =
+          "creating an anonymous account";
+
         const {
           data,
           error
-        } = await supabaseClient.auth.signInAnonymously();
+        } =
+          await supabaseClient.auth
+            .signInAnonymously();
 
         if (error) {
           throw error;
@@ -119,59 +245,132 @@
         activeSession = data.session;
       }
 
-      state.user = activeSession?.user ?? null;
+      state.user =
+        activeSession?.user ?? null;
 
       if (!state.user) {
-        throw new Error("Supabase did not return a player account.");
+        throw new Error(
+          "Supabase did not return a player account."
+        );
       }
 
-      await loadOrCreateProfile();
+      setupStage =
+        "loading the player profile";
+
+      await loadPlayerProfile();
+
+      console.log(
+        "Player authentication ready:",
+        {
+          id: state.user.id,
+          email: state.user.email,
+          anonymous:
+            state.user.is_anonymous
+        }
+      );
     } catch (error) {
-      console.error("Player setup failed:", error);
+      console.error(
+        `Player setup failed while ${setupStage}:`,
+        error
+      );
+
       alert(
-        "The game could not create a player account. " +
-        "Check that anonymous sign-ins are enabled in Supabase."
+        `Player setup failed while ${setupStage}.\n\n` +
+        `${error?.message || String(error)}`
       );
     }
   }
 
-  async function loadOrCreateProfile() {
-    const { data, error } = await supabaseClient
-      .from("profiles")
-      .select("id, display_name")
-      .eq("id", state.user.id)
-      .maybeSingle();
+  async function loadPlayerProfile() {
+    if (!state.user) {
+      state.profile = null;
+      return null;
+    }
+
+    const { data, error } =
+      await supabaseClient
+        .from("profiles")
+        .select("id, display_name")
+        .eq("id", state.user.id)
+        .maybeSingle();
 
     if (error) {
       throw error;
     }
 
-    if (data) {
-      state.profile = data;
-      return;
+    state.profile = data ?? null;
+
+    updateAccountUI();
+
+    return state.profile;
+  }
+
+  async function ensurePlayerProfile() {
+    if (state.profile) {
+      return true;
     }
 
-    const displayName = requestPlayerName();
+    if (!state.user) {
+      alert(
+        "The player account is not ready. Reload the page and try again."
+      );
 
-    if (!displayName) {
-      throw new Error("A player name is required.");
+      return false;
     }
 
-    const { data: createdProfile, error: insertError } =
-      await supabaseClient
-        .from("profiles")
-        .insert({
-          id: state.user.id,
-          display_name: displayName
-        })
-        .select("id, display_name")
-        .single();
+    while (!state.profile) {
+      const displayName =
+        requestPlayerName();
 
-    if (insertError) {
-      throw insertError;
+      if (!displayName) {
+        return false;
+      }
+
+      const {
+        data: createdProfile,
+        error
+      } =
+        await supabaseClient
+          .from("profiles")
+          .insert({
+            id: state.user.id,
+            display_name: displayName
+          })
+          .select("id, display_name")
+          .single();
+
+      if (error?.code === "23505") {
+        localStorage.removeItem(
+          "triviaRushPlayerName"
+        );
+
+        alert(
+          "That player name is already being used. Choose another name."
+        );
+
+        continue;
+      }
+
+      if (error) {
+        console.error(
+          "Could not create player profile:",
+          error
+        );
+
+        alert(
+          `The player profile could not be created.\n\n` +
+          `${error.message}`
+        );
+
+        return false;
+      }
+
+      state.profile = createdProfile;
     }
 
-    state.profile = createdProfile;
+    updateAccountUI();
+
+    return true;
   }
 
   function requestPlayerName() {
@@ -195,6 +394,274 @@
 
     localStorage.setItem("triviaRushPlayerName", cleanedName);
     return cleanedName;
+  }
+
+  function openAccountDialog() {
+    elements.accountStatus.textContent = "";
+    elements.accountStatus.className =
+      "account-status";
+
+    updateAccountUI();
+
+    elements.accountDialog.showModal();
+  }
+
+  function closeAccountDialog() {
+    elements.accountDialog.close();
+  }
+
+  function updateAccountUI() {
+    const hasPermanentEmail =
+      Boolean(
+        state.user?.email &&
+        !state.user?.is_anonymous
+      );
+
+    const playerName =
+      state.profile?.display_name ||
+      "Guest player";
+
+    elements.accountButtonText.textContent =
+      state.profile?.display_name ||
+      "Account";
+
+    elements.accountPlayerName.textContent =
+      playerName;
+
+    if (hasPermanentEmail) {
+      elements.accountDescription.textContent =
+        "Your leaderboard progress is protected and can be restored using your email magic link.";
+
+      elements.accountEmail.value =
+        state.user.email;
+
+      elements.accountEmail.disabled =
+        true;
+
+      elements.linkEmailButton.hidden =
+        true;
+
+      elements.magicLinkButton.hidden =
+        true;
+
+      elements.accountStatus.textContent =
+        `Account saved as ${state.user.email}.`;
+
+      elements.accountStatus.className =
+        "account-status";
+
+      return;
+    }
+
+    elements.accountDescription.textContent =
+      "Save this player's scores with an email, or sign in to an account you previously saved.";
+
+    elements.accountEmail.disabled =
+      false;
+
+    elements.linkEmailButton.hidden =
+      false;
+
+    elements.magicLinkButton.hidden =
+      false;
+
+    if (!elements.accountStatus.textContent) {
+      elements.accountStatus.textContent =
+        "You are currently playing as a guest.";
+    }
+  }
+
+  function getAuthRedirectUrl() {
+    const redirectUrl =
+      new URL(window.location.href);
+
+    redirectUrl.search = "";
+    redirectUrl.hash = "";
+
+    return redirectUrl.toString();
+  }
+
+  function readAccountEmail() {
+    const email =
+      elements.accountEmail.value
+        .trim()
+        .toLowerCase();
+
+    elements.accountEmail.value =
+      email;
+
+    if (
+      !email ||
+      !elements.accountEmail.checkValidity()
+    ) {
+      elements.accountStatus.textContent =
+        "Enter a valid email address.";
+
+      elements.accountStatus.className =
+        "account-status error";
+
+      return null;
+    }
+
+    return email;
+  }
+
+  function setAccountBusy(isBusy) {
+    elements.accountEmail.disabled =
+      isBusy ||
+      Boolean(
+        state.user?.email &&
+        !state.user?.is_anonymous
+      );
+
+    elements.linkEmailButton.disabled =
+      isBusy;
+
+    elements.magicLinkButton.disabled =
+      isBusy;
+  }
+
+  async function linkEmailToCurrentPlayer() {
+    if (!state.user) {
+      elements.accountStatus.textContent =
+        "The player account is not ready.";
+
+      elements.accountStatus.className =
+        "account-status error";
+
+      return;
+    }
+
+    if (!state.user.is_anonymous) {
+      updateAccountUI();
+      return;
+    }
+
+    const profileReady =
+      await ensurePlayerProfile();
+
+    if (!profileReady) {
+      return;
+    }
+
+    const email =
+      readAccountEmail();
+
+    if (!email) {
+      return;
+    }
+
+    setAccountBusy(true);
+
+    elements.accountStatus.textContent =
+      "Sending your confirmation email…";
+
+    elements.accountStatus.className =
+      "account-status";
+
+    try {
+      const { error } =
+        await supabaseClient.auth.updateUser(
+          {
+            email
+          },
+          {
+            emailRedirectTo:
+              getAuthRedirectUrl()
+          }
+        );
+
+      if (error) {
+        throw error;
+      }
+
+      elements.accountStatus.textContent =
+        "Check your email and open the confirmation link. Your existing scores will remain attached to this player.";
+
+      elements.accountStatus.className =
+        "account-status";
+    } catch (error) {
+      console.error(
+        "Could not link email:",
+        error
+      );
+
+      const emailAlreadyUsed =
+        error?.message
+          ?.toLowerCase()
+          .includes("already");
+
+      elements.accountStatus.textContent =
+        emailAlreadyUsed
+          ? "That email already belongs to an account. Use “Sign in to an existing account” instead."
+          : `Email could not be linked: ${
+              error?.message ||
+              String(error)
+            }`;
+
+      elements.accountStatus.className =
+        "account-status error";
+    } finally {
+      setAccountBusy(false);
+    }
+  }
+
+  async function sendExistingAccountMagicLink() {
+    const email =
+      readAccountEmail();
+
+    if (!email) {
+      return;
+    }
+
+    setAccountBusy(true);
+
+    elements.accountStatus.textContent =
+      "Sending your sign-in link…";
+
+    elements.accountStatus.className =
+      "account-status";
+
+    try {
+      const { error } =
+        await supabaseClient.auth
+          .signInWithOtp({
+            email,
+            options: {
+              emailRedirectTo:
+                getAuthRedirectUrl(),
+
+              shouldCreateUser:
+                false
+            }
+          });
+
+      if (error) {
+        throw error;
+      }
+
+      elements.accountStatus.textContent =
+        "Check your email and open the sign-in link. This page will restore the player attached to that account.";
+
+      elements.accountStatus.className =
+        "account-status";
+    } catch (error) {
+      console.error(
+        "Could not send magic link:",
+        error
+      );
+
+      elements.accountStatus.textContent =
+        `The sign-in link could not be sent: ${
+          error?.message ||
+          String(error)
+        }`;
+
+      elements.accountStatus.className =
+        "account-status error";
+    } finally {
+      setAccountBusy(false);
+    }
   }
 
   async function testSupabaseConnection() {
@@ -248,23 +715,103 @@
   }
 
   function bindEvents() {
-    elements.startButton.addEventListener("click", beginCountdown);
-    elements.playAgainButton.addEventListener("click", beginCountdown);
-    elements.homeButton.addEventListener("click", showHome);
-    elements.passButton.addEventListener("click", passQuestion);
-    elements.voiceButton.addEventListener("click", toggleVoiceRecognition);
-    elements.soundToggle.addEventListener("click", toggleSound);
-    elements.hostToggle.addEventListener("click", toggleHost);
-    elements.howToButton.addEventListener("click", () => elements.howToDialog.showModal());
-    elements.closeDialogButton.addEventListener("click", () => elements.howToDialog.close());
+    elements.startButton.addEventListener(
+      "click",
+      beginCountdown
+    );
 
-    elements.howToDialog.addEventListener("click", (event) => {
-      if (event.target === elements.howToDialog) {
-        elements.howToDialog.close();
+    elements.playAgainButton.addEventListener(
+      "click",
+      beginCountdown
+    );
+
+    elements.homeButton.addEventListener(
+      "click",
+      showHome
+    );
+
+    elements.passButton.addEventListener(
+      "click",
+      passQuestion
+    );
+
+    elements.voiceButton.addEventListener(
+      "click",
+      toggleVoiceRecognition
+    );
+
+    elements.soundToggle.addEventListener(
+      "click",
+      toggleSound
+    );
+
+    elements.hostToggle.addEventListener(
+      "click",
+      toggleHost
+    );
+
+    elements.accountButton.addEventListener(
+      "click",
+      openAccountDialog
+    );
+
+    elements.closeAccountDialogButton
+      .addEventListener(
+        "click",
+        closeAccountDialog
+      );
+
+    elements.linkEmailButton.addEventListener(
+      "click",
+      linkEmailToCurrentPlayer
+    );
+
+    elements.magicLinkButton.addEventListener(
+      "click",
+      sendExistingAccountMagicLink
+    );
+
+    elements.accountDialog.addEventListener(
+      "click",
+      (event) => {
+        if (
+          event.target ===
+          elements.accountDialog
+        ) {
+          closeAccountDialog();
+        }
       }
-    });
+    );
 
-    document.addEventListener("keydown", handleKeyboard);
+    elements.howToButton.addEventListener(
+      "click",
+      () =>
+        elements.howToDialog.showModal()
+    );
+
+    elements.closeDialogButton
+      .addEventListener(
+        "click",
+        () =>
+          elements.howToDialog.close()
+      );
+
+    elements.howToDialog.addEventListener(
+      "click",
+      (event) => {
+        if (
+          event.target ===
+          elements.howToDialog
+        ) {
+          elements.howToDialog.close();
+        }
+      }
+    );
+
+    document.addEventListener(
+      "keydown",
+      handleKeyboard
+    );
   }
 
   function showScreen(screen) {
@@ -272,20 +819,47 @@
   }
 
   async function beginCountdown() {
-    state.selectedCategory = elements.categorySelect.value;
+    const profileReady =
+      await ensurePlayerProfile();
+
+    if (!profileReady) {
+      return;
+    }
+
+    state.selectedCategory =
+      elements.categorySelect.value;
+
     resetGame();
-    showScreen(elements.countdownScreen);
+
+    showScreen(
+      elements.countdownScreen
+    );
 
     stopSpeaking();
+
     if (state.hostEnabled) {
       speak("Get ready.");
     }
 
-    const values = ["3", "2", "1", "GO!"];
+    const values = [
+      "3",
+      "2",
+      "1",
+      "GO!"
+    ];
+
     for (const value of values) {
-      elements.countdownNumber.textContent = value;
-      playTone(value === "GO!" ? 660 : 440, value === "GO!" ? 0.16 : 0.09);
-      await wait(value === "GO!" ? 450 : 650);
+      elements.countdownNumber.textContent =
+        value;
+
+      playTone(
+        value === "GO!" ? 660 : 440,
+        value === "GO!" ? 0.16 : 0.09
+      );
+
+      await wait(
+        value === "GO!" ? 450 : 650
+      );
     }
 
     startGame();

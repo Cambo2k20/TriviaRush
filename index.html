@@ -23,10 +23,33 @@
       </a>
 
       <div class="header-actions">
-        <button id="soundToggle" class="icon-button" type="button" aria-label="Toggle game sounds" aria-pressed="true">
+        <button
+          id="accountButton"
+          class="account-button"
+          type="button"
+          aria-label="Open player account"
+        >
+          <span aria-hidden="true">👤</span>
+          <span id="accountButtonText">Account</span>
+        </button>
+
+        <button
+          id="soundToggle"
+          class="icon-button"
+          type="button"
+          aria-label="Toggle game sounds"
+          aria-pressed="true"
+        >
           <span aria-hidden="true">🔊</span>
         </button>
-        <button id="hostToggle" class="icon-button" type="button" aria-label="Toggle spoken host" aria-pressed="false">
+
+        <button
+          id="hostToggle"
+          class="icon-button"
+          type="button"
+          aria-label="Toggle spoken host"
+          aria-pressed="false"
+        >
           <span aria-hidden="true">🎙️</span>
         </button>
       </div>
@@ -162,16 +185,73 @@
     </footer>
   </main>
 
-  <dialog id="howToDialog">
-    <button id="closeDialogButton" class="dialog-close" type="button" aria-label="Close">×</button>
-    <h2>How to play</h2>
-    <ol>
-      <li>You have 60 seconds to answer as many questions as possible.</li>
-      <li>Correct answers earn 100 points plus a speed bonus.</li>
-      <li>Consecutive correct answers build a score multiplier.</li>
-      <li>A wrong answer resets your streak. Passing moves to the next question.</li>
-      <li>Use buttons, number keys, or the microphone where browser support is available.</li>
-    </ol>
+  <dialog id="accountDialog" class="account-dialog">
+    <button
+      id="closeAccountDialogButton"
+      class="dialog-close"
+      type="button"
+      aria-label="Close account window"
+    >
+      ×
+    </button>
+
+    <div class="account-heading">
+      <span class="account-icon" aria-hidden="true">👤</span>
+
+      <div>
+        <h2>Player account</h2>
+        <p id="accountDescription">
+          Save your leaderboard progress so it can be restored on another device.
+        </p>
+      </div>
+    </div>
+
+    <div class="account-player">
+      <span>Current player</span>
+      <strong id="accountPlayerName">Guest player</strong>
+    </div>
+
+    <div class="account-email-field">
+      <label for="accountEmail">Email address</label>
+
+      <input
+        id="accountEmail"
+        type="email"
+        inputmode="email"
+        autocomplete="email"
+        placeholder="name@example.com"
+        maxlength="254"
+      >
+    </div>
+
+    <div class="account-actions">
+      <button
+        id="linkEmailButton"
+        class="primary-button"
+        type="button"
+      >
+        Save this player's progress
+      </button>
+
+      <button
+        id="magicLinkButton"
+        class="secondary-button"
+        type="button"
+      >
+        Sign in to an existing account
+      </button>
+    </div>
+
+    <p class="account-help">
+      Saving links this player's scores to your email. Use the sign-in option
+      when returning on another browser or device.
+    </p>
+
+    <p
+      id="accountStatus"
+      class="account-status"
+      aria-live="polite"
+    ></p>
   </dialog>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="questions.js"></script>

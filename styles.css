@@ -974,3 +974,159 @@ dialog ol {
     transition-duration: 0.01ms !important;
   }
 }
+
+.account-button {
+  min-height: 44px;
+  padding: 0 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--outline);
+  border-radius: 14px;
+  color: var(--text);
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.06);
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    border-color 160ms ease;
+}
+
+.account-button:hover {
+  transform: translateY(-2px);
+  border-color: rgba(62, 231, 219, 0.45);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+#accountButtonText {
+  max-width: 150px;
+  overflow: hidden;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.account-dialog {
+  width: min(580px, calc(100% - 32px));
+}
+
+.account-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.account-heading h2 {
+  margin-bottom: 4px;
+}
+
+.account-heading p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.account-icon {
+  flex: 0 0 auto;
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  font-size: 1.4rem;
+  background: rgba(62, 231, 219, 0.14);
+}
+
+.account-player {
+  margin: 24px 0 18px;
+  padding: 16px 18px;
+  border: 1px solid var(--outline);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.account-player span {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.account-player strong {
+  font-family: "Baloo 2", sans-serif;
+  font-size: 1.5rem;
+}
+
+.account-email-field {
+  display: grid;
+  gap: 8px;
+}
+
+.account-email-field label {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.account-email-field input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  color: var(--text);
+  border: 1px solid var(--outline);
+  border-radius: 14px;
+  background: #202a59;
+}
+
+.account-email-field input:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.account-actions {
+  margin-top: 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.account-actions .primary-button,
+.account-actions .secondary-button {
+  width: 100%;
+  justify-content: center;
+}
+
+.account-help {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.account-status {
+  min-height: 24px;
+  margin: 14px 0 0;
+  color: var(--cyan);
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.account-status.error {
+  color: var(--red);
+}
+
+@media (max-width: 580px) {
+  #accountButtonText {
+    display: none;
+  }
+
+  .account-button {
+    width: 44px;
+    padding: 0;
+    justify-content: center;
+  }
+}
