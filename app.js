@@ -397,9 +397,23 @@
   }
 
   function openAccountDialog() {
-    elements.accountStatus.textContent = "";
-    elements.accountStatus.className =
-      "account-status";
+    if (!elements.accountDialog) {
+      console.error(
+        "The #accountDialog element is missing."
+      );
+
+      alert(
+        "The account window could not be opened."
+      );
+
+      return;
+    }
+
+    if (elements.accountStatus) {
+      elements.accountStatus.textContent = "";
+      elements.accountStatus.className =
+        "account-status";
+    }
 
     updateAccountUI();
 
@@ -407,6 +421,10 @@
   }
 
   function closeAccountDialog() {
+    if (!elements.accountDialog) {
+      return;
+    }
+
     elements.accountDialog.close();
   }
 
@@ -715,94 +733,90 @@
   }
 
   function bindEvents() {
-    elements.startButton.addEventListener(
+    elements.startButton?.addEventListener(
       "click",
       beginCountdown
     );
 
-    elements.playAgainButton.addEventListener(
+    elements.playAgainButton?.addEventListener(
       "click",
       beginCountdown
     );
 
-    elements.homeButton.addEventListener(
+    elements.homeButton?.addEventListener(
       "click",
       showHome
     );
 
-    elements.passButton.addEventListener(
+    elements.passButton?.addEventListener(
       "click",
       passQuestion
     );
 
-    elements.voiceButton.addEventListener(
+    elements.voiceButton?.addEventListener(
       "click",
       toggleVoiceRecognition
     );
 
-    elements.soundToggle.addEventListener(
+    elements.soundToggle?.addEventListener(
       "click",
       toggleSound
     );
 
-    elements.hostToggle.addEventListener(
+    elements.hostToggle?.addEventListener(
       "click",
       toggleHost
     );
 
-    elements.accountButton.addEventListener(
+    elements.accountButton?.addEventListener(
       "click",
       openAccountDialog
     );
 
     elements.closeAccountDialogButton
-      .addEventListener(
+      ?.addEventListener(
         "click",
         closeAccountDialog
       );
 
-    elements.linkEmailButton.addEventListener(
+    elements.linkEmailButton?.addEventListener(
       "click",
       linkEmailToCurrentPlayer
     );
 
-    elements.magicLinkButton.addEventListener(
+    elements.magicLinkButton?.addEventListener(
       "click",
       sendExistingAccountMagicLink
     );
 
-    elements.accountDialog.addEventListener(
+    elements.accountDialog?.addEventListener(
       "click",
       (event) => {
-        if (
-          event.target ===
-          elements.accountDialog
-        ) {
+        if (event.target === elements.accountDialog) {
           closeAccountDialog();
         }
       }
     );
 
-    elements.howToButton.addEventListener(
+    elements.howToButton?.addEventListener(
       "click",
-      () =>
-        elements.howToDialog.showModal()
+      () => {
+        elements.howToDialog?.showModal();
+      }
     );
 
     elements.closeDialogButton
-      .addEventListener(
+      ?.addEventListener(
         "click",
-        () =>
-          elements.howToDialog.close()
+        () => {
+          elements.howToDialog?.close();
+        }
       );
 
-    elements.howToDialog.addEventListener(
+    elements.howToDialog?.addEventListener(
       "click",
       (event) => {
-        if (
-          event.target ===
-          elements.howToDialog
-        ) {
+        if (event.target === elements.howToDialog) {
           elements.howToDialog.close();
         }
       }
