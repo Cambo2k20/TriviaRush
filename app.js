@@ -443,135 +443,139 @@
 
     elements.accountDialog.close();
   }
-
   function updateAccountUI() {
-    const requiredElements = {
-      accountButtonText:
-        elements.accountButtonText,
+    const isPermanentAccount = Boolean(
+      state.user?.email &&
+      !state.user?.is_anonymous
+    );
 
-      accountPlayerName:
-        elements.accountPlayerName,
-
-      accountDescription:
-        elements.accountDescription,
-
-      accountUsername:
-        elements.accountUsername,
-
-      accountEmail:
-        elements.accountEmail,
-
-      accountPassword:
-        elements.accountPassword,
-
-      createAccountButton:
-        elements.createAccountButton,
-
-      signInButton:
-        elements.signInButton,
-
-      signOutButton:
-        elements.signOutButton,
-
-      accountStatus:
-        elements.accountStatus
-    };
-
-    const missingElements =
-      Object.entries(requiredElements)
-        .filter(([, element]) => !element)
-        .map(([name]) => name);
-
-    if (missingElements.length > 0) {
-      console.error(
-        "Account interface elements are missing:",
-        missingElements
-      );
-
-      return;
-    }
-
-    const isPermanentAccount =
-      Boolean(
-        state.user?.email &&
-        !state.user?.is_anonymous
-      );
+    const passwordSetupComplete = Boolean(
+      state.user?.user_metadata
+        ?.password_setup_complete
+    );
 
     const playerName =
       state.profile?.display_name ||
       "Guest player";
 
-    elements.accountButtonText.textContent =
-      state.profile?.display_name ||
-      "Account";
+    if (elements.accountButtonText) {
+      elements.accountButtonText.textContent =
+        state.profile?.display_name ||
+        "Account";
+    }
 
-    elements.accountPlayerName.textContent =
-      playerName;
+    if (elements.accountPlayerName) {
+      elements.accountPlayerName.textContent =
+        playerName;
+    }
 
-    elements.accountUsername.value =
-      state.profile?.display_name || "";
+    if (
+      elements.accountUsername &&
+      document.activeElement !==
+        elements.accountUsername
+    ) {
+      elements.accountUsername.value =
+        state.profile?.display_name || "";
+    }
+
+    if (!elements.accountDialog) {
+      return;
+    }
 
     if (isPermanentAccount) {
-      elements.accountDescription.textContent =
-        "Your leaderboard progress is protected by your account.";
+      if (elements.accountDescription) {
+        elements.accountDescription.textContent =
+          passwordSetupComplete
+            ? "Your leaderboard progress is protected by your account."
+            : "Your email is verified. Set a password to finish creating your account.";
+      }
 
-      elements.accountEmail.value =
-        state.user.email;
+      if (elements.accountEmail) {
+        elements.accountEmail.value =
+          state.user.email || "";
 
-      elements.accountEmail.disabled = true;
+        elements.accountEmail.disabled =
+          true;
+      }
 
-      elements.createAccountButton.textContent =
-        "Update account";
+      if (elements.createAccountButton) {
+        elements.createAccountButton.textContent =
+          passwordSetupComplete
+            ? "Update account"
+            : "Finish account setup";
 
-      elements.createAccountButton.hidden =
-        false;
+        elements.createAccountButton.hidden =
+          false;
+      }
 
-      elements.signInButton.hidden =
-        true;
+      if (elements.signInButton) {
+        elements.signInButton.hidden =
+          true;
+      }
 
-      elements.signOutButton.hidden =
-        false;
+      if (elements.signOutButton) {
+        elements.signOutButton.hidden =
+          false;
+      }
 
       if (
+        elements.accountStatus &&
         !elements.accountStatus.textContent
       ) {
         elements.accountStatus.textContent =
-          `Signed in as ${state.user.email}.`;
+          passwordSetupComplete
+            ? `Signed in as ${state.user.email}.`
+            : "Your email is verified. Enter a password and press “Finish account setup”.";
       }
 
-      elements.accountStatus.className =
-        "account-status";
+      if (elements.accountStatus) {
+        elements.accountStatus.className =
+          "account-status";
+      }
 
       return;
     }
 
-    elements.accountDescription.textContent =
-      "Create an account to protect your leaderboard progress, or sign in to an existing account.";
+    if (elements.accountDescription) {
+      elements.accountDescription.textContent =
+        "Create an account to protect your leaderboard progress, or sign in to an existing account.";
+    }
 
-    elements.accountEmail.disabled =
-      false;
+    if (elements.accountEmail) {
+      elements.accountEmail.disabled =
+        false;
+    }
 
-    elements.createAccountButton.textContent =
-      "Create account";
+    if (elements.createAccountButton) {
+      elements.createAccountButton.textContent =
+        "Create account";
 
-    elements.createAccountButton.hidden =
-      false;
+      elements.createAccountButton.hidden =
+        false;
+    }
 
-    elements.signInButton.hidden =
-      false;
+    if (elements.signInButton) {
+      elements.signInButton.hidden =
+        false;
+    }
 
-    elements.signOutButton.hidden =
-      true;
+    if (elements.signOutButton) {
+      elements.signOutButton.hidden =
+        true;
+    }
 
     if (
+      elements.accountStatus &&
       !elements.accountStatus.textContent
     ) {
       elements.accountStatus.textContent =
         "You are currently playing as a guest.";
     }
 
-    elements.accountStatus.className =
-      "account-status";
+    if (elements.accountStatus) {
+      elements.accountStatus.className =
+        "account-status";
+    }
   }
 
 
@@ -635,9 +639,40 @@
 
     return state.profile;
   }
+  function setAccountStatus(
+    message,
+    isError = false
+  ) {
+    if (!elements.accountStatus) {
+      if (isError) {
+        console.error(message);
+      } else {
+        console.log(message);
+      }
+
+      return;
+    }
+
+    elements.accountStatus.textContent =
+      message;
+
+    elements.accountStatus.className =
+      isError
+        ? "account-status error"
+        : "account-status";
+  }
 
 
   function readAccountEmail() {
+    if (!elements.accountEmail) {
+      setAccountStatus(
+        "The email field is missing from index.html.",
+        true
+      );
+
+      return null;
+    }
+
     const email =
       elements.accountEmail.value
         .trim()
@@ -650,19 +685,26 @@
       !email ||
       !elements.accountEmail.checkValidity()
     ) {
-      elements.accountStatus.textContent =
-        "Enter a valid email address.";
-
-      elements.accountStatus.className =
-        "account-status error";
+      setAccountStatus(
+        "Enter a valid email address.",
+        true
+      );
 
       return null;
     }
 
     return email;
   }
-
   function readAccountUsername() {
+    if (!elements.accountUsername) {
+      setAccountStatus(
+        "The username field is missing from index.html.",
+        true
+      );
+
+      return null;
+    }
+
     const username =
       elements.accountUsername.value.trim();
 
@@ -670,35 +712,40 @@
       username.length < 3 ||
       username.length > 24
     ) {
-      elements.accountStatus.textContent =
-        "Username must contain between 3 and 24 characters.";
-
-      elements.accountStatus.className =
-        "account-status error";
+      setAccountStatus(
+        "Username must contain between 3 and 24 characters.",
+        true
+      );
 
       return null;
     }
 
     return username;
   }
-
   function readAccountPassword() {
+    if (!elements.accountPassword) {
+      setAccountStatus(
+        "The password field is missing from index.html.",
+        true
+      );
+
+      return null;
+    }
+
     const password =
       elements.accountPassword.value;
 
     if (password.length < 8) {
-      elements.accountStatus.textContent =
-        "Password must contain at least 8 characters.";
-
-      elements.accountStatus.className =
-        "account-status error";
+      setAccountStatus(
+        "Password must contain at least 8 characters.",
+        true
+      );
 
       return null;
     }
 
     return password;
   }
-
   function setAccountBusy(isBusy) {
     const isPermanentAccount =
       Boolean(
@@ -706,25 +753,36 @@
         !state.user?.is_anonymous
       );
 
-    elements.accountUsername.disabled =
-      isBusy;
+    if (elements.accountUsername) {
+      elements.accountUsername.disabled =
+        isBusy;
+    }
 
-    elements.accountEmail.disabled =
-      isBusy || isPermanentAccount;
+    if (elements.accountEmail) {
+      elements.accountEmail.disabled =
+        isBusy || isPermanentAccount;
+    }
 
-    elements.accountPassword.disabled =
-      isBusy;
+    if (elements.accountPassword) {
+      elements.accountPassword.disabled =
+        isBusy;
+    }
 
-    elements.createAccountButton.disabled =
-      isBusy;
+    if (elements.createAccountButton) {
+      elements.createAccountButton.disabled =
+        isBusy;
+    }
 
-    elements.signInButton.disabled =
-      isBusy;
+    if (elements.signInButton) {
+      elements.signInButton.disabled =
+        isBusy;
+    }
 
-    elements.signOutButton.disabled =
-      isBusy;
+    if (elements.signOutButton) {
+      elements.signOutButton.disabled =
+        isBusy;
+    }
   }
-
   async function createAccount() {
     const username =
       readAccountUsername();
@@ -740,35 +798,29 @@
     }
 
     if (!state.user) {
-      elements.accountStatus.textContent =
-        "The player account is not ready.";
-
-      elements.accountStatus.className =
-        "account-status error";
+      setAccountStatus(
+        "The player account is not ready. Reload the page and try again.",
+        true
+      );
 
       return;
     }
 
     setAccountBusy(true);
-
-    elements.accountStatus.textContent =
-      "Creating your account…";
-
-    elements.accountStatus.className =
-      "account-status";
+    setAccountStatus("Creating your account…");
 
     try {
       await saveProfileUsername(username);
 
-      /*
-      * Anonymous users must verify their email before
-      * Supabase allows a password to be attached.
-      */
       if (state.user.is_anonymous) {
-        const { error } =
+        const { data, error } =
           await supabaseClient.auth.updateUser(
             {
-              email
+              email,
+              data: {
+                display_name: username,
+                password_setup_complete: false
+              }
             },
             {
               emailRedirectTo:
@@ -780,12 +832,19 @@
           throw error;
         }
 
-        elements.accountStatus.textContent =
-          "Verification email sent. Open the email link, return to Trivia Rush, enter your password again and press “Finish account setup”.";
+        state.user =
+          data.user || state.user;
 
-        elements.createAccountButton.textContent =
-          "Finish account setup";
+        if (elements.accountPassword) {
+          elements.accountPassword.value =
+            "";
+        }
 
+        setAccountStatus(
+          "Verification email sent. Open the link in that email, return to Trivia Rush, then enter a password and press “Finish account setup”."
+        );
+
+        updateAccountUI();
         return;
       }
 
@@ -793,7 +852,8 @@
         await supabaseClient.auth.updateUser({
           password,
           data: {
-            display_name: username
+            display_name: username,
+            password_setup_complete: true
           }
         });
 
@@ -806,33 +866,35 @@
 
       await saveProfileUsername(username);
 
-      elements.accountPassword.value = "";
+      if (elements.accountPassword) {
+        elements.accountPassword.value =
+          "";
+      }
 
-      elements.accountStatus.textContent =
-        "Account created successfully. Your leaderboard progress is now protected.";
-
-      elements.accountStatus.className =
-        "account-status";
+      setAccountStatus(
+        "Account saved successfully. Your leaderboard progress is now protected."
+      );
 
       updateAccountUI();
     } catch (error) {
       console.error(
-        "Could not create account:",
+        "Could not create or update account:",
         error
       );
 
-      elements.accountStatus.textContent =
-        `Account could not be created: ${
-          error?.message || String(error)
-        }`;
+      const message =
+        error?.message || String(error);
 
-      elements.accountStatus.className =
-        "account-status error";
+      setAccountStatus(
+        message.toLowerCase().includes("already")
+          ? "That email or username is already in use. Sign in instead, or choose another username."
+          : `Account could not be saved: ${message}`,
+        true
+      );
     } finally {
       setAccountBusy(false);
     }
   }
-
   async function signInToAccount() {
     const email =
       readAccountEmail();
@@ -845,12 +907,7 @@
     }
 
     setAccountBusy(true);
-
-    elements.accountStatus.textContent =
-      "Signing in…";
-
-    elements.accountStatus.className =
-      "account-status";
+    setAccountStatus("Signing in…");
 
     try {
       const { data, error } =
@@ -867,15 +924,42 @@
       state.user = data.user;
       state.profile = null;
 
+      /*
+       * A successful password sign-in proves that this
+       * account has completed password setup. Store that
+       * fact in user metadata so the account UI can show
+       * the correct state on future visits.
+       */
+      if (
+        !state.user?.user_metadata
+          ?.password_setup_complete
+      ) {
+        const {
+          data: updatedData,
+          error: metadataError
+        } =
+          await supabaseClient.auth.updateUser({
+            data: {
+              ...state.user.user_metadata,
+              password_setup_complete: true
+            }
+          });
+
+        if (!metadataError && updatedData.user) {
+          state.user = updatedData.user;
+        }
+      }
+
       await loadPlayerProfile();
 
-      elements.accountPassword.value = "";
+      if (elements.accountPassword) {
+        elements.accountPassword.value =
+          "";
+      }
 
-      elements.accountStatus.textContent =
-        "Signed in successfully. Your saved leaderboard progress has been restored.";
-
-      elements.accountStatus.className =
-        "account-status";
+      setAccountStatus(
+        "Signed in successfully. Your saved leaderboard progress has been restored."
+      );
 
       updateAccountUI();
     } catch (error) {
@@ -884,16 +968,14 @@
         error
       );
 
-      elements.accountStatus.textContent =
-        "Sign-in failed. Check your email address and password.";
-
-      elements.accountStatus.className =
-        "account-status error";
+      setAccountStatus(
+        "Sign-in failed. Check your email address, password and whether your email has been verified.",
+        true
+      );
     } finally {
       setAccountBusy(false);
     }
   }
-
   async function signOutAccount() {
     setAccountBusy(true);
 
@@ -914,15 +996,21 @@
 
       await initialisePlayer();
 
-      elements.accountUsername.value = "";
-      elements.accountEmail.value = "";
-      elements.accountPassword.value = "";
+      if (elements.accountUsername) {
+        elements.accountUsername.value = "";
+      }
 
-      elements.accountStatus.textContent =
-        "Signed out. You are now playing as a new guest.";
+      if (elements.accountEmail) {
+        elements.accountEmail.value = "";
+      }
 
-      elements.accountStatus.className =
-        "account-status";
+      if (elements.accountPassword) {
+        elements.accountPassword.value = "";
+      }
+
+      setAccountStatus(
+        "Signed out. You are now playing as a new guest."
+      );
 
       updateAccountUI();
     } catch (error) {
@@ -931,13 +1019,12 @@
         error
       );
 
-      elements.accountStatus.textContent =
+      setAccountStatus(
         `Could not sign out: ${
           error?.message || String(error)
-        }`;
-
-      elements.accountStatus.className =
-        "account-status error";
+        }`,
+        true
+      );
     } finally {
       setAccountBusy(false);
     }
