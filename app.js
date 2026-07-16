@@ -29,7 +29,11 @@
     hostEnabled: false,
     recognition: null,
     listening: false,
-    selectedCategory: "All categories"
+    selectedCategory: "All categories",
+    user: null,
+    profile: null,
+    scoreSaved: false,
+    responseTimes: []
   };
 
   const elements = {
@@ -79,13 +83,56 @@
     updateStartStats();
     configureSpeechRecognition();
     bindEvents();
-  
+
     elements.timerProgress.style.strokeDasharray =
       `${TIMER_CIRCUMFERENCE}`;
-  
+
     elements.timerProgress.style.strokeDashoffset = "0";
-  
+
+    await initialisePlayer();
     await testSupabaseConnection();
+  }
+
+  async function initialisePlayer() {
+    try {
+      const {
+        data: { session },
+        error: sessionError
+      } = await supabaseClient.auth.getSession();
+
+      if (sessionError) {
+        throw sessionError;
+      }
+
+      let activeSession = session;
+
+      if (!activeSession) {
+        const {
+          data,
+          error
+        } = await supabaseClient.auth.signInAnonymously();
+
+        if (error) {
+          throw error;
+        }
+
+        activeSession = data.session;
+      }
+
+      state.user = activeSession?.user ?? null;
+
+      if (!state.user) {
+        throw new Error("Supabase did not return a player account.");
+      }
+
+      await loadOrCreateProfile();
+    } catch (error) {
+      console.error("Player setup failed:", error);
+      alert(
+        "The game could not create a player account. " +
+        "Check that anonymous sign-ins are enabled in Supabase."
+      );
+    }
   }
 
   async function testSupabaseConnection() {
