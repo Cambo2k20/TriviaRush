@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
   <div class="background-orb orb-one" aria-hidden="true"></div>
@@ -23,6 +23,16 @@
       </a>
 
       <div class="header-actions">
+        <button
+          id="leaderboardButton"
+          class="leaderboard-button"
+          type="button"
+          aria-label="Open global leaderboard"
+        >
+          <span aria-hidden="true">🏆</span>
+          <span id="leaderboardButtonText">Leaderboard</span>
+        </button>
+
         <button
           id="accountButton"
           class="account-button"
@@ -174,8 +184,109 @@
 
         <div class="result-actions">
           <button id="playAgainButton" class="primary-button" type="button">Play again</button>
+          <button id="resultsLeaderboardButton" class="secondary-button" type="button">View leaderboard</button>
           <button id="homeButton" class="secondary-button" type="button">Change category</button>
         </div>
+      </div>
+    </section>
+
+    <section
+      id="leaderboardScreen"
+      class="screen leaderboard-screen"
+      aria-labelledby="leaderboardTitle"
+    >
+      <div class="leaderboard-card">
+        <header class="leaderboard-header">
+          <div>
+            <div class="eyebrow">GLOBAL LEADERBOARD</div>
+            <h1 id="leaderboardTitle">Leaderboard</h1>
+            <p id="leaderboardFilterSummary">
+              All-time overall rankings
+            </p>
+          </div>
+
+          <button
+            id="closeLeaderboardButton"
+            class="secondary-button leaderboard-back-button"
+            type="button"
+          >
+            Back
+          </button>
+        </header>
+
+        <div class="leaderboard-filter-panel">
+          <div class="leaderboard-filter-group">
+            <span class="leaderboard-filter-label">Period</span>
+
+            <div class="leaderboard-filter-buttons" role="group" aria-label="Leaderboard period">
+              <button class="leaderboard-filter active" type="button" data-leaderboard-period="all" aria-pressed="true">
+                All time
+              </button>
+              <button class="leaderboard-filter" type="button" data-leaderboard-period="week" aria-pressed="false">
+                This week
+              </button>
+              <button class="leaderboard-filter" type="button" data-leaderboard-period="today" aria-pressed="false">
+                Today
+              </button>
+            </div>
+          </div>
+
+          <div class="leaderboard-filter-group">
+            <span class="leaderboard-filter-label">Category</span>
+
+            <div class="leaderboard-filter-buttons" role="group" aria-label="Leaderboard category">
+              <button class="leaderboard-filter active" type="button" data-leaderboard-category="overall" aria-pressed="true">
+                Overall
+              </button>
+              <button class="leaderboard-filter" type="button" data-leaderboard-category="science" aria-pressed="false">
+                Science
+              </button>
+              <button class="leaderboard-filter" type="button" data-leaderboard-category="history" aria-pressed="false">
+                History
+              </button>
+              <button class="leaderboard-filter" type="button" data-leaderboard-category="gaming" aria-pressed="false">
+                Gaming
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <section
+          id="currentPlayerRank"
+          class="current-player-rank"
+          aria-label="Your leaderboard position"
+          hidden
+        ></section>
+
+        <div
+          id="leaderboardStatus"
+          class="leaderboard-status"
+          aria-live="polite"
+        >
+          Select Leaderboard to load the rankings.
+        </div>
+
+        <div class="leaderboard-table" aria-label="Global leaderboard">
+          <div class="leaderboard-table-header" aria-hidden="true">
+            <span>Rank</span>
+            <span>Player</span>
+            <span>ID</span>
+            <span>High score</span>
+            <span>Accuracy</span>
+            <span>Streak</span>
+          </div>
+
+          <div id="leaderboardList" class="leaderboard-list"></div>
+        </div>
+
+        <button
+          id="leaderboardRetryButton"
+          class="secondary-button leaderboard-retry-button"
+          type="button"
+          hidden
+        >
+          Try again
+        </button>
       </div>
     </section>
 
@@ -537,6 +648,6 @@
   </dialog>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="questions.js?v=3"></script>
-  <script src="app.js?v=8"></script>
+  <script src="app.js?v=9"></script>
 </body>
 </html>

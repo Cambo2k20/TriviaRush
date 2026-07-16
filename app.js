@@ -36,7 +36,12 @@
     responseTimes: [],
     accountMode: "create",
     recoveryMode: false,
-    authSubscription: null
+    authSubscription: null,
+    leaderboardPeriod: "all",
+    leaderboardCategory: "overall",
+    leaderboardReturnScreen: null,
+    leaderboardRows: [],
+    leaderboardRequestId: 0
   };
 
   const elements = {
@@ -45,9 +50,11 @@
     countdownScreen: document.querySelector("#countdownScreen"),
     gameScreen: document.querySelector("#gameScreen"),
     resultsScreen: document.querySelector("#resultsScreen"),
+    leaderboardScreen: document.querySelector("#leaderboardScreen"),
     startButton: document.querySelector("#startButton"),
     playAgainButton: document.querySelector("#playAgainButton"),
     homeButton: document.querySelector("#homeButton"),
+    resultsLeaderboardButton: document.querySelector("#resultsLeaderboardButton"),
     categorySelect: document.querySelector("#categorySelect"),
     startHighScore: document.querySelector("#startHighScore"),
     startBestStreak: document.querySelector("#startBestStreak"),
@@ -74,6 +81,20 @@
     newHighScore: document.querySelector("#newHighScore"),
     soundToggle: document.querySelector("#soundToggle"),
     hostToggle: document.querySelector("#hostToggle"),
+
+    leaderboardButton: document.querySelector("#leaderboardButton"),
+    closeLeaderboardButton: document.querySelector("#closeLeaderboardButton"),
+    leaderboardPeriodButtons: [
+      ...document.querySelectorAll("[data-leaderboard-period]")
+    ],
+    leaderboardCategoryButtons: [
+      ...document.querySelectorAll("[data-leaderboard-category]")
+    ],
+    leaderboardFilterSummary: document.querySelector("#leaderboardFilterSummary"),
+    currentPlayerRank: document.querySelector("#currentPlayerRank"),
+    leaderboardStatus: document.querySelector("#leaderboardStatus"),
+    leaderboardList: document.querySelector("#leaderboardList"),
+    leaderboardRetryButton: document.querySelector("#leaderboardRetryButton"),
 
     accountButton: document.querySelector("#accountButton"),
     accountButtonText: document.querySelector("#accountButtonText"),
@@ -124,6 +145,7 @@
     configureSpeechRecognition();
     setupAuthStateListener();
     bindEvents();
+    updateLeaderboardFilterButtons();
 
     if (elements.timerProgress) {
       elements.timerProgress.style.strokeDasharray =
@@ -1434,6 +1456,53 @@
       toggleHost
     );
 
+    elements.leaderboardButton
+      ?.addEventListener(
+        "click",
+        openLeaderboard
+      );
+    elements.resultsLeaderboardButton
+      ?.addEventListener(
+        "click",
+        openLeaderboard
+      );
+    elements.closeLeaderboardButton
+      ?.addEventListener(
+        "click",
+        closeLeaderboard
+      );
+    elements.leaderboardRetryButton
+      ?.addEventListener(
+        "click",
+        loadLeaderboard
+      );
+
+    elements.leaderboardPeriodButtons
+      .forEach((button) => {
+        button.addEventListener(
+          "click",
+          () => {
+            setLeaderboardPeriod(
+              button.dataset
+                .leaderboardPeriod
+            );
+          }
+        );
+      });
+
+    elements.leaderboardCategoryButtons
+      .forEach((button) => {
+        button.addEventListener(
+          "click",
+          () => {
+            setLeaderboardCategory(
+              button.dataset
+                .leaderboardCategory
+            );
+          }
+        );
+      });
+
     elements.accountButton?.addEventListener(
       "click",
       () => openAccountDialog(true)
@@ -1538,7 +1607,26 @@
   }
 
   function showScreen(screen) {
-    elements.screens.forEach((item) => item.classList.toggle("active", item === screen));
+    elements.screens.forEach((item) => {
+      item.classList.toggle(
+        "active",
+        item === screen
+      );
+    });
+
+    const gameIsRunning =
+      screen === elements.gameScreen ||
+      screen === elements.countdownScreen;
+
+    if (elements.leaderboardButton) {
+      elements.leaderboardButton.disabled =
+        gameIsRunning;
+    }
+
+    if (elements.accountButton) {
+      elements.accountButton.disabled =
+        gameIsRunning;
+    }
   }
 
   async function beginCountdown() {
@@ -1934,7 +2022,7 @@
 
     await saveGameResult();
 
-    await loadLeaderboard();
+    state.leaderboardRows = [];
 
     if (state.hostEnabled) {
       speak(
@@ -1992,47 +2080,67 @@
         ? "mixed"
         : state.selectedCategory;
 
+    const parameters = {
+      p_questions_answered:
+        state.answered,
+      p_correct_answers:
+        state.correct,
+      p_incorrect_answers:
+        incorrectAnswers,
+      p_score:
+        state.score,
+      p_best_streak:
+        state.bestStreak,
+      p_average_response_ms:
+        averageResponseMs,
+      p_duration_seconds:
+        GAME_SECONDS,
+      p_game_mode:
+        "rush_60",
+      p_category:
+        category
+    };
+
     try {
-      const { error } =
+      let result =
         await supabaseClient.rpc(
-          "submit_game_result",
-          {
-            p_questions_answered:
-              state.answered,
-
-            p_correct_answers:
-              state.correct,
-
-            p_incorrect_answers:
-              incorrectAnswers,
-
-            p_score:
-              state.score,
-
-            p_best_streak:
-              state.bestStreak,
-
-            p_average_response_ms:
-              averageResponseMs,
-
-            p_duration_seconds:
-              GAME_SECONDS,
-
-            p_game_mode:
-              "rush_60",
-
-            p_category:
-              category
-          }
+          "submit_game_result_v2",
+          parameters
         );
 
-      if (error) {
-        throw error;
+      /*
+       * Keep the game usable before the Phase 2 SQL
+       * migration has been installed. The legacy RPC
+       * still saves the aggregate score, but period and
+       * category filters will not include that game.
+       */
+      if (
+        result.error &&
+        isMissingRpcError(
+          result.error,
+          "submit_game_result_v2"
+        )
+      ) {
+        console.warn(
+          "Phase 2 result history RPC is missing. Falling back to the legacy score RPC."
+        );
+
+        result =
+          await supabaseClient.rpc(
+            "submit_game_result",
+            parameters
+          );
+      }
+
+      if (result.error) {
+        throw result.error;
       }
 
       console.log(
         "Game result saved successfully."
       );
+
+      state.leaderboardRows = [];
 
       elements.resultMessage.textContent +=
         " Your result was saved to the global leaderboard.";
@@ -2050,47 +2158,651 @@
   }
 
   async function loadLeaderboard() {
-    try {
-      const { data, error } =
-        await supabaseClient
-          .from("leaderboard")
-          .select(`
-            leaderboard_rank,
-            display_name,
-            games_played,
-            total_questions,
-            total_correct,
-            total_incorrect,
-            accuracy_percent,
-            total_score,
-            high_score,
-            best_streak
-          `)
-          .order(
-            "leaderboard_rank",
-            { ascending: true }
-          )
-          .limit(20);
+    if (
+      !elements.leaderboardList ||
+      !elements.leaderboardStatus
+    ) {
+      return [];
+    }
 
-      if (error) {
-        throw error;
+    const requestId =
+      state.leaderboardRequestId + 1;
+
+    state.leaderboardRequestId =
+      requestId;
+
+    setLeaderboardLoadingState();
+    updateLeaderboardFilterButtons();
+
+    const parameters = {
+      p_period:
+        state.leaderboardPeriod,
+      p_category:
+        state.leaderboardCategory,
+      p_limit:
+        20
+    };
+
+    try {
+      const [
+        leaderboardResponse,
+        playerRankResponse
+      ] = await Promise.all([
+        supabaseClient.rpc(
+          "get_leaderboard_v2",
+          parameters
+        ),
+        supabaseClient.rpc(
+          "get_my_leaderboard_rank_v2",
+          {
+            p_period:
+              state.leaderboardPeriod,
+            p_category:
+              state.leaderboardCategory
+          }
+        )
+      ]);
+
+      if (
+        requestId !==
+        state.leaderboardRequestId
+      ) {
+        return [];
       }
 
-      console.log(
-        "Global leaderboard loaded successfully."
-      );
+      if (leaderboardResponse.error) {
+        throw leaderboardResponse.error;
+      }
 
-      console.table(data);
+      const rows =
+        Array.isArray(
+          leaderboardResponse.data
+        )
+          ? leaderboardResponse.data
+          : [];
 
-      return data;
+      state.leaderboardRows =
+        rows;
+
+      renderLeaderboard(rows);
+
+      if (playerRankResponse.error) {
+        console.warn(
+          "Could not load the current player's rank:",
+          playerRankResponse.error
+        );
+
+        renderCurrentPlayerRank(null);
+      } else {
+        const playerRank =
+          Array.isArray(
+            playerRankResponse.data
+          )
+            ? playerRankResponse.data[0] ||
+              null
+            : playerRankResponse.data ||
+              null;
+
+        renderCurrentPlayerRank(
+          playerRank
+        );
+      }
+
+      return rows;
     } catch (error) {
+      if (
+        requestId !==
+        state.leaderboardRequestId
+      ) {
+        return [];
+      }
+
       console.error(
         "Could not load the global leaderboard:",
         error
       );
 
+      setLeaderboardErrorState(
+        getLeaderboardErrorMessage(
+          error
+        )
+      );
+
       return [];
     }
+  }
+
+
+  function openLeaderboard() {
+    if (!elements.leaderboardScreen) {
+      return;
+    }
+
+    const activeScreen =
+      elements.screens.find(
+        (screen) =>
+          screen.classList.contains(
+            "active"
+          )
+      );
+
+    if (
+      activeScreen ===
+        elements.gameScreen ||
+      activeScreen ===
+        elements.countdownScreen
+    ) {
+      return;
+    }
+
+    if (
+      activeScreen &&
+      activeScreen !==
+        elements.leaderboardScreen
+    ) {
+      state.leaderboardReturnScreen =
+        activeScreen;
+    }
+
+    showScreen(
+      elements.leaderboardScreen
+    );
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+    void loadLeaderboard();
+  }
+
+
+  function closeLeaderboard() {
+    const returnScreen =
+      state.leaderboardReturnScreen &&
+      document.body.contains(
+        state.leaderboardReturnScreen
+      )
+        ? state.leaderboardReturnScreen
+        : elements.startScreen;
+
+    state.leaderboardReturnScreen =
+      null;
+
+    showScreen(returnScreen);
+  }
+
+
+  function setLeaderboardPeriod(period) {
+    const allowedPeriods =
+      new Set([
+        "all",
+        "week",
+        "today"
+      ]);
+
+    const nextPeriod =
+      allowedPeriods.has(period)
+        ? period
+        : "all";
+
+    if (
+      state.leaderboardPeriod ===
+      nextPeriod
+    ) {
+      return;
+    }
+
+    state.leaderboardPeriod =
+      nextPeriod;
+
+    updateLeaderboardFilterButtons();
+    void loadLeaderboard();
+  }
+
+
+  function setLeaderboardCategory(
+    category
+  ) {
+    const allowedCategories =
+      new Set([
+        "overall",
+        "science",
+        "history",
+        "gaming"
+      ]);
+
+    const nextCategory =
+      allowedCategories.has(category)
+        ? category
+        : "overall";
+
+    if (
+      state.leaderboardCategory ===
+      nextCategory
+    ) {
+      return;
+    }
+
+    state.leaderboardCategory =
+      nextCategory;
+
+    updateLeaderboardFilterButtons();
+    void loadLeaderboard();
+  }
+
+
+  function updateLeaderboardFilterButtons() {
+    elements.leaderboardPeriodButtons
+      .forEach((button) => {
+        const active =
+          button.dataset
+            .leaderboardPeriod ===
+          state.leaderboardPeriod;
+
+        button.classList.toggle(
+          "active",
+          active
+        );
+
+        button.setAttribute(
+          "aria-pressed",
+          String(active)
+        );
+      });
+
+    elements.leaderboardCategoryButtons
+      .forEach((button) => {
+        const active =
+          button.dataset
+            .leaderboardCategory ===
+          state.leaderboardCategory;
+
+        button.classList.toggle(
+          "active",
+          active
+        );
+
+        button.setAttribute(
+          "aria-pressed",
+          String(active)
+        );
+      });
+
+    if (
+      elements.leaderboardFilterSummary
+    ) {
+      elements.leaderboardFilterSummary
+        .textContent =
+          getLeaderboardFilterSummary();
+    }
+  }
+
+
+  function getLeaderboardFilterSummary() {
+    const periodLabels = {
+      all: "All-time",
+      week: "This week's",
+      today: "Today's"
+    };
+
+    const categoryLabels = {
+      overall: "overall",
+      science: "Science",
+      history: "History",
+      gaming: "Gaming"
+    };
+
+    return `${
+      periodLabels[
+        state.leaderboardPeriod
+      ]
+    } ${
+      categoryLabels[
+        state.leaderboardCategory
+      ]
+    } rankings`;
+  }
+
+
+  function setLeaderboardLoadingState() {
+    elements.leaderboardList
+      .replaceChildren();
+
+    elements.leaderboardStatus
+      .textContent =
+        "Loading leaderboard…";
+
+    elements.leaderboardStatus
+      .className =
+        "leaderboard-status loading";
+
+    if (
+      elements.leaderboardRetryButton
+    ) {
+      elements.leaderboardRetryButton
+        .hidden = true;
+    }
+
+    if (elements.currentPlayerRank) {
+      elements.currentPlayerRank.hidden =
+        true;
+    }
+  }
+
+
+  function setLeaderboardErrorState(
+    message
+  ) {
+    elements.leaderboardList
+      .replaceChildren();
+
+    elements.leaderboardStatus
+      .textContent = message;
+
+    elements.leaderboardStatus
+      .className =
+        "leaderboard-status error";
+
+    if (
+      elements.leaderboardRetryButton
+    ) {
+      elements.leaderboardRetryButton
+        .hidden = false;
+    }
+
+    if (elements.currentPlayerRank) {
+      elements.currentPlayerRank.hidden =
+        true;
+    }
+  }
+
+
+  function renderLeaderboard(rows) {
+    elements.leaderboardList
+      .replaceChildren();
+
+    if (rows.length === 0) {
+      elements.leaderboardStatus
+        .textContent =
+          "No scores have been recorded for these filters yet.";
+
+      elements.leaderboardStatus
+        .className =
+          "leaderboard-status empty";
+
+      return;
+    }
+
+    const fragment =
+      document.createDocumentFragment();
+
+    rows.forEach((row) => {
+      fragment.appendChild(
+        createLeaderboardRow(row)
+      );
+    });
+
+    elements.leaderboardList
+      .appendChild(fragment);
+
+    elements.leaderboardStatus
+      .textContent =
+        `Showing the top ${
+          rows.length
+        } player${
+          rows.length === 1 ? "" : "s"
+        }.`;
+
+    elements.leaderboardStatus
+      .className =
+        "leaderboard-status success";
+
+    if (
+      elements.leaderboardRetryButton
+    ) {
+      elements.leaderboardRetryButton
+        .hidden = true;
+    }
+  }
+
+
+  function createLeaderboardRow(row) {
+    const article =
+      document.createElement("article");
+
+    const isCurrentPlayer =
+      row.is_current_player === true ||
+      (
+        Number(
+          row.account_number
+        ) ===
+        Number(
+          state.profile
+            ?.account_number
+        )
+      );
+
+    article.className =
+      isCurrentPlayer
+        ? "leaderboard-row current-player"
+        : "leaderboard-row";
+
+    if (isCurrentPlayer) {
+      article.setAttribute(
+        "aria-current",
+        "true"
+      );
+    }
+
+    const rank =
+      formatLeaderboardInteger(
+        row.leaderboard_rank
+      );
+
+    const playerName =
+      escapeHtml(
+        row.display_name ||
+        "Unknown player"
+      );
+
+    const identifier =
+      escapeHtml(
+        formatAccountIdentifier(
+          row.account_number
+        )
+      );
+
+    const highScore =
+      formatLeaderboardInteger(
+        row.high_score
+      );
+
+    const accuracy =
+      formatLeaderboardPercent(
+        row.accuracy_percent
+      );
+
+    const streak =
+      formatLeaderboardInteger(
+        row.best_streak
+      );
+
+    const gamesPlayed =
+      formatLeaderboardInteger(
+        row.games_played
+      );
+
+    article.innerHTML = `
+      <span class="leaderboard-cell leaderboard-rank" data-label="Rank">
+        #${rank}
+      </span>
+
+      <span class="leaderboard-cell leaderboard-player" data-label="Player">
+        <strong>${playerName}</strong>
+        <small>${gamesPlayed} game${Number(row.games_played) === 1 ? "" : "s"}</small>
+      </span>
+
+      <span class="leaderboard-cell leaderboard-id" data-label="ID">
+        ${identifier}
+      </span>
+
+      <span class="leaderboard-cell leaderboard-score" data-label="High score">
+        ${highScore}
+      </span>
+
+      <span class="leaderboard-cell" data-label="Accuracy">
+        ${accuracy}
+      </span>
+
+      <span class="leaderboard-cell" data-label="Streak">
+        ${streak}
+      </span>
+    `;
+
+    return article;
+  }
+
+
+  function renderCurrentPlayerRank(row) {
+    if (!elements.currentPlayerRank) {
+      return;
+    }
+
+    if (!state.profile) {
+      elements.currentPlayerRank.hidden =
+        true;
+      elements.currentPlayerRank
+        .replaceChildren();
+      return;
+    }
+
+    elements.currentPlayerRank.hidden =
+      false;
+
+    const identifier =
+      escapeHtml(
+        formatAccountIdentifier(
+          state.profile.account_number
+        )
+      );
+
+    const playerName =
+      escapeHtml(
+        state.profile.display_name ||
+        "Current player"
+      );
+
+    if (!row) {
+      elements.currentPlayerRank
+        .innerHTML = `
+          <div>
+            <span>Your rank</span>
+            <strong>Unranked</strong>
+          </div>
+
+          <p>
+            ${playerName} ${identifier} has no score for the selected filters yet.
+          </p>
+        `;
+
+      return;
+    }
+
+    elements.currentPlayerRank
+      .innerHTML = `
+        <div>
+          <span>Your rank</span>
+          <strong>#${formatLeaderboardInteger(row.leaderboard_rank)}</strong>
+        </div>
+
+        <p>
+          ${playerName} ${identifier} ·
+          ${formatLeaderboardInteger(row.high_score)} high score ·
+          ${formatLeaderboardPercent(row.accuracy_percent)} accuracy ·
+          ${formatLeaderboardInteger(row.best_streak)} streak
+        </p>
+      `;
+  }
+
+
+  function formatLeaderboardInteger(
+    value
+  ) {
+    const number =
+      Number(value);
+
+    return Number.isFinite(number)
+      ? Math.round(number)
+          .toLocaleString()
+      : "0";
+  }
+
+
+  function formatLeaderboardPercent(
+    value
+  ) {
+    const number =
+      Number(value);
+
+    return Number.isFinite(number)
+      ? `${number.toFixed(1)}%`
+      : "0.0%";
+  }
+
+
+  function isMissingRpcError(
+    error,
+    functionName
+  ) {
+    const message =
+      String(
+        error?.message ||
+        error?.details ||
+        error ||
+        ""
+      ).toLowerCase();
+
+    return (
+      error?.code === "PGRST202" ||
+      error?.code === "42883" ||
+      (
+        message.includes(
+          functionName.toLowerCase()
+        ) &&
+        (
+          message.includes(
+            "not find"
+          ) ||
+          message.includes(
+            "does not exist"
+          ) ||
+          message.includes(
+            "schema cache"
+          )
+        )
+      )
+    );
+  }
+
+
+  function getLeaderboardErrorMessage(
+    error
+  ) {
+    if (
+      isMissingRpcError(
+        error,
+        "get_leaderboard_v2"
+      )
+    ) {
+      return "Leaderboard setup is incomplete. The site owner needs to run the Phase 2 Supabase SQL migration.";
+    }
+
+    if (isNetworkLoadError(error)) {
+      return "The leaderboard could not be reached. Open Trivia Rush directly in Safari or Chrome and try again.";
+    }
+
+    return "The leaderboard could not be loaded. Try again in a moment.";
   }
 
   function showHome() {
