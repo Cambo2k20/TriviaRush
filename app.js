@@ -135,6 +135,68 @@
     }
   }
 
+  async function loadOrCreateProfile() {
+    const { data, error } = await supabaseClient
+      .from("profiles")
+      .select("id, display_name")
+      .eq("id", state.user.id)
+      .maybeSingle();
+
+    if (error) {
+      throw error;
+    }
+
+    if (data) {
+      state.profile = data;
+      return;
+    }
+
+    const displayName = requestPlayerName();
+
+    if (!displayName) {
+      throw new Error("A player name is required.");
+    }
+
+    const { data: createdProfile, error: insertError } =
+      await supabaseClient
+        .from("profiles")
+        .insert({
+          id: state.user.id,
+          display_name: displayName
+        })
+        .select("id, display_name")
+        .single();
+
+    if (insertError) {
+      throw insertError;
+    }
+
+    state.profile = createdProfile;
+  }
+
+  function requestPlayerName() {
+    const savedName = localStorage.getItem("triviaRushPlayerName");
+
+    const enteredName = window.prompt(
+      "Choose a public leaderboard name:",
+      savedName || ""
+    );
+
+    if (enteredName === null) {
+      return null;
+    }
+
+    const cleanedName = enteredName.trim();
+
+    if (cleanedName.length < 3 || cleanedName.length > 24) {
+      alert("Your player name must be between 3 and 24 characters.");
+      return requestPlayerName();
+    }
+
+    localStorage.setItem("triviaRushPlayerName", cleanedName);
+    return cleanedName;
+  }
+
   async function testSupabaseConnection() {
     try {
       const { error } = await supabaseClient
