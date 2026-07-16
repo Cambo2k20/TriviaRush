@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
   <div class="background-orb orb-one" aria-hidden="true"></div>
@@ -23,10 +23,43 @@
       </a>
 
       <div class="header-actions">
-        <button id="soundToggle" class="icon-button" type="button" aria-label="Toggle game sounds" aria-pressed="true">
+        <button
+          id="leaderboardButton"
+          class="leaderboard-button"
+          type="button"
+          aria-label="Open global leaderboard"
+        >
+          <span aria-hidden="true">🏆</span>
+          <span id="leaderboardButtonText">Leaderboard</span>
+        </button>
+
+        <button
+          id="accountButton"
+          class="account-button"
+          type="button"
+          aria-label="Open player account"
+        >
+          <span aria-hidden="true">👤</span>
+          <span id="accountButtonText">Account</span>
+        </button>
+
+        <button
+          id="soundToggle"
+          class="icon-button"
+          type="button"
+          aria-label="Toggle game sounds"
+          aria-pressed="true"
+        >
           <span aria-hidden="true">🔊</span>
         </button>
-        <button id="hostToggle" class="icon-button" type="button" aria-label="Toggle spoken host" aria-pressed="false">
+
+        <button
+          id="hostToggle"
+          class="icon-button"
+          type="button"
+          aria-label="Toggle spoken host"
+          aria-pressed="false"
+        >
           <span aria-hidden="true">🎙️</span>
         </button>
       </div>
@@ -149,10 +182,115 @@
           <div><span>Best streak</span><strong id="bestStreakTotal">0</strong></div>
         </div>
 
+        <button
+          id="retrySaveButton"
+          class="secondary-button retry-save-button"
+          type="button"
+          hidden
+        >
+          Retry saving score
+        </button>
+
         <div class="result-actions">
           <button id="playAgainButton" class="primary-button" type="button">Play again</button>
+          <button id="resultsLeaderboardButton" class="secondary-button" type="button">View leaderboard</button>
           <button id="homeButton" class="secondary-button" type="button">Change category</button>
         </div>
+      </div>
+    </section>
+
+    <section
+      id="leaderboardScreen"
+      class="screen leaderboard-screen"
+      aria-labelledby="leaderboardTitle"
+    >
+      <div class="leaderboard-card">
+        <header class="leaderboard-header">
+          <div>
+            <div class="eyebrow">GLOBAL LEADERBOARD</div>
+            <h1 id="leaderboardTitle">Leaderboard</h1>
+            <p id="leaderboardFilterSummary">
+              All-time overall rankings
+            </p>
+          </div>
+
+          <button
+            id="closeLeaderboardButton"
+            class="secondary-button leaderboard-back-button"
+            type="button"
+          >
+            Back
+          </button>
+        </header>
+
+        <div class="leaderboard-filter-panel">
+          <div class="leaderboard-filter-group">
+            <span class="leaderboard-filter-label">Period</span>
+
+            <div class="leaderboard-filter-buttons" role="group" aria-label="Leaderboard period">
+              <button class="leaderboard-filter active" type="button" data-leaderboard-period="all" aria-pressed="true">
+                All time
+              </button>
+              <button class="leaderboard-filter" type="button" data-leaderboard-period="week" aria-pressed="false">
+                This week
+              </button>
+              <button class="leaderboard-filter" type="button" data-leaderboard-period="today" aria-pressed="false">
+                Today
+              </button>
+            </div>
+          </div>
+
+          <div class="leaderboard-filter-group">
+            <span class="leaderboard-filter-label">Category</span>
+
+<!-- Phase 3: category buttons are generated from questions.js so the
+                 leaderboard filters can never drift out of sync with the
+                 categories that games actually record. -->
+            <div
+              id="leaderboardCategoryFilters"
+              class="leaderboard-filter-buttons"
+              role="group"
+              aria-label="Leaderboard category"
+            ></div>
+          </div>
+        </div>
+
+        <section
+          id="currentPlayerRank"
+          class="current-player-rank"
+          aria-label="Your leaderboard position"
+          hidden
+        ></section>
+
+        <div
+          id="leaderboardStatus"
+          class="leaderboard-status"
+          aria-live="polite"
+        >
+          Select Leaderboard to load the rankings.
+        </div>
+
+        <div class="leaderboard-table" aria-label="Global leaderboard">
+          <div class="leaderboard-table-header" aria-hidden="true">
+            <span>Rank</span>
+            <span>Player</span>
+            <span>ID</span>
+            <span>High score</span>
+            <span>Accuracy</span>
+            <span>Streak</span>
+          </div>
+
+          <div id="leaderboardList" class="leaderboard-list"></div>
+        </div>
+
+        <button
+          id="leaderboardRetryButton"
+          class="secondary-button leaderboard-retry-button"
+          type="button"
+          hidden
+        >
+          Try again
+        </button>
       </div>
     </section>
 
@@ -162,19 +300,358 @@
     </footer>
   </main>
 
+  <dialog id="accountDialog" class="account-dialog">
+    <button
+      id="closeAccountDialogButton"
+      class="dialog-close"
+      type="button"
+      aria-label="Close account window"
+    >
+      ×
+    </button>
+
+    <div class="account-heading">
+      <span class="account-icon" aria-hidden="true">👤</span>
+
+      <div>
+        <h2>Player account</h2>
+        <p id="accountDescription">
+          Create an account or sign in to protect your leaderboard progress.
+        </p>
+      </div>
+    </div>
+
+    <div class="account-player">
+      <span>Current player</span>
+      <strong id="accountPlayerName">Guest player</strong>
+      <small id="accountIdentifier">#----</small>
+    </div>
+
+    <div id="accountAuthTabs" class="account-tabs" role="tablist" aria-label="Account options">
+      <button
+        id="showCreateAccountButton"
+        class="account-tab active"
+        type="button"
+        role="tab"
+        aria-selected="true"
+        data-account-control
+      >
+        Create account
+      </button>
+
+      <button
+        id="showSignInButton"
+        class="account-tab"
+        type="button"
+        role="tab"
+        aria-selected="false"
+        data-account-control
+      >
+        Sign in
+      </button>
+    </div>
+
+    <section id="createAccountForm" class="account-view">
+      <div class="account-field">
+        <label for="createUsername">Username</label>
+        <input
+          id="createUsername"
+          type="text"
+          autocomplete="username"
+          placeholder="Leaderboard username"
+          minlength="3"
+          maxlength="24"
+          data-account-control
+        >
+      </div>
+
+      <div class="account-field">
+        <label for="createEmail">Email address</label>
+        <input
+          id="createEmail"
+          type="email"
+          inputmode="email"
+          autocomplete="email"
+          placeholder="name@example.com"
+          maxlength="254"
+          data-account-control
+        >
+      </div>
+
+      <button
+        id="createAccountButton"
+        class="primary-button"
+        type="button"
+        data-account-control
+      >
+        Create account
+      </button>
+
+      <p class="account-help">
+        We will send a verification link first. After opening it,
+        return here to choose your password. Passwords are never
+        stored in this page or in browser storage.
+      </p>
+    </section>
+
+    <section id="signInForm" class="account-view" hidden>
+      <div class="account-field">
+        <label for="signInEmail">Email address</label>
+        <input
+          id="signInEmail"
+          type="email"
+          inputmode="email"
+          autocomplete="email"
+          placeholder="name@example.com"
+          maxlength="254"
+          data-account-control
+        >
+      </div>
+
+      <div class="account-field">
+        <label for="signInPassword">Password</label>
+        <input
+          id="signInPassword"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Your password"
+          minlength="8"
+          maxlength="128"
+          data-account-control
+        >
+      </div>
+
+      <div class="account-actions">
+        <button
+          id="signInButton"
+          class="primary-button"
+          type="button"
+          data-account-control
+        >
+          Sign in
+        </button>
+
+        <button
+          id="forgotPasswordButton"
+          class="text-button"
+          type="button"
+          data-account-control
+        >
+          Forgot password?
+        </button>
+      </div>
+    </section>
+
+    <section id="accountSetupForm" class="account-view" hidden>
+      <div class="account-section-heading">
+        <h3>Finish account setup</h3>
+        <p>Your email is verified. Choose the password for this account.</p>
+      </div>
+
+      <div class="account-field">
+        <label for="setupPassword">Password</label>
+        <input
+          id="setupPassword"
+          type="password"
+          autocomplete="new-password"
+          placeholder="At least 8 characters"
+          minlength="8"
+          maxlength="128"
+          data-account-control
+        >
+      </div>
+
+      <div class="account-field">
+        <label for="setupPasswordConfirm">Confirm password</label>
+        <input
+          id="setupPasswordConfirm"
+          type="password"
+          autocomplete="new-password"
+          placeholder="Enter the same password again"
+          minlength="8"
+          maxlength="128"
+          data-account-control
+        >
+      </div>
+
+      <button
+        id="finishAccountSetupButton"
+        class="primary-button"
+        type="button"
+        data-account-control
+      >
+        Finish account setup
+      </button>
+    </section>
+
+    <section id="manageAccountForm" class="account-view" hidden>
+      <div class="account-section">
+        <div class="account-section-heading">
+          <h3>Profile</h3>
+          <p>Your public username can change. Your player number never changes.</p>
+        </div>
+
+        <div class="account-field">
+          <label for="manageEmail">Email address</label>
+          <input
+            id="manageEmail"
+            type="email"
+            autocomplete="email"
+            readonly
+          >
+        </div>
+
+        <div class="account-field">
+          <label for="manageUsername">Username</label>
+          <input
+            id="manageUsername"
+            type="text"
+            autocomplete="username"
+            minlength="3"
+            maxlength="24"
+            data-account-control
+          >
+        </div>
+
+        <button
+          id="saveUsernameButton"
+          class="secondary-button"
+          type="button"
+          data-account-control
+        >
+          Save username
+        </button>
+      </div>
+
+      <div class="account-divider" aria-hidden="true"></div>
+
+      <div class="account-section">
+        <div class="account-section-heading">
+          <h3>Security</h3>
+          <p>Changing your password does not affect your username or scores.</p>
+        </div>
+
+        <div class="account-field">
+          <label for="newPassword">New password</label>
+          <input
+            id="newPassword"
+            type="password"
+            autocomplete="new-password"
+            placeholder="At least 8 characters"
+            minlength="8"
+            maxlength="128"
+            data-account-control
+          >
+        </div>
+
+        <div class="account-field">
+          <label for="newPasswordConfirm">Confirm new password</label>
+          <input
+            id="newPasswordConfirm"
+            type="password"
+            autocomplete="new-password"
+            placeholder="Enter the same password again"
+            minlength="8"
+            maxlength="128"
+            data-account-control
+          >
+        </div>
+
+        <button
+          id="changePasswordButton"
+          class="secondary-button"
+          type="button"
+          data-account-control
+        >
+          Change password
+        </button>
+      </div>
+
+      <button
+        id="signOutButton"
+        class="danger-button"
+        type="button"
+        data-account-control
+      >
+        Sign out
+      </button>
+    </section>
+
+    <section id="passwordRecoveryForm" class="account-view" hidden>
+      <div class="account-section-heading">
+        <h3>Choose a new password</h3>
+        <p>The recovery link has been accepted. Set a new password below.</p>
+      </div>
+
+      <div class="account-field">
+        <label for="recoveryPassword">New password</label>
+        <input
+          id="recoveryPassword"
+          type="password"
+          autocomplete="new-password"
+          placeholder="At least 8 characters"
+          minlength="8"
+          maxlength="128"
+          data-account-control
+        >
+      </div>
+
+      <div class="account-field">
+        <label for="recoveryPasswordConfirm">Confirm new password</label>
+        <input
+          id="recoveryPasswordConfirm"
+          type="password"
+          autocomplete="new-password"
+          placeholder="Enter the same password again"
+          minlength="8"
+          maxlength="128"
+          data-account-control
+        >
+      </div>
+
+      <button
+        id="completeRecoveryButton"
+        class="primary-button"
+        type="button"
+        data-account-control
+      >
+        Save new password
+      </button>
+    </section>
+
+    <p
+      id="accountStatus"
+      class="account-status"
+      aria-live="polite"
+    ></p>
+  </dialog>
+
   <dialog id="howToDialog">
-    <button id="closeDialogButton" class="dialog-close" type="button" aria-label="Close">×</button>
+    <button
+      id="closeDialogButton"
+      class="dialog-close"
+      type="button"
+      aria-label="Close instructions"
+    >
+      ×
+    </button>
+
     <h2>How to play</h2>
-    <ol>
-      <li>You have 60 seconds to answer as many questions as possible.</li>
-      <li>Correct answers earn 100 points plus a speed bonus.</li>
-      <li>Consecutive correct answers build a score multiplier.</li>
-      <li>A wrong answer resets your streak. Passing moves to the next question.</li>
-      <li>Use buttons, number keys, or the microphone where browser support is available.</li>
-    </ol>
+
+    <p>
+      Answer as many questions as possible before
+      the 60-second timer reaches zero.
+    </p>
+
+    <ul>
+      <li>Tap an answer or press 1, 2 or 3.</li>
+      <li>Press P to pass a question.</li>
+      <li>Press V to use voice input.</li>
+      <li>Build streaks to increase your score.</li>
+    </ul>
   </dialog>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="questions.js"></script>
-  <script src="app.js"></script>
+  <script src="questions.js?v=3"></script>
+  <script src="app.js?v=11"></script>
 </body>
 </html>

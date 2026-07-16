@@ -758,7 +758,7 @@ kbd {
 
 .result-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 
@@ -973,4 +973,699 @@ dialog ol {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+.account-button {
+  min-height: 44px;
+  padding: 0 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--outline);
+  border-radius: 14px;
+  color: var(--text);
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.06);
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    border-color 160ms ease;
+}
+
+.account-button:hover {
+  transform: translateY(-2px);
+  border-color: rgba(62, 231, 219, 0.45);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+#accountButtonText {
+  max-width: 150px;
+  overflow: hidden;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.account-dialog {
+  width: min(620px, calc(100% - 24px));
+  max-height: min(860px, calc(100vh - 24px));
+  overflow-y: auto;
+}
+
+.account-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding-right: 30px;
+}
+
+.account-heading h2 {
+  margin: 0 0 4px;
+}
+
+.account-heading p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.account-icon {
+  flex: 0 0 auto;
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  font-size: 1.4rem;
+  background: rgba(62, 231, 219, 0.14);
+}
+
+.account-player {
+  margin: 24px 0 18px;
+  padding: 16px 18px;
+  border: 1px solid var(--outline);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.account-player span {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.account-player strong {
+  font-family: "Baloo 2", sans-serif;
+  font-size: 1.5rem;
+}
+
+#accountIdentifier {
+  display: block;
+  margin-top: 3px;
+  color: var(--cyan);
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.account-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 5px;
+  border: 1px solid var(--outline);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.account-tab {
+  min-height: 44px;
+  border: 0;
+  border-radius: 11px;
+  color: var(--muted);
+  cursor: pointer;
+  font-weight: 800;
+  background: transparent;
+}
+
+.account-tab.active {
+  color: #10142a;
+  background: var(--cyan);
+}
+
+.account-view {
+  display: grid;
+  gap: 14px;
+}
+
+.account-view[hidden],
+.account-tabs[hidden] {
+  display: none !important;
+}
+
+.account-field {
+  display: grid;
+  gap: 8px;
+}
+
+.account-field label {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.account-field input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  color: var(--text);
+  border: 1px solid var(--outline);
+  border-radius: 14px;
+  background: #202a59;
+}
+
+.account-field input:focus {
+  border-color: rgba(62, 231, 219, 0.7);
+}
+
+.account-field input[readonly] {
+  opacity: 0.72;
+  cursor: default;
+}
+
+.account-section {
+  display: grid;
+  gap: 14px;
+}
+
+.account-section-heading h3 {
+  margin: 0 0 3px;
+  font-family: "Baloo 2", sans-serif;
+  font-size: 1.25rem;
+}
+
+.account-section-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.account-divider {
+  height: 1px;
+  margin: 4px 0;
+  background: var(--outline);
+}
+
+.account-actions {
+  display: grid;
+  gap: 10px;
+}
+
+.account-view .primary-button,
+.account-view .secondary-button,
+.account-view .danger-button {
+  width: 100%;
+  min-height: 52px;
+  justify-content: center;
+}
+
+.text-button {
+  min-height: 40px;
+  padding: 0;
+  border: 0;
+  color: var(--cyan);
+  cursor: pointer;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: transparent;
+}
+
+.danger-button {
+  border: 1px solid rgba(255, 101, 119, 0.45);
+  border-radius: 14px;
+  color: #ffd9de;
+  cursor: pointer;
+  font-weight: 800;
+  background: rgba(255, 101, 119, 0.14);
+}
+
+.account-help {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.account-status {
+  min-height: 24px;
+  margin: 16px 0 0;
+  color: var(--cyan);
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.account-status.error {
+  color: var(--red);
+}
+
+.account-dialog [data-account-control]:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+@media (max-width: 580px) {
+  #accountButtonText {
+    display: none;
+  }
+
+  .account-button {
+    width: 44px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .account-dialog {
+    width: calc(100% - 14px);
+    max-height: calc(100vh - 14px);
+    padding: 24px 18px;
+  }
+
+  .account-heading {
+    gap: 12px;
+  }
+
+  .account-icon {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+
+/* Phase 2: global leaderboard */
+
+.leaderboard-button {
+  min-height: 44px;
+  padding: 0 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 213, 74, 0.34);
+  border-radius: 14px;
+  color: var(--text);
+  cursor: pointer;
+  background: rgba(255, 213, 74, 0.09);
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    border-color 160ms ease;
+}
+
+.leaderboard-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: rgba(255, 213, 74, 0.7);
+  background: rgba(255, 213, 74, 0.16);
+}
+
+.leaderboard-button:disabled,
+.account-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+#leaderboardButtonText {
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.leaderboard-screen {
+  padding: 34px 0;
+  align-items: start;
+}
+
+.leaderboard-card {
+  width: 100%;
+  padding: clamp(24px, 4vw, 44px);
+  border: 1px solid var(--outline);
+  border-radius: var(--radius-xl);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(26, 36, 79, 0.97),
+      rgba(14, 21, 51, 0.97)
+    );
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(20px);
+}
+
+.leaderboard-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.leaderboard-header .eyebrow {
+  margin-bottom: 8px;
+}
+
+.leaderboard-header h1 {
+  margin: 0;
+  font-family: "Baloo 2", sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.6rem);
+  line-height: 0.95;
+}
+
+.leaderboard-header p {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.leaderboard-back-button {
+  width: auto;
+  min-width: 104px;
+  min-height: 48px;
+  padding: 0 20px;
+}
+
+.leaderboard-filter-panel {
+  margin: 28px 0 20px;
+  padding: 18px;
+  display: grid;
+  gap: 16px;
+  border: 1px solid var(--outline);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.leaderboard-filter-group {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.leaderboard-filter-label {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+.leaderboard-filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.leaderboard-filter {
+  min-height: 40px;
+  padding: 0 15px;
+  border: 1px solid var(--outline);
+  border-radius: 12px;
+  color: var(--muted);
+  cursor: pointer;
+  font-weight: 800;
+  background: rgba(255, 255, 255, 0.045);
+  transition:
+    transform 140ms ease,
+    color 140ms ease,
+    border-color 140ms ease,
+    background 140ms ease;
+}
+
+.leaderboard-filter:hover {
+  transform: translateY(-1px);
+  color: var(--text);
+  border-color: rgba(62, 231, 219, 0.42);
+}
+
+.leaderboard-filter.active {
+  color: #10142a;
+  border-color: var(--cyan);
+  background: var(--cyan);
+}
+
+.current-player-rank {
+  margin-bottom: 18px;
+  padding: 17px 19px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+  border: 1px solid rgba(62, 231, 219, 0.5);
+  border-radius: 17px;
+  background: rgba(62, 231, 219, 0.09);
+}
+
+.current-player-rank > div {
+  display: grid;
+}
+
+.current-player-rank span {
+  color: var(--cyan);
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+.current-player-rank strong {
+  font-family: "Baloo 2", sans-serif;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.current-player-rank p {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.leaderboard-status {
+  min-height: 24px;
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.leaderboard-status.loading {
+  color: var(--cyan);
+}
+
+.leaderboard-status.error {
+  color: var(--red);
+}
+
+.leaderboard-status.empty {
+  padding: 32px 18px;
+  border: 1px dashed var(--outline);
+  border-radius: 16px;
+  text-align: center;
+}
+
+.leaderboard-status.success {
+  color: var(--green);
+}
+
+.leaderboard-table {
+  overflow: hidden;
+  border: 1px solid var(--outline);
+  border-radius: 18px;
+  background: rgba(7, 12, 31, 0.35);
+}
+
+.leaderboard-table-header,
+.leaderboard-row {
+  display: grid;
+  grid-template-columns:
+    minmax(64px, 0.55fr)
+    minmax(170px, 1.8fr)
+    minmax(86px, 0.7fr)
+    minmax(105px, 0.9fr)
+    minmax(90px, 0.8fr)
+    minmax(72px, 0.6fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.leaderboard-table-header {
+  min-height: 48px;
+  padding: 0 18px;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.leaderboard-row {
+  min-height: 72px;
+  padding: 12px 18px;
+  border-top: 1px solid var(--outline);
+  transition:
+    background 150ms ease,
+    transform 150ms ease;
+}
+
+.leaderboard-row:hover {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.leaderboard-row.current-player {
+  border-left: 4px solid var(--cyan);
+  padding-left: 14px;
+  background: rgba(62, 231, 219, 0.1);
+}
+
+.leaderboard-cell {
+  min-width: 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.leaderboard-rank {
+  color: var(--yellow);
+  font-family: "Baloo 2", sans-serif;
+  font-size: 1.35rem;
+}
+
+.leaderboard-player {
+  display: grid;
+  gap: 2px;
+}
+
+.leaderboard-player strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.leaderboard-player small {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.leaderboard-id {
+  color: var(--cyan);
+  letter-spacing: 0.04em;
+}
+
+.leaderboard-score {
+  color: var(--yellow);
+  font-family: "Baloo 2", sans-serif;
+  font-size: 1.15rem;
+}
+
+.leaderboard-retry-button {
+  width: auto;
+  min-height: 48px;
+  margin: 16px auto 0;
+  padding: 0 22px;
+}
+
+@media (max-width: 850px) {
+  .leaderboard-table-header {
+    display: none;
+  }
+
+  .leaderboard-table {
+    border: 0;
+    overflow: visible;
+    background: transparent;
+  }
+
+  .leaderboard-list {
+    display: grid;
+    gap: 10px;
+  }
+
+  .leaderboard-row {
+    min-height: auto;
+    padding: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px 18px;
+    border: 1px solid var(--outline);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.035);
+  }
+
+  .leaderboard-row.current-player {
+    padding-left: 16px;
+    border-left: 4px solid var(--cyan);
+  }
+
+  .leaderboard-cell {
+    display: grid;
+    gap: 2px;
+  }
+
+  .leaderboard-cell::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-size: 0.62rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .leaderboard-player strong {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 580px) {
+  #leaderboardButtonText {
+    display: none;
+  }
+
+  .leaderboard-button {
+    width: 44px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .leaderboard-screen {
+    padding: 18px 0;
+  }
+
+  .leaderboard-card {
+    padding: 22px 16px;
+    border-radius: 24px;
+  }
+
+  .leaderboard-header {
+    display: grid;
+  }
+
+  .leaderboard-back-button {
+    width: 100%;
+  }
+
+  .leaderboard-filter-group {
+    grid-template-columns: 1fr;
+  }
+
+  .leaderboard-filter-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .leaderboard-filter {
+    padding: 0 9px;
+  }
+
+  .current-player-rank {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .leaderboard-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .header-actions {
+    gap: 6px;
+  }
+}
+
+/* Phase 3: retry affordance shown when a game result fails to save. */
+.retry-save-button {
+  margin: 14px auto 0;
+  display: block;
 }

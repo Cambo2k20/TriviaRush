@@ -25,6 +25,8 @@
     timerStartedAt: 0,
     timerFrame: null,
     locked: false,
+    gameEnded: false,
+    pendingQuestionTimer: null,
     soundEnabled: true,
     hostEnabled: false,
     recognition: null,
@@ -33,7 +35,17 @@
     user: null,
     profile: null,
     scoreSaved: false,
-    responseTimes: []
+    baseResultMessage: "",
+    responseTimes: [],
+    accountMode: "create",
+    recoveryMode: false,
+    authSubscription: null,
+    leaderboardPeriod: "all",
+    leaderboardCategory: "overall",
+    leaderboardCategories: [],
+    leaderboardReturnScreen: null,
+    leaderboardRows: [],
+    leaderboardRequestId: 0
   };
 
   const elements = {
@@ -42,9 +54,11 @@
     countdownScreen: document.querySelector("#countdownScreen"),
     gameScreen: document.querySelector("#gameScreen"),
     resultsScreen: document.querySelector("#resultsScreen"),
+    leaderboardScreen: document.querySelector("#leaderboardScreen"),
     startButton: document.querySelector("#startButton"),
     playAgainButton: document.querySelector("#playAgainButton"),
     homeButton: document.querySelector("#homeButton"),
+    resultsLeaderboardButton: document.querySelector("#resultsLeaderboardButton"),
     categorySelect: document.querySelector("#categorySelect"),
     startHighScore: document.querySelector("#startHighScore"),
     startBestStreak: document.querySelector("#startBestStreak"),
@@ -71,29 +85,162 @@
     newHighScore: document.querySelector("#newHighScore"),
     soundToggle: document.querySelector("#soundToggle"),
     hostToggle: document.querySelector("#hostToggle"),
+
+    leaderboardButton: document.querySelector("#leaderboardButton"),
+    closeLeaderboardButton: document.querySelector("#closeLeaderboardButton"),
+    leaderboardPeriodButtons: [
+      ...document.querySelectorAll("[data-leaderboard-period]")
+    ],
+    leaderboardCategoryFilters: document.querySelector(
+      "#leaderboardCategoryFilters"
+    ),
+    retrySaveButton: document.querySelector("#retrySaveButton"),
+    leaderboardFilterSummary: document.querySelector("#leaderboardFilterSummary"),
+    currentPlayerRank: document.querySelector("#currentPlayerRank"),
+    leaderboardStatus: document.querySelector("#leaderboardStatus"),
+    leaderboardList: document.querySelector("#leaderboardList"),
+    leaderboardRetryButton: document.querySelector("#leaderboardRetryButton"),
+
+    accountButton: document.querySelector("#accountButton"),
+    accountButtonText: document.querySelector("#accountButtonText"),
+    accountDialog: document.querySelector("#accountDialog"),
+    closeAccountDialogButton: document.querySelector("#closeAccountDialogButton"),
+    accountDescription: document.querySelector("#accountDescription"),
+    accountPlayerName: document.querySelector("#accountPlayerName"),
+    accountIdentifier: document.querySelector("#accountIdentifier"),
+    accountAuthTabs: document.querySelector("#accountAuthTabs"),
+    showCreateAccountButton: document.querySelector("#showCreateAccountButton"),
+    showSignInButton: document.querySelector("#showSignInButton"),
+    createAccountForm: document.querySelector("#createAccountForm"),
+    createUsername: document.querySelector("#createUsername"),
+    createEmail: document.querySelector("#createEmail"),
+    createAccountButton: document.querySelector("#createAccountButton"),
+    signInForm: document.querySelector("#signInForm"),
+    signInEmail: document.querySelector("#signInEmail"),
+    signInPassword: document.querySelector("#signInPassword"),
+    signInButton: document.querySelector("#signInButton"),
+    forgotPasswordButton: document.querySelector("#forgotPasswordButton"),
+    accountSetupForm: document.querySelector("#accountSetupForm"),
+    setupPassword: document.querySelector("#setupPassword"),
+    setupPasswordConfirm: document.querySelector("#setupPasswordConfirm"),
+    finishAccountSetupButton: document.querySelector("#finishAccountSetupButton"),
+    manageAccountForm: document.querySelector("#manageAccountForm"),
+    manageEmail: document.querySelector("#manageEmail"),
+    manageUsername: document.querySelector("#manageUsername"),
+    saveUsernameButton: document.querySelector("#saveUsernameButton"),
+    newPassword: document.querySelector("#newPassword"),
+    newPasswordConfirm: document.querySelector("#newPasswordConfirm"),
+    changePasswordButton: document.querySelector("#changePasswordButton"),
+    signOutButton: document.querySelector("#signOutButton"),
+    passwordRecoveryForm: document.querySelector("#passwordRecoveryForm"),
+    recoveryPassword: document.querySelector("#recoveryPassword"),
+    recoveryPasswordConfirm: document.querySelector("#recoveryPasswordConfirm"),
+    completeRecoveryButton: document.querySelector("#completeRecoveryButton"),
+    accountStatus: document.querySelector("#accountStatus"),
+
     howToButton: document.querySelector("#howToButton"),
     howToDialog: document.querySelector("#howToDialog"),
     closeDialogButton: document.querySelector("#closeDialogButton")
   };
-
   async function init() {
     validateQuestions();
     populateCategories();
+    buildLeaderboardCategoryFilters();
     loadPreferences();
     updateStartStats();
     configureSpeechRecognition();
+    setupAuthStateListener();
     bindEvents();
+    updateLeaderboardFilterButtons();
 
-    elements.timerProgress.style.strokeDasharray =
-      `${TIMER_CIRCUMFERENCE}`;
-
-    elements.timerProgress.style.strokeDashoffset = "0";
+    if (elements.timerProgress) {
+      elements.timerProgress.style.strokeDasharray =
+        `${TIMER_CIRCUMFERENCE}`;
+      elements.timerProgress.style.strokeDashoffset = "0";
+    }
 
     await initialisePlayer();
-    await testSupabaseConnection();
+    updateAccountUI();
   }
 
+  function setupAuthStateListener() {
+    const { data } =
+      supabaseClient.auth.onAuthStateChange(
+        (event, session) => {
+          window.setTimeout(() => {
+            void handleAuthStateChange(
+              event,
+              session
+            );
+          }, 0);
+        }
+      );
+
+    state.authSubscription =
+      data.subscription;
+  }
+
+  async function handleAuthStateChange(
+    event,
+    session
+  ) {
+    if (event === "PASSWORD_RECOVERY") {
+      state.recoveryMode = true;
+      state.user = session?.user ?? null;
+      state.profile = null;
+
+      if (state.user) {
+        await loadPlayerProfile();
+      } else {
+        updateAccountUI();
+      }
+
+      openAccountDialog(false);
+      setAccountStatus(
+        "Recovery link accepted. Choose a new password."
+      );
+      return;
+    }
+
+    if (event === "SIGNED_OUT") {
+      state.user = null;
+      state.profile = null;
+      state.recoveryMode = false;
+      updateAccountUI();
+      return;
+    }
+
+    if (
+      event === "SIGNED_IN" ||
+      event === "USER_UPDATED" ||
+      event === "TOKEN_REFRESHED"
+    ) {
+      state.user = session?.user ?? null;
+
+      if (!state.user) {
+        state.profile = null;
+        updateAccountUI();
+        return;
+      }
+
+      // Phase 3: token refreshes happen roughly hourly and do not change
+      // profile data, so skip the profile query when one is already loaded.
+      if (
+        event === "TOKEN_REFRESHED" &&
+        state.profile
+      ) {
+        return;
+      }
+
+      await loadPlayerProfile();
+    }
+  }
+
+
   async function initialisePlayer() {
+    let setupStage =
+      "checking the existing session";
+
     try {
       const {
         data: { session },
@@ -107,10 +254,15 @@
       let activeSession = session;
 
       if (!activeSession) {
+        setupStage =
+          "creating an anonymous account";
+
         const {
           data,
           error
-        } = await supabaseClient.auth.signInAnonymously();
+        } =
+          await supabaseClient.auth
+            .signInAnonymously();
 
         if (error) {
           throw error;
@@ -119,59 +271,128 @@
         activeSession = data.session;
       }
 
-      state.user = activeSession?.user ?? null;
+      state.user =
+        activeSession?.user ?? null;
 
       if (!state.user) {
-        throw new Error("Supabase did not return a player account.");
+        throw new Error(
+          "Supabase did not return a player account."
+        );
       }
 
-      await loadOrCreateProfile();
+      setupStage =
+        "loading the player profile";
+
+      await loadPlayerProfile();
+
+      console.log(
+        "Player authentication ready:",
+        {
+          id: state.user.id,
+          email: state.user.email,
+          anonymous:
+            state.user.is_anonymous
+        }
+      );
     } catch (error) {
-      console.error("Player setup failed:", error);
+      console.error(
+        `Player setup failed while ${setupStage}:`,
+        error
+      );
+
       alert(
-        "The game could not create a player account. " +
-        "Check that anonymous sign-ins are enabled in Supabase."
+        `Player setup failed while ${setupStage}.\n\n` +
+        `${error?.message || String(error)}`
       );
     }
   }
+  async function loadPlayerProfile() {
+    if (!state.user) {
+      state.profile = null;
+      updateAccountUI();
+      return null;
+    }
 
-  async function loadOrCreateProfile() {
-    const { data, error } = await supabaseClient
-      .from("profiles")
-      .select("id, display_name")
-      .eq("id", state.user.id)
-      .maybeSingle();
+    const { data, error } =
+      await supabaseClient
+        .from("profiles")
+        .select(
+          "id, display_name, account_number"
+        )
+        .eq("id", state.user.id)
+        .maybeSingle();
 
     if (error) {
       throw error;
     }
 
-    if (data) {
-      state.profile = data;
-      return;
+    state.profile = data ?? null;
+
+    if (state.profile?.display_name) {
+      localStorage.setItem(
+        "triviaRushPlayerName",
+        state.profile.display_name
+      );
     }
 
-    const displayName = requestPlayerName();
-
-    if (!displayName) {
-      throw new Error("A player name is required.");
+    updateAccountUI();
+    return state.profile;
+  }
+  async function ensurePlayerProfile() {
+    if (state.profile) {
+      return true;
     }
 
-    const { data: createdProfile, error: insertError } =
-      await supabaseClient
-        .from("profiles")
-        .insert({
-          id: state.user.id,
-          display_name: displayName
-        })
-        .select("id, display_name")
-        .single();
-
-    if (insertError) {
-      throw insertError;
+    if (!state.user) {
+      alert(
+        "The player account is not ready. Reload the page and try again."
+      );
+      return false;
     }
 
-    state.profile = createdProfile;
+    // Phase 3: profile creation is delegated to saveProfileUsername so the
+    // insert logic, duplicate-name handling and localStorage write exist in
+    // exactly one place.
+    while (!state.profile) {
+      const displayName = requestPlayerName();
+
+      if (!displayName) {
+        return false;
+      }
+
+      try {
+        await saveProfileUsername(
+          displayName
+        );
+      } catch (error) {
+        const isDuplicateName =
+          String(
+            error?.message || ""
+          ).includes("already being used");
+
+        if (isDuplicateName) {
+          localStorage.removeItem(
+            "triviaRushPlayerName"
+          );
+          alert(
+            "That player name is already being used. Choose another name."
+          );
+          continue;
+        }
+
+        console.error(
+          "Could not create player profile:",
+          error
+        );
+        alert(
+          `The player profile could not be created.\n\n${error?.message || error}`
+        );
+        return false;
+      }
+    }
+
+    updateAccountUI();
+    return true;
   }
 
   function requestPlayerName() {
@@ -196,22 +417,974 @@
     localStorage.setItem("triviaRushPlayerName", cleanedName);
     return cleanedName;
   }
+  function openAccountDialog(
+    clearStatus = true
+  ) {
+    if (!elements.accountDialog) {
+      console.error(
+        "The #accountDialog element is missing."
+      );
+      alert(
+        "The account window could not be opened."
+      );
+      return;
+    }
 
-  async function testSupabaseConnection() {
-    try {
-      const { error } = await supabaseClient
-        .from("leaderboard")
-        .select("display_name")
-        .limit(1);
-  
-      if (error) {
-        console.error("Supabase connection failed:", error);
-        return;
+    if (clearStatus) {
+      setAccountStatus("");
+    }
+
+    updateAccountUI();
+
+    if (!elements.accountDialog.open) {
+      elements.accountDialog.showModal();
+    }
+  }
+
+  function closeAccountDialog() {
+    if (elements.accountDialog?.open) {
+      elements.accountDialog.close();
+    }
+  }
+
+  function setAccountMode(mode) {
+    state.accountMode =
+      mode === "signin"
+        ? "signin"
+        : "create";
+    setAccountStatus("");
+    updateAccountUI();
+  }
+
+  function formatAccountIdentifier(
+    accountNumber
+  ) {
+    const parsedNumber =
+      Number(accountNumber);
+
+    if (
+      !Number.isInteger(parsedNumber) ||
+      parsedNumber < 1
+    ) {
+      return "#----";
+    }
+
+    return `#${String(parsedNumber)
+      .padStart(4, "0")}`;
+  }
+
+  function hasCompletedPasswordSetup() {
+    return (
+      state.user?.user_metadata
+        ?.password_setup_complete === true
+    );
+  }
+
+  function isPasswordSetupPending() {
+    return Boolean(
+      state.user?.email &&
+      !state.user?.is_anonymous &&
+      !hasCompletedPasswordSetup() &&
+      state.user?.user_metadata
+        ?.account_setup_stage ===
+        "awaiting_password"
+    );
+  }
+
+  function updateAccountUI() {
+    const isPermanentAccount = Boolean(
+      state.user?.email &&
+      !state.user?.is_anonymous
+    );
+    const setupPending =
+      isPasswordSetupPending();
+    const isRecovery =
+      state.recoveryMode === true;
+    const playerName =
+      state.profile?.display_name ||
+      "Guest player";
+
+    if (elements.accountButtonText) {
+      elements.accountButtonText.textContent =
+        state.profile?.display_name ||
+        "Account";
+    }
+
+    if (elements.accountPlayerName) {
+      elements.accountPlayerName.textContent =
+        playerName;
+    }
+
+    if (elements.accountIdentifier) {
+      elements.accountIdentifier.textContent =
+        formatAccountIdentifier(
+          state.profile?.account_number
+        );
+    }
+
+    if (
+      elements.createUsername &&
+      !elements.createUsername.value
+    ) {
+      elements.createUsername.value =
+        state.profile?.display_name || "";
+    }
+
+    if (elements.manageUsername) {
+      elements.manageUsername.value =
+        state.profile?.display_name || "";
+    }
+
+    if (elements.manageEmail) {
+      elements.manageEmail.value =
+        state.user?.email || "";
+    }
+
+    const showGuestAuth =
+      !isPermanentAccount && !isRecovery;
+    const showCreate =
+      showGuestAuth &&
+      state.accountMode === "create";
+    const showSignIn =
+      showGuestAuth &&
+      state.accountMode === "signin";
+    const showSetup =
+      setupPending && !isRecovery;
+    const showManage =
+      isPermanentAccount &&
+      !setupPending &&
+      !isRecovery;
+
+    if (elements.accountAuthTabs) {
+      elements.accountAuthTabs.hidden =
+        !showGuestAuth;
+    }
+    if (elements.createAccountForm) {
+      elements.createAccountForm.hidden =
+        !showCreate;
+    }
+    if (elements.signInForm) {
+      elements.signInForm.hidden =
+        !showSignIn;
+    }
+    if (elements.accountSetupForm) {
+      elements.accountSetupForm.hidden =
+        !showSetup;
+    }
+    if (elements.manageAccountForm) {
+      elements.manageAccountForm.hidden =
+        !showManage;
+    }
+    if (elements.passwordRecoveryForm) {
+      elements.passwordRecoveryForm.hidden =
+        !isRecovery;
+    }
+
+    if (elements.showCreateAccountButton) {
+      const active =
+        state.accountMode === "create";
+      elements.showCreateAccountButton
+        .classList.toggle("active", active);
+      elements.showCreateAccountButton
+        .setAttribute(
+          "aria-selected",
+          String(active)
+        );
+    }
+
+    if (elements.showSignInButton) {
+      const active =
+        state.accountMode === "signin";
+      elements.showSignInButton
+        .classList.toggle("active", active);
+      elements.showSignInButton
+        .setAttribute(
+          "aria-selected",
+          String(active)
+        );
+    }
+
+    if (!elements.accountDescription) {
+      return;
+    }
+
+    if (isRecovery) {
+      elements.accountDescription.textContent =
+        "Set a new password for your account.";
+    } else if (setupPending) {
+      elements.accountDescription.textContent =
+        "Your email is verified. Finish creating your account by choosing a password.";
+    } else if (showManage) {
+      elements.accountDescription.textContent =
+        "Manage your public username, password and session.";
+    } else if (showSignIn) {
+      elements.accountDescription.textContent =
+        "Sign in to restore your player profile and leaderboard progress.";
+    } else {
+      elements.accountDescription.textContent =
+        "Create an account to protect your leaderboard progress.";
+    }
+
+    if (
+      elements.accountStatus &&
+      !elements.accountStatus.textContent
+    ) {
+      if (setupPending) {
+        setAccountStatus(
+          "Email verified. Choose your password to complete setup."
+        );
+      } else if (showManage) {
+        setAccountStatus(
+          `Signed in as ${state.user.email}.`
+        );
+      } else if (showGuestAuth) {
+        setAccountStatus(
+          "You are currently playing as a guest."
+        );
       }
-  
-      console.log("Supabase connection successful");
+    }
+  }
+
+  function getAuthRedirectUrl() {
+    const redirectUrl =
+      new URL(window.location.href);
+    redirectUrl.search = "";
+    redirectUrl.hash = "";
+    return redirectUrl.toString();
+  }
+
+  async function saveProfileUsername(
+    username
+  ) {
+    if (!state.user) {
+      throw new Error(
+        "No authenticated player is available."
+      );
+    }
+
+    let result;
+
+    if (state.profile) {
+      result = await supabaseClient
+        .from("profiles")
+        .update({
+          display_name: username
+        })
+        .eq("id", state.user.id)
+        .select(
+          "id, display_name, account_number"
+        )
+        .single();
+    } else {
+      result = await supabaseClient
+        .from("profiles")
+        .insert({
+          id: state.user.id,
+          display_name: username
+        })
+        .select(
+          "id, display_name, account_number"
+        )
+        .single();
+    }
+
+    if (result.error) {
+      if (result.error.code === "23505") {
+        throw new Error(
+          "That username is already being used."
+        );
+      }
+      throw result.error;
+    }
+
+    state.profile = result.data;
+    localStorage.setItem(
+      "triviaRushPlayerName",
+      username
+    );
+    updateAccountUI();
+    return state.profile;
+  }
+
+  function setAccountStatus(
+    message,
+    isError = false
+  ) {
+    if (!elements.accountStatus) {
+      if (message) {
+        console[isError ? "error" : "log"](
+          message
+        );
+      }
+      return;
+    }
+
+    elements.accountStatus.textContent =
+      message;
+    elements.accountStatus.className =
+      isError
+        ? "account-status error"
+        : "account-status";
+  }
+
+  function readUsernameInput(element) {
+    const username =
+      element?.value.trim() || "";
+
+    if (
+      username.length < 3 ||
+      username.length > 24
+    ) {
+      setAccountStatus(
+        "Username must contain between 3 and 24 characters.",
+        true
+      );
+      return null;
+    }
+
+    return username;
+  }
+
+  function readEmailInput(element) {
+    const email =
+      element?.value.trim().toLowerCase() ||
+      "";
+
+    if (element) {
+      element.value = email;
+    }
+
+    if (
+      !email ||
+      !element?.checkValidity()
+    ) {
+      setAccountStatus(
+        "Enter a valid email address.",
+        true
+      );
+      return null;
+    }
+
+    return email;
+  }
+
+  function readPasswordInput(element) {
+    const password =
+      element?.value || "";
+
+    if (password.length < 8) {
+      setAccountStatus(
+        "Password must contain at least 8 characters.",
+        true
+      );
+      return null;
+    }
+
+    return password;
+  }
+
+  function readPasswordPair(
+    passwordElement,
+    confirmationElement
+  ) {
+    const password =
+      readPasswordInput(passwordElement);
+
+    if (!password) {
+      return null;
+    }
+
+    if (
+      password !==
+      (confirmationElement?.value || "")
+    ) {
+      setAccountStatus(
+        "The two passwords do not match.",
+        true
+      );
+      return null;
+    }
+
+    return password;
+  }
+
+  function clearPasswordFields() {
+    [
+      elements.signInPassword,
+      elements.setupPassword,
+      elements.setupPasswordConfirm,
+      elements.newPassword,
+      elements.newPasswordConfirm,
+      elements.recoveryPassword,
+      elements.recoveryPasswordConfirm
+    ].forEach((element) => {
+      if (element) {
+        element.value = "";
+      }
+    });
+  }
+
+  function setAccountBusy(isBusy) {
+    elements.accountDialog
+      ?.querySelectorAll(
+        "[data-account-control]"
+      )
+      .forEach((element) => {
+        element.disabled = isBusy;
+      });
+  }
+
+  function isNetworkLoadError(error) {
+    const message = String(
+      error?.message || error || ""
+    ).toLowerCase();
+
+    return (
+      error instanceof TypeError ||
+      message.includes("load failed") ||
+      message.includes("failed to fetch") ||
+      message.includes(
+        "network request failed"
+      ) ||
+      message.includes("networkerror")
+    );
+  }
+
+  function getFriendlyAuthError(
+    error,
+    fallback
+  ) {
+    if (isNetworkLoadError(error)) {
+      return "Trivia Rush could not contact Supabase. Open the game directly in Safari or Chrome rather than an in-app browser, then try again.";
+    }
+
+    return error?.message || fallback;
+  }
+
+  async function runAuthRequest(operation) {
+    let lastError = null;
+
+    for (
+      let attempt = 1;
+      attempt <= 2;
+      attempt += 1
+    ) {
+      try {
+        return await operation();
+      } catch (error) {
+        lastError = error;
+
+        if (
+          !isNetworkLoadError(error) ||
+          attempt === 2
+        ) {
+          throw error;
+        }
+
+        await wait(1200);
+      }
+    }
+
+    throw lastError;
+  }
+
+  async function createAccount() {
+    if (!state.user) {
+      setAccountStatus(
+        "The player account is not ready. Reload the page and try again.",
+        true
+      );
+      return;
+    }
+
+    const username =
+      readUsernameInput(
+        elements.createUsername
+      );
+    const email =
+      readEmailInput(elements.createEmail);
+
+    if (!username || !email) {
+      return;
+    }
+
+    setAccountBusy(true);
+    setAccountStatus(
+      "Creating your account…"
+    );
+
+    try {
+      await saveProfileUsername(username);
+
+      const currentMetadata =
+        state.user.user_metadata || {};
+      const { data, error } =
+        await runAuthRequest(() =>
+          supabaseClient.auth.updateUser(
+            {
+              email,
+              data: {
+                ...currentMetadata,
+                display_name: username,
+                account_setup_stage:
+                  "awaiting_password",
+                password_setup_complete:
+                  false
+              }
+            },
+            {
+              emailRedirectTo:
+                getAuthRedirectUrl()
+            }
+          )
+        );
+
+      if (error) {
+        throw error;
+      }
+
+      state.user =
+        data.user || state.user;
+      setAccountStatus(
+        "Verification email sent. Open the link, return to Trivia Rush and choose your password."
+      );
     } catch (error) {
-      console.error("Unable to contact Supabase:", error);
+      console.error(
+        "Could not create account:",
+        error
+      );
+      const message =
+        getFriendlyAuthError(
+          error,
+          "Account creation failed."
+        );
+      setAccountStatus(
+        message.toLowerCase().includes(
+          "already"
+        )
+          ? "That email or username is already in use. Try signing in instead."
+          : message,
+        true
+      );
+    } finally {
+      setAccountBusy(false);
+      updateAccountUI();
+    }
+  }
+
+  async function finishAccountSetup() {
+    const password = readPasswordPair(
+      elements.setupPassword,
+      elements.setupPasswordConfirm
+    );
+
+    if (!password) {
+      return;
+    }
+
+    setAccountBusy(true);
+    setAccountStatus(
+      "Finishing account setup…"
+    );
+
+    try {
+      const currentMetadata =
+        state.user?.user_metadata || {};
+      const { data, error } =
+        await runAuthRequest(() =>
+          supabaseClient.auth.updateUser({
+            password,
+            data: {
+              ...currentMetadata,
+              account_setup_stage:
+                "complete",
+              password_setup_complete: true
+            }
+          })
+        );
+
+      if (error) {
+        throw error;
+      }
+
+      state.user =
+        data.user || state.user;
+      clearPasswordFields();
+      setAccountStatus(
+        "Account created successfully. Your scores are protected."
+      );
+      updateAccountUI();
+    } catch (error) {
+      console.error(
+        "Could not finish account setup:",
+        error
+      );
+      setAccountStatus(
+        getFriendlyAuthError(
+          error,
+          "Account setup failed."
+        ),
+        true
+      );
+    } finally {
+      setAccountBusy(false);
+    }
+  }
+
+  async function signInToAccount() {
+    const email =
+      readEmailInput(elements.signInEmail);
+    const password =
+      readPasswordInput(
+        elements.signInPassword
+      );
+
+    if (!email || !password) {
+      return;
+    }
+
+    setAccountBusy(true);
+    setAccountStatus("Signing in…");
+
+    try {
+      const { data, error } =
+        await runAuthRequest(() =>
+          supabaseClient.auth
+            .signInWithPassword({
+              email,
+              password
+            })
+        );
+
+      if (error) {
+        throw error;
+      }
+
+      state.user = data.user;
+      state.profile = null;
+      state.recoveryMode = false;
+
+      if (
+        !hasCompletedPasswordSetup()
+      ) {
+        const currentMetadata =
+          state.user.user_metadata || {};
+        const {
+          data: updatedData,
+          error: metadataError
+        } = await supabaseClient.auth
+          .updateUser({
+            data: {
+              ...currentMetadata,
+              account_setup_stage:
+                "complete",
+              password_setup_complete: true
+            }
+          });
+
+        if (
+          !metadataError &&
+          updatedData.user
+        ) {
+          state.user = updatedData.user;
+        }
+      }
+
+      await loadPlayerProfile();
+      clearPasswordFields();
+      setAccountStatus(
+        "Signed in successfully. Your saved progress has been restored."
+      );
+      updateAccountUI();
+    } catch (error) {
+      console.error(
+        "Could not sign in:",
+        error
+      );
+      setAccountStatus(
+        isNetworkLoadError(error)
+          ? getFriendlyAuthError(error)
+          : "Sign-in failed. Check your email address and password.",
+        true
+      );
+    } finally {
+      setAccountBusy(false);
+    }
+  }
+
+  async function saveUsername() {
+    const username =
+      readUsernameInput(
+        elements.manageUsername
+      );
+
+    if (!username) {
+      return;
+    }
+
+    setAccountBusy(true);
+    setAccountStatus(
+      "Saving username…"
+    );
+
+    try {
+      await saveProfileUsername(username);
+
+      const currentMetadata =
+        state.user?.user_metadata || {};
+      const { data, error } =
+        await supabaseClient.auth
+          .updateUser({
+            data: {
+              ...currentMetadata,
+              display_name: username
+            }
+          });
+
+      if (error) {
+        console.warn(
+          "Username metadata was not updated:",
+          error
+        );
+      } else if (data.user) {
+        state.user = data.user;
+      }
+
+      setAccountStatus(
+        "Username updated. Your player number and scores are unchanged."
+      );
+      updateAccountUI();
+    } catch (error) {
+      console.error(
+        "Could not save username:",
+        error
+      );
+      setAccountStatus(
+        error?.message ||
+          "Username could not be saved.",
+        true
+      );
+    } finally {
+      setAccountBusy(false);
+    }
+  }
+
+  async function changePassword() {
+    const password = readPasswordPair(
+      elements.newPassword,
+      elements.newPasswordConfirm
+    );
+
+    if (!password) {
+      return;
+    }
+
+    setAccountBusy(true);
+    setAccountStatus(
+      "Changing password…"
+    );
+
+    try {
+      const currentMetadata =
+        state.user?.user_metadata || {};
+      const { data, error } =
+        await runAuthRequest(() =>
+          supabaseClient.auth.updateUser({
+            password,
+            data: {
+              ...currentMetadata,
+              account_setup_stage:
+                "complete",
+              password_setup_complete: true
+            }
+          })
+        );
+
+      if (error) {
+        throw error;
+      }
+
+      state.user =
+        data.user || state.user;
+      clearPasswordFields();
+      setAccountStatus(
+        "Password changed successfully."
+      );
+    } catch (error) {
+      console.error(
+        "Could not change password:",
+        error
+      );
+      setAccountStatus(
+        getFriendlyAuthError(
+          error,
+          "Password could not be changed."
+        ),
+        true
+      );
+    } finally {
+      setAccountBusy(false);
+    }
+  }
+
+  async function sendPasswordResetEmail() {
+    const email =
+      readEmailInput(elements.signInEmail);
+
+    if (!email) {
+      return;
+    }
+
+    setAccountBusy(true);
+    setAccountStatus(
+      "Sending password-reset email…"
+    );
+
+    try {
+      const { error } =
+        await runAuthRequest(() =>
+          supabaseClient.auth
+            .resetPasswordForEmail(
+              email,
+              {
+                redirectTo:
+                  getAuthRedirectUrl()
+              }
+            )
+        );
+
+      if (error) {
+        throw error;
+      }
+
+      setAccountStatus(
+        "Check your email for a password-reset link."
+      );
+    } catch (error) {
+      console.error(
+        "Could not send reset email:",
+        error
+      );
+      setAccountStatus(
+        getFriendlyAuthError(
+          error,
+          "The reset email could not be sent."
+        ),
+        true
+      );
+    } finally {
+      setAccountBusy(false);
+    }
+  }
+
+  async function completePasswordRecovery() {
+    const password = readPasswordPair(
+      elements.recoveryPassword,
+      elements.recoveryPasswordConfirm
+    );
+
+    if (!password) {
+      return;
+    }
+
+    setAccountBusy(true);
+    setAccountStatus(
+      "Saving new password…"
+    );
+
+    try {
+      const currentMetadata =
+        state.user?.user_metadata || {};
+      const { data, error } =
+        await runAuthRequest(() =>
+          supabaseClient.auth.updateUser({
+            password,
+            data: {
+              ...currentMetadata,
+              account_setup_stage:
+                "complete",
+              password_setup_complete: true
+            }
+          })
+        );
+
+      if (error) {
+        throw error;
+      }
+
+      state.user =
+        data.user || state.user;
+      state.recoveryMode = false;
+      clearPasswordFields();
+      setAccountStatus(
+        "Password reset successfully."
+      );
+      updateAccountUI();
+    } catch (error) {
+      console.error(
+        "Could not reset password:",
+        error
+      );
+      setAccountStatus(
+        getFriendlyAuthError(
+          error,
+          "Password could not be reset."
+        ),
+        true
+      );
+    } finally {
+      setAccountBusy(false);
+    }
+  }
+
+  async function signOutAccount() {
+    setAccountBusy(true);
+    setAccountStatus("Signing out…");
+
+    try {
+      const { error: signOutError } =
+        await supabaseClient.auth.signOut();
+
+      if (signOutError) {
+        throw signOutError;
+      }
+
+      const { data, error } =
+        await supabaseClient.auth
+          .signInAnonymously();
+
+      if (error) {
+        throw error;
+      }
+
+      state.user = data.user;
+      state.profile = null;
+      state.recoveryMode = false;
+      state.accountMode = "create";
+      localStorage.removeItem(
+        "triviaRushPlayerName"
+      );
+
+      await loadPlayerProfile();
+      clearPasswordFields();
+      setAccountStatus(
+        "Signed out. You are now playing as a guest."
+      );
+      updateAccountUI();
+    } catch (error) {
+      console.error(
+        "Could not sign out:",
+        error
+      );
+      setAccountStatus(
+        getFriendlyAuthError(
+          error,
+          "Could not sign out."
+        ),
+        true
+      );
+    } finally {
+      setAccountBusy(false);
     }
   }
 
@@ -247,45 +1420,337 @@
       .join("");
   }
 
-  function bindEvents() {
-    elements.startButton.addEventListener("click", beginCountdown);
-    elements.playAgainButton.addEventListener("click", beginCountdown);
-    elements.homeButton.addEventListener("click", showHome);
-    elements.passButton.addEventListener("click", passQuestion);
-    elements.voiceButton.addEventListener("click", toggleVoiceRecognition);
-    elements.soundToggle.addEventListener("click", toggleSound);
-    elements.hostToggle.addEventListener("click", toggleHost);
-    elements.howToButton.addEventListener("click", () => elements.howToDialog.showModal());
-    elements.closeDialogButton.addEventListener("click", () => elements.howToDialog.close());
+  // Phase 3: the leaderboard category filters are generated from the same
+  // question bank that populates the start-screen select, so the stored
+  // game_sessions.category values and the filter buttons can never drift
+  // apart. "Overall" is the unfiltered board and "Mixed" surfaces games
+  // played with the "All categories" option, which are saved as "mixed".
+  function buildLeaderboardCategoryFilters() {
+    if (!elements.leaderboardCategoryFilters) {
+      return;
+    }
 
-    elements.howToDialog.addEventListener("click", (event) => {
-      if (event.target === elements.howToDialog) {
-        elements.howToDialog.close();
+    const questionCategories = [
+      ...new Set(
+        QUESTIONS.map(
+          (question) => question.category
+        )
+      )
+    ].sort();
+
+    const categories = [
+      { id: "overall", label: "Overall" },
+      { id: "mixed", label: "Mixed" }
+    ];
+
+    questionCategories.forEach((category) => {
+      const id = category.trim().toLowerCase();
+
+      if (
+        !categories.some(
+          (existing) => existing.id === id
+        )
+      ) {
+        categories.push({
+          id,
+          label: category
+        });
       }
     });
 
-    document.addEventListener("keydown", handleKeyboard);
+    state.leaderboardCategories = categories;
+
+    if (
+      !categories.some(
+        (category) =>
+          category.id ===
+          state.leaderboardCategory
+      )
+    ) {
+      state.leaderboardCategory = "overall";
+    }
+
+    elements.leaderboardCategoryFilters
+      .replaceChildren();
+
+    categories.forEach((category) => {
+      const button =
+        document.createElement("button");
+
+      button.type = "button";
+      button.className = "leaderboard-filter";
+      button.dataset.leaderboardCategory =
+        category.id;
+      button.setAttribute(
+        "aria-pressed",
+        "false"
+      );
+      button.textContent = category.label;
+
+      button.addEventListener(
+        "click",
+        () => {
+          setLeaderboardCategory(
+            category.id
+          );
+        }
+      );
+
+      elements.leaderboardCategoryFilters
+        .appendChild(button);
+    });
+  }
+
+  function getLeaderboardCategoryButtons() {
+    return [
+      ...(
+        elements.leaderboardCategoryFilters
+          ?.querySelectorAll(
+            "[data-leaderboard-category]"
+          ) ?? []
+      )
+    ];
+  }
+  function bindEvents() {
+    elements.startButton?.addEventListener(
+      "click",
+      beginCountdown
+    );
+    elements.playAgainButton?.addEventListener(
+      "click",
+      beginCountdown
+    );
+    elements.homeButton?.addEventListener(
+      "click",
+      showHome
+    );
+    elements.passButton?.addEventListener(
+      "click",
+      passQuestion
+    );
+    elements.voiceButton?.addEventListener(
+      "click",
+      toggleVoiceRecognition
+    );
+    elements.soundToggle?.addEventListener(
+      "click",
+      toggleSound
+    );
+    elements.hostToggle?.addEventListener(
+      "click",
+      toggleHost
+    );
+
+    elements.leaderboardButton
+      ?.addEventListener(
+        "click",
+        openLeaderboard
+      );
+    elements.resultsLeaderboardButton
+      ?.addEventListener(
+        "click",
+        openLeaderboard
+      );
+    elements.closeLeaderboardButton
+      ?.addEventListener(
+        "click",
+        closeLeaderboard
+      );
+    elements.leaderboardRetryButton
+      ?.addEventListener(
+        "click",
+        loadLeaderboard
+      );
+
+    elements.leaderboardPeriodButtons
+      .forEach((button) => {
+        button.addEventListener(
+          "click",
+          () => {
+            setLeaderboardPeriod(
+              button.dataset
+                .leaderboardPeriod
+            );
+          }
+        );
+      });
+
+    elements.retrySaveButton
+      ?.addEventListener(
+        "click",
+        () => {
+          void saveGameResult();
+        }
+      );
+
+    elements.accountButton?.addEventListener(
+      "click",
+      () => openAccountDialog(true)
+    );
+    elements.closeAccountDialogButton
+      ?.addEventListener(
+        "click",
+        closeAccountDialog
+      );
+    elements.showCreateAccountButton
+      ?.addEventListener(
+        "click",
+        () => setAccountMode("create")
+      );
+    elements.showSignInButton
+      ?.addEventListener(
+        "click",
+        () => setAccountMode("signin")
+      );
+    elements.createAccountButton
+      ?.addEventListener(
+        "click",
+        createAccount
+      );
+    elements.signInButton
+      ?.addEventListener(
+        "click",
+        signInToAccount
+      );
+    elements.forgotPasswordButton
+      ?.addEventListener(
+        "click",
+        sendPasswordResetEmail
+      );
+    elements.finishAccountSetupButton
+      ?.addEventListener(
+        "click",
+        finishAccountSetup
+      );
+    elements.saveUsernameButton
+      ?.addEventListener(
+        "click",
+        saveUsername
+      );
+    elements.changePasswordButton
+      ?.addEventListener(
+        "click",
+        changePassword
+      );
+    elements.completeRecoveryButton
+      ?.addEventListener(
+        "click",
+        completePasswordRecovery
+      );
+    elements.signOutButton
+      ?.addEventListener(
+        "click",
+        signOutAccount
+      );
+
+    elements.accountDialog?.addEventListener(
+      "click",
+      (event) => {
+        if (
+          event.target ===
+          elements.accountDialog
+        ) {
+          closeAccountDialog();
+        }
+      }
+    );
+
+    elements.howToButton?.addEventListener(
+      "click",
+      () => {
+        elements.howToDialog?.showModal();
+      }
+    );
+    elements.closeDialogButton
+      ?.addEventListener(
+        "click",
+        () => {
+          elements.howToDialog?.close();
+        }
+      );
+    elements.howToDialog?.addEventListener(
+      "click",
+      (event) => {
+        if (
+          event.target ===
+          elements.howToDialog
+        ) {
+          elements.howToDialog.close();
+        }
+      }
+    );
+
+    document.addEventListener(
+      "keydown",
+      handleKeyboard
+    );
   }
 
   function showScreen(screen) {
-    elements.screens.forEach((item) => item.classList.toggle("active", item === screen));
+    elements.screens.forEach((item) => {
+      item.classList.toggle(
+        "active",
+        item === screen
+      );
+    });
+
+    const gameIsRunning =
+      screen === elements.gameScreen ||
+      screen === elements.countdownScreen;
+
+    if (elements.leaderboardButton) {
+      elements.leaderboardButton.disabled =
+        gameIsRunning;
+    }
+
+    if (elements.accountButton) {
+      elements.accountButton.disabled =
+        gameIsRunning;
+    }
   }
 
   async function beginCountdown() {
-    state.selectedCategory = elements.categorySelect.value;
+    const profileReady =
+      await ensurePlayerProfile();
+
+    if (!profileReady) {
+      return;
+    }
+
+    state.selectedCategory =
+      elements.categorySelect.value;
+
     resetGame();
-    showScreen(elements.countdownScreen);
+
+    showScreen(
+      elements.countdownScreen
+    );
 
     stopSpeaking();
+
     if (state.hostEnabled) {
       speak("Get ready.");
     }
 
-    const values = ["3", "2", "1", "GO!"];
+    const values = [
+      "3",
+      "2",
+      "1",
+      "GO!"
+    ];
+
     for (const value of values) {
-      elements.countdownNumber.textContent = value;
-      playTone(value === "GO!" ? 660 : 440, value === "GO!" ? 0.16 : 0.09);
-      await wait(value === "GO!" ? 450 : 650);
+      elements.countdownNumber.textContent =
+        value;
+
+      playTone(
+        value === "GO!" ? 660 : 440,
+        value === "GO!" ? 0.16 : 0.09
+      );
+
+      await wait(
+        value === "GO!" ? 450 : 650
+      );
     }
 
     startGame();
@@ -310,8 +1775,20 @@
     state.answered = 0;
     state.remainingMs = GAME_SECONDS * 1000;
     state.locked = false;
+    state.gameEnded = false;
     state.scoreSaved = false;
     state.responseTimes = [];
+
+    if (state.pendingQuestionTimer !== null) {
+      window.clearTimeout(
+        state.pendingQuestionTimer
+      );
+      state.pendingQuestionTimer = null;
+    }
+
+    if (elements.retrySaveButton) {
+      elements.retrySaveButton.hidden = true;
+    }
 
     updateHud();
 
@@ -354,6 +1831,8 @@
   }
 
   function nextQuestion() {
+    state.pendingQuestionTimer = null;
+
     if (state.remainingMs <= 0) {
       endGame();
       return;
@@ -527,10 +2006,11 @@
 
     updateHud();
 
-    window.setTimeout(
-      nextQuestion,
-      QUESTION_DELAY_MS
-    );
+    state.pendingQuestionTimer =
+      window.setTimeout(
+        nextQuestion,
+        QUESTION_DELAY_MS
+      );
   }
 
 
@@ -545,7 +2025,7 @@
     elements.feedback.className = "feedback";
     updateHud();
     playTone(260, 0.08);
-    window.setTimeout(nextQuestion, 320);
+    state.pendingQuestionTimer = window.setTimeout(nextQuestion, 320);
   }
 
   function updateHud() {
@@ -554,6 +2034,23 @@
   }
 
   async function endGame() {
+    // Phase 3: if the timer expires while a post-answer delay is still
+    // pending, both timerLoop and the delayed nextQuestion call used to run
+    // endGame, replaying the finish sound and overwriting the saved-result
+    // message. The guard and timer clear below make endGame run exactly once.
+    if (state.gameEnded) {
+      return;
+    }
+
+    state.gameEnded = true;
+
+    if (state.pendingQuestionTimer !== null) {
+      window.clearTimeout(
+        state.pendingQuestionTimer
+      );
+      state.pendingQuestionTimer = null;
+    }
+
     cancelAnimationFrame(state.timerFrame);
 
     state.timerFrame = null;
@@ -626,6 +2123,9 @@
     elements.resultMessage.textContent =
       resultCopy.message;
 
+    state.baseResultMessage =
+      resultCopy.message;
+
     elements.newHighScore.hidden =
       !isNewHighScore;
 
@@ -637,7 +2137,7 @@
 
     await saveGameResult();
 
-    await loadLeaderboard();
+    state.leaderboardRows = [];
 
     if (state.hostEnabled) {
       speak(
@@ -656,8 +2156,9 @@
         "The result was not saved because no player is signed in."
       );
 
-      elements.resultMessage.textContent +=
-        " Your result could not be saved because no player account was available.";
+      setResultSaveMessage(
+        "Your result could not be saved because no player account was available."
+      );
 
       return;
     }
@@ -667,8 +2168,9 @@
         "The result was not saved because no questions were answered."
       );
 
-      elements.resultMessage.textContent +=
-        " No result was saved because no questions were answered.";
+      setResultSaveMessage(
+        "No result was saved because no questions were answered."
+      );
 
       return;
     }
@@ -695,38 +2197,32 @@
         ? "mixed"
         : state.selectedCategory;
 
+    const parameters = {
+      p_questions_answered:
+        state.answered,
+      p_correct_answers:
+        state.correct,
+      p_incorrect_answers:
+        incorrectAnswers,
+      p_score:
+        state.score,
+      p_best_streak:
+        state.bestStreak,
+      p_average_response_ms:
+        averageResponseMs,
+      p_duration_seconds:
+        GAME_SECONDS,
+      p_game_mode:
+        "rush_60",
+      p_category:
+        category
+    };
+
     try {
       const { error } =
         await supabaseClient.rpc(
           "submit_game_result",
-          {
-            p_questions_answered:
-              state.answered,
-
-            p_correct_answers:
-              state.correct,
-
-            p_incorrect_answers:
-              incorrectAnswers,
-
-            p_score:
-              state.score,
-
-            p_best_streak:
-              state.bestStreak,
-
-            p_average_response_ms:
-              averageResponseMs,
-
-            p_duration_seconds:
-              GAME_SECONDS,
-
-            p_game_mode:
-              "rush_60",
-
-            p_category:
-              category
-          }
+          parameters
         );
 
       if (error) {
@@ -737,8 +2233,16 @@
         "Game result saved successfully."
       );
 
-      elements.resultMessage.textContent +=
-        " Your result was saved to the global leaderboard.";
+      state.leaderboardRows = [];
+
+      setResultSaveMessage(
+        "Your result was saved to the global leaderboard."
+      );
+
+      if (elements.retrySaveButton) {
+        elements.retrySaveButton.hidden =
+          true;
+      }
     } catch (error) {
       state.scoreSaved = false;
 
@@ -747,53 +2251,675 @@
         error
       );
 
-      elements.resultMessage.textContent +=
-        " Your result could not be saved to the global leaderboard.";
+      setResultSaveMessage(
+        "Your result could not be saved to the global leaderboard."
+      );
+
+      if (elements.retrySaveButton) {
+        elements.retrySaveButton.hidden =
+          false;
+      }
     }
   }
 
-  async function loadLeaderboard() {
-    try {
-      const { data, error } =
-        await supabaseClient
-          .from("leaderboard")
-          .select(`
-            leaderboard_rank,
-            display_name,
-            games_played,
-            total_questions,
-            total_correct,
-            total_incorrect,
-            accuracy_percent,
-            total_score,
-            high_score,
-            best_streak
-          `)
-          .order(
-            "leaderboard_rank",
-            { ascending: true }
-          )
-          .limit(20);
+  // Phase 3: the result message is rebuilt from the stored base copy so a
+  // failed save followed by a retry never stacks status sentences.
+  function setResultSaveMessage(suffix) {
+    if (!elements.resultMessage) {
+      return;
+    }
 
-      if (error) {
-        throw error;
+    elements.resultMessage.textContent =
+      `${state.baseResultMessage} ${suffix}`.trim();
+  }
+
+  async function loadLeaderboard() {
+    if (
+      !elements.leaderboardList ||
+      !elements.leaderboardStatus
+    ) {
+      return [];
+    }
+
+    const requestId =
+      state.leaderboardRequestId + 1;
+
+    state.leaderboardRequestId =
+      requestId;
+
+    setLeaderboardLoadingState();
+    updateLeaderboardFilterButtons();
+
+    const parameters = {
+      p_period:
+        state.leaderboardPeriod,
+      p_category:
+        state.leaderboardCategory,
+      p_limit:
+        20
+    };
+
+    try {
+      const [
+        leaderboardResponse,
+        playerRankResponse
+      ] = await Promise.all([
+        supabaseClient.rpc(
+          "get_leaderboard_v2",
+          parameters
+        ),
+        supabaseClient.rpc(
+          "get_my_leaderboard_rank_v2",
+          {
+            p_period:
+              state.leaderboardPeriod,
+            p_category:
+              state.leaderboardCategory
+          }
+        )
+      ]);
+
+      if (
+        requestId !==
+        state.leaderboardRequestId
+      ) {
+        return [];
       }
 
-      console.log(
-        "Global leaderboard loaded successfully."
-      );
+      if (leaderboardResponse.error) {
+        throw leaderboardResponse.error;
+      }
 
-      console.table(data);
+      const rows =
+        Array.isArray(
+          leaderboardResponse.data
+        )
+          ? leaderboardResponse.data
+          : [];
 
-      return data;
+      state.leaderboardRows =
+        rows;
+
+      renderLeaderboard(rows);
+
+      if (playerRankResponse.error) {
+        console.warn(
+          "Could not load the current player's rank:",
+          playerRankResponse.error
+        );
+
+        renderCurrentPlayerRank(null);
+      } else {
+        const playerRank =
+          Array.isArray(
+            playerRankResponse.data
+          )
+            ? playerRankResponse.data[0] ||
+              null
+            : playerRankResponse.data ||
+              null;
+
+        renderCurrentPlayerRank(
+          playerRank
+        );
+      }
+
+      return rows;
     } catch (error) {
+      if (
+        requestId !==
+        state.leaderboardRequestId
+      ) {
+        return [];
+      }
+
       console.error(
         "Could not load the global leaderboard:",
         error
       );
 
+      setLeaderboardErrorState(
+        getLeaderboardErrorMessage(
+          error
+        )
+      );
+
       return [];
     }
+  }
+
+
+  function openLeaderboard() {
+    if (!elements.leaderboardScreen) {
+      return;
+    }
+
+    const activeScreen =
+      elements.screens.find(
+        (screen) =>
+          screen.classList.contains(
+            "active"
+          )
+      );
+
+    if (
+      activeScreen ===
+        elements.gameScreen ||
+      activeScreen ===
+        elements.countdownScreen
+    ) {
+      return;
+    }
+
+    if (
+      activeScreen &&
+      activeScreen !==
+        elements.leaderboardScreen
+    ) {
+      state.leaderboardReturnScreen =
+        activeScreen;
+    }
+
+    showScreen(
+      elements.leaderboardScreen
+    );
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+    void loadLeaderboard();
+  }
+
+
+  function closeLeaderboard() {
+    const returnScreen =
+      state.leaderboardReturnScreen &&
+      document.body.contains(
+        state.leaderboardReturnScreen
+      )
+        ? state.leaderboardReturnScreen
+        : elements.startScreen;
+
+    state.leaderboardReturnScreen =
+      null;
+
+    showScreen(returnScreen);
+  }
+
+
+  function setLeaderboardPeriod(period) {
+    const allowedPeriods =
+      new Set([
+        "all",
+        "week",
+        "today"
+      ]);
+
+    const nextPeriod =
+      allowedPeriods.has(period)
+        ? period
+        : "all";
+
+    if (
+      state.leaderboardPeriod ===
+      nextPeriod
+    ) {
+      return;
+    }
+
+    state.leaderboardPeriod =
+      nextPeriod;
+
+    updateLeaderboardFilterButtons();
+    void loadLeaderboard();
+  }
+
+
+  function setLeaderboardCategory(
+    category
+  ) {
+    const allowedCategories = new Set(
+      state.leaderboardCategories.map(
+        (item) => item.id
+      )
+    );
+
+    const nextCategory =
+      allowedCategories.has(category)
+        ? category
+        : "overall";
+
+    if (
+      state.leaderboardCategory ===
+      nextCategory
+    ) {
+      return;
+    }
+
+    state.leaderboardCategory =
+      nextCategory;
+
+    updateLeaderboardFilterButtons();
+    void loadLeaderboard();
+  }
+
+
+  function updateLeaderboardFilterButtons() {
+    elements.leaderboardPeriodButtons
+      .forEach((button) => {
+        const active =
+          button.dataset
+            .leaderboardPeriod ===
+          state.leaderboardPeriod;
+
+        button.classList.toggle(
+          "active",
+          active
+        );
+
+        button.setAttribute(
+          "aria-pressed",
+          String(active)
+        );
+      });
+
+    getLeaderboardCategoryButtons()
+      .forEach((button) => {
+        const active =
+          button.dataset
+            .leaderboardCategory ===
+          state.leaderboardCategory;
+
+        button.classList.toggle(
+          "active",
+          active
+        );
+
+        button.setAttribute(
+          "aria-pressed",
+          String(active)
+        );
+      });
+
+    if (
+      elements.leaderboardFilterSummary
+    ) {
+      elements.leaderboardFilterSummary
+        .textContent =
+          getLeaderboardFilterSummary();
+    }
+  }
+
+
+  function getLeaderboardFilterSummary() {
+    const periodLabels = {
+      all: "All-time",
+      week: "This week's",
+      today: "Today's"
+    };
+
+    const category =
+      state.leaderboardCategories.find(
+        (item) =>
+          item.id ===
+          state.leaderboardCategory
+      );
+
+    const categoryLabel =
+      state.leaderboardCategory ===
+      "overall"
+        ? "overall"
+        : category?.label ??
+          state.leaderboardCategory;
+
+    return `${
+      periodLabels[
+        state.leaderboardPeriod
+      ]
+    } ${categoryLabel} rankings`;
+  }
+
+
+  function setLeaderboardLoadingState() {
+    elements.leaderboardList
+      .replaceChildren();
+
+    elements.leaderboardStatus
+      .textContent =
+        "Loading leaderboard…";
+
+    elements.leaderboardStatus
+      .className =
+        "leaderboard-status loading";
+
+    if (
+      elements.leaderboardRetryButton
+    ) {
+      elements.leaderboardRetryButton
+        .hidden = true;
+    }
+
+    if (elements.currentPlayerRank) {
+      elements.currentPlayerRank.hidden =
+        true;
+    }
+  }
+
+
+  function setLeaderboardErrorState(
+    message
+  ) {
+    elements.leaderboardList
+      .replaceChildren();
+
+    elements.leaderboardStatus
+      .textContent = message;
+
+    elements.leaderboardStatus
+      .className =
+        "leaderboard-status error";
+
+    if (
+      elements.leaderboardRetryButton
+    ) {
+      elements.leaderboardRetryButton
+        .hidden = false;
+    }
+
+    if (elements.currentPlayerRank) {
+      elements.currentPlayerRank.hidden =
+        true;
+    }
+  }
+
+
+  function renderLeaderboard(rows) {
+    elements.leaderboardList
+      .replaceChildren();
+
+    if (rows.length === 0) {
+      elements.leaderboardStatus
+        .textContent =
+          "No scores have been recorded for these filters yet.";
+
+      elements.leaderboardStatus
+        .className =
+          "leaderboard-status empty";
+
+      return;
+    }
+
+    const fragment =
+      document.createDocumentFragment();
+
+    rows.forEach((row) => {
+      fragment.appendChild(
+        createLeaderboardRow(row)
+      );
+    });
+
+    elements.leaderboardList
+      .appendChild(fragment);
+
+    elements.leaderboardStatus
+      .textContent =
+        `Showing the top ${
+          rows.length
+        } player${
+          rows.length === 1 ? "" : "s"
+        }.`;
+
+    elements.leaderboardStatus
+      .className =
+        "leaderboard-status success";
+
+    if (
+      elements.leaderboardRetryButton
+    ) {
+      elements.leaderboardRetryButton
+        .hidden = true;
+    }
+  }
+
+
+  function createLeaderboardRow(row) {
+    const article =
+      document.createElement("article");
+
+    const isCurrentPlayer =
+      row.is_current_player === true ||
+      (
+        Number(
+          row.account_number
+        ) ===
+        Number(
+          state.profile
+            ?.account_number
+        )
+      );
+
+    article.className =
+      isCurrentPlayer
+        ? "leaderboard-row current-player"
+        : "leaderboard-row";
+
+    if (isCurrentPlayer) {
+      article.setAttribute(
+        "aria-current",
+        "true"
+      );
+    }
+
+    const rank =
+      formatLeaderboardInteger(
+        row.leaderboard_rank
+      );
+
+    const playerName =
+      escapeHtml(
+        row.display_name ||
+        "Unknown player"
+      );
+
+    const identifier =
+      escapeHtml(
+        formatAccountIdentifier(
+          row.account_number
+        )
+      );
+
+    const highScore =
+      formatLeaderboardInteger(
+        row.high_score
+      );
+
+    const accuracy =
+      formatLeaderboardPercent(
+        row.accuracy_percent
+      );
+
+    const streak =
+      formatLeaderboardInteger(
+        row.best_streak
+      );
+
+    const gamesPlayed =
+      formatLeaderboardInteger(
+        row.games_played
+      );
+
+    article.innerHTML = `
+      <span class="leaderboard-cell leaderboard-rank" data-label="Rank">
+        #${rank}
+      </span>
+
+      <span class="leaderboard-cell leaderboard-player" data-label="Player">
+        <strong>${playerName}</strong>
+        <small>${gamesPlayed} game${Number(row.games_played) === 1 ? "" : "s"}</small>
+      </span>
+
+      <span class="leaderboard-cell leaderboard-id" data-label="ID">
+        ${identifier}
+      </span>
+
+      <span class="leaderboard-cell leaderboard-score" data-label="High score">
+        ${highScore}
+      </span>
+
+      <span class="leaderboard-cell" data-label="Accuracy">
+        ${accuracy}
+      </span>
+
+      <span class="leaderboard-cell" data-label="Streak">
+        ${streak}
+      </span>
+    `;
+
+    return article;
+  }
+
+
+  function renderCurrentPlayerRank(row) {
+    if (!elements.currentPlayerRank) {
+      return;
+    }
+
+    if (!state.profile) {
+      elements.currentPlayerRank.hidden =
+        true;
+      elements.currentPlayerRank
+        .replaceChildren();
+      return;
+    }
+
+    elements.currentPlayerRank.hidden =
+      false;
+
+    const identifier =
+      escapeHtml(
+        formatAccountIdentifier(
+          state.profile.account_number
+        )
+      );
+
+    const playerName =
+      escapeHtml(
+        state.profile.display_name ||
+        "Current player"
+      );
+
+    if (!row) {
+      elements.currentPlayerRank
+        .innerHTML = `
+          <div>
+            <span>Your rank</span>
+            <strong>Unranked</strong>
+          </div>
+
+          <p>
+            ${playerName} ${identifier} has no score for the selected filters yet.
+          </p>
+        `;
+
+      return;
+    }
+
+    elements.currentPlayerRank
+      .innerHTML = `
+        <div>
+          <span>Your rank</span>
+          <strong>#${formatLeaderboardInteger(row.leaderboard_rank)}</strong>
+        </div>
+
+        <p>
+          ${playerName} ${identifier} ·
+          ${formatLeaderboardInteger(row.high_score)} high score ·
+          ${formatLeaderboardPercent(row.accuracy_percent)} accuracy ·
+          ${formatLeaderboardInteger(row.best_streak)} streak
+        </p>
+      `;
+  }
+
+
+  function formatLeaderboardInteger(
+    value
+  ) {
+    const number =
+      Number(value);
+
+    return Number.isFinite(number)
+      ? Math.round(number)
+          .toLocaleString()
+      : "0";
+  }
+
+
+  function formatLeaderboardPercent(
+    value
+  ) {
+    const number =
+      Number(value);
+
+    return Number.isFinite(number)
+      ? `${number.toFixed(1)}%`
+      : "0.0%";
+  }
+
+
+  function isMissingRpcError(
+    error,
+    functionName
+  ) {
+    const message =
+      String(
+        error?.message ||
+        error?.details ||
+        error ||
+        ""
+      ).toLowerCase();
+
+    return (
+      error?.code === "PGRST202" ||
+      error?.code === "42883" ||
+      (
+        message.includes(
+          functionName.toLowerCase()
+        ) &&
+        (
+          message.includes(
+            "not find"
+          ) ||
+          message.includes(
+            "does not exist"
+          ) ||
+          message.includes(
+            "schema cache"
+          )
+        )
+      )
+    );
+  }
+
+
+  function getLeaderboardErrorMessage(
+    error
+  ) {
+    if (
+      isMissingRpcError(
+        error,
+        "get_leaderboard_v2"
+      )
+    ) {
+      return "Leaderboard setup is incomplete. The site owner needs to run the Phase 2 Supabase SQL migration.";
+    }
+
+    if (isNetworkLoadError(error)) {
+      return "The leaderboard could not be reached. Open Trivia Rush directly in Safari or Chrome and try again.";
+    }
+
+    return "The leaderboard could not be loaded. Try again in a moment.";
   }
 
   function showHome() {
@@ -809,17 +2935,30 @@
     elements.startHighScore.textContent = readNumber("triviaRushHighScore").toLocaleString();
     elements.startBestStreak.textContent = String(readNumber("triviaRushBestStreak"));
   }
-
   function handleKeyboard(event) {
-    if (!elements.gameScreen.classList.contains("active")) {
+    if (
+      elements.accountDialog?.open ||
+      elements.howToDialog?.open
+    ) {
+      return;
+    }
+
+    if (
+      !elements.gameScreen.classList
+        .contains("active")
+    ) {
       return;
     }
 
     if (["1", "2", "3"].includes(event.key)) {
       selectAnswer(Number(event.key) - 1);
-    } else if (event.key.toLowerCase() === "p") {
+    } else if (
+      event.key.toLowerCase() === "p"
+    ) {
       passQuestion();
-    } else if (event.key.toLowerCase() === "v") {
+    } else if (
+      event.key.toLowerCase() === "v"
+    ) {
       toggleVoiceRecognition();
     }
   }
