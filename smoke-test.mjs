@@ -15,17 +15,23 @@ const { window } = dom;
 // --- Stubs the real page gets from CDN scripts ---
 const rpcCalls = [];
 const categories = [
-  ["science", "Science"],
-  ["history", "History"],
-  ["geography", "Geography"],
-  ["entertainment", "Entertainment"],
-  ["sport", "Sport"],
-  ["technology", "Technology"],
-  ["gaming", "Gaming"]
-].map(([category_id, label]) => ({
+  ["science", "Science", "flask", "#41E28C"],
+  ["history", "History", "landmark", "#FFD54A"],
+  ["geography", "Geography", "globe", "#3EE7DB"],
+  ["entertainment", "Entertainment", "film", "#FF4F9B"],
+  ["sport", "Sport", "trophy", "#FF8A4C"],
+  ["technology", "Technology", "cpu", "#7C83FF"],
+  ["gaming", "Gaming", "gamepad", "#B66CFF"],
+  ["food_drink", "Food & Drink", "utensils", "#FFB347"],
+  ["nature_animals", "Nature & Animals", "paw", "#62D26F"],
+  ["art_literature", "Art & Literature", "palette_book", "#F47CD4"]
+].map(([category_id, label, icon_key, color], index) => ({
   category_id,
   label,
-  question_count: 100
+  question_count: 100,
+  icon_key,
+  color,
+  sort_order: (index + 1) * 10
 }));
 
 window.supabase = {
@@ -117,7 +123,16 @@ assert("filters include overall", ids.includes("overall"));
 assert("filters include mixed", ids.includes("mixed"));
 assert("filters include science", ids.includes("science"));
 assert("filters include history", ids.includes("history"));
-for (const cat of ["geography", "entertainment", "sport", "technology", "gaming"]) {
+for (const cat of [
+  "geography",
+  "entertainment",
+  "sport",
+  "technology",
+  "gaming",
+  "food_drink",
+  "nature_animals",
+  "art_literature"
+]) {
   assert(`filters include ${cat}`, ids.includes(cat));
 }
 assert("no duplicate science button", ids.filter((i) => i === "science").length === 1);
@@ -150,7 +165,12 @@ const options = [
 ].map((o) => o.value);
 assert(
   "game select and filters share the category source",
-  options.includes("science") && options.includes("technology") && options.includes("gaming")
+  options.includes("science") &&
+    options.includes("technology") &&
+    options.includes("gaming") &&
+    options.includes("food_drink") &&
+    options.includes("nature_animals") &&
+    options.includes("art_literature")
 );
 assert("question bank RPC called", rpcCalls.some((c) => c.name === "get_question_categories"));
 assert("start enabled after complete bank loads", window.document.querySelector("#startButton")?.disabled === false);

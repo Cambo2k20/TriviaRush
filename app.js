@@ -1482,15 +1482,20 @@
       .map((category) => ({
         id: String(category.category_id || "").trim().toLowerCase(),
         label: String(category.label || "").trim(),
-        questionCount: Number(category.question_count || 0)
+        questionCount: Number(category.question_count || 0),
+        iconKey: String(category.icon_key || "").trim().toLowerCase(),
+        color: String(category.color || "").trim().toUpperCase(),
+        sortOrder: Number(category.sort_order || 0)
       }))
       .filter((category) =>
-        category.id && category.label && category.questionCount > 0
+        category.id &&
+        category.label &&
+        category.questionCount >= 80
       );
 
-    if (categories.length !== 7) {
+    if (categories.length === 0) {
       setStartStatus(
-        "The question bank is incomplete. Trivia Rush requires seven active categories.",
+        "The question bank is incomplete. Each active category needs at least 80 questions.",
         true
       );
       return;

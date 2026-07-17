@@ -342,15 +342,6 @@
     "genome"
   ],
   [
-    "science-039",
-    "easy",
-    "Which animal group feeds its young with milk?",
-    "Mammals",
-    "Reptiles",
-    "Amphibians",
-    "smithsonian_science"
-  ],
-  [
     "science-040",
     "easy",
     "In plant cells, which structures carry out photosynthesis?",
@@ -358,6 +349,15 @@
     "Ribosomes",
     "Lysosomes",
     "smithsonian_science"
+  ],
+  [
+    "science-101",
+    "easy",
+    "Which subatomic particle carries a negative electric charge?",
+    "Electron",
+    "Proton",
+    "Neutron",
+    "rsc_periodic"
   ],
   [
     "science-041",

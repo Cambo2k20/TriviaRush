@@ -1,0 +1,902 @@
+[
+  [
+    "nature_animals-001",
+    "easy",
+    "Which is the largest living land animal?",
+    "African bush elephant",
+    "White rhinoceros",
+    "Hippopotamus",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-002",
+    "easy",
+    "Which animal is the fastest runner on land?",
+    "Cheetah",
+    "Lion",
+    "Greyhound",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-003",
+    "easy",
+    "Which is the largest animal known to have lived?",
+    "Blue whale",
+    "African elephant",
+    "Whale shark",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-004",
+    "easy",
+    "Which black-and-white bear eats a diet dominated by bamboo?",
+    "Giant panda",
+    "Polar bear",
+    "Sun bear",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-005",
+    "easy",
+    "Which mammals are capable of true sustained flight?",
+    "Bats",
+    "Flying squirrels",
+    "Sugar gliders",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-006",
+    "easy",
+    "A frog belongs to which vertebrate group?",
+    "Amphibians",
+    "Reptiles",
+    "Mammals",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-007",
+    "easy",
+    "A snake belongs to which vertebrate group?",
+    "Reptiles",
+    "Amphibians",
+    "Fish",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-008",
+    "easy",
+    "How many arms does a typical octopus have?",
+    "Eight",
+    "Six",
+    "Ten",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-009",
+    "easy",
+    "How many walking legs does a spider have?",
+    "Eight",
+    "Six",
+    "Ten",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-010",
+    "easy",
+    "How many legs does an adult insect normally have?",
+    "Six",
+    "Eight",
+    "Four",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-011",
+    "easy",
+    "A penguin belongs to which animal class?",
+    "Birds",
+    "Mammals",
+    "Reptiles",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-012",
+    "easy",
+    "A dolphin belongs to which animal class?",
+    "Mammals",
+    "Fish",
+    "Amphibians",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-013",
+    "easy",
+    "What type of skeleton do sharks have?",
+    "A skeleton made mainly of cartilage",
+    "A bony internal skeleton",
+    "A hard external shell",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-014",
+    "easy",
+    "When bees carry pollen between flowers, which process do they assist?",
+    "Pollination",
+    "Germination",
+    "Decomposition",
+    "usgs_ecosystems"
+  ],
+  [
+    "nature_animals-015",
+    "easy",
+    "Koalas are native to which country?",
+    "Australia",
+    "India",
+    "Brazil",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-016",
+    "easy",
+    "Polar bears live naturally in which polar region?",
+    "The Arctic",
+    "Antarctica",
+    "Both polar regions",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-017",
+    "easy",
+    "What is stored in a camel's hump?",
+    "Fat",
+    "Water",
+    "Air",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-018",
+    "easy",
+    "Which is the tallest living land animal?",
+    "Giraffe",
+    "African elephant",
+    "Ostrich",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-019",
+    "easy",
+    "Which bird is especially associated with nocturnal hunting and silent flight?",
+    "Owl",
+    "Pelican",
+    "Flamingo",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-020",
+    "easy",
+    "Which body structure protects a tortoise?",
+    "A shell",
+    "A pouch",
+    "A mane",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-021",
+    "easy",
+    "A kangaroo belongs to which mammal group?",
+    "Marsupials",
+    "Monotremes",
+    "Primates",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-022",
+    "easy",
+    "Which feature is most characteristic of an adult male lion?",
+    "A mane",
+    "Antlers",
+    "Stripes",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-023",
+    "easy",
+    "What is a social group of wolves commonly called?",
+    "A pack",
+    "A pride",
+    "A pod",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-024",
+    "easy",
+    "What is the aquatic larval stage of a frog called?",
+    "Tadpole",
+    "Nymph",
+    "Chick",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-025",
+    "easy",
+    "A caterpillar is the larval stage of which animal?",
+    "A butterfly or moth",
+    "A beetle only",
+    "A dragonfly",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-026",
+    "easy",
+    "Many salmon migrate between the ocean and what other environment?",
+    "Freshwater rivers",
+    "Dry deserts",
+    "Mountain caves",
+    "usgs_ecosystems"
+  ],
+  [
+    "nature_animals-027",
+    "easy",
+    "Corals are colonies of what kind of organism?",
+    "Animals",
+    "Plants",
+    "Fungi",
+    "noaa_facts"
+  ],
+  [
+    "nature_animals-028",
+    "easy",
+    "Which plant catches insects using snap-shut leaves?",
+    "Venus flytrap",
+    "Sunflower",
+    "Foxglove",
+    "kew_plants"
+  ],
+  [
+    "nature_animals-029",
+    "easy",
+    "In which structures do most cacti store water?",
+    "Thick stems",
+    "Flowers",
+    "Spines",
+    "kew_plants"
+  ],
+  [
+    "nature_animals-030",
+    "easy",
+    "What do deciduous trees characteristically do?",
+    "Shed their leaves seasonally",
+    "Produce cones only",
+    "Grow without roots",
+    "kew_plants"
+  ],
+  [
+    "nature_animals-031",
+    "easy",
+    "Which reproductive structures are typical of conifers?",
+    "Cones",
+    "Pods",
+    "Bulbs",
+    "kew_plants"
+  ],
+  [
+    "nature_animals-032",
+    "easy",
+    "Which green pigment captures light energy in plants?",
+    "Chlorophyll",
+    "Melanin",
+    "Keratin",
+    "kew_plants"
+  ],
+  [
+    "nature_animals-033",
+    "easy",
+    "Which plant organs absorb most water and minerals from soil?",
+    "Roots",
+    "Flowers",
+    "Fruits",
+    "kew_plants"
+  ],
+  [
+    "nature_animals-034",
+    "easy",
+    "Which biome is characterised by high rainfall and dense tree growth?",
+    "Rainforest",
+    "Tundra",
+    "Desert",
+    "usgs_ecosystems"
+  ],
+  [
+    "nature_animals-035",
+    "easy",
+    "Which biome is dominated by grasses with scattered trees?",
+    "Savanna",
+    "Taiga",
+    "Ice cap",
+    "usgs_ecosystems"
+  ],
+  [
+    "nature_animals-036",
+    "easy",
+    "Which condition chiefly defines a desert?",
+    "Very low precipitation",
+    "Permanent ice cover",
+    "Constant strong wind",
+    "usgs_ecosystems"
+  ],
+  [
+    "nature_animals-037",
+    "easy",
+    "Mushrooms belong to which kingdom?",
+    "Fungi",
+    "Plants",
+    "Animals",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-038",
+    "easy",
+    "Through which structure does a whale breathe?",
+    "A blowhole",
+    "Gills",
+    "Its skin",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-039",
+    "easy",
+    "Which feature is unique to birds among living animals?",
+    "Feathers",
+    "Wings",
+    "Beaks",
+    "nhm_nature"
+  ],
+  [
+    "science-039",
+    "easy",
+    "Which animal group feeds its young with milk?",
+    "Mammals",
+    "Reptiles",
+    "Amphibians",
+    "smithsonian_science"
+  ],
+  [
+    "nature_animals-040",
+    "medium",
+    "The red panda is the only living member of which family?",
+    "Ailuridae",
+    "Ursidae",
+    "Procyonidae",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-041",
+    "medium",
+    "Which term describes an axolotl retaining larval features as an adult?",
+    "Neoteny",
+    "Mimicry",
+    "Hibernation",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-042",
+    "medium",
+    "Bats commonly navigate and hunt by interpreting returning what?",
+    "Sound echoes",
+    "Magnetic sparks",
+    "Ultraviolet shadows",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-043",
+    "medium",
+    "Approximately how long is an African elephant's pregnancy?",
+    "About 22 months",
+    "About 9 months",
+    "About 36 months",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-044",
+    "medium",
+    "The platypus belongs to which egg-laying mammal group?",
+    "Monotremes",
+    "Marsupials",
+    "Cetaceans",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-045",
+    "medium",
+    "Which other living mammal, besides the platypus, lays eggs?",
+    "Echidna",
+    "Wombat",
+    "Bandicoot",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-046",
+    "medium",
+    "Orangutans are native to which continent?",
+    "Asia",
+    "Africa",
+    "South America",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-047",
+    "medium",
+    "Gorillas are native to which continent?",
+    "Africa",
+    "Asia",
+    "South America",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-048",
+    "medium",
+    "Which pigments obtained from food contribute to a flamingo's pink colour?",
+    "Carotenoids",
+    "Melanins",
+    "Chlorophylls",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-049",
+    "medium",
+    "In emperor penguins, which parent incubates the single egg on its feet?",
+    "The male",
+    "The female",
+    "Both inside a nest",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-050",
+    "medium",
+    "In seahorses, which sex carries developing embryos in a pouch?",
+    "Male",
+    "Female",
+    "Neither",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-051",
+    "medium",
+    "How many hearts does an octopus have?",
+    "Three",
+    "One",
+    "Five",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-052",
+    "medium",
+    "What are the tooth-like scales covering shark skin called?",
+    "Dermal denticles",
+    "Osteoderms",
+    "Scutes",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-053",
+    "medium",
+    "How many chambers does a crocodilian heart have?",
+    "Four",
+    "Three",
+    "Two",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-054",
+    "medium",
+    "Besides a powerful bite, what biological weapon does a Komodo dragon use?",
+    "Venom",
+    "Electricity",
+    "Ink",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-055",
+    "medium",
+    "Which birds can sustain hovering flight and also fly backwards?",
+    "Hummingbirds",
+    "Swifts",
+    "Falcons",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-056",
+    "medium",
+    "Albatrosses conserve energy over oceans using which flight technique?",
+    "Dynamic soaring",
+    "Rapid hovering",
+    "Thermal diving",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-057",
+    "medium",
+    "A honeybee's waggle dance communicates information about what?",
+    "A food source's direction and distance",
+    "The queen's age",
+    "The hive's temperature only",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-058",
+    "medium",
+    "What helps many termites digest cellulose in wood?",
+    "Symbiotic gut microorganisms",
+    "Venom glands",
+    "Photosynthetic skin",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-059",
+    "medium",
+    "Which term describes ants living in cooperative colonies with specialised castes?",
+    "Eusocial",
+    "Solitary",
+    "Parasitic",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-060",
+    "medium",
+    "Monarch butterfly caterpillars feed mainly on which plants?",
+    "Milkweeds",
+    "Orchids",
+    "Mosses",
+    "usgs_ecosystems"
+  ],
+  [
+    "nature_animals-061",
+    "medium",
+    "A dragonfly's juvenile aquatic stage is called what?",
+    "A nymph",
+    "A grub",
+    "A polyp",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-062",
+    "medium",
+    "Squid, cuttlefish and octopuses belong to which mollusc class?",
+    "Cephalopods",
+    "Gastropods",
+    "Bivalves",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-063",
+    "medium",
+    "Which molluscs have shells made of two hinged parts?",
+    "Bivalves",
+    "Cephalopods",
+    "Gastropods",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-064",
+    "medium",
+    "Which specialised structures allow jellyfish and corals to sting?",
+    "Nematocysts",
+    "Nephrons",
+    "Spiracles",
+    "noaa_facts"
+  ],
+  [
+    "nature_animals-065",
+    "medium",
+    "Sea stars move and feed using which hydraulic system?",
+    "A water vascular system",
+    "A closed air-sac system",
+    "A swim bladder system",
+    "noaa_facts"
+  ],
+  [
+    "nature_animals-066",
+    "medium",
+    "Mangroves are specially adapted to grow in which habitat?",
+    "Salty tropical coastlines",
+    "Dry alpine slopes",
+    "Deep open ocean",
+    "usgs_ecosystems"
+  ],
+  [
+    "nature_animals-067",
+    "medium",
+    "What is an epiphyte?",
+    "A plant growing on another plant without taking its nutrients",
+    "A plant that eats only insects",
+    "A fungus living inside rock",
+    "kew_plants"
+  ],
+  [
+    "nature_animals-068",
+    "medium",
+    "A lichen is a partnership centred on a fungus and what photosynthetic partner?",
+    "An alga or cyanobacterium",
+    "A moss root",
+    "A fern spore",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-069",
+    "medium",
+    "Mycorrhiza describes a partnership between fungi and which plant structures?",
+    "Roots",
+    "Flowers",
+    "Seeds",
+    "kew_plants"
+  ],
+  [
+    "nature_animals-070",
+    "medium",
+    "What are stomata?",
+    "Pores that regulate gas exchange in plants",
+    "Cells that transport sugar",
+    "Structures that anchor mosses",
+    "kew_plants"
+  ],
+  [
+    "nature_animals-071",
+    "medium",
+    "Which plant tissue carries water upward from the roots?",
+    "Xylem",
+    "Phloem",
+    "Cambium only",
+    "kew_plants"
+  ],
+  [
+    "nature_animals-072",
+    "medium",
+    "Which plant tissue transports sugars from photosynthetic leaves?",
+    "Phloem",
+    "Xylem",
+    "Cork",
+    "kew_plants"
+  ],
+  [
+    "nature_animals-073",
+    "medium",
+    "Which organisms commonly convert atmospheric nitrogen into forms plants can use?",
+    "Certain bacteria",
+    "Most insects",
+    "All fungi",
+    "usgs_ecosystems"
+  ],
+  [
+    "nature_animals-074",
+    "medium",
+    "Which biome has permanently frozen subsoil known as permafrost?",
+    "Tundra",
+    "Savanna",
+    "Temperate rainforest",
+    "usgs_ecosystems"
+  ],
+  [
+    "nature_animals-075",
+    "medium",
+    "Which forest biome is dominated by northern conifers?",
+    "Taiga",
+    "Chaparral",
+    "Mangrove",
+    "usgs_ecosystems"
+  ],
+  [
+    "nature_animals-076",
+    "medium",
+    "What is an estuary?",
+    "A place where river freshwater meets the sea",
+    "A lake formed inside a volcano",
+    "An isolated desert spring",
+    "noaa_facts"
+  ],
+  [
+    "nature_animals-077",
+    "medium",
+    "What is a keystone species?",
+    "A species with a disproportionately large ecosystem effect",
+    "The most numerous species in any habitat",
+    "The oldest individual in a population",
+    "usgs_ecosystems"
+  ],
+  [
+    "nature_animals-078",
+    "medium",
+    "Which term describes animals active mainly at dawn and dusk?",
+    "Crepuscular",
+    "Nocturnal",
+    "Arboreal",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-079",
+    "medium",
+    "Animals that regulate body temperature mainly using external heat are called what?",
+    "Ectotherms",
+    "Endotherms",
+    "Autotrophs",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-080",
+    "hard",
+    "Which living animal is the giraffe's closest relative?",
+    "Okapi",
+    "Pronghorn",
+    "Eland",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-081",
+    "hard",
+    "A narwhal's long tusk is an enlarged version of which structure?",
+    "A canine tooth",
+    "A horn core",
+    "A jawbone",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-082",
+    "hard",
+    "Pangolin scales are made chiefly from which protein?",
+    "Keratin",
+    "Collagen",
+    "Chitin",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-083",
+    "hard",
+    "Which Australian marsupial is known for producing cube-shaped droppings?",
+    "Wombat",
+    "Quokka",
+    "Numbat",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-084",
+    "hard",
+    "What is the helmet-like structure on a cassowary's head called?",
+    "A casque",
+    "A caruncle",
+    "A cere",
+    "national_zoo"
+  ],
+  [
+    "nature_animals-085",
+    "hard",
+    "Which New Zealand bird is a nocturnal, flightless parrot?",
+    "Kakapo",
+    "Kea",
+    "Takahe",
+    "iucn_red_list"
+  ],
+  [
+    "nature_animals-086",
+    "hard",
+    "Which feature on a tuatara's head is sometimes called a third eye?",
+    "A parietal eye",
+    "A tympanic eye",
+    "A compound eye",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-087",
+    "hard",
+    "The coelacanth belongs to which major fish lineage?",
+    "Lobe-finned fishes",
+    "Cartilaginous fishes",
+    "Ray-finned sharks",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-088",
+    "hard",
+    "Horseshoe crabs are more closely related to which animals than to true crabs?",
+    "Spiders",
+    "Lobsters",
+    "Barnacles",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-089",
+    "hard",
+    "A mantis shrimp belongs to which crustacean order?",
+    "Stomatopoda",
+    "Decapoda",
+    "Isopoda",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-090",
+    "hard",
+    "Which dormant state helps some tardigrades survive extreme conditions?",
+    "Cryptobiosis",
+    "Metamorphosis",
+    "Aestivation only",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-091",
+    "hard",
+    "Which defence is especially characteristic of hagfish?",
+    "Producing large quantities of slime",
+    "Inflating a swim bladder",
+    "Releasing an ink cloud",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-092",
+    "hard",
+    "Unlike most cephalopods, the nautilus has what type of eye?",
+    "A pinhole eye without a lens",
+    "A compound eye",
+    "An eye covered by scales",
+    "nhm_nature"
+  ],
+  [
+    "nature_animals-093",
+    "hard",
+    "A siphonophore such as the Portuguese man o' war is best described as what?",
+    "A colony of specialised individuals",
+    "A single jellyfish",
+    "A marine plant",
+    "noaa_facts"
+  ],
+  [
+    "nature_animals-094",
+    "hard",
+    "Bryophytes such as mosses lack which specialised feature?",
+    "Vascular tissue",
+    "Chlorophyll",
+    "Cell walls",
+    "kew_plants"
+  ],
+  [
+    "nature_animals-095",
+    "hard",
+    "What does the term gymnosperm indicate about a plant's seeds?",
+    "They are not enclosed in an ovary",
+    "They form only underwater",
+    "They contain no embryo",
+    "kew_plants"
+  ],
+  [
+    "nature_animals-096",
+    "hard",
+    "Plants using CAM photosynthesis usually open their stomata when?",
+    "At night",
+    "At midday",
+    "Only during rain",
+    "kew_plants"
+  ],
+  [
+    "nature_animals-097",
+    "hard",
+    "What is allelopathy?",
+    "Chemical inhibition of one plant by another",
+    "Growth toward a light source",
+    "Seed dispersal by animals",
+    "usgs_ecosystems"
+  ],
+  [
+    "nature_animals-098",
+    "hard",
+    "Which organisms commonly act as pioneers on bare rock during primary succession?",
+    "Lichens",
+    "Large shrubs",
+    "Earthworms",
+    "usgs_ecosystems"
+  ],
+  [
+    "nature_animals-099",
+    "hard",
+    "What does aposematic coloration advertise to potential predators?",
+    "A defence such as toxicity or a sting",
+    "Readiness to mate",
+    "Ability to change sex",
+    "nhm_nature"
+  ]
+]

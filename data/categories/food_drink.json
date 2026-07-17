@@ -1,0 +1,902 @@
+[
+  [
+    "food_drink-001",
+    "easy",
+    "What is the main ingredient in guacamole?",
+    "Avocado",
+    "Courgette",
+    "Cucumber",
+    "britannica_food"
+  ],
+  [
+    "food_drink-002",
+    "easy",
+    "Which pulse is the main ingredient in traditional hummus?",
+    "Chickpeas",
+    "Lentils",
+    "Kidney beans",
+    "britannica_food"
+  ],
+  [
+    "food_drink-003",
+    "easy",
+    "Tofu is made primarily from which bean?",
+    "Soybean",
+    "Broad bean",
+    "Black bean",
+    "fao_food"
+  ],
+  [
+    "food_drink-004",
+    "easy",
+    "Sushi is most closely associated with which country's cuisine?",
+    "Japan",
+    "Thailand",
+    "Mongolia",
+    "britannica_food"
+  ],
+  [
+    "food_drink-005",
+    "easy",
+    "Paella originated in which country?",
+    "Spain",
+    "Portugal",
+    "Italy",
+    "britannica_food"
+  ],
+  [
+    "food_drink-006",
+    "easy",
+    "In pasta cookery, what does al dente mean?",
+    "Firm to the bite",
+    "Cooked without salt",
+    "Filled with cheese",
+    "britannica_food"
+  ],
+  [
+    "food_drink-007",
+    "easy",
+    "Which microorganism is commonly used to make bread dough rise?",
+    "Yeast",
+    "Algae",
+    "Protozoa",
+    "smithsonian_food"
+  ],
+  [
+    "food_drink-008",
+    "easy",
+    "Chocolate is produced from the seeds of which plant?",
+    "Cacao tree",
+    "Coffee shrub",
+    "Carob tree",
+    "britannica_food"
+  ],
+  [
+    "food_drink-009",
+    "easy",
+    "Raisins are dried versions of which fruit?",
+    "Grapes",
+    "Cherries",
+    "Figs",
+    "usda_fooddata"
+  ],
+  [
+    "food_drink-010",
+    "easy",
+    "Prunes are dried versions of which fruit?",
+    "Plums",
+    "Pears",
+    "Peaches",
+    "usda_fooddata"
+  ],
+  [
+    "food_drink-011",
+    "easy",
+    "Espresso is a method of preparing which drink?",
+    "Coffee",
+    "Tea",
+    "Cocoa",
+    "britannica_food"
+  ],
+  [
+    "food_drink-012",
+    "easy",
+    "Black, green and oolong tea all come from which plant species?",
+    "Camellia sinensis",
+    "Coffea arabica",
+    "Mentha spicata",
+    "britannica_food"
+  ],
+  [
+    "food_drink-013",
+    "easy",
+    "Maple syrup is made by concentrating what?",
+    "Tree sap",
+    "Flower nectar",
+    "Fruit juice",
+    "britannica_food"
+  ],
+  [
+    "food_drink-014",
+    "easy",
+    "Popcorn is a variety of which cereal?",
+    "Maize",
+    "Barley",
+    "Rye",
+    "fao_food"
+  ],
+  [
+    "food_drink-015",
+    "easy",
+    "Which vegetable is the usual base of French fries?",
+    "Potato",
+    "Turnip",
+    "Parsnip",
+    "usda_fooddata"
+  ],
+  [
+    "food_drink-016",
+    "easy",
+    "Which ingredient forms the base of an omelette?",
+    "Eggs",
+    "Rice",
+    "Potatoes",
+    "britannica_food"
+  ],
+  [
+    "food_drink-017",
+    "easy",
+    "Which herb gives classic Genoese pesto its characteristic green colour?",
+    "Basil",
+    "Parsley",
+    "Sage",
+    "britannica_food"
+  ],
+  [
+    "food_drink-018",
+    "easy",
+    "Which dairy product is the base of tzatziki?",
+    "Yoghurt",
+    "Cream cheese",
+    "Butter",
+    "britannica_food"
+  ],
+  [
+    "food_drink-019",
+    "easy",
+    "Miso is traditionally made by fermenting which legume?",
+    "Soybeans",
+    "Peanuts",
+    "Peas",
+    "britannica_food"
+  ],
+  [
+    "food_drink-020",
+    "easy",
+    "Sauerkraut is made primarily from which vegetable?",
+    "Cabbage",
+    "Cauliflower",
+    "Celery",
+    "britannica_food"
+  ],
+  [
+    "food_drink-021",
+    "easy",
+    "Kimchi is a traditional food of which country?",
+    "Korea",
+    "Greece",
+    "Mexico",
+    "unesco_heritage"
+  ],
+  [
+    "food_drink-022",
+    "easy",
+    "Couscous is traditionally made from granules of which wheat product?",
+    "Semolina",
+    "Bran",
+    "Malt",
+    "britannica_food"
+  ],
+  [
+    "food_drink-023",
+    "easy",
+    "Which grain is used to make risotto?",
+    "Rice",
+    "Oats",
+    "Millet",
+    "britannica_food"
+  ],
+  [
+    "food_drink-024",
+    "easy",
+    "Polenta is commonly made from which ground cereal?",
+    "Maize",
+    "Rice",
+    "Rye",
+    "britannica_food"
+  ],
+  [
+    "food_drink-025",
+    "easy",
+    "Naan is what type of food?",
+    "Flatbread",
+    "Rice pudding",
+    "Fresh cheese",
+    "britannica_food"
+  ],
+  [
+    "food_drink-026",
+    "easy",
+    "Feta cheese is strongly associated with which country?",
+    "Greece",
+    "Belgium",
+    "Norway",
+    "britannica_food"
+  ],
+  [
+    "food_drink-027",
+    "easy",
+    "What is nori, often used around sushi rolls?",
+    "Dried seaweed",
+    "Rice paper",
+    "Cured fish skin",
+    "britannica_food"
+  ],
+  [
+    "food_drink-028",
+    "easy",
+    "Which fruit supplies the juice in traditional lemonade?",
+    "Lemon",
+    "Lime",
+    "Grapefruit",
+    "britannica_food"
+  ],
+  [
+    "food_drink-029",
+    "easy",
+    "Cider is most commonly fermented from which fruit?",
+    "Apples",
+    "Pineapples",
+    "Blackberries",
+    "britannica_food"
+  ],
+  [
+    "food_drink-030",
+    "easy",
+    "Which acid gives ordinary vinegar much of its sourness?",
+    "Acetic acid",
+    "Citric acid",
+    "Lactic acid",
+    "codex_food"
+  ],
+  [
+    "food_drink-031",
+    "easy",
+    "Which part of an egg is whipped to make a basic meringue?",
+    "White",
+    "Yolk",
+    "Shell membrane",
+    "britannica_food"
+  ],
+  [
+    "food_drink-032",
+    "easy",
+    "Butter is traditionally churned from which dairy component?",
+    "Cream",
+    "Whey",
+    "Skimmed milk",
+    "britannica_food"
+  ],
+  [
+    "food_drink-033",
+    "easy",
+    "Cheese is produced by coagulating which food?",
+    "Milk",
+    "Fruit juice",
+    "Vegetable oil",
+    "fao_food"
+  ],
+  [
+    "food_drink-034",
+    "easy",
+    "Honey is made by which insects?",
+    "Bees",
+    "Butterflies",
+    "Dragonflies",
+    "britannica_food"
+  ],
+  [
+    "food_drink-035",
+    "easy",
+    "Coconut milk is extracted mainly from which part of a mature coconut?",
+    "Grated flesh",
+    "Hard shell",
+    "Outer fibre",
+    "fao_food"
+  ],
+  [
+    "food_drink-036",
+    "easy",
+    "Black peppercorns are derived from which part of the pepper plant?",
+    "Fruit",
+    "Root",
+    "Flower petal",
+    "britannica_food"
+  ],
+  [
+    "food_drink-037",
+    "easy",
+    "Saffron consists mainly of dried parts from which flower?",
+    "Crocus",
+    "Tulip",
+    "Poppy",
+    "britannica_food"
+  ],
+  [
+    "food_drink-038",
+    "easy",
+    "Vanilla flavouring comes from the fruit of which type of plant?",
+    "Orchid",
+    "Fern",
+    "Palm",
+    "britannica_food"
+  ],
+  [
+    "food_drink-039",
+    "easy",
+    "Cinnamon is obtained mainly from which part of a tree?",
+    "Inner bark",
+    "Seeds",
+    "Leaves",
+    "britannica_food"
+  ],
+  [
+    "food_drink-040",
+    "easy",
+    "Which fruit is pressed to produce olive oil?",
+    "Olives",
+    "Dates",
+    "Figs",
+    "fao_food"
+  ],
+  [
+    "food_drink-041",
+    "medium",
+    "Which two ingredients are cooked together to make a basic roux?",
+    "Flour and fat",
+    "Egg and sugar",
+    "Milk and yeast",
+    "britannica_food"
+  ],
+  [
+    "food_drink-042",
+    "medium",
+    "Béchamel is traditionally based on milk thickened with what?",
+    "A white roux",
+    "Egg whites",
+    "Gelatine",
+    "britannica_food"
+  ],
+  [
+    "food_drink-043",
+    "medium",
+    "In traditional cookery, what does confit describe?",
+    "Food slowly cooked and preserved in fat",
+    "Dough cooked by steam",
+    "Fruit dried in sunlight",
+    "britannica_food"
+  ],
+  [
+    "food_drink-044",
+    "medium",
+    "A julienne cut produces vegetables in what shape?",
+    "Thin matchsticks",
+    "Large wedges",
+    "Round balls",
+    "britannica_food"
+  ],
+  [
+    "food_drink-045",
+    "medium",
+    "What is a bain-marie?",
+    "A heated water bath",
+    "A perforated frying pan",
+    "A stone grinding bowl",
+    "britannica_food"
+  ],
+  [
+    "food_drink-046",
+    "medium",
+    "Which basic taste is associated with glutamates?",
+    "Umami",
+    "Bitter",
+    "Sour",
+    "britannica_food"
+  ],
+  [
+    "food_drink-047",
+    "medium",
+    "Gelatine is derived primarily from which structural protein?",
+    "Collagen",
+    "Keratin",
+    "Haemoglobin",
+    "codex_food"
+  ],
+  [
+    "food_drink-048",
+    "medium",
+    "Gluten is a network of proteins found especially in which cereal?",
+    "Wheat",
+    "Rice",
+    "Maize",
+    "fao_food"
+  ],
+  [
+    "food_drink-049",
+    "medium",
+    "During alcoholic fermentation, yeast converts sugars mainly into alcohol and what gas?",
+    "Carbon dioxide",
+    "Nitrogen",
+    "Hydrogen",
+    "fao_food"
+  ],
+  [
+    "food_drink-050",
+    "medium",
+    "Pasteurisation primarily uses which treatment to reduce harmful microorganisms?",
+    "Controlled heating",
+    "Freezing under pressure",
+    "Ultraviolet colouring",
+    "codex_food"
+  ],
+  [
+    "food_drink-051",
+    "medium",
+    "The Maillard reaction occurs chiefly between reducing sugars and what?",
+    "Amino acids",
+    "Mineral salts",
+    "Water molecules",
+    "britannica_food"
+  ],
+  [
+    "food_drink-052",
+    "medium",
+    "Caramelisation is the browning of which food component?",
+    "Sugar",
+    "Protein",
+    "Salt",
+    "britannica_food"
+  ],
+  [
+    "food_drink-053",
+    "medium",
+    "What is the main job of an emulsifier in food?",
+    "Help oil and water remain mixed",
+    "Make starch sweeter",
+    "Remove all moisture",
+    "codex_food"
+  ],
+  [
+    "food_drink-054",
+    "medium",
+    "A classic chocolate ganache combines chocolate with what?",
+    "Cream",
+    "Vinegar",
+    "Egg white",
+    "britannica_food"
+  ],
+  [
+    "food_drink-055",
+    "medium",
+    "Traditional aioli is an emulsion centred on garlic and which oil?",
+    "Olive oil",
+    "Sesame oil",
+    "Coconut oil",
+    "britannica_food"
+  ],
+  [
+    "food_drink-056",
+    "medium",
+    "Which ingredient thickens a traditional hollandaise sauce?",
+    "Egg yolk",
+    "Breadcrumbs",
+    "Cornflour",
+    "britannica_food"
+  ],
+  [
+    "food_drink-057",
+    "medium",
+    "Which three vegetables form the classic French mirepoix?",
+    "Onion, carrot and celery",
+    "Leek, turnip and pepper",
+    "Tomato, garlic and cabbage",
+    "britannica_food"
+  ],
+  [
+    "food_drink-058",
+    "medium",
+    "Tempura is a frying style most closely associated with which cuisine?",
+    "Japanese",
+    "Peruvian",
+    "Turkish",
+    "britannica_food"
+  ],
+  [
+    "food_drink-059",
+    "medium",
+    "In ceviche, seafood is exposed to the juice of what type of fruit?",
+    "Citrus fruit",
+    "Stone fruit",
+    "Berry fruit",
+    "britannica_food"
+  ],
+  [
+    "food_drink-060",
+    "medium",
+    "Pho is a noodle soup associated with which country?",
+    "Vietnam",
+    "India",
+    "Lebanon",
+    "britannica_food"
+  ],
+  [
+    "food_drink-061",
+    "medium",
+    "A tagine is associated especially with the cuisine of which country?",
+    "Morocco",
+    "Finland",
+    "Japan",
+    "britannica_food"
+  ],
+  [
+    "food_drink-062",
+    "medium",
+    "Injera is a fermented flatbread traditionally made with which grain?",
+    "Teff",
+    "Rye",
+    "Sorghum only",
+    "britannica_food"
+  ],
+  [
+    "food_drink-063",
+    "medium",
+    "Which microorganisms are chiefly responsible for souring vegetables during kimchi fermentation?",
+    "Lactic acid bacteria",
+    "Baker's yeast only",
+    "Acetic acid moulds",
+    "fao_food"
+  ],
+  [
+    "food_drink-064",
+    "medium",
+    "Sake is brewed mainly from which cereal?",
+    "Rice",
+    "Barley",
+    "Maize",
+    "britannica_food"
+  ],
+  [
+    "food_drink-065",
+    "medium",
+    "Tequila is made from which plant?",
+    "Blue agave",
+    "Sugar cane",
+    "Prickly pear cactus",
+    "britannica_food"
+  ],
+  [
+    "food_drink-066",
+    "medium",
+    "Rum is traditionally distilled from products of which crop?",
+    "Sugar cane",
+    "Grapevine",
+    "Agave",
+    "britannica_food"
+  ],
+  [
+    "food_drink-067",
+    "medium",
+    "Which botanical gives gin its defining flavour?",
+    "Juniper",
+    "Rosemary",
+    "Vanilla",
+    "britannica_food"
+  ],
+  [
+    "food_drink-068",
+    "medium",
+    "Whisky is distilled from a fermented mash based on what?",
+    "Grain",
+    "Apples",
+    "Honey",
+    "britannica_food"
+  ],
+  [
+    "food_drink-069",
+    "medium",
+    "Matcha is made by finely grinding what?",
+    "Green tea leaves",
+    "Roasted coffee beans",
+    "Dried mint leaves",
+    "britannica_food"
+  ],
+  [
+    "food_drink-070",
+    "medium",
+    "Oolong tea is generally processed to what oxidation level?",
+    "Partly oxidised",
+    "Completely unoxidised",
+    "Always fully oxidised",
+    "britannica_food"
+  ],
+  [
+    "food_drink-071",
+    "medium",
+    "Arborio is a rice variety commonly used for which dish?",
+    "Risotto",
+    "Paella only",
+    "Sushi",
+    "britannica_food"
+  ],
+  [
+    "food_drink-072",
+    "medium",
+    "Basmati is best described as what kind of rice?",
+    "Long-grain aromatic rice",
+    "Short-grain sticky rice",
+    "Wild aquatic grass only",
+    "fao_food"
+  ],
+  [
+    "food_drink-073",
+    "medium",
+    "Botanically, quinoa is commonly described as what rather than a true cereal?",
+    "A pseudocereal seed",
+    "A tree nut",
+    "A root vegetable",
+    "fao_food"
+  ],
+  [
+    "food_drink-074",
+    "medium",
+    "Aquafaba is the cooking liquid most commonly associated with which pulse?",
+    "Chickpeas",
+    "Split peas",
+    "Adzuki beans",
+    "britannica_food"
+  ],
+  [
+    "food_drink-075",
+    "medium",
+    "Seitan is made primarily from which wheat component?",
+    "Gluten",
+    "Bran",
+    "Germ oil",
+    "britannica_food"
+  ],
+  [
+    "food_drink-076",
+    "medium",
+    "Tempeh is traditionally produced by fermenting which food?",
+    "Soybeans",
+    "Rice noodles",
+    "Cassava root",
+    "britannica_food"
+  ],
+  [
+    "food_drink-077",
+    "medium",
+    "Paneer is what type of food?",
+    "Fresh acid-set cheese",
+    "Fermented flatbread",
+    "Clarified butter",
+    "britannica_food"
+  ],
+  [
+    "food_drink-078",
+    "medium",
+    "Ghee is produced by clarifying which dairy product?",
+    "Butter",
+    "Yoghurt",
+    "Whey",
+    "britannica_food"
+  ],
+  [
+    "food_drink-079",
+    "medium",
+    "Which rice is traditionally seasoned with vinegar for sushi?",
+    "Short-grain Japanese rice",
+    "Wild rice",
+    "Parboiled basmati",
+    "britannica_food"
+  ],
+  [
+    "food_drink-080",
+    "medium",
+    "What does proofing allow bread dough to do before baking?",
+    "Rise through fermentation",
+    "Lose all gluten",
+    "Become completely dry",
+    "smithsonian_food"
+  ],
+  [
+    "food_drink-081",
+    "hard",
+    "What is beurre manié?",
+    "Kneaded butter and flour used as a thickener",
+    "Butter browned until nutty",
+    "Butter whipped with herbs",
+    "britannica_food"
+  ],
+  [
+    "food_drink-082",
+    "hard",
+    "Cooking en papillote encloses food in what?",
+    "A folded paper or foil parcel",
+    "A salt crust only",
+    "A sealed clay jar",
+    "britannica_food"
+  ],
+  [
+    "food_drink-083",
+    "hard",
+    "What defines the sous-vide method?",
+    "Vacuum-sealed food cooked at controlled low temperature",
+    "Food exposed directly to charcoal",
+    "Dough cooked on a dry griddle",
+    "britannica_food"
+  ],
+  [
+    "food_drink-084",
+    "hard",
+    "In bread making, what is an autolyse?",
+    "A rest after mixing flour and water",
+    "The final shaping of a loaf",
+    "Rapid cooling after baking",
+    "britannica_food"
+  ],
+  [
+    "food_drink-085",
+    "hard",
+    "Which of these is one of the five classical French mother sauces?",
+    "Espagnole",
+    "Pesto",
+    "Tzatziki",
+    "britannica_food"
+  ],
+  [
+    "food_drink-086",
+    "hard",
+    "Agar used as a gelling agent is obtained mainly from what?",
+    "Red algae",
+    "Animal collagen",
+    "Cereal starch",
+    "codex_food"
+  ],
+  [
+    "food_drink-087",
+    "hard",
+    "Which plant polysaccharide helps jams and jellies set?",
+    "Pectin",
+    "Cellulose acetate",
+    "Glycogen",
+    "codex_food"
+  ],
+  [
+    "food_drink-088",
+    "hard",
+    "Lecithin in egg yolk helps hollandaise by acting as what?",
+    "An emulsifier",
+    "A raising agent",
+    "A preservative salt",
+    "codex_food"
+  ],
+  [
+    "food_drink-089",
+    "hard",
+    "Which enzyme breaks starch into smaller sugars during processes such as brewing?",
+    "Amylase",
+    "Lipase",
+    "Rennin",
+    "fao_food"
+  ],
+  [
+    "food_drink-090",
+    "hard",
+    "Rennet is used in cheesemaking mainly to do what?",
+    "Coagulate milk",
+    "Sweeten whey",
+    "Colour the rind",
+    "fao_food"
+  ],
+  [
+    "food_drink-091",
+    "hard",
+    "Which mould species is widely used to produce koji?",
+    "Aspergillus oryzae",
+    "Penicillium chrysogenum",
+    "Rhizopus stolonifer",
+    "fao_food"
+  ],
+  [
+    "food_drink-092",
+    "hard",
+    "Nixtamalisation treats maize with what kind of solution?",
+    "An alkaline solution",
+    "A concentrated sugar syrup",
+    "A neutral oil",
+    "fao_food"
+  ],
+  [
+    "food_drink-093",
+    "hard",
+    "Masa for traditional corn tortillas is made from maize processed by what method?",
+    "Nixtamalisation",
+    "Malting",
+    "Freeze-drying",
+    "fao_food"
+  ],
+  [
+    "food_drink-094",
+    "hard",
+    "What is verjus?",
+    "Juice pressed from unripe grapes",
+    "Vinegar aged with herbs",
+    "Syrup made from green figs",
+    "britannica_food"
+  ],
+  [
+    "food_drink-095",
+    "hard",
+    "A gastrique classically combines caramelised sugar with what?",
+    "Vinegar",
+    "Cream",
+    "Stock only",
+    "britannica_food"
+  ],
+  [
+    "food_drink-096",
+    "hard",
+    "A brunoise cut produces what?",
+    "Very small dice",
+    "Long thin ribbons",
+    "Large irregular chunks",
+    "britannica_food"
+  ],
+  [
+    "food_drink-097",
+    "hard",
+    "A chiffonade cut is normally used to create thin ribbons from what?",
+    "Leafy vegetables or herbs",
+    "Root vegetables",
+    "Boneless meat",
+    "britannica_food"
+  ],
+  [
+    "food_drink-098",
+    "hard",
+    "Zabaglione is traditionally made by whisking egg yolks and sugar with what?",
+    "Sweet wine",
+    "Olive oil",
+    "Strong coffee",
+    "britannica_food"
+  ],
+  [
+    "food_drink-099",
+    "hard",
+    "Which two ingredients commonly form the base of Japanese dashi?",
+    "Kombu and dried bonito",
+    "Miso and tofu",
+    "Rice and sesame",
+    "britannica_food"
+  ],
+  [
+    "food_drink-100",
+    "hard",
+    "Capsaicin is the compound chiefly responsible for which sensation?",
+    "The heat of chilli peppers",
+    "The coolness of mint",
+    "The bitterness of coffee",
+    "usda_fooddata"
+  ]
+]

@@ -36,7 +36,22 @@
     "playstation": {"name": "PlayStation", "url": "https://www.playstation.com/en-gb/"},
     "xbox": {"name": "Xbox", "url": "https://www.xbox.com/en-GB/"},
     "strong_museum": {"name": "The Strong National Museum of Play", "url": "https://www.museumofplay.org/exhibits/world-video-game-hall-of-fame/"},
-    "esrb": {"name": "Entertainment Software Rating Board", "url": "https://www.esrb.org/ratings-guide/"}
+    "esrb": {"name": "Entertainment Software Rating Board", "url": "https://www.esrb.org/ratings-guide/"},
+    "usda_fooddata": {"name": "USDA FoodData Central", "url": "https://fdc.nal.usda.gov/"},
+    "fao_food": {"name": "Food and Agriculture Organization of the United Nations", "url": "https://www.fao.org/food-agriculture-statistics/en/"},
+    "codex_food": {"name": "FAO/WHO Codex Alimentarius", "url": "https://www.fao.org/fao-who-codexalimentarius/en/"},
+    "smithsonian_food": {"name": "Smithsonian National Museum of American History — Food", "url": "https://americanhistory.si.edu/explore/exhibitions/food"},
+    "britannica_food": {"name": "Encyclopaedia Britannica — Food", "url": "https://www.britannica.com/topic/food"},
+    "unesco_heritage": {"name": "UNESCO Intangible Cultural Heritage", "url": "https://ich.unesco.org/en/lists"},
+    "national_zoo": {"name": "Smithsonian's National Zoo — Animals", "url": "https://nationalzoo.si.edu/animals/list"},
+    "nhm_nature": {"name": "Natural History Museum — Discover", "url": "https://www.nhm.ac.uk/discover.html"},
+    "iucn_red_list": {"name": "IUCN Red List of Threatened Species", "url": "https://www.iucnredlist.org/"},
+    "kew_plants": {"name": "Royal Botanic Gardens, Kew — Plants of the World Online", "url": "https://powo.science.kew.org/"},
+    "usgs_ecosystems": {"name": "U.S. Geological Survey Ecosystems", "url": "https://www.usgs.gov/mission-areas/ecosystems"},
+    "met_collection": {"name": "The Metropolitan Museum of Art Collection", "url": "https://www.metmuseum.org/art/collection"},
+    "national_gallery": {"name": "The National Gallery Collection", "url": "https://www.nationalgallery.org.uk/paintings"},
+    "tate_art": {"name": "Tate Art and Artists", "url": "https://www.tate.org.uk/art"},
+    "moma_collection": {"name": "The Museum of Modern Art Collection", "url": "https://www.moma.org/collection/"}
   },
   "categories": [
     {"id":"science","label":"Science","sort_order":10,"icon_key":"flask","color":"#41E28C","status":"active","target":{"easy":40,"medium":40,"hard":20}},
@@ -46,8 +61,8 @@
     {"id":"sport","label":"Sport","sort_order":50,"icon_key":"trophy","color":"#FF8A4C","status":"active","target":{"easy":40,"medium":40,"hard":20}},
     {"id":"technology","label":"Technology","sort_order":60,"icon_key":"cpu","color":"#7C83FF","status":"active","target":{"easy":40,"medium":40,"hard":20}},
     {"id":"gaming","label":"Gaming","sort_order":70,"icon_key":"gamepad","color":"#B66CFF","status":"active","target":{"easy":40,"medium":40,"hard":20}},
-    {"id":"food_drink","label":"Food & Drink","sort_order":80,"icon_key":"utensils","color":"#FFB347","status":"planned","target":{"easy":40,"medium":40,"hard":20}},
-    {"id":"nature_animals","label":"Nature & Animals","sort_order":90,"icon_key":"paw","color":"#62D26F","status":"planned","target":{"easy":40,"medium":40,"hard":20}},
-    {"id":"art_literature","label":"Art & Literature","sort_order":100,"icon_key":"palette_book","color":"#F47CD4","status":"planned","target":{"easy":40,"medium":40,"hard":20}}
+    {"id":"food_drink","label":"Food & Drink","sort_order":80,"icon_key":"utensils","color":"#FFB347","status":"active","target":{"easy":40,"medium":40,"hard":20}},
+    {"id":"nature_animals","label":"Nature & Animals","sort_order":90,"icon_key":"paw","color":"#62D26F","status":"active","target":{"easy":40,"medium":40,"hard":20}},
+    {"id":"art_literature","label":"Art & Literature","sort_order":100,"icon_key":"palette_book","color":"#F47CD4","status":"active","target":{"easy":40,"medium":40,"hard":20}}
   ]
 }

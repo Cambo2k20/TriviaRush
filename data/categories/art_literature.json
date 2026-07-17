@@ -1,0 +1,902 @@
+[
+  [
+    "art_literature-001",
+    "easy",
+    "Who painted the Mona Lisa?",
+    "Leonardo da Vinci",
+    "Raphael",
+    "Titian",
+    "national_gallery"
+  ],
+  [
+    "art_literature-002",
+    "easy",
+    "Who painted The Starry Night?",
+    "Vincent van Gogh",
+    "Claude Monet",
+    "Paul Cézanne",
+    "moma_collection"
+  ],
+  [
+    "art_literature-003",
+    "easy",
+    "Who painted Guernica?",
+    "Pablo Picasso",
+    "Salvador Dalí",
+    "Joan Miró",
+    "moma_collection"
+  ],
+  [
+    "art_literature-004",
+    "easy",
+    "Who painted The Persistence of Memory?",
+    "Salvador Dalí",
+    "René Magritte",
+    "Pablo Picasso",
+    "moma_collection"
+  ],
+  [
+    "art_literature-005",
+    "easy",
+    "Who painted Girl with a Pearl Earring?",
+    "Johannes Vermeer",
+    "Rembrandt",
+    "Frans Hals",
+    "national_gallery"
+  ],
+  [
+    "art_literature-006",
+    "easy",
+    "Which Norwegian artist created The Scream?",
+    "Edvard Munch",
+    "Gustav Klimt",
+    "Egon Schiele",
+    "moma_collection"
+  ],
+  [
+    "art_literature-007",
+    "easy",
+    "Which artist is famous for a large series of Water Lilies paintings?",
+    "Claude Monet",
+    "Edgar Degas",
+    "Pierre-Auguste Renoir",
+    "national_gallery"
+  ],
+  [
+    "art_literature-008",
+    "easy",
+    "Who painted American Gothic?",
+    "Grant Wood",
+    "Edward Hopper",
+    "Georgia O'Keeffe",
+    "met_collection"
+  ],
+  [
+    "art_literature-009",
+    "easy",
+    "Who painted The Birth of Venus?",
+    "Sandro Botticelli",
+    "Caravaggio",
+    "Donatello",
+    "national_gallery"
+  ],
+  [
+    "art_literature-010",
+    "easy",
+    "Who created the sculpture The Thinker?",
+    "Auguste Rodin",
+    "Henry Moore",
+    "Constantin Brâncuși",
+    "met_collection"
+  ],
+  [
+    "art_literature-011",
+    "easy",
+    "Which artist sculpted the 5.17-metre Renaissance marble David in Florence?",
+    "Michelangelo",
+    "Bernini",
+    "Donatello",
+    "met_collection"
+  ],
+  [
+    "art_literature-012",
+    "easy",
+    "Who painted the ceiling of the Sistine Chapel?",
+    "Michelangelo",
+    "Raphael",
+    "Leonardo da Vinci",
+    "met_collection"
+  ],
+  [
+    "art_literature-013",
+    "easy",
+    "Which artist is strongly associated with Pop Art images of Campbell's soup cans?",
+    "Andy Warhol",
+    "Jackson Pollock",
+    "Mark Rothko",
+    "moma_collection"
+  ],
+  [
+    "art_literature-014",
+    "easy",
+    "Pablo Picasso and Georges Braque helped develop which art movement?",
+    "Cubism",
+    "Surrealism",
+    "Romanticism",
+    "tate_art"
+  ],
+  [
+    "art_literature-015",
+    "easy",
+    "Impressionism first developed as a named movement in which country?",
+    "France",
+    "Spain",
+    "Russia",
+    "tate_art"
+  ],
+  [
+    "art_literature-016",
+    "easy",
+    "Which art form creates three-dimensional objects?",
+    "Sculpture",
+    "Etching",
+    "Watercolour",
+    "met_collection"
+  ],
+  [
+    "art_literature-017",
+    "easy",
+    "A true fresco is painted onto what surface?",
+    "Wet plaster",
+    "Dry canvas",
+    "Polished wood",
+    "met_collection"
+  ],
+  [
+    "art_literature-018",
+    "easy",
+    "What is a portrait primarily intended to depict?",
+    "A person or group of people",
+    "A bowl of objects",
+    "An imaginary map",
+    "national_gallery"
+  ],
+  [
+    "art_literature-019",
+    "easy",
+    "Which subject is central to a landscape painting?",
+    "Natural scenery",
+    "Arranged household objects",
+    "A single written letter",
+    "national_gallery"
+  ],
+  [
+    "art_literature-020",
+    "easy",
+    "A still life usually depicts what?",
+    "Inanimate objects",
+    "A historical battle",
+    "Moving dancers",
+    "national_gallery"
+  ],
+  [
+    "art_literature-021",
+    "easy",
+    "How many lines does a traditional sonnet have?",
+    "Fourteen",
+    "Twelve",
+    "Sixteen",
+    "british_library"
+  ],
+  [
+    "art_literature-022",
+    "easy",
+    "A traditional Japanese haiku is arranged in how many lines?",
+    "Three",
+    "Four",
+    "Five",
+    "british_library"
+  ],
+  [
+    "art_literature-023",
+    "easy",
+    "Who wrote the tragedy Romeo and Juliet?",
+    "William Shakespeare",
+    "Christopher Marlowe",
+    "Ben Jonson",
+    "british_library"
+  ],
+  [
+    "art_literature-024",
+    "easy",
+    "Who is the central wandering hero of The Odyssey?",
+    "Odysseus",
+    "Achilles",
+    "Hector",
+    "british_library"
+  ],
+  [
+    "art_literature-025",
+    "easy",
+    "Who wrote Animal Farm?",
+    "George Orwell",
+    "Aldous Huxley",
+    "H. G. Wells",
+    "british_library"
+  ],
+  [
+    "art_literature-026",
+    "easy",
+    "Who wrote The Little Prince?",
+    "Antoine de Saint-Exupéry",
+    "Jules Verne",
+    "Albert Camus",
+    "british_library"
+  ],
+  [
+    "entertainment-006",
+    "easy",
+    "At which fictional address does Sherlock Holmes live?",
+    "221B Baker Street",
+    "12 Grimmauld Place",
+    "10 Downing Street",
+    "british_library"
+  ],
+  [
+    "entertainment-007",
+    "easy",
+    "Who wrote the novel Frankenstein?",
+    "Mary Shelley",
+    "Jane Austen",
+    "Emily Brontë",
+    "british_library"
+  ],
+  [
+    "entertainment-009",
+    "easy",
+    "What type of animal is Paddington?",
+    "Bear",
+    "Rabbit",
+    "Fox",
+    "british_library"
+  ],
+  [
+    "entertainment-010",
+    "easy",
+    "Which Belgian detective was created by Agatha Christie?",
+    "Hercule Poirot",
+    "Philip Marlowe",
+    "Sam Spade",
+    "british_library"
+  ],
+  [
+    "entertainment-011",
+    "easy",
+    "Who wrote Hamlet?",
+    "William Shakespeare",
+    "Charles Dickens",
+    "Oscar Wilde",
+    "british_library"
+  ],
+  [
+    "entertainment-012",
+    "easy",
+    "Who wrote The Hobbit?",
+    "J. R. R. Tolkien",
+    "C. S. Lewis",
+    "Roald Dahl",
+    "british_library"
+  ],
+  [
+    "entertainment-013",
+    "easy",
+    "Who wrote the Harry Potter novels?",
+    "J. K. Rowling",
+    "Suzanne Collins",
+    "Philip Pullman",
+    "british_library"
+  ],
+  [
+    "entertainment-014",
+    "easy",
+    "What is the name of the lion in The Chronicles of Narnia?",
+    "Aslan",
+    "Simba",
+    "Shere Khan",
+    "british_library"
+  ],
+  [
+    "entertainment-015",
+    "easy",
+    "What kind of animal is Moby Dick?",
+    "Whale",
+    "Shark",
+    "Giant squid",
+    "british_library"
+  ],
+  [
+    "entertainment-016",
+    "easy",
+    "Who wrote the novel Nineteen Eighty-Four?",
+    "George Orwell",
+    "Aldous Huxley",
+    "H. G. Wells",
+    "british_library"
+  ],
+  [
+    "entertainment-017",
+    "easy",
+    "Who wrote Pride and Prejudice?",
+    "Jane Austen",
+    "George Eliot",
+    "Virginia Woolf",
+    "british_library"
+  ],
+  [
+    "entertainment-018",
+    "easy",
+    "Who wrote the novel Dracula?",
+    "Bram Stoker",
+    "Mary Shelley",
+    "Robert Louis Stevenson",
+    "british_library"
+  ],
+  [
+    "entertainment-019",
+    "easy",
+    "In which fictional place does Peter Pan live?",
+    "Neverland",
+    "Wonderland",
+    "Narnia",
+    "british_library"
+  ],
+  [
+    "entertainment-020",
+    "easy",
+    "Alice follows which animal into Wonderland?",
+    "White Rabbit",
+    "Cheshire Cat",
+    "Dormouse",
+    "british_library"
+  ],
+  [
+    "art_literature-027",
+    "medium",
+    "Who painted Las Meninas?",
+    "Diego Velázquez",
+    "Francisco Goya",
+    "El Greco",
+    "national_gallery"
+  ],
+  [
+    "art_literature-028",
+    "medium",
+    "Who painted The Night Watch?",
+    "Rembrandt",
+    "Johannes Vermeer",
+    "Peter Paul Rubens",
+    "national_gallery"
+  ],
+  [
+    "art_literature-029",
+    "medium",
+    "Who painted The Arnolfini Portrait?",
+    "Jan van Eyck",
+    "Albrecht Dürer",
+    "Hans Holbein the Younger",
+    "national_gallery"
+  ],
+  [
+    "art_literature-030",
+    "medium",
+    "Who painted Liberty Leading the People?",
+    "Eugène Delacroix",
+    "Théodore Géricault",
+    "Jacques-Louis David",
+    "tate_art"
+  ],
+  [
+    "art_literature-031",
+    "medium",
+    "Who created The Great Wave off Kanagawa?",
+    "Katsushika Hokusai",
+    "Utagawa Hiroshige",
+    "Kitagawa Utamaro",
+    "met_collection"
+  ],
+  [
+    "art_literature-032",
+    "medium",
+    "Who painted the diner scene Nighthawks?",
+    "Edward Hopper",
+    "Grant Wood",
+    "Andrew Wyeth",
+    "moma_collection"
+  ],
+  [
+    "art_literature-033",
+    "medium",
+    "Who painted The Kiss completed in 1907–08?",
+    "Gustav Klimt",
+    "Egon Schiele",
+    "Edvard Munch",
+    "met_collection"
+  ],
+  [
+    "art_literature-034",
+    "medium",
+    "Which painting gave Impressionism its name?",
+    "Impression, Sunrise",
+    "The Luncheon on the Grass",
+    "Dance at Le Moulin de la Galette",
+    "tate_art"
+  ],
+  [
+    "art_literature-035",
+    "medium",
+    "Which artist created Broadway Boogie Woogie?",
+    "Piet Mondrian",
+    "Kazimir Malevich",
+    "Wassily Kandinsky",
+    "moma_collection"
+  ],
+  [
+    "art_literature-036",
+    "medium",
+    "Art Nouveau is especially known for what kind of lines?",
+    "Flowing organic lines",
+    "Rigid military grids",
+    "Only perfect circles",
+    "tate_art"
+  ],
+  [
+    "art_literature-037",
+    "medium",
+    "What does chiaroscuro describe in visual art?",
+    "Strong contrasts of light and dark",
+    "A palette limited to blue",
+    "Painting on wet plaster",
+    "tate_art"
+  ],
+  [
+    "art_literature-038",
+    "medium",
+    "Which softly blended painting technique is associated with Leonardo da Vinci?",
+    "Sfumato",
+    "Impasto",
+    "Pointillism",
+    "national_gallery"
+  ],
+  [
+    "art_literature-039",
+    "medium",
+    "What does impasto involve?",
+    "Applying paint thickly so brush or knife marks remain visible",
+    "Diluting pigment until transparent",
+    "Drawing with silver wire",
+    "tate_art"
+  ],
+  [
+    "art_literature-040",
+    "medium",
+    "How many panels does a triptych have?",
+    "Three",
+    "Two",
+    "Four",
+    "met_collection"
+  ],
+  [
+    "art_literature-041",
+    "medium",
+    "Traditional lithography draws an image on which material?",
+    "Stone",
+    "Copper wire",
+    "Silk cloth",
+    "met_collection"
+  ],
+  [
+    "art_literature-042",
+    "medium",
+    "In sculpture, what does contrapposto describe?",
+    "A standing pose with weight shifted onto one leg",
+    "A figure carved only in profile",
+    "A group arranged in a circle",
+    "met_collection"
+  ],
+  [
+    "art_literature-043",
+    "medium",
+    "In linear perspective, parallel lines appear to meet at what?",
+    "A vanishing point",
+    "A colour wheel",
+    "The picture frame",
+    "national_gallery"
+  ],
+  [
+    "art_literature-044",
+    "medium",
+    "Pointillist paintings build images from what?",
+    "Small distinct dots of colour",
+    "Layers of polished wax",
+    "Cut paper silhouettes",
+    "tate_art"
+  ],
+  [
+    "art_literature-045",
+    "medium",
+    "The Dada movement emerged during the First World War in which city?",
+    "Zurich",
+    "Rome",
+    "Madrid",
+    "tate_art"
+  ],
+  [
+    "art_literature-046",
+    "medium",
+    "Who wrote Jane Eyre?",
+    "Charlotte Brontë",
+    "Emily Brontë",
+    "Anne Brontë",
+    "british_library"
+  ],
+  [
+    "art_literature-047",
+    "medium",
+    "Who wrote Wuthering Heights?",
+    "Emily Brontë",
+    "Charlotte Brontë",
+    "George Eliot",
+    "british_library"
+  ],
+  [
+    "art_literature-048",
+    "medium",
+    "Who wrote Beloved?",
+    "Toni Morrison",
+    "Alice Walker",
+    "Maya Angelou",
+    "nobel"
+  ],
+  [
+    "art_literature-049",
+    "medium",
+    "Who wrote Things Fall Apart?",
+    "Chinua Achebe",
+    "Wole Soyinka",
+    "Ngũgĩ wa Thiong'o",
+    "british_library"
+  ],
+  [
+    "art_literature-050",
+    "medium",
+    "Who wrote Invisible Man, published in 1952?",
+    "Ralph Ellison",
+    "Richard Wright",
+    "James Baldwin",
+    "british_library"
+  ],
+  [
+    "art_literature-051",
+    "medium",
+    "Who wrote the play A Doll's House?",
+    "Henrik Ibsen",
+    "Anton Chekhov",
+    "August Strindberg",
+    "british_library"
+  ],
+  [
+    "art_literature-052",
+    "medium",
+    "Who wrote Waiting for Godot?",
+    "Samuel Beckett",
+    "Harold Pinter",
+    "Eugène Ionesco",
+    "nobel"
+  ],
+  [
+    "art_literature-053",
+    "medium",
+    "Who wrote The Canterbury Tales?",
+    "Geoffrey Chaucer",
+    "Thomas Malory",
+    "John Gower",
+    "british_library"
+  ],
+  [
+    "art_literature-054",
+    "medium",
+    "Who wrote The Divine Comedy?",
+    "Dante Alighieri",
+    "Giovanni Boccaccio",
+    "Petrarch",
+    "british_library"
+  ],
+  [
+    "art_literature-055",
+    "medium",
+    "Which German writer created the literary version of Faust published in two parts?",
+    "Johann Wolfgang von Goethe",
+    "Friedrich Schiller",
+    "Thomas Mann",
+    "british_library"
+  ],
+  [
+    "art_literature-056",
+    "medium",
+    "Which narrative voice uses I or we to tell the story?",
+    "First person",
+    "Second person",
+    "Third-person omniscient",
+    "british_library"
+  ],
+  [
+    "entertainment-041",
+    "medium",
+    "Who wrote Don Quixote?",
+    "Miguel de Cervantes",
+    "Federico García Lorca",
+    "Gabriel García Márquez",
+    "british_library"
+  ],
+  [
+    "entertainment-042",
+    "medium",
+    "Which ancient poet is traditionally credited with The Odyssey?",
+    "Homer",
+    "Virgil",
+    "Ovid",
+    "british_library"
+  ],
+  [
+    "entertainment-043",
+    "medium",
+    "Who wrote The Picture of Dorian Gray?",
+    "Oscar Wilde",
+    "Thomas Hardy",
+    "James Joyce",
+    "british_library"
+  ],
+  [
+    "entertainment-044",
+    "medium",
+    "Who wrote The Great Gatsby?",
+    "F. Scott Fitzgerald",
+    "Ernest Hemingway",
+    "John Steinbeck",
+    "british_library"
+  ],
+  [
+    "entertainment-045",
+    "medium",
+    "Who wrote Les Misérables?",
+    "Victor Hugo",
+    "Alexandre Dumas",
+    "Émile Zola",
+    "british_library"
+  ],
+  [
+    "entertainment-046",
+    "medium",
+    "Who wrote War and Peace?",
+    "Leo Tolstoy",
+    "Fyodor Dostoevsky",
+    "Anton Chekhov",
+    "british_library"
+  ],
+  [
+    "entertainment-047",
+    "medium",
+    "Who wrote The Handmaid's Tale?",
+    "Margaret Atwood",
+    "Ursula K. Le Guin",
+    "Doris Lessing",
+    "british_library"
+  ],
+  [
+    "entertainment-048",
+    "medium",
+    "Which elderly amateur detective was created by Agatha Christie?",
+    "Miss Marple",
+    "Nancy Drew",
+    "V. I. Warshawski",
+    "british_library"
+  ],
+  [
+    "entertainment-049",
+    "medium",
+    "On which fictional continent is most of The Lord of the Rings set?",
+    "Middle-earth",
+    "Westeros",
+    "Earthsea",
+    "british_library"
+  ],
+  [
+    "entertainment-050",
+    "medium",
+    "Who wrote Catch-22?",
+    "Joseph Heller",
+    "Kurt Vonnegut",
+    "Norman Mailer",
+    "british_library"
+  ],
+  [
+    "art_literature-057",
+    "hard",
+    "Who painted The Garden of Earthly Delights?",
+    "Hieronymus Bosch",
+    "Pieter Bruegel the Elder",
+    "Jan van Eyck",
+    "met_collection"
+  ],
+  [
+    "art_literature-058",
+    "hard",
+    "Which artist painted the Isenheim Altarpiece?",
+    "Matthias Grünewald",
+    "Lucas Cranach the Elder",
+    "Albrecht Altdorfer",
+    "met_collection"
+  ],
+  [
+    "art_literature-059",
+    "hard",
+    "Which artist founded the abstract movement known as Suprematism?",
+    "Kazimir Malevich",
+    "Piet Mondrian",
+    "El Lissitzky",
+    "tate_art"
+  ],
+  [
+    "art_literature-060",
+    "hard",
+    "Which Dutch movement is associated with Piet Mondrian and Theo van Doesburg?",
+    "De Stijl",
+    "Fauvism",
+    "Vorticism",
+    "tate_art"
+  ],
+  [
+    "art_literature-061",
+    "hard",
+    "Which artist submitted a urinal titled Fountain as a readymade?",
+    "Marcel Duchamp",
+    "Man Ray",
+    "Francis Picabia",
+    "tate_art"
+  ],
+  [
+    "art_literature-062",
+    "hard",
+    "Tenebrism uses which visual effect?",
+    "Extreme darkness surrounding strongly lit forms",
+    "Many tiny unmixed colour dots",
+    "Distorted linear perspective only",
+    "tate_art"
+  ],
+  [
+    "art_literature-063",
+    "hard",
+    "In encaustic painting, pigment is mixed with what?",
+    "Heated wax",
+    "Egg white",
+    "Lime plaster",
+    "met_collection"
+  ],
+  [
+    "art_literature-064",
+    "hard",
+    "In intaglio printmaking, where does the ink that prints the image sit?",
+    "In recessed lines below the plate surface",
+    "On raised areas of a block",
+    "Inside a silk stencil",
+    "met_collection"
+  ],
+  [
+    "art_literature-065",
+    "hard",
+    "What is ekphrasis?",
+    "A vivid literary description of a work of art",
+    "A poem without metre",
+    "A play performed by one actor",
+    "british_library"
+  ],
+  [
+    "art_literature-066",
+    "hard",
+    "Which interlocking rhyme scheme is called terza rima?",
+    "ABA BCB CDC",
+    "ABAB CDCD",
+    "AABB CCDD",
+    "british_library"
+  ],
+  [
+    "art_literature-067",
+    "hard",
+    "How many lines are in a stanza of ottava rima?",
+    "Eight",
+    "Six",
+    "Ten",
+    "british_library"
+  ],
+  [
+    "art_literature-068",
+    "hard",
+    "A Bildungsroman focuses on what?",
+    "A protagonist's formative growth and development",
+    "The fall of a royal dynasty",
+    "A journey through the underworld",
+    "british_library"
+  ],
+  [
+    "art_literature-069",
+    "hard",
+    "An epistolary novel is told chiefly through what?",
+    "Letters or other documents",
+    "Stage directions",
+    "A chorus's songs",
+    "british_library"
+  ],
+  [
+    "art_literature-070",
+    "hard",
+    "Which figure of speech uses a part to represent a whole?",
+    "Synecdoche",
+    "Oxymoron",
+    "Anaphora",
+    "british_library"
+  ],
+  [
+    "art_literature-071",
+    "hard",
+    "In classical drama, what is anagnorisis?",
+    "A character's crucial recognition or discovery",
+    "The opening speech by a chorus",
+    "A comic scene after the ending",
+    "british_library"
+  ],
+  [
+    "entertainment-081",
+    "hard",
+    "In which historical form of English was Beowulf composed?",
+    "Old English",
+    "Middle English",
+    "Early Modern English",
+    "british_library"
+  ],
+  [
+    "entertainment-082",
+    "hard",
+    "James Joyce's Ulysses is set largely during one day in which city?",
+    "Dublin",
+    "London",
+    "Paris",
+    "british_library"
+  ],
+  [
+    "entertainment-083",
+    "hard",
+    "Who wrote One Hundred Years of Solitude?",
+    "Gabriel García Márquez",
+    "Jorge Luis Borges",
+    "Mario Vargas Llosa",
+    "nobel"
+  ],
+  [
+    "entertainment-084",
+    "hard",
+    "What is the first name of the protagonist transformed in Kafka's The Metamorphosis?",
+    "Gregor",
+    "Josef",
+    "Franz",
+    "british_library"
+  ],
+  [
+    "entertainment-085",
+    "hard",
+    "Who wrote the poem The Waste Land?",
+    "T. S. Eliot",
+    "W. B. Yeats",
+    "Ezra Pound",
+    "british_library"
+  ]
+]

@@ -45,24 +45,6 @@
     "strong_museum"
   ],
   [
-    "entertainment-006",
-    "easy",
-    "At which fictional address does Sherlock Holmes live?",
-    "221B Baker Street",
-    "12 Grimmauld Place",
-    "10 Downing Street",
-    "british_library"
-  ],
-  [
-    "entertainment-007",
-    "easy",
-    "Who wrote the novel Frankenstein?",
-    "Mary Shelley",
-    "Jane Austen",
-    "Emily Brontë",
-    "british_library"
-  ],
-  [
     "entertainment-008",
     "easy",
     "Which animated family lives in Springfield?",
@@ -70,114 +52,6 @@
     "The Griffins",
     "The Flintstones",
     "bfi"
-  ],
-  [
-    "entertainment-009",
-    "easy",
-    "What type of animal is Paddington?",
-    "Bear",
-    "Rabbit",
-    "Fox",
-    "british_library"
-  ],
-  [
-    "entertainment-010",
-    "easy",
-    "Which Belgian detective was created by Agatha Christie?",
-    "Hercule Poirot",
-    "Philip Marlowe",
-    "Sam Spade",
-    "british_library"
-  ],
-  [
-    "entertainment-011",
-    "easy",
-    "Who wrote Hamlet?",
-    "William Shakespeare",
-    "Charles Dickens",
-    "Oscar Wilde",
-    "british_library"
-  ],
-  [
-    "entertainment-012",
-    "easy",
-    "Who wrote The Hobbit?",
-    "J. R. R. Tolkien",
-    "C. S. Lewis",
-    "Roald Dahl",
-    "british_library"
-  ],
-  [
-    "entertainment-013",
-    "easy",
-    "Who wrote the Harry Potter novels?",
-    "J. K. Rowling",
-    "Suzanne Collins",
-    "Philip Pullman",
-    "british_library"
-  ],
-  [
-    "entertainment-014",
-    "easy",
-    "What is the name of the lion in The Chronicles of Narnia?",
-    "Aslan",
-    "Simba",
-    "Shere Khan",
-    "british_library"
-  ],
-  [
-    "entertainment-015",
-    "easy",
-    "What kind of animal is Moby Dick?",
-    "Whale",
-    "Shark",
-    "Giant squid",
-    "british_library"
-  ],
-  [
-    "entertainment-016",
-    "easy",
-    "Who wrote the novel Nineteen Eighty-Four?",
-    "George Orwell",
-    "Aldous Huxley",
-    "H. G. Wells",
-    "british_library"
-  ],
-  [
-    "entertainment-017",
-    "easy",
-    "Who wrote Pride and Prejudice?",
-    "Jane Austen",
-    "George Eliot",
-    "Virginia Woolf",
-    "british_library"
-  ],
-  [
-    "entertainment-018",
-    "easy",
-    "Who wrote the novel Dracula?",
-    "Bram Stoker",
-    "Mary Shelley",
-    "Robert Louis Stevenson",
-    "british_library"
-  ],
-  [
-    "entertainment-019",
-    "easy",
-    "In which fictional place does Peter Pan live?",
-    "Neverland",
-    "Wonderland",
-    "Narnia",
-    "british_library"
-  ],
-  [
-    "entertainment-020",
-    "easy",
-    "Alice follows which animal into Wonderland?",
-    "White Rabbit",
-    "Cheshire Cat",
-    "Dormouse",
-    "british_library"
   ],
   [
     "entertainment-021",
@@ -360,94 +234,130 @@
     "loc_entertainment"
   ],
   [
-    "entertainment-041",
-    "medium",
-    "Who wrote Don Quixote?",
-    "Miguel de Cervantes",
-    "Federico García Lorca",
-    "Gabriel García Márquez",
-    "british_library"
+    "entertainment-101",
+    "easy",
+    "Which awards are presented annually by the Academy of Motion Picture Arts and Sciences?",
+    "The Oscars",
+    "The Grammys",
+    "The Emmys",
+    "oscars"
   ],
   [
-    "entertainment-042",
-    "medium",
-    "Which ancient poet is traditionally credited with The Odyssey?",
+    "entertainment-102",
+    "easy",
+    "Who directed Titanic and Avatar?",
+    "James Cameron",
+    "Ridley Scott",
+    "Peter Jackson",
+    "bfi"
+  ],
+  [
+    "entertainment-103",
+    "easy",
+    "Who directed E.T. the Extra-Terrestrial?",
+    "Steven Spielberg",
+    "George Lucas",
+    "Ron Howard",
+    "bfi"
+  ],
+  [
+    "entertainment-104",
+    "easy",
+    "Who created the Star Wars film saga?",
+    "George Lucas",
+    "James Cameron",
+    "Tim Burton",
+    "bfi"
+  ],
+  [
+    "entertainment-105",
+    "easy",
+    "Which animation studio made Toy Story?",
+    "Pixar",
+    "Aardman",
+    "Studio Ghibli",
+    "bfi"
+  ],
+  [
+    "entertainment-106",
+    "easy",
+    "What is the first name of Bart Simpson's father?",
     "Homer",
-    "Virgil",
-    "Ovid",
-    "british_library"
+    "Ned",
+    "Moe",
+    "bfi"
   ],
   [
-    "entertainment-043",
-    "medium",
-    "Who wrote The Picture of Dorian Gray?",
-    "Oscar Wilde",
-    "Thomas Hardy",
-    "James Joyce",
-    "british_library"
+    "entertainment-107",
+    "easy",
+    "Spock is half human and half member of which species in Star Trek?",
+    "Vulcan",
+    "Klingon",
+    "Romulan",
+    "bfi"
   ],
   [
-    "entertainment-044",
-    "medium",
-    "Who wrote The Great Gatsby?",
-    "F. Scott Fitzgerald",
-    "Ernest Hemingway",
-    "John Steinbeck",
-    "british_library"
+    "entertainment-108",
+    "easy",
+    "What is Iron Man's civilian name?",
+    "Tony Stark",
+    "Bruce Banner",
+    "Steve Rogers",
+    "bfi"
   ],
   [
-    "entertainment-045",
-    "medium",
-    "Who wrote Les Misérables?",
-    "Victor Hugo",
-    "Alexandre Dumas",
-    "Émile Zola",
-    "british_library"
+    "entertainment-109",
+    "easy",
+    "Which fictional city is Batman best known for protecting?",
+    "Gotham City",
+    "Metropolis",
+    "Star City",
+    "bfi"
   ],
   [
-    "entertainment-046",
-    "medium",
-    "Who wrote War and Peace?",
-    "Leo Tolstoy",
-    "Fyodor Dostoevsky",
-    "Anton Chekhov",
-    "british_library"
+    "entertainment-110",
+    "easy",
+    "The Beatles formed in which English city?",
+    "Liverpool",
+    "Manchester",
+    "Birmingham",
+    "loc_entertainment"
   ],
   [
-    "entertainment-047",
-    "medium",
-    "Who wrote The Handmaid's Tale?",
-    "Margaret Atwood",
-    "Ursula K. Le Guin",
-    "Doris Lessing",
-    "british_library"
+    "entertainment-111",
+    "easy",
+    "Which band recorded Bohemian Rhapsody?",
+    "Queen",
+    "The Who",
+    "Pink Floyd",
+    "loc_entertainment"
   ],
   [
-    "entertainment-048",
-    "medium",
-    "Which elderly amateur detective was created by Agatha Christie?",
-    "Miss Marple",
-    "Nancy Drew",
-    "V. I. Warshawski",
-    "british_library"
+    "entertainment-112",
+    "easy",
+    "How many keys does a standard modern piano normally have?",
+    "88",
+    "76",
+    "96",
+    "loc_entertainment"
   ],
   [
-    "entertainment-049",
-    "medium",
-    "On which fictional continent is most of The Lord of the Rings set?",
-    "Middle-earth",
-    "Westeros",
-    "Earthsea",
-    "british_library"
+    "entertainment-113",
+    "easy",
+    "How many strings does a standard violin have?",
+    "Four",
+    "Five",
+    "Six",
+    "loc_entertainment"
   ],
   [
-    "entertainment-050",
-    "medium",
-    "Who wrote Catch-22?",
-    "Joseph Heller",
-    "Kurt Vonnegut",
-    "Norman Mailer",
-    "british_library"
+    "entertainment-114",
+    "easy",
+    "The trumpet belongs to which instrument family?",
+    "Brass",
+    "Woodwind",
+    "Strings",
+    "loc_entertainment"
   ],
   [
     "entertainment-051",
@@ -720,49 +630,94 @@
     "loc_entertainment"
   ],
   [
-    "entertainment-081",
-    "hard",
-    "In which historical form of English was Beowulf composed?",
-    "Old English",
-    "Middle English",
-    "Early Modern English",
-    "british_library"
+    "entertainment-115",
+    "medium",
+    "Who directed the South Korean film Parasite?",
+    "Bong Joon Ho",
+    "Park Chan-wook",
+    "Lee Chang-dong",
+    "oscars"
   ],
   [
-    "entertainment-082",
-    "hard",
-    "James Joyce's Ulysses is set largely during one day in which city?",
-    "Dublin",
-    "London",
-    "Paris",
-    "british_library"
+    "entertainment-116",
+    "medium",
+    "Who directed Pan's Labyrinth?",
+    "Guillermo del Toro",
+    "Alfonso Cuarón",
+    "Alejandro G. Iñárritu",
+    "bfi"
   ],
   [
-    "entertainment-083",
-    "hard",
-    "Who wrote One Hundred Years of Solitude?",
-    "Gabriel García Márquez",
-    "Jorge Luis Borges",
-    "Mario Vargas Llosa",
-    "nobel"
+    "entertainment-117",
+    "medium",
+    "Which film won Best Picture at the 2017 Academy Awards ceremony?",
+    "Moonlight",
+    "La La Land",
+    "Arrival",
+    "oscars"
   ],
   [
-    "entertainment-084",
-    "hard",
-    "What is the first name of the protagonist transformed in Kafka's The Metamorphosis?",
-    "Gregor",
-    "Josef",
-    "Franz",
-    "british_library"
+    "entertainment-118",
+    "medium",
+    "Who directed Mad Max: Fury Road?",
+    "George Miller",
+    "James Mangold",
+    "Neill Blomkamp",
+    "bfi"
   ],
   [
-    "entertainment-085",
-    "hard",
-    "Who wrote the poem The Waste Land?",
-    "T. S. Eliot",
-    "W. B. Yeats",
-    "Ezra Pound",
-    "british_library"
+    "entertainment-119",
+    "medium",
+    "Which family is central to the television series Succession?",
+    "The Roy family",
+    "The Carrington family",
+    "The Shelby family",
+    "bfi"
+  ],
+  [
+    "entertainment-120",
+    "medium",
+    "Which advertising agency is central at the beginning of Mad Men?",
+    "Sterling Cooper",
+    "Dunder Mifflin",
+    "Lumon Industries",
+    "bfi"
+  ],
+  [
+    "entertainment-121",
+    "medium",
+    "Which fictional company employs the workers in Severance?",
+    "Lumon Industries",
+    "Waystar Royco",
+    "Massive Dynamic",
+    "bfi"
+  ],
+  [
+    "entertainment-122",
+    "medium",
+    "Which musician recorded the jazz album Kind of Blue?",
+    "Miles Davis",
+    "John Coltrane",
+    "Thelonious Monk",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-123",
+    "medium",
+    "Which band released the album Rumours?",
+    "Fleetwood Mac",
+    "Eagles",
+    "ABBA",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-124",
+    "medium",
+    "Which performer created the album and film Purple Rain?",
+    "Prince",
+    "David Bowie",
+    "Stevie Wonder",
+    "loc_entertainment"
   ],
   [
     "entertainment-086",
@@ -897,6 +852,51 @@
     "Monty Python's Flying Circus",
     "Monty Python's Comedy Hour",
     "The Python Players",
+    "bfi"
+  ],
+  [
+    "entertainment-125",
+    "hard",
+    "What was Disney's first full-length cel-animated feature film?",
+    "Snow White and the Seven Dwarfs",
+    "Pinocchio",
+    "Fantasia",
+    "bfi"
+  ],
+  [
+    "entertainment-126",
+    "hard",
+    "Which 1927 film is famous for its synchronised spoken dialogue and songs?",
+    "The Jazz Singer",
+    "Metropolis",
+    "Sunrise",
+    "bfi"
+  ],
+  [
+    "entertainment-127",
+    "hard",
+    "Who directed the French New Wave film The 400 Blows?",
+    "François Truffaut",
+    "Jean-Luc Godard",
+    "Agnès Varda",
+    "bfi"
+  ],
+  [
+    "entertainment-128",
+    "hard",
+    "Who directed the French New Wave film Breathless?",
+    "Jean-Luc Godard",
+    "François Truffaut",
+    "Jacques Demy",
+    "bfi"
+  ],
+  [
+    "entertainment-129",
+    "hard",
+    "Who directed Blue Velvet?",
+    "David Lynch",
+    "Brian De Palma",
+    "John Carpenter",
     "bfi"
   ]
 ]

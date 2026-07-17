@@ -121,7 +121,7 @@ await db.query("select set_config('request.jwt.claim.sub', $1, false)", [PLAYER_
 const categoryResult = await db.query(
   "select * from public.get_question_categories() order by category_id"
 );
-assert(categoryResult.rows.length === 7, "Category RPC must return seven categories.");
+assert(categoryResult.rows.length === 7, "Phase 4 category RPC must return seven categories.");
 assert(
   categoryResult.rows.every((row) => Number(row.question_count) === 100),
   "Every category must expose exactly 100 active questions."
@@ -233,6 +233,26 @@ assert(
 );
 
 await db.exec(readFileSync(resolve(ROOT, "phase-4b-multiplayer.sql"), "utf8"));
+await db.exec(readFileSync(resolve(ROOT, "phase-5-category-platform.sql"), "utf8"));
+await db.exec(readFileSync(resolve(ROOT, "phase-5-question-seed.sql"), "utf8"));
+
+const phaseFiveCategoryResult = await db.query(
+  "select * from public.get_question_categories() order by sort_order"
+);
+assert(
+  phaseFiveCategoryResult.rows.length === 10,
+  "Phase 5 category RPC must return ten categories."
+);
+assert(
+  phaseFiveCategoryResult.rows.every((row) => Number(row.question_count) === 100),
+  "Every Phase 5 category must expose exactly 100 active questions."
+);
+assert(
+  phaseFiveCategoryResult.rows.every(
+    (row) => row.icon_key && /^#[0-9A-F]{6}$/.test(row.color)
+  ),
+  "Every category must expose safe card metadata."
+);
 
 const friendRequestResult = await db.query(
   "select public.send_friend_request(2) as friendship_id"
@@ -404,8 +424,8 @@ assert(duelLeaderboardResult.rows.length === 2, "Duel leaderboard must remain se
 console.log(
   JSON.stringify(
     {
-      categories: categoryResult.rows.length,
-      questions: 700,
+      categories: phaseFiveCategoryResult.rows.length,
+      questions: 1000,
       first_points: answer.points_awarded,
       pass_counted_incorrect: true,
       session_id: finished.session_id,
