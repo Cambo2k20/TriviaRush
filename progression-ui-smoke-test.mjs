@@ -106,6 +106,42 @@ window.supabase = {
           error: null
         };
       }
+      if (name === "get_turn_challenge_state") {
+        progressionPayload = {
+          ...progressionPayload,
+          total_xp: 1091,
+          level: 5,
+          credited_games: 11,
+          xp_into_level: 91,
+          xp_to_next_level: 409,
+          progress_percent: 18.2
+        };
+        return {
+          data: {
+            match_id: params?.p_match_id,
+            match_format: "turn_based",
+            status: "completed"
+          },
+          error: null
+        };
+      }
+      if (name === "get_turn_based_global_xp_summary") {
+        return {
+          data: {
+            status: "credited",
+            match_id: params?.p_match_id,
+            xp_awarded: 52,
+            base_xp: 45,
+            answer_xp: 48,
+            score_multiplier: 1.03,
+            result_multiplier: 1.05,
+            total_xp: 1091,
+            level: 5,
+            credited_games: 11
+          },
+          error: null
+        };
+      }
       return { data: null, error: null };
     }
   })
@@ -159,6 +195,20 @@ assert(
 );
 assert("duel result shows exact participant XP", window.document.querySelector("#duelProgressionResult [data-progression-award]")?.textContent === "+68 XP");
 assert("duel result shows server result multiplier", window.document.querySelector("#duelProgressionResult [data-progression-breakdown]")?.textContent.includes("result ×1.10"));
+
+await client.rpc("get_turn_challenge_state", {
+  p_match_id: "cccccccc-cccc-4ccc-8ccc-cccccccccccc"
+});
+await new Promise((resolve) => setTimeout(resolve, 40));
+assert(
+  "turn-based summary uses completed challenge id",
+  rpcCalls.some((call) =>
+    call.name === "get_turn_based_global_xp_summary" &&
+    call.params?.p_match_id === "cccccccc-cccc-4ccc-8ccc-cccccccccccc"
+  )
+);
+assert("turn-based result shows exact participant XP", window.document.querySelector("#duelProgressionResult [data-progression-award]")?.textContent === "+52 XP");
+assert("turn-based result shows draw multiplier", window.document.querySelector("#duelProgressionResult [data-progression-breakdown]")?.textContent.includes("result ×1.05"));
 
 console.log(results.join("\n"));
 window.close();
