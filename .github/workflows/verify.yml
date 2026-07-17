@@ -31,6 +31,9 @@ jobs:
       - name: Apply social assets to the current production page
         run: node scripts/sync-social-branch-with-main.mjs
 
+      - name: Apply social screen observer hotfix
+        run: node scripts/fix-social-page-observer.mjs
+
       - name: Install test dependencies
         run: npm ci
 
@@ -68,7 +71,7 @@ jobs:
           path: artifacts/social-redesign/*.png
           if-no-files-found: error
 
-      - name: Commit generated production page
+      - name: Commit generated production files
         if: github.event_name == 'pull_request'
         run: |
           if git diff --quiet; then
@@ -76,6 +79,6 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html
-          git commit -m "Wire the social tabs into the current production page"
+          git add index.html social-redesign.js
+          git commit -m "Fix the Play friends observer loop"
           git push
