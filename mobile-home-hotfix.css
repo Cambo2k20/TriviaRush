@@ -1,0 +1,45 @@
+@media (max-width: 700px) {
+  /* Some legacy mobile rules reduce the labelled navigation buttons to
+     font-size: 0. Restore an explicit size on the retained icon span. */
+  body.trivia-shell-ready .duel-button > span:first-child,
+  body.trivia-shell-ready .leaderboard-button > span:first-child,
+  body.trivia-shell-ready .account-button > span:first-child {
+    display: inline-grid !important;
+    width: auto !important;
+    height: auto !important;
+    place-items: center;
+    overflow: visible !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-size: 1.05rem !important;
+    line-height: 1 !important;
+  }
+
+  /* Keep the Home CTA in its original hero position. This explicitly
+     neutralises sticky/fixed positioning inherited by narrow iOS layouts. */
+  body.trivia-shell-ready #startScreen.home-screen-v2 .home-hero-v2 {
+    display: block !important;
+  }
+
+  body.trivia-shell-ready #startScreen.home-screen-v2 .home-start-button {
+    position: static !important;
+    inset: auto !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    z-index: auto !important;
+    width: 100%;
+    max-width: 650px;
+    margin: 0;
+    transform: none !important;
+  }
+
+  body.trivia-shell-ready #startScreen.home-screen-v2 .home-quick-actions {
+    position: static !important;
+    inset: auto !important;
+    z-index: auto !important;
+  }
+}
+
+/* This file is intentionally loaded last so it wins only on narrow Home views. */

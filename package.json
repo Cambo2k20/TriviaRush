@@ -8,7 +8,7 @@
     "generate:vapid": "node scripts/generate-vapid-keys.mjs",
     "test:questions": "node scripts/build-question-seed.mjs",
     "test:database": "node scripts/database-smoke-test.mjs",
-    "test:frontend": "node smoke-test.mjs && node progression-ui-smoke-test.mjs && node home-redesign-smoke-test.mjs && node social-redesign-smoke-test.mjs && node social-account-guard-smoke-test.mjs && node social-page-integration-smoke-test.mjs && node unified-shell-smoke-test.mjs && node mobile-shell-polish-smoke-test.mjs",
+    "test:frontend": "node smoke-test.mjs && node progression-ui-smoke-test.mjs && node home-redesign-smoke-test.mjs && node social-redesign-smoke-test.mjs && node social-account-guard-smoke-test.mjs && node social-page-integration-smoke-test.mjs && node unified-shell-smoke-test.mjs && node mobile-shell-polish-smoke-test.mjs && node mobile-home-hotfix-smoke-test.mjs",
     "test": "npm run test:questions && npm run test:database && npm run test:global-progression && npm run test:global-progression-solo && npm run test:global-progression-live-duels && npm run test:global-progression-turn-based && npm run test:global-progression-backfill && npm run test:frontend",
     "test:global-progression": "node scripts/global-progression-foundation-smoke-test.mjs",
     "test:global-progression-solo": "node scripts/global-progression-solo-smoke-test.mjs",

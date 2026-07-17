@@ -31,6 +31,15 @@ if (!/href="mobile-shell-polish\.css\?v=\d+"/.test(html)) {
   );
 }
 
+if (!/href="mobile-home-hotfix\.css\?v=\d+"/.test(html)) {
+  const mobilePolishStyle = html.match(/  <link rel="stylesheet" href="mobile-shell-polish\.css\?v=\d+">/);
+  if (!mobilePolishStyle) throw new Error("Mobile shell stylesheet marker not found.");
+  html = html.replace(
+    mobilePolishStyle[0],
+    `${mobilePolishStyle[0]}\n  <link rel="stylesheet" href="mobile-home-hotfix.css?v=1">`
+  );
+}
+
 const supabaseMarker = '  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>';
 if (!/src="social-rpc-bridge\.js\?v=\d+"/.test(html)) {
   if (!html.includes(supabaseMarker)) throw new Error("Supabase script marker not found.");
@@ -74,6 +83,15 @@ if (!/href="\.\.\/mobile-shell-polish\.css\?v=\d+"/.test(fixture)) {
   fixture = fixture.replace(
     fixtureUnifiedStyle[0],
     `${fixtureUnifiedStyle[0]}\n  <link rel="stylesheet" href="../mobile-shell-polish.css?v=1">`
+  );
+}
+
+if (!/href="\.\.\/mobile-home-hotfix\.css\?v=\d+"/.test(fixture)) {
+  const fixtureMobileStyle = fixture.match(/  <link rel="stylesheet" href="\.\.\/mobile-shell-polish\.css\?v=\d+">/);
+  if (!fixtureMobileStyle) throw new Error("Fixture mobile shell stylesheet marker not found.");
+  fixture = fixture.replace(
+    fixtureMobileStyle[0],
+    `${fixtureMobileStyle[0]}\n  <link rel="stylesheet" href="../mobile-home-hotfix.css?v=1">`
   );
 }
 
