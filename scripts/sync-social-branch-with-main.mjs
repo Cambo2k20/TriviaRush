@@ -8,19 +8,19 @@ if (html.includes('href="home-redesign.css?v=3"')) {
 }
 
 const styleMarker = '  <link rel="stylesheet" href="home-redesign.css?v=4">';
-if (!html.includes('href="social-redesign.css?v=1"')) {
+if (!/href="social-redesign\.css\?v=\d+"/.test(html)) {
   if (!html.includes(styleMarker)) throw new Error("Home stylesheet marker not found.");
   html = html.replace(styleMarker, `${styleMarker}\n  <link rel="stylesheet" href="social-redesign.css?v=1">`);
 }
 
 const supabaseMarker = '  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>';
-if (!html.includes('src="social-rpc-bridge.js?v=1"')) {
+if (!/src="social-rpc-bridge\.js\?v=\d+"/.test(html)) {
   if (!html.includes(supabaseMarker)) throw new Error("Supabase script marker not found.");
   html = html.replace(supabaseMarker, `${supabaseMarker}\n  <script src="social-rpc-bridge.js?v=1"></script>`);
 }
 
 const appMarker = '  <script src="app.js?v=18"></script>';
-if (!html.includes('src="social-redesign.js?v=1"')) {
+if (!/src="social-redesign\.js\?v=\d+"/.test(html)) {
   if (!html.includes(appMarker)) throw new Error("Application script marker not found.");
   html = html.replace(appMarker, `${appMarker}\n  <script src="social-redesign.js?v=1"></script>`);
 }
