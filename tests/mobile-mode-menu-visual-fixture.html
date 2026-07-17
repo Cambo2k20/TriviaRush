@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trivia Rush mobile mode fixture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=8">
+  <link rel="stylesheet" href="../home-redesign.css?v=4">
+  <link rel="stylesheet" href="../unified-shell.css?v=1">
+  <link rel="stylesheet" href="../mobile-shell-polish.css?v=1">
+  <link rel="stylesheet" href="../mobile-home-hotfix.css?v=1">
+  <link rel="stylesheet" href="../mobile-mode-menu.css?v=1">
+</head>
+<body class="trivia-shell-ready home-redesign-active">
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Trivia Rush home">
+        <span class="brand-bolt" aria-hidden="true">⚡</span>
+        <span>TRIVIA <strong>RUSH</strong></span>
+      </a>
+      <div class="header-actions">
+        <button id="notificationButton" class="icon-button notification-button" type="button" aria-label="Open notifications"><span aria-hidden="true">🔔</span><span class="notification-badge">1</span></button>
+        <button id="duelButton" class="duel-button" type="button"><span aria-hidden="true">⚔️</span><span id="duelButtonText">Play friends</span></button>
+        <button id="leaderboardButton" class="leaderboard-button" type="button"><span aria-hidden="true">🏆</span><span id="leaderboardButtonText">Leaderboard</span></button>
+        <button id="accountButton" class="account-button" type="button"><span aria-hidden="true">👤</span><span id="accountButtonText">Cambo</span></button>
+        <button id="soundToggle" class="icon-button" type="button"><span aria-hidden="true">🔊</span></button>
+        <button id="hostToggle" class="icon-button" type="button"><span aria-hidden="true">🎙️</span></button>
+      </div>
+    </header>
+
+    <section id="startScreen" class="screen active home-screen-v2" aria-labelledby="startTitle">
+      <div class="home-hero-v2">
+        <div class="eyebrow">60 SECONDS. ONE HIGH SCORE.</div>
+        <h1 id="startTitle">How many<br>can<br><span>you answer?</span></h1>
+        <p class="home-hero-copy">Choose a category and put your knowledge to the test. Race the clock, build your streak and earn global XP.</p>
+        <div class="home-selection-row">
+          <div class="home-selected-category">Selected:<strong>All categories</strong></div>
+          <button class="home-host-toggle" type="button"><span>Voice host</span><span class="home-switch-track"></span></button>
+        </div>
+        <button class="primary-button home-start-button" type="button"><span>Start the challenge</span><span>›</span></button>
+        <div class="home-stats-v2">
+          <div class="home-stat-v2"><span>High score</span><strong id="startHighScore">2,898</strong></div>
+          <div class="home-stat-v2"><span>Best streak</span><strong id="startBestStreak">12</strong></div>
+          <div class="home-stat-v2"><span>Global level</span><strong>LV <span id="homeGlobalLevel">5</span></strong></div>
+        </div>
+      </div>
+
+      <aside class="home-category-browser">
+        <header class="home-category-heading"><span class="home-category-mark">?</span><div><h2>Choose a category</h2><p>Pick one to begin</p></div></header>
+        <div class="home-category-grid">
+          <button class="home-category-card" style="--category-accent:#ffd335"><span class="home-category-icon">?</span><strong>All categories</strong></button>
+          <button class="home-category-card" style="--category-accent:#35d9d1"><span class="home-category-icon">⚗</span><strong>Science</strong></button>
+          <button class="home-category-card" style="--category-accent:#ff6b57"><span class="home-category-icon">⌂</span><strong>History</strong></button>
+          <button class="home-category-card" style="--category-accent:#4ba3ff"><span class="home-category-icon">◎</span><strong>Geography</strong></button>
+        </div>
+      </aside>
+
+      <nav class="home-quick-actions"><button class="home-quick-action">Solo challenge</button><button class="home-quick-action">Play with friends</button><button class="home-quick-action">Leaderboard</button></nav>
+    </section>
+
+    <button id="homeButton" type="button" hidden>Change category</button>
+    <footer><span>Original browser trivia project · Built with HTML, CSS and JavaScript</span><button type="button">How to play</button></footer>
+  </main>
+
+  <script>
+    window.scrollTo = () => {};
+  </script>
+  <script src="../mobile-mode-menu.js?v=1"></script>
+  <script>
+    window.addEventListener("load", () => {
+      if (new URLSearchParams(window.location.search).get("stage") === "solo") {
+        document.getElementById("mobileSoloMode")?.click();
+      }
+    });
+  </script>
+</body>
+</html>
