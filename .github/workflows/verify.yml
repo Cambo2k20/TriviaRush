@@ -38,5 +38,8 @@ jobs:
       - name: Verify global progression foundation
         run: npm run test:global-progression
 
+      - name: Verify solo global progression
+        run: npm run test:global-progression-solo
+
       - name: Verify frontend
         run: npm run test:frontend
