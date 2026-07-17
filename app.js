@@ -3784,7 +3784,11 @@
         { method: "GET" }
       );
       if (configError || !config?.vapid_public_key) {
-        setNotificationStatus("Push delivery is not configured on the server yet.", true);
+        console.error("Push config fetch failed:", configError, config);
+        setNotificationStatus(
+          `Push config error: ${configError?.name || "none"} — ${configError?.message || JSON.stringify(config) || "no response"}`,
+          true
+        );
         return;
       }
 
