@@ -289,6 +289,29 @@ select:focus-visible {
   box-shadow: 0 14px 35px rgba(255, 213, 74, 0.18);
 }
 
+.primary-button:disabled {
+  cursor: wait;
+  filter: grayscale(0.45);
+  opacity: 0.62;
+  transform: none;
+}
+
+.start-status {
+  min-height: 1.25rem;
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.start-status:empty {
+  display: none;
+}
+
+.start-status.error {
+  color: var(--red);
+}
+
 .controls-hint {
   margin-top: 18px;
   display: flex;
@@ -1267,6 +1290,321 @@ dialog ol {
     transform 160ms ease,
     background 160ms ease,
     border-color 160ms ease;
+}
+
+.duel-button {
+  min-height: 44px;
+  padding: 0 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(38, 226, 255, 0.4);
+  border-radius: 14px;
+  color: var(--text);
+  cursor: pointer;
+  background: rgba(38, 226, 255, 0.1);
+}
+
+.duel-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: rgba(38, 226, 255, 0.18);
+}
+
+.duel-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.social-screen,
+.duel-game-screen {
+  padding: 34px 0;
+  align-items: start;
+}
+
+.social-shell {
+  width: 100%;
+}
+
+.social-header {
+  margin-bottom: 24px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.social-header h1 {
+  margin: 4px 0;
+  font-family: "Baloo 2", sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.6rem);
+  line-height: 1;
+}
+
+.social-header p,
+.card-note {
+  color: var(--muted);
+}
+
+.compact-button {
+  width: auto;
+  min-width: 100px;
+  padding: 0 18px;
+}
+
+.social-content {
+  display: grid;
+  gap: 14px;
+}
+
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.social-card,
+.duel-waiting-card {
+  padding: 24px;
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  border: 1px solid var(--outline);
+  border-radius: 22px;
+  background: rgba(22, 30, 68, 0.94);
+  box-shadow: var(--shadow);
+}
+
+.social-card h2,
+.social-card h3,
+.duel-waiting-card h1 {
+  margin: 0;
+  font-family: "Baloo 2", sans-serif;
+}
+
+.social-card h3 {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.social-card label {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.social-card input,
+.social-card select,
+.card-title-row input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 13px;
+  border: 1px solid var(--outline);
+  border-radius: 12px;
+  color: var(--text);
+  background: #202a59;
+}
+
+.history-card {
+  grid-column: 1 / -1;
+}
+
+.inline-form,
+.card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.inline-form .secondary-button {
+  width: auto;
+  min-width: 84px;
+}
+
+.card-title-row {
+  justify-content: space-between;
+}
+
+.card-title-row input {
+  max-width: 170px;
+}
+
+.social-list {
+  display: grid;
+  gap: 8px;
+}
+
+.social-row {
+  min-height: 54px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.035);
+}
+
+.social-row-copy {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.social-row-copy strong,
+.social-row-copy small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.social-row-copy small,
+.social-empty {
+  color: var(--muted);
+}
+
+.row-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.row-action {
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--outline);
+  border-radius: 9px;
+  color: var(--text);
+  cursor: pointer;
+  background: rgba(255,255,255,0.08);
+}
+
+.social-status {
+  min-height: 1.3rem;
+  margin: 0;
+  color: var(--cyan);
+}
+
+.social-status.error {
+  color: var(--red);
+}
+
+.account-gate {
+  max-width: 620px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.duel-waiting-card {
+  width: min(620px, 100%);
+  padding: clamp(28px, 6vw, 52px);
+  place-items: center;
+  text-align: center;
+}
+
+.room-code {
+  padding: 12px 20px;
+  border: 2px dashed var(--cyan);
+  border-radius: 14px;
+  color: var(--cyan);
+  font-family: monospace;
+  font-size: clamp(2rem, 9vw, 4rem);
+  letter-spacing: 0.12em;
+}
+
+.duel-waiting-actions {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.duel-scoreboard {
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.duel-player,
+.duel-clock {
+  padding: 14px 18px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--outline);
+  border-radius: 18px;
+  background: rgba(22, 30, 68, 0.94);
+}
+
+.duel-player strong,
+.duel-clock strong {
+  font-family: "Baloo 2", sans-serif;
+  font-size: 2.2rem;
+}
+
+.duel-player small,
+.duel-clock span {
+  color: var(--muted);
+}
+
+.duel-final-scores {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.duel-final-scores div {
+  padding: 18px;
+  display: grid;
+  border: 1px solid var(--outline);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.04);
+}
+
+.duel-final-scores strong {
+  font-family: "Baloo 2", sans-serif;
+  font-size: 2.4rem;
+}
+
+@media (max-width: 800px) {
+  .social-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .history-card {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 580px) {
+  #duelButtonText {
+    display: none;
+  }
+
+  .duel-button {
+    width: 44px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .duel-scoreboard {
+    grid-template-columns: 1fr 74px 1fr;
+  }
+
+  .duel-player,
+  .duel-clock {
+    padding: 10px 6px;
+  }
+
+  .duel-player strong,
+  .duel-clock strong {
+    font-size: 1.6rem;
+  }
+
+  .duel-waiting-actions {
+    grid-template-columns: 1fr;
+  }
 }
 
 .leaderboard-button:hover:not(:disabled) {
