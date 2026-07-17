@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - phase-5-foundation
-      - feature/social-tabs-redesign
 
 permissions:
   contents: write
@@ -18,8 +17,10 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - name: Check out repository
+      - name: Check out repository branch
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -27,7 +28,7 @@ jobs:
           node-version: 22
           cache: npm
 
-      - name: Synchronise current home asset version
+      - name: Apply social assets to the current production page
         run: node scripts/sync-social-branch-with-main.mjs
 
       - name: Install test dependencies
@@ -67,8 +68,8 @@ jobs:
           path: artifacts/social-redesign/*.png
           if-no-files-found: error
 
-      - name: Commit synchronised production asset version
-        if: github.event_name == 'push'
+      - name: Commit generated production page
+        if: github.event_name == 'pull_request'
         run: |
           if git diff --quiet; then
             exit 0
@@ -76,5 +77,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git commit -m "Synchronise the home stylesheet version"
+          git commit -m "Wire the social tabs into the current production page"
           git push
