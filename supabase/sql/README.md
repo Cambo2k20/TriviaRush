@@ -29,3 +29,14 @@ Follow `docs/phase-5-category-rollout.md`.
 2. `phase-5-turn-based-verification.sql`
 
 Follow `docs/phase-5-turn-based-rollout.md`.
+
+## Phase 5 global XP progression
+
+1. `phase-5-global-progression-foundation.sql`
+2. `phase-5-global-progression-verification.sql`
+
+This checkpoint creates the secure progression foundation only. It does not
+award XP from games until the subsequent solo and multiplayer integration
+migrations are deployed.
+
+Follow `docs/phase-5-global-progression-rollout.md`.
