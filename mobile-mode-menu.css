@@ -1,0 +1,317 @@
+.mobile-mode-menu,
+.mobile-solo-back {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  body.mobile-mode-menu-ready #startScreen.home-screen-v2 {
+    min-height: auto;
+    padding: 18px 0 32px;
+    display: block;
+  }
+
+  body.mobile-mode-menu-ready #startScreen.home-screen-v2[data-mobile-home-stage="modes"] > .home-hero-v2,
+  body.mobile-mode-menu-ready #startScreen.home-screen-v2[data-mobile-home-stage="modes"] > .home-category-browser,
+  body.mobile-mode-menu-ready #startScreen.home-screen-v2[data-mobile-home-stage="modes"] > .home-quick-actions {
+    display: none !important;
+  }
+
+  body.mobile-mode-menu-ready #startScreen.home-screen-v2[data-mobile-home-stage="solo"] > .mobile-mode-menu {
+    display: none !important;
+  }
+
+  body.mobile-mode-menu-ready #startScreen.home-screen-v2[data-mobile-home-stage="solo"] > .home-hero-v2 {
+    display: block !important;
+  }
+
+  body.mobile-mode-menu-ready #startScreen.home-screen-v2[data-mobile-home-stage="solo"] > .home-category-browser {
+    display: flex !important;
+  }
+
+  body.mobile-mode-menu-ready #startScreen.home-screen-v2 > .home-quick-actions {
+    display: none !important;
+  }
+
+  .mobile-mode-menu {
+    width: 100%;
+    display: grid;
+    gap: 22px;
+    padding: 10px 2px 4px;
+  }
+
+  .mobile-mode-heading {
+    display: grid;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .mobile-mode-eyebrow {
+    color: var(--home-cyan, #25e7d1);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .mobile-mode-heading h1 {
+    margin: 0;
+    font-family: "Baloo 2", sans-serif;
+    font-size: clamp(2.65rem, 13vw, 3.65rem);
+    font-weight: 800;
+    line-height: 0.94;
+    letter-spacing: -0.04em;
+  }
+
+  .mobile-mode-heading h1 span {
+    color: var(--home-yellow, #ffd335);
+  }
+
+  .mobile-mode-heading p {
+    max-width: 32rem;
+    margin: 0 auto;
+    color: #bec6dc;
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+
+  .mobile-mode-list {
+    display: grid;
+    gap: 12px;
+  }
+
+  .mobile-mode-card {
+    --mode-accent: #25e7d1;
+    width: 100%;
+    min-height: 118px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 16px;
+    color: #f7f8ff;
+    text-align: left;
+    border: 1px solid color-mix(in srgb, var(--mode-accent) 64%, transparent);
+    border-radius: 18px;
+    background:
+      linear-gradient(125deg, color-mix(in srgb, var(--mode-accent) 13%, transparent), transparent 55%),
+      rgba(8, 16, 44, 0.86);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+
+  .mobile-mode-card:active:not(:disabled) {
+    transform: scale(0.985);
+  }
+
+  .mobile-mode-card:focus-visible {
+    outline: 4px solid color-mix(in srgb, var(--mode-accent) 42%, transparent);
+    outline-offset: 3px;
+  }
+
+  .mobile-mode-card.featured {
+    --mode-accent: #ffd335;
+    min-height: 144px;
+    border-width: 2px;
+    background:
+      radial-gradient(circle at 90% 0%, rgba(255, 213, 53, 0.19), transparent 11rem),
+      linear-gradient(135deg, rgba(44, 36, 83, 0.96), rgba(11, 21, 52, 0.96));
+    box-shadow: 0 22px 54px rgba(255, 194, 31, 0.13);
+  }
+
+  .mobile-mode-card.friends {
+    --mode-accent: #25e7d1;
+  }
+
+  .mobile-mode-icon {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    color: var(--mode-accent);
+    border-radius: 15px;
+    background: color-mix(in srgb, var(--mode-accent) 10%, rgba(255, 255, 255, 0.03));
+  }
+
+  .mobile-mode-icon svg {
+    width: 32px;
+    height: 32px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .mobile-mode-copy {
+    min-width: 0;
+    display: grid;
+    gap: 5px;
+  }
+
+  .mobile-mode-copy strong {
+    font-family: "Baloo 2", sans-serif;
+    font-size: 1.45rem;
+    line-height: 1;
+  }
+
+  .mobile-mode-copy span {
+    color: #b9c2d9;
+    font-size: 0.86rem;
+    line-height: 1.42;
+  }
+
+  .mobile-mode-arrow {
+    color: var(--mode-accent);
+    font-size: 1.8rem;
+    font-weight: 700;
+  }
+
+  .mobile-mode-secondary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .mobile-mode-card.compact {
+    min-height: 132px;
+    padding: 18px 15px;
+    grid-template-columns: 1fr;
+    align-content: start;
+    gap: 12px;
+  }
+
+  .mobile-mode-card.compact .mobile-mode-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .mobile-mode-card.compact .mobile-mode-icon svg {
+    width: 27px;
+    height: 27px;
+  }
+
+  .mobile-mode-card.compact .mobile-mode-copy strong {
+    font-size: 1.15rem;
+  }
+
+  .mobile-mode-card:disabled {
+    cursor: default;
+    opacity: 0.62;
+    box-shadow: none;
+  }
+
+  .mobile-mode-card.practice {
+    --mode-accent: #a66cff;
+  }
+
+  .mobile-mode-card.daily {
+    --mode-accent: #ffb347;
+  }
+
+  .mobile-mode-coming-soon {
+    width: fit-content;
+    padding: 4px 8px;
+    color: #d7dced;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    font-size: 0.63rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .mobile-mode-progress {
+    padding: 17px 16px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .mobile-mode-progress > div {
+    min-width: 0;
+    padding: 0 11px;
+    display: grid;
+    gap: 5px;
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .mobile-mode-progress > div:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .mobile-mode-progress span {
+    color: #9fa9c4;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .mobile-mode-progress strong {
+    overflow: hidden;
+    font-family: "Baloo 2", sans-serif;
+    font-size: 1.25rem;
+    line-height: 1;
+    text-overflow: ellipsis;
+  }
+
+  .mobile-solo-back {
+    width: fit-content;
+    min-height: 40px;
+    margin: 0 0 24px;
+    padding: 0 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #d9dff0;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.045);
+  }
+
+  .mobile-solo-back span:first-child {
+    color: var(--home-cyan, #25e7d1);
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .mobile-mode-card {
+    padding: 17px;
+    grid-template-columns: 46px minmax(0, 1fr) auto;
+    gap: 12px;
+  }
+
+  .mobile-mode-icon {
+    width: 46px;
+    height: 46px;
+  }
+
+  .mobile-mode-copy strong {
+    font-size: 1.3rem;
+  }
+
+  .mobile-mode-secondary-grid {
+    gap: 9px;
+  }
+
+  .mobile-mode-card.compact {
+    min-height: 126px;
+    padding: 15px 12px;
+  }
+
+  .mobile-mode-card.compact .mobile-mode-copy strong {
+    font-size: 1.04rem;
+  }
+
+  .mobile-mode-progress {
+    padding-inline: 12px;
+  }
+
+  .mobile-mode-progress > div {
+    padding-inline: 8px;
+  }
+}
