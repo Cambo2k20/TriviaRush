@@ -3779,16 +3779,27 @@
       }
 
       const registration = await navigator.serviceWorker.register("./sw.js");
-      const { data: config, error: configError } = await supabaseClient.functions.invoke(
-        "dispatch-notifications",
-        { method: "GET" }
-      );
-      if (configError || !config?.vapid_public_key) {
-        console.error("Push config fetch failed:", configError, config);
-        setNotificationStatus(
-          `Push config error: ${configError?.name || "none"} — ${configError?.message || JSON.stringify(config) || "no response"}`,
-          true
-        );
+      let config = null;
+      try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        const response = await fetch(`${SUPABASE_URL}/functions/v1/dispatch-notifications`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${session?.access_token || ""}`,
+            apikey: SUPABASE_PUBLISHABLE_KEY
+          }
+        });
+        if (!response.ok) {
+          throw new Error(`Server responded ${response.status}`);
+        }
+        config = await response.json();
+      } catch (fetchError) {
+        console.error("Push config fetch failed:", fetchError);
+        setNotificationStatus(`Push config error: ${fetchError.message}`, true);
+        return;
+      }
+      if (!config?.vapid_public_key) {
+        setNotificationStatus("Push delivery is not configured on the server yet.", true);
         return;
       }
 
