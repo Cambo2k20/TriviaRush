@@ -262,7 +262,7 @@ await new Promise((resolve) => window.setTimeout(resolve, 0));
 assert("notification settings are moved to the notification dialog", window.document.querySelector("#notificationDialog")?.open === true && Boolean(window.document.querySelector("#notificationDialog #notificationCard")) && !window.document.querySelector("#socialScreen #notificationCard"));
 
 assert("social RPC bridge caches existing data contracts", window.triviaRushSocialRpcCache instanceof window.Map && window.triviaRushSocialRpcCache.size === Object.keys(rpcData).length);
-assert("production page links the social assets in execution order", index.includes('href="social-redesign.css?v=1"') && index.indexOf('social-rpc-bridge.js?v=1') < index.indexOf('app.js?v=18') && index.indexOf('app.js?v=18') < index.indexOf('social-redesign.js?v=1'));
+assert("production page links the social assets in execution order", index.includes('href="social-redesign.css?v=2"') && index.indexOf('social-rpc-bridge.js?v=2') < index.indexOf('app.js?v=18') && index.indexOf('app.js?v=18') < index.indexOf('social-redesign.js?v=2'));
 assert("responsive desktop and mobile rules are included", styles.includes("@media (max-width: 760px)") && styles.includes("@media (max-width: 560px)"));
 assert("restrained teal and violet depth gradients are included", styles.includes("radial-gradient(circle at 14% 50%") && styles.includes("radial-gradient(circle at 85% 42%"));
 assert("tabs use correct ARIA panel relationships", tabs.every((tab) => window.document.getElementById(tab.getAttribute("aria-controls"))?.getAttribute("role") === "tabpanel"));
