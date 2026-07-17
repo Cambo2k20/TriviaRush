@@ -87,12 +87,13 @@ body.home-redesign-active .header-actions > button:hover {
 }
 
 #startScreen.home-screen-v2 {
-  min-height: calc(100vh - 150px);
-  padding: 54px 0 26px;
+  min-height: calc(100dvh - 90px);
+  padding: clamp(24px, 5dvh, 54px) 0 clamp(20px, 3dvh, 32px);
   grid-template-columns: minmax(0, 0.94fr) minmax(540px, 1.06fr);
   grid-template-rows: minmax(0, 1fr) auto;
-  gap: 42px 72px;
-  align-items: stretch;
+  column-gap: clamp(32px, 4.7vw, 72px);
+  row-gap: clamp(24px, 4dvh, 42px);
+  align-items: center;
 }
 
 .home-hero-v2 {
@@ -258,11 +259,14 @@ body.home-redesign-active .header-actions > button:hover {
 }
 
 .home-category-browser {
-  min-height: 600px;
-  max-height: 660px;
+  width: 100%;
+  height: clamp(500px, calc(100dvh - 270px), 660px);
+  min-height: 0;
+  max-height: none;
   padding: 28px 30px 22px;
   display: flex;
   flex-direction: column;
+  align-self: center;
   overflow: hidden;
   border: 1px solid rgba(139, 70, 255, 0.72);
   border-radius: 17px;
@@ -520,8 +524,10 @@ body.home-redesign-active .header-actions > button:hover {
   }
 
   .home-category-browser {
-    min-height: 560px;
-    max-height: 620px;
+    height: clamp(520px, 70dvh, 620px);
+    min-height: 0;
+    max-height: none;
+    align-self: stretch;
   }
 
   .home-quick-actions {
@@ -598,9 +604,12 @@ body.home-redesign-active .header-actions > button:hover {
   }
 
   .home-category-browser {
+    width: 100%;
+    height: auto;
     min-height: 0;
     max-height: none;
     padding: 22px 18px;
+    align-self: stretch;
   }
 
   .home-category-grid {
@@ -623,10 +632,27 @@ body.home-redesign-active .header-actions > button:hover {
   }
 }
 
-@media (min-width: 921px) {
+
+
+@supports not (height: 100dvh) {
+  #startScreen.home-screen-v2 {
+    min-height: calc(100vh - 90px);
+  }
+
   .home-category-browser {
-    align-self: center;
-    transform: translateY(35px);
+    height: clamp(500px, calc(100vh - 270px), 660px);
+  }
+
+  @media (max-width: 920px) {
+    .home-category-browser {
+      height: clamp(520px, 70vh, 620px);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .home-category-browser {
+      height: auto;
+    }
   }
 }
 

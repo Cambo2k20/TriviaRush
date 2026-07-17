@@ -53,7 +53,7 @@ const assert = (name, condition) => {
   if (!condition) process.exitCode = 1;
 };
 
-assert("redesign stylesheet linked", html.includes('href="home-redesign.css?v=1"'));
+assert("redesign stylesheet linked", html.includes('href="home-redesign.css?v=2"'));
 assert("redesign runtime linked", html.includes('src="home-redesign.js?v=1"'));
 assert("mockup hero markup present", Boolean(window.document.querySelector(".home-hero-v2")));
 assert("category browser present", Boolean(window.document.querySelector(".home-category-browser")));
@@ -75,6 +75,8 @@ assert("home voice switch mirrors host state", window.document.querySelector("#h
 window.document.querySelector("#homeFriendsShortcut").click();
 assert("friends shortcut uses existing navigation control", friendsOpened === 1);
 assert("responsive rules included", styles.includes("@media (max-width: 640px)"));
+assert("dynamic desktop alignment used", styles.includes("align-items: center") && styles.includes("100dvh"));
+assert("fixed category translation removed", !styles.includes("translateY(35px)"));
 assert("reduced-motion handling included", styles.includes("prefers-reduced-motion"));
 assert("unimplemented daily and practice modes are not advertised", !html.includes("Daily Challenge") && !html.includes("Practice mode"));
 
