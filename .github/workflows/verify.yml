@@ -52,3 +52,13 @@ jobs:
 
       - name: Verify frontend
         run: npm run test:frontend
+
+      - name: Capture social redesign screenshots
+        run: node scripts/capture-social-redesign.mjs
+
+      - name: Upload social redesign screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: social-redesign-screenshots
+          path: artifacts/social-redesign/*.png
+          if-no-files-found: error
