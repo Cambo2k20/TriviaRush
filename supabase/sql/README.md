@@ -49,3 +49,12 @@ Follow `docs/phase-5-global-progression-rollout.md`.
 This awards global XP when new authoritative solo runs complete. It does not backfill older runs or change the frontend.
 
 Follow `docs/phase-5-global-progression-solo-rollout.md`.
+
+### Live-duel integration
+
+1. `phase-5-global-progression-live-duels.sql`
+2. `phase-5-global-progression-live-duels-verification.sql`
+
+This awards both participants when new authoritative live duels complete, including score-win, draw, loss and forfeit result multipliers. It does not backfill older duels or change the frontend.
+
+Follow `docs/phase-5-global-progression-live-duels-rollout.md`.
