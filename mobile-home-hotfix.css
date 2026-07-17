@@ -41,3 +41,5 @@
     z-index: auto !important;
   }
 }
+
+/* This file is intentionally loaded last so it wins only on narrow Home views. */
