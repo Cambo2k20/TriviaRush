@@ -31,4 +31,11 @@ jobs:
         run: node scripts/fix-social-page-observer.mjs
 
       - name: Reproduce Play friends click
-        run: node social-page-integration-smoke-test.mjs
+        run: node social-page-integration-smoke-test.mjs > social-diagnostic-output.txt 2>&1 || true
+
+      - name: Upload diagnostic output
+        uses: actions/upload-artifact@v4
+        with:
+          name: social-diagnostic-output
+          path: social-diagnostic-output.txt
+          if-no-files-found: error
