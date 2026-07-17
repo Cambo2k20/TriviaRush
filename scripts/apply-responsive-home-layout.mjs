@@ -1,3 +1,4 @@
+// Regenerates the home layout without viewport-specific pixel offsets.
 import { readFileSync, writeFileSync } from "node:fs";
 
 const cssPath = "home-redesign.css";
