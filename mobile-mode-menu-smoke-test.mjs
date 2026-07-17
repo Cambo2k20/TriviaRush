@@ -43,6 +43,7 @@ const backButton = window.document.getElementById("mobileSoloBack");
 const checks = [
   ["mobile mode menu initialises ahead of solo setup", startScreen.dataset.mobileHomeStage === "modes"],
   ["mobile mode menu is inserted into the existing Home screen", Boolean(window.document.getElementById("mobileModeMenu"))],
+  ["existing desktop Home content remains in the DOM", Boolean(startScreen.querySelector(".home-hero-v2")) && Boolean(startScreen.querySelector(".home-category-browser"))],
   ["Solo Rush opens the existing solo setup stage", (() => {
     soloButton.click();
     return startScreen.dataset.mobileHomeStage === "solo";
@@ -63,7 +64,8 @@ const checks = [
   ["mode menu mirrors real player progress", window.document.getElementById("mobileModeHighScore").textContent === "120" && window.document.getElementById("mobileModeBestStreak").textContent === "7" && window.document.getElementById("mobileModeLevel").textContent === "4"],
   ["desktop remains unchanged because the menu is hidden outside the mobile query", styles.startsWith(".mobile-mode-menu,\n.mobile-solo-back {\n  display: none;") && styles.includes("@media (max-width: 700px)")],
   ["mobile quick actions are removed after mode selection replaces them", styles.includes("#startScreen.home-screen-v2 > .home-quick-actions") && styles.includes("display: none !important")],
-  ["production loads the mobile mode assets after the Home hotfix", index.includes('href="mobile-mode-menu.css?v=1"') && index.includes('src="mobile-mode-menu.js?v=1"') && index.indexOf('mobile-home-hotfix.css?v=1') < index.indexOf('mobile-mode-menu.css?v=1')]
+  ["production loads the mobile mode assets after the Home hotfix", index.includes('href="mobile-mode-menu.css?v=1"') && index.includes('src="mobile-mode-menu.js?v=1"') && index.indexOf('mobile-home-hotfix.css?v=1') < index.indexOf('mobile-mode-menu.css?v=1')],
+  ["mobile mode runtime loads after the shared shell runtime", index.indexOf('unified-shell.js?v=1') < index.indexOf('mobile-mode-menu.js?v=1')]
 ];
 
 let failed = false;
