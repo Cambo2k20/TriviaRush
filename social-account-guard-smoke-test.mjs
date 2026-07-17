@@ -51,7 +51,8 @@ assert("the Play friends header state is exposed on the body", window.document.b
 assert("the guard stylesheet is loaded", window.document.querySelector('link[data-social-auth-guard="true"]')?.getAttribute("href")?.endsWith("/social-auth-guard.css?v=1"));
 assert("the social page heading remains centred", guardStyles.includes(".social-tabs-redesign .social-page-heading") && guardStyles.includes("justify-self: center"));
 assert("the mobile header uses fixed icon columns", guardStyles.includes("grid-auto-columns: 42px") && guardStyles.includes("body.social-page-open .header-actions"));
-assert("mobile navigation labels collapse without losing buttons", guardStyles.includes(".duel-button span:last-child") && guardStyles.includes(".leaderboard-button span:last-child") && guardStyles.includes(".account-button span:last-child"));
+assert("mobile navigation labels collapse by their IDs", guardStyles.includes("#duelButtonText") && guardStyles.includes("#leaderboardButtonText") && guardStyles.includes("#accountButtonText"));
+assert("mobile navigation icon spans remain visible", guardStyles.includes(".duel-button > span:first-child") && guardStyles.includes("display: inline-grid !important"));
 
 window.document.querySelector("#joinDuelButton").click();
 assert("restricted actions do not reach the existing mutation handler", joinClicks === 0);
