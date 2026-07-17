@@ -1,10 +1,8 @@
 (() => {
   "use strict";
 
-  const GAME_SECONDS = 60;
   const QUESTION_DELAY_MS = 850;
   const TIMER_CIRCUMFERENCE = 2 * Math.PI * 52;
-  const QUESTIONS = Array.isArray(window.TRIVIA_QUESTIONS) ? window.TRIVIA_QUESTIONS : [];
   const SUPABASE_URL = "https://kgdnuzasbeavpqharbpf.supabase.co";
   const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_R-AJK-addd0bcjUtfzAOqQ_88GYxN_O";
   const supabaseClient = window.supabase.createClient(
@@ -12,7 +10,7 @@
     SUPABASE_PUBLISHABLE_KEY
   );
   const state = {
-    pool: [],
+    categories: [],
     currentQuestion: null,
     questionIndex: 0,
     score: 0,
@@ -20,18 +18,24 @@
     bestStreak: 0,
     correct: 0,
     answered: 0,
-    remainingMs: GAME_SECONDS * 1000,
+    remainingMs: 60 * 1000,
+    durationSeconds: 60,
+    runId: null,
+    completedSessionId: null,
+    serverEndsAtMs: 0,
+    serverClockOffsetMs: 0,
     questionStartedAt: 0,
     timerStartedAt: 0,
     timerFrame: null,
     locked: false,
+    starting: false,
     gameEnded: false,
     pendingQuestionTimer: null,
     soundEnabled: true,
     hostEnabled: false,
     recognition: null,
     listening: false,
-    selectedCategory: "All categories",
+    selectedCategory: "mixed",
     user: null,
     profile: null,
     scoreSaved: false,
@@ -45,7 +49,19 @@
     leaderboardCategories: [],
     leaderboardReturnScreen: null,
     leaderboardRows: [],
-    leaderboardRequestId: 0
+    leaderboardRequestId: 0,
+    socialReturnScreen: null,
+    activeDuelId: null,
+    activeDuelCode: null,
+    duelState: null,
+    duelQuestion: null,
+    duelLocked: true,
+    duelPollTimer: null,
+    duelTimerFrame: null,
+    duelSubscription: null,
+    duelServerOffsetMs: 0,
+    duelRefreshPending: false,
+    rematchSettings: null
   };
 
   const elements = {
@@ -60,6 +76,55 @@
     homeButton: document.querySelector("#homeButton"),
     resultsLeaderboardButton: document.querySelector("#resultsLeaderboardButton"),
     categorySelect: document.querySelector("#categorySelect"),
+    startStatus: document.querySelector("#startStatus"),
+    duelButton: document.querySelector("#duelButton"),
+    socialScreen: document.querySelector("#socialScreen"),
+    closeSocialButton: document.querySelector("#closeSocialButton"),
+    duelAccountGate: document.querySelector("#duelAccountGate"),
+    openAccountForDuelButton: document.querySelector("#openAccountForDuelButton"),
+    socialContent: document.querySelector("#socialContent"),
+    socialStatus: document.querySelector("#socialStatus"),
+    duelCategorySelect: document.querySelector("#duelCategorySelect"),
+    duelDurationSelect: document.querySelector("#duelDurationSelect"),
+    duelInviteAccount: document.querySelector("#duelInviteAccount"),
+    createDuelButton: document.querySelector("#createDuelButton"),
+    duelRoomCode: document.querySelector("#duelRoomCode"),
+    joinDuelButton: document.querySelector("#joinDuelButton"),
+    duelInvitations: document.querySelector("#duelInvitations"),
+    friendAccountNumber: document.querySelector("#friendAccountNumber"),
+    addFriendButton: document.querySelector("#addFriendButton"),
+    friendRequests: document.querySelector("#friendRequests"),
+    friendsList: document.querySelector("#friendsList"),
+    historyOpponentFilter: document.querySelector("#historyOpponentFilter"),
+    duelHistory: document.querySelector("#duelHistory"),
+    duelLeaderboard: document.querySelector("#duelLeaderboard"),
+    duelWaitingScreen: document.querySelector("#duelWaitingScreen"),
+    duelWaitingCode: document.querySelector("#duelWaitingCode"),
+    duelWaitingStatus: document.querySelector("#duelWaitingStatus"),
+    copyDuelLinkButton: document.querySelector("#copyDuelLinkButton"),
+    cancelDuelButton: document.querySelector("#cancelDuelButton"),
+    duelGameScreen: document.querySelector("#duelGameScreen"),
+    duelSelfScore: document.querySelector("#duelSelfScore"),
+    duelSelfProgress: document.querySelector("#duelSelfProgress"),
+    duelOpponentName: document.querySelector("#duelOpponentName"),
+    duelOpponentScore: document.querySelector("#duelOpponentScore"),
+    duelOpponentProgress: document.querySelector("#duelOpponentProgress"),
+    duelTimerValue: document.querySelector("#duelTimerValue"),
+    duelPhaseLabel: document.querySelector("#duelPhaseLabel"),
+    duelCategoryBadge: document.querySelector("#duelCategoryBadge"),
+    duelQuestionNumber: document.querySelector("#duelQuestionNumber"),
+    duelQuestionText: document.querySelector("#duelQuestionText"),
+    duelAnswerGrid: document.querySelector("#duelAnswerGrid"),
+    duelPassButton: document.querySelector("#duelPassButton"),
+    duelFeedback: document.querySelector("#duelFeedback"),
+    duelResultsScreen: document.querySelector("#duelResultsScreen"),
+    duelResultTitle: document.querySelector("#duelResultTitle"),
+    duelResultMessage: document.querySelector("#duelResultMessage"),
+    duelFinalSelfScore: document.querySelector("#duelFinalSelfScore"),
+    duelFinalOpponentName: document.querySelector("#duelFinalOpponentName"),
+    duelFinalOpponentScore: document.querySelector("#duelFinalOpponentScore"),
+    duelRematchButton: document.querySelector("#duelRematchButton"),
+    duelResultsHomeButton: document.querySelector("#duelResultsHomeButton"),
     startHighScore: document.querySelector("#startHighScore"),
     startBestStreak: document.querySelector("#startBestStreak"),
     countdownNumber: document.querySelector("#countdownNumber"),
@@ -143,9 +208,6 @@
     closeDialogButton: document.querySelector("#closeDialogButton")
   };
   async function init() {
-    validateQuestions();
-    populateCategories();
-    buildLeaderboardCategoryFilters();
     loadPreferences();
     updateStartStats();
     configureSpeechRecognition();
@@ -160,7 +222,9 @@
     }
 
     await initialisePlayer();
+    await loadQuestionCategories();
     updateAccountUI();
+    await handleDuelLink();
   }
 
   function setupAuthStateListener() {
@@ -641,6 +705,15 @@
         setAccountStatus(
           "You are currently playing as a guest."
         );
+      }
+    }
+
+    if (elements.socialScreen?.classList.contains("active")) {
+      const permanentForDuels = state.user?.is_anonymous === false && Boolean(state.profile);
+      elements.duelAccountGate.hidden = permanentForDuels;
+      elements.socialContent.hidden = !permanentForDuels;
+      if (permanentForDuels) {
+        void loadSocialData();
       }
     }
   }
@@ -1388,75 +1461,95 @@
     }
   }
 
-  function validateQuestions() {
-    const invalid = QUESTIONS.find((item) => {
-      return !item ||
-        typeof item.question !== "string" ||
-        typeof item.category !== "string" ||
-        !Array.isArray(item.answers) ||
-        item.answers.length !== 3 ||
-        !Number.isInteger(item.correct) ||
-        item.correct < 0 ||
-        item.correct > 2;
-    });
+  async function loadQuestionCategories() {
+    elements.startButton.disabled = true;
+    setStartStatus("Loading the question bank…");
 
-    if (invalid) {
-      console.error("Invalid trivia question:", invalid);
-      alert("One or more questions in questions.js use an invalid format. Check the browser console.");
+    const { data, error } = await supabaseClient.rpc(
+      "get_question_categories"
+    );
+
+    if (error) {
+      console.error("Could not load question categories:", error);
+      setStartStatus(
+        "The question bank could not be loaded. Try refreshing after the Phase 4A database migration is deployed.",
+        true
+      );
+      return;
     }
 
-    if (QUESTIONS.length < 1) {
-      elements.startButton.disabled = true;
-      elements.startButton.textContent = "Add questions to questions.js";
+    const categories = (Array.isArray(data) ? data : [])
+      .map((category) => ({
+        id: String(category.category_id || "").trim().toLowerCase(),
+        label: String(category.label || "").trim(),
+        questionCount: Number(category.question_count || 0)
+      }))
+      .filter((category) =>
+        category.id && category.label && category.questionCount > 0
+      );
+
+    if (categories.length !== 7) {
+      setStartStatus(
+        "The question bank is incomplete. Trivia Rush requires seven active categories.",
+        true
+      );
+      return;
     }
+
+    state.categories = categories;
+    populateCategories();
+    buildLeaderboardCategoryFilters();
+    elements.startButton.disabled = false;
+    setStartStatus("");
+  }
+
+  function setStartStatus(message, isError = false) {
+    if (!elements.startStatus) {
+      return;
+    }
+
+    elements.startStatus.textContent = message;
+    elements.startStatus.classList.toggle("error", isError);
   }
 
   function populateCategories() {
-    const categories = [...new Set(QUESTIONS.map((question) => question.category))].sort();
-    const options = ["All categories", ...categories];
+    const options = [
+      { id: "mixed", label: "All categories" },
+      ...state.categories
+    ];
 
-    elements.categorySelect.innerHTML = options
-      .map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`)
-      .join("");
+    elements.categorySelect.replaceChildren();
+    options.forEach((category) => {
+      const option = document.createElement("option");
+      option.value = category.id;
+      option.textContent = category.label;
+      elements.categorySelect.appendChild(option);
+    });
+
+    if (elements.duelCategorySelect) {
+      elements.duelCategorySelect.replaceChildren();
+      options.forEach((category) => {
+        const option = document.createElement("option");
+        option.value = category.id;
+        option.textContent = category.label;
+        elements.duelCategorySelect.appendChild(option);
+      });
+    }
   }
 
-  // Phase 3: the leaderboard category filters are generated from the same
-  // question bank that populates the start-screen select, so the stored
-  // game_sessions.category values and the filter buttons can never drift
-  // apart. "Overall" is the unfiltered board and "Mixed" surfaces games
-  // played with the "All categories" option, which are saved as "mixed".
+  // Category IDs and labels come from the same controlled database RPC used
+  // by the game selector. This keeps question delivery, stored sessions and
+  // leaderboard filters on one taxonomy.
   function buildLeaderboardCategoryFilters() {
     if (!elements.leaderboardCategoryFilters) {
       return;
     }
 
-    const questionCategories = [
-      ...new Set(
-        QUESTIONS.map(
-          (question) => question.category
-        )
-      )
-    ].sort();
-
     const categories = [
       { id: "overall", label: "Overall" },
-      { id: "mixed", label: "Mixed" }
+      { id: "mixed", label: "Mixed" },
+      ...state.categories.map(({ id, label }) => ({ id, label }))
     ];
-
-    questionCategories.forEach((category) => {
-      const id = category.trim().toLowerCase();
-
-      if (
-        !categories.some(
-          (existing) => existing.id === id
-        )
-      ) {
-        categories.push({
-          id,
-          label: category
-        });
-      }
-    });
 
     state.leaderboardCategories = categories;
 
@@ -1512,6 +1605,18 @@
     ];
   }
   function bindEvents() {
+    elements.duelButton?.addEventListener("click", openSocialScreen);
+    elements.closeSocialButton?.addEventListener("click", closeSocialScreen);
+    elements.openAccountForDuelButton?.addEventListener("click", () => openAccountDialog(true));
+    elements.createDuelButton?.addEventListener("click", createDuel);
+    elements.joinDuelButton?.addEventListener("click", () => joinDuel(elements.duelRoomCode.value));
+    elements.copyDuelLinkButton?.addEventListener("click", copyDuelInviteLink);
+    elements.cancelDuelButton?.addEventListener("click", cancelWaitingDuel);
+    elements.addFriendButton?.addEventListener("click", addFriend);
+    elements.historyOpponentFilter?.addEventListener("change", loadDuelHistory);
+    elements.duelPassButton?.addEventListener("click", () => submitDuelAnswer(null));
+    elements.duelRematchButton?.addEventListener("click", createRematch);
+    elements.duelResultsHomeButton?.addEventListener("click", openSocialScreen);
     elements.startButton?.addEventListener(
       "click",
       beginCountdown
@@ -1696,7 +1801,9 @@
 
     const gameIsRunning =
       screen === elements.gameScreen ||
-      screen === elements.countdownScreen;
+      screen === elements.countdownScreen ||
+      screen === elements.duelWaitingScreen ||
+      screen === elements.duelGameScreen;
 
     if (elements.leaderboardButton) {
       elements.leaderboardButton.disabled =
@@ -1707,13 +1814,23 @@
       elements.accountButton.disabled =
         gameIsRunning;
     }
+
+    if (elements.duelButton) {
+      elements.duelButton.disabled = gameIsRunning;
+    }
   }
 
   async function beginCountdown() {
+    if (state.starting) {
+      return;
+    }
+
+    state.starting = true;
     const profileReady =
       await ensurePlayerProfile();
 
     if (!profileReady) {
+      state.starting = false;
       return;
     }
 
@@ -1753,19 +1870,10 @@
       );
     }
 
-    startGame();
+    await startGame();
   }
 
   function resetGame() {
-    const categoryQuestions =
-      state.selectedCategory === "All categories"
-        ? [...QUESTIONS]
-        : QUESTIONS.filter(
-            (question) =>
-              question.category === state.selectedCategory
-          );
-
-    state.pool = shuffle(categoryQuestions);
     state.currentQuestion = null;
     state.questionIndex = 0;
     state.score = 0;
@@ -1773,7 +1881,12 @@
     state.bestStreak = 0;
     state.correct = 0;
     state.answered = 0;
-    state.remainingMs = GAME_SECONDS * 1000;
+    state.remainingMs = 60 * 1000;
+    state.durationSeconds = 60;
+    state.runId = null;
+    state.completedSessionId = null;
+    state.serverEndsAtMs = 0;
+    state.serverClockOffsetMs = 0;
     state.locked = false;
     state.gameEnded = false;
     state.scoreSaved = false;
@@ -1796,20 +1909,53 @@
     elements.newHighScore.hidden = true;
   }
 
-  function startGame() {
+  async function startGame() {
+    elements.countdownNumber.textContent = "STARTING…";
+
+    const { data, error } = await supabaseClient.rpc(
+      "start_solo_game",
+      {
+        p_game_mode: "rush_60",
+        p_category: state.selectedCategory
+      }
+    );
+
+    if (error || !data?.run_id || !data?.question) {
+      console.error("Could not start the game:", error);
+      showScreen(elements.startScreen);
+      setStartStatus(
+        error?.message || "The game could not be started. Please try again.",
+        true
+      );
+      state.starting = false;
+      return;
+    }
+
+    setStartStatus("");
+    state.starting = false;
+    state.runId = data.run_id;
+    state.durationSeconds = Number(data.duration_seconds) || 60;
+    syncServerClock(data.server_now);
+    state.serverEndsAtMs = Date.parse(data.ends_at);
+    applyAuthoritativeStats(data);
+    setCurrentQuestion(data.question);
+
     showScreen(elements.gameScreen);
-    state.timerStartedAt = performance.now();
-    state.questionStartedAt = state.timerStartedAt;
-    nextQuestion();
+    renderQuestion();
+    if (state.hostEnabled) {
+      speakQuestion();
+    }
     timerLoop();
   }
 
-  function timerLoop(now = performance.now()) {
-    const elapsed = now - state.timerStartedAt;
-    state.remainingMs = Math.max(0, GAME_SECONDS * 1000 - elapsed);
+  function timerLoop() {
+    state.remainingMs = Math.max(
+      0,
+      state.serverEndsAtMs - serverNowMs()
+    );
 
     const seconds = Math.ceil(state.remainingMs / 1000);
-    const ratio = state.remainingMs / (GAME_SECONDS * 1000);
+    const ratio = state.remainingMs / (state.durationSeconds * 1000);
 
     elements.timerValue.textContent = String(seconds);
     elements.timerProgress.style.strokeDashoffset = String(TIMER_CIRCUMFERENCE * (1 - ratio));
@@ -1823,36 +1969,67 @@
     }
 
     if (state.remainingMs <= 0) {
-      endGame();
+      void endGame();
       return;
     }
 
     state.timerFrame = requestAnimationFrame(timerLoop);
   }
 
-  function nextQuestion() {
+  async function nextQuestion() {
     state.pendingQuestionTimer = null;
 
     if (state.remainingMs <= 0) {
-      endGame();
+      void endGame();
       return;
     }
 
     stopRecognition();
-    state.locked = false;
     elements.feedback.textContent = "";
     elements.feedback.className = "feedback";
 
-    if (state.pool.length === 0) {
-      const basePool = state.selectedCategory === "All categories"
-        ? [...QUESTIONS]
-        : QUESTIONS.filter((question) => question.category === state.selectedCategory);
-      state.pool = shuffle(basePool);
+    const { data, error } = await supabaseClient.rpc(
+      "get_current_solo_question",
+      { p_run_id: state.runId }
+    );
+
+    if (state.gameEnded) {
+      return;
     }
 
-    state.currentQuestion = state.pool.pop();
-    state.questionIndex += 1;
-    state.questionStartedAt = performance.now();
+    if (error) {
+      console.error("Could not load the next question:", error);
+      elements.feedback.textContent = "Connection interrupted — retrying…";
+      elements.feedback.className = "feedback wrong";
+      state.pendingQuestionTimer = window.setTimeout(nextQuestion, 700);
+      return;
+    }
+
+    syncServerClock(data?.server_now);
+
+    if (data?.status === "completed" || data?.status === "expired") {
+      void endGame(data);
+      return;
+    }
+
+    if (data?.status === "waiting") {
+      const delay = Math.max(
+        40,
+        Date.parse(data.available_at) - serverNowMs()
+      );
+      state.pendingQuestionTimer = window.setTimeout(nextQuestion, delay);
+      return;
+    }
+
+    if (data?.status !== "active" || !data.question) {
+      elements.feedback.textContent = "The next question is unavailable — retrying…";
+      state.pendingQuestionTimer = window.setTimeout(nextQuestion, 700);
+      return;
+    }
+
+    applyAuthoritativeStats(data);
+    setCurrentQuestion(data.question);
+    state.locked = false;
 
     renderQuestion();
     if (state.hostEnabled) {
@@ -1862,7 +2039,7 @@
 
   function renderQuestion() {
     const question = state.currentQuestion;
-    elements.categoryBadge.textContent = question.category;
+    elements.categoryBadge.textContent = question.categoryLabel;
     elements.questionNumber.textContent = String(state.questionIndex);
     elements.questionText.textContent = question.question;
     elements.answerGrid.innerHTML = "";
@@ -1878,7 +2055,7 @@
     });
   }
 
-  function selectAnswer(index) {
+  async function selectAnswer(index) {
     if (
       state.locked ||
       !state.currentQuestion ||
@@ -1898,70 +2075,47 @@
       )
     ];
 
-    const isCorrect =
-      index === state.currentQuestion.correct;
+    buttons.forEach((button) => {
+      button.disabled = true;
+    });
 
-    const responseMs = Math.round(
-      performance.now() -
-        state.questionStartedAt
-    );
+    const requestId = createRequestId();
+    const response = await submitAnswerWithRetry(index, requestId);
 
-    state.responseTimes.push(responseMs);
-    state.answered += 1;
+    if (state.gameEnded) {
+      return;
+    }
 
-    buttons.forEach(
-      (button, buttonIndex) => {
-        button.disabled = true;
+    if (!response) {
+      state.locked = false;
+      buttons.forEach((button) => {
+        button.disabled = false;
+      });
+      elements.feedback.textContent = "Your answer could not be sent. Please try again.";
+      elements.feedback.className = "feedback wrong";
+      return;
+    }
 
-        if (
-          buttonIndex ===
-          state.currentQuestion.correct
-        ) {
-          button.classList.add("correct");
-        }
+    if (response.status === "completed" || response.status === "expired") {
+      void endGame(response);
+      return;
+    }
 
-        if (
-          !isCorrect &&
-          buttonIndex === index
-        ) {
-          button.classList.add("wrong");
-        }
+    syncServerClock(response.server_now);
+    applyAuthoritativeStats(response);
+    const isCorrect = response.is_correct === true;
+
+    buttons.forEach((button, buttonIndex) => {
+      if (isCorrect && buttonIndex === index) {
+        button.classList.add("correct");
+      } else if (!isCorrect && buttonIndex === index) {
+        button.classList.add("wrong");
       }
-    );
+    });
 
     if (isCorrect) {
-      state.correct += 1;
-      state.streak += 1;
-
-      state.bestStreak = Math.max(
-        state.bestStreak,
-        state.streak
-      );
-
-      const speedBonus = Math.max(
-        0,
-        100 -
-          Math.floor(responseMs / 60)
-      );
-
-      const multiplier = Math.min(
-        3,
-        1 +
-          Math.floor(
-            (state.streak - 1) / 3
-          ) *
-            0.5
-      );
-
-      const points = Math.round(
-        (100 + speedBonus) *
-          multiplier
-      );
-
-      state.score += points;
-
       elements.feedback.textContent =
-        `Correct! +${points}`;
+        `Correct! +${response.points_awarded}`;
 
       elements.feedback.className =
         "feedback correct";
@@ -1982,11 +2136,7 @@
       state.streak = 0;
 
       elements.feedback.textContent =
-        `The answer was ${
-          state.currentQuestion.answers[
-            state.currentQuestion.correct
-          ]
-        }.`;
+        `The answer was ${response.correct_answer}.`;
 
       elements.feedback.className =
         "feedback wrong";
@@ -1996,9 +2146,7 @@
       if (state.hostEnabled) {
         speak(
           `Not this time. The answer was ${
-            state.currentQuestion.answers[
-              state.currentQuestion.correct
-            ]
+            response.correct_answer
           }.`
         );
       }
@@ -2009,23 +2157,129 @@
     state.pendingQuestionTimer =
       window.setTimeout(
         nextQuestion,
-        QUESTION_DELAY_MS
+        getNextQuestionDelay(response.next_question_at)
       );
   }
 
 
-  function passQuestion() {
+  async function passQuestion() {
     if (state.locked || state.remainingMs <= 0) {
       return;
     }
 
     state.locked = true;
-    state.streak = 0;
-    elements.feedback.textContent = "Passed — next question!";
+    stopRecognition();
+    stopSpeaking();
+    const response = await submitAnswerWithRetry(null, createRequestId());
+
+    if (state.gameEnded) {
+      return;
+    }
+
+    if (!response) {
+      state.locked = false;
+      elements.feedback.textContent = "Your pass could not be sent. Please try again.";
+      elements.feedback.className = "feedback wrong";
+      return;
+    }
+
+    if (response.status === "completed" || response.status === "expired") {
+      void endGame(response);
+      return;
+    }
+
+    syncServerClock(response.server_now);
+    applyAuthoritativeStats(response);
+    elements.answerGrid.querySelectorAll(".answer-button").forEach((button) => {
+      button.disabled = true;
+    });
+    elements.feedback.textContent = `Passed — the answer was ${response.correct_answer}.`;
     elements.feedback.className = "feedback";
     updateHud();
     playTone(260, 0.08);
-    state.pendingQuestionTimer = window.setTimeout(nextQuestion, 320);
+    state.pendingQuestionTimer = window.setTimeout(
+      nextQuestion,
+      getNextQuestionDelay(response.next_question_at)
+    );
+  }
+
+  async function submitAnswerWithRetry(selectedIndex, requestId) {
+    const parameters = {
+      p_run_id: state.runId,
+      p_position: state.currentQuestion.position,
+      p_selected_index: selectedIndex,
+      p_request_id: requestId
+    };
+
+    for (let attempt = 0; attempt < 2; attempt += 1) {
+      const { data, error } = await supabaseClient.rpc(
+        "submit_solo_answer",
+        parameters
+      );
+
+      if (!error) {
+        return data;
+      }
+
+      console.warn("Could not submit answer:", error);
+      if (attempt === 0 && state.remainingMs > 500) {
+        await wait(250);
+      }
+    }
+
+    return null;
+  }
+
+  function setCurrentQuestion(question) {
+    state.currentQuestion = {
+      position: Number(question.position),
+      questionId: Number(question.question_id),
+      categoryId: question.category_id,
+      categoryLabel: question.category_label,
+      difficulty: question.difficulty,
+      question: question.question,
+      answers: Array.isArray(question.answers) ? question.answers : []
+    };
+    state.questionIndex = state.currentQuestion.position;
+  }
+
+  function applyAuthoritativeStats(payload) {
+    state.score = Number(payload.score ?? state.score);
+    state.streak = Number(payload.streak ?? state.streak);
+    state.bestStreak = Number(payload.best_streak ?? state.bestStreak);
+    state.answered = Number(payload.questions_answered ?? state.answered);
+    state.correct = Number(payload.correct_answers ?? state.correct);
+    updateHud();
+  }
+
+  function syncServerClock(serverNow) {
+    const parsed = Date.parse(serverNow);
+    if (Number.isFinite(parsed)) {
+      state.serverClockOffsetMs = parsed - Date.now();
+    }
+  }
+
+  function serverNowMs() {
+    return Date.now() + state.serverClockOffsetMs;
+  }
+
+  function getNextQuestionDelay(nextQuestionAt) {
+    const parsed = Date.parse(nextQuestionAt);
+    return Number.isFinite(parsed)
+      ? Math.max(40, parsed - serverNowMs())
+      : QUESTION_DELAY_MS;
+  }
+
+  function createRequestId() {
+    if (window.crypto?.randomUUID) {
+      return window.crypto.randomUUID();
+    }
+
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (character) => {
+      const value = Math.floor(Math.random() * 16);
+      const nibble = character === "x" ? value : (value & 0x3) | 0x8;
+      return nibble.toString(16);
+    });
   }
 
   function updateHud() {
@@ -2033,11 +2287,7 @@
     elements.streakValue.textContent = String(state.streak);
   }
 
-  async function endGame() {
-    // Phase 3: if the timer expires while a post-answer delay is still
-    // pending, both timerLoop and the delayed nextQuestion call used to run
-    // endGame, replaying the finish sound and overwriting the saved-result
-    // message. The guard and timer clear below make endGame run exactly once.
+  async function endGame(serverPayload = null) {
     if (state.gameEnded) {
       return;
     }
@@ -2059,6 +2309,15 @@
 
     stopRecognition();
     stopSpeaking();
+
+    if (serverPayload?.server_now) {
+      syncServerClock(serverPayload.server_now);
+    }
+
+    const finalPayload = await finishGameRun();
+    if (finalPayload) {
+      applyAuthoritativeStats(finalPayload);
+    }
 
     const previousHighScore = readNumber(
       "triviaRushHighScore"
@@ -2126,6 +2385,20 @@
     state.baseResultMessage =
       resultCopy.message;
 
+    if (state.scoreSaved && state.completedSessionId) {
+      setResultSaveMessage(
+        "Your server-validated result was saved to the global leaderboard."
+      );
+    } else if (state.scoreSaved) {
+      setResultSaveMessage(
+        "No result was saved because no questions were answered."
+      );
+    } else {
+      setResultSaveMessage(
+        "Your result could not be finalised. Use Retry save to try again."
+      );
+    }
+
     elements.newHighScore.hidden =
       !isNewHighScore;
 
@@ -2134,8 +2407,6 @@
     showScreen(elements.resultsScreen);
 
     playFinishSound();
-
-    await saveGameResult();
 
     state.leaderboardRows = [];
 
@@ -2151,115 +2422,58 @@
       return;
     }
 
-    if (!state.user || !state.profile) {
-      console.warn(
-        "The result was not saved because no player is signed in."
-      );
+    const finalPayload = await finishGameRun();
 
-      setResultSaveMessage(
-        "Your result could not be saved because no player account was available."
-      );
-
-      return;
-    }
-
-    if (state.answered < 1) {
-      console.warn(
-        "The result was not saved because no questions were answered."
-      );
-
-      setResultSaveMessage(
-        "No result was saved because no questions were answered."
-      );
-
-      return;
-    }
-
-    state.scoreSaved = true;
-
-    const incorrectAnswers =
-      state.answered - state.correct;
-
-    const averageResponseMs =
-      state.responseTimes.length === 0
-        ? null
-        : Math.round(
-            state.responseTimes.reduce(
-              (total, responseTime) =>
-                total + responseTime,
-              0
-            ) / state.responseTimes.length
-          );
-
-    const category =
-      state.selectedCategory ===
-      "All categories"
-        ? "mixed"
-        : state.selectedCategory;
-
-    const parameters = {
-      p_questions_answered:
-        state.answered,
-      p_correct_answers:
-        state.correct,
-      p_incorrect_answers:
-        incorrectAnswers,
-      p_score:
-        state.score,
-      p_best_streak:
-        state.bestStreak,
-      p_average_response_ms:
-        averageResponseMs,
-      p_duration_seconds:
-        GAME_SECONDS,
-      p_game_mode:
-        "rush_60",
-      p_category:
-        category
-    };
-
-    try {
-      const { error } =
-        await supabaseClient.rpc(
-          "submit_game_result",
-          parameters
-        );
-
-      if (error) {
-        throw error;
-      }
-
-      console.log(
-        "Game result saved successfully."
-      );
-
+    if (finalPayload) {
+      applyAuthoritativeStats(finalPayload);
       state.leaderboardRows = [];
-
       setResultSaveMessage(
-        "Your result was saved to the global leaderboard."
+        state.completedSessionId
+          ? "Your server-validated result was saved to the global leaderboard."
+          : "No result was saved because no questions were answered."
       );
-
-      if (elements.retrySaveButton) {
-        elements.retrySaveButton.hidden =
-          true;
-      }
-    } catch (error) {
-      state.scoreSaved = false;
-
-      console.error(
-        "Could not save game result:",
-        error
-      );
-
-      setResultSaveMessage(
-        "Your result could not be saved to the global leaderboard."
-      );
-
-      if (elements.retrySaveButton) {
-        elements.retrySaveButton.hidden =
-          false;
-      }
     }
+  }
+
+  async function finishGameRun() {
+    if (!state.runId) {
+      return null;
+    }
+
+    for (let attempt = 0; attempt < 4; attempt += 1) {
+      const { data, error } = await supabaseClient.rpc(
+        "finish_solo_game",
+        { p_run_id: state.runId }
+      );
+
+      if (!error && data) {
+        state.scoreSaved = true;
+        state.completedSessionId = data.session_id || null;
+        syncServerClock(data.server_now);
+        if (elements.retrySaveButton) {
+          elements.retrySaveButton.hidden = true;
+        }
+        return data;
+      }
+
+      const timerNotExpired = String(error?.message || "")
+        .toLowerCase()
+        .includes("timer has not expired");
+
+      if (timerNotExpired && attempt < 3) {
+        await wait(250);
+        continue;
+      }
+
+      console.error("Could not finalise game result:", error);
+      state.scoreSaved = false;
+      if (elements.retrySaveButton) {
+        elements.retrySaveButton.hidden = false;
+      }
+      return null;
+    }
+
+    return null;
   }
 
   // Phase 3: the result message is rebuilt from the stored base copy so a
@@ -2922,6 +3136,677 @@
     return "The leaderboard could not be loaded. Try again in a moment.";
   }
 
+  function isPermanentAccount() {
+    return Boolean(state.user && state.profile && state.user.is_anonymous === false);
+  }
+
+  async function handleDuelLink() {
+    const savedDuel = readSavedDuel();
+    if (savedDuel && isPermanentAccount()) {
+      enterDuelRoom(savedDuel.matchId, savedDuel.roomCode, savedDuel.isHost);
+      return;
+    }
+
+    const url = new URL(window.location.href);
+    const roomCode = url.searchParams.get("duel")?.trim().toUpperCase();
+
+    if (!roomCode) {
+      return;
+    }
+
+    elements.duelRoomCode.value = roomCode;
+    if (isPermanentAccount()) {
+      await joinDuel(roomCode);
+    } else {
+      openSocialScreen();
+      setSocialStatus("Sign in or create a permanent account, then join the pre-filled room.");
+    }
+  }
+
+  function readSavedDuel() {
+    try {
+      const value = JSON.parse(localStorage.getItem("triviaRushActiveDuel") || "null");
+      return value?.matchId && value?.roomCode ? value : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function openSocialScreen() {
+    const activeScreen = elements.screens.find((screen) => screen.classList.contains("active"));
+    if (activeScreen && ![
+      elements.socialScreen,
+      elements.duelWaitingScreen,
+      elements.duelGameScreen,
+      elements.duelResultsScreen
+    ].includes(activeScreen)) {
+      state.socialReturnScreen = activeScreen;
+    }
+
+    stopDuelRuntime();
+    showScreen(elements.socialScreen);
+    const permanent = isPermanentAccount();
+    elements.duelAccountGate.hidden = permanent;
+    elements.socialContent.hidden = !permanent;
+    if (permanent) {
+      void loadSocialData();
+    }
+  }
+
+  function closeSocialScreen() {
+    const returnScreen = state.socialReturnScreen || elements.startScreen;
+    state.socialReturnScreen = null;
+    showScreen(returnScreen);
+  }
+
+  function setSocialStatus(message, isError = false) {
+    if (!elements.socialStatus) {
+      return;
+    }
+    elements.socialStatus.textContent = message;
+    elements.socialStatus.classList.toggle("error", isError);
+  }
+
+  async function loadSocialData() {
+    if (!isPermanentAccount()) {
+      return;
+    }
+
+    setSocialStatus("Loading friends, challenges and match history…");
+    const [social, invitations, history, leaderboard] = await Promise.all([
+      supabaseClient.rpc("get_social_dashboard"),
+      supabaseClient.rpc("get_duel_invitations"),
+      supabaseClient.rpc("get_duel_match_history", {
+        p_opponent_account_number: parseOptionalAccount(elements.historyOpponentFilter?.value),
+        p_limit: 30
+      }),
+      supabaseClient.rpc("get_duel_leaderboard", { p_limit: 20 })
+    ]);
+
+    const failed = [social, invitations, history, leaderboard].find((response) => response.error);
+    if (failed) {
+      console.error("Could not load social data:", failed.error);
+      setSocialStatus(failed.error.message || "Friends and duels could not be loaded.", true);
+      return;
+    }
+
+    renderSocialDashboard(social.data || {});
+    renderDuelInvitations(Array.isArray(invitations.data) ? invitations.data : []);
+    renderDuelHistory(Array.isArray(history.data) ? history.data : []);
+    renderDuelLeaderboard(Array.isArray(leaderboard.data) ? leaderboard.data : []);
+    setSocialStatus("");
+  }
+
+  function parseOptionalAccount(value) {
+    const trimmed = String(value || "").trim();
+    return /^\d+$/.test(trimmed) ? Number(trimmed) : null;
+  }
+
+  function createSocialRow(primary, secondary, actions = []) {
+    const row = document.createElement("div");
+    row.className = "social-row";
+    const copy = document.createElement("div");
+    copy.className = "social-row-copy";
+    const strong = document.createElement("strong");
+    strong.textContent = primary;
+    const small = document.createElement("small");
+    small.textContent = secondary;
+    copy.append(strong, small);
+    row.appendChild(copy);
+
+    if (actions.length) {
+      const controls = document.createElement("div");
+      controls.className = "row-actions";
+      actions.forEach(({ label, handler }) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "row-action";
+        button.textContent = label;
+        button.addEventListener("click", handler);
+        controls.appendChild(button);
+      });
+      row.appendChild(controls);
+    }
+
+    return row;
+  }
+
+  function renderEmpty(container, message) {
+    container.replaceChildren();
+    const empty = document.createElement("p");
+    empty.className = "social-empty";
+    empty.textContent = message;
+    container.appendChild(empty);
+  }
+
+  function renderSocialDashboard(data) {
+    const friends = Array.isArray(data.friends) ? data.friends : [];
+    const incoming = Array.isArray(data.incoming) ? data.incoming : [];
+    const outgoing = Array.isArray(data.outgoing) ? data.outgoing : [];
+
+    elements.friendRequests.replaceChildren();
+    incoming.forEach((request) => {
+      elements.friendRequests.appendChild(createSocialRow(
+        request.display_name,
+        `Account #${request.account_number}`,
+        [
+          { label: "Accept", handler: () => respondFriendRequest(request.friendship_id, true) },
+          { label: "Decline", handler: () => respondFriendRequest(request.friendship_id, false) }
+        ]
+      ));
+    });
+    outgoing.forEach((request) => {
+      elements.friendRequests.appendChild(createSocialRow(
+        request.display_name,
+        `Request sent · #${request.account_number}`
+      ));
+    });
+    if (!incoming.length && !outgoing.length) {
+      renderEmpty(elements.friendRequests, "No pending requests.");
+    }
+
+    elements.friendsList.replaceChildren();
+    friends.forEach((friend) => {
+      elements.friendsList.appendChild(createSocialRow(
+        friend.display_name,
+        `Account #${friend.account_number}`,
+        [
+          { label: "Challenge", handler: () => prepareFriendChallenge(friend.account_number) },
+          { label: "Remove", handler: () => removeFriend(friend.player_id) }
+        ]
+      ));
+    });
+    if (!friends.length) {
+      renderEmpty(elements.friendsList, "Add friends by their account number.");
+    }
+  }
+
+  function renderDuelInvitations(rows) {
+    elements.duelInvitations.replaceChildren();
+    rows.forEach((invite) => {
+      elements.duelInvitations.appendChild(createSocialRow(
+        invite.host_display_name,
+        `${invite.duration_seconds}s · ${formatCategory(invite.category_id)} · #${invite.host_account_number}`,
+        [{ label: "Accept", handler: () => joinDuel(invite.room_code) }]
+      ));
+    });
+    if (!rows.length) {
+      renderEmpty(elements.duelInvitations, "No direct challenges.");
+    }
+  }
+
+  function renderDuelHistory(rows) {
+    elements.duelHistory.replaceChildren();
+    rows.forEach((match) => {
+      const outcome = match.outcome === "forfeit" ? "FORFEIT" : String(match.outcome || "").toUpperCase();
+      elements.duelHistory.appendChild(createSocialRow(
+        `${outcome} vs ${match.opponent_display_name}`,
+        `${match.player_score}–${match.opponent_score} · ${match.duration_seconds}s ${formatCategory(match.category_id)} · #${match.opponent_account_number}`
+      ));
+    });
+    if (!rows.length) {
+      renderEmpty(elements.duelHistory, "No completed matches for this filter.");
+    }
+  }
+
+  function renderDuelLeaderboard(rows) {
+    elements.duelLeaderboard.replaceChildren();
+    rows.forEach((player) => {
+      const rate = player.is_provisional ? "Provisional" : `${player.win_rate}% wins`;
+      elements.duelLeaderboard.appendChild(createSocialRow(
+        `#${player.leaderboard_rank} ${player.display_name}`,
+        `${player.wins}W ${player.draws}D ${player.losses}L · ${rate} · ${Number(player.total_duel_score).toLocaleString()} pts`
+      ));
+    });
+    if (!rows.length) {
+      renderEmpty(elements.duelLeaderboard, "No completed duels yet.");
+    }
+  }
+
+  function formatCategory(categoryId) {
+    if (categoryId === "mixed") {
+      return "Mixed";
+    }
+    return state.categories.find((category) => category.id === categoryId)?.label || categoryId;
+  }
+
+  async function addFriend() {
+    const accountNumber = parseOptionalAccount(elements.friendAccountNumber.value);
+    if (!accountNumber) {
+      setSocialStatus("Enter a valid account number.", true);
+      return;
+    }
+
+    const { error } = await supabaseClient.rpc("send_friend_request", {
+      p_account_number: accountNumber
+    });
+    if (error) {
+      setSocialStatus(error.message, true);
+      return;
+    }
+    elements.friendAccountNumber.value = "";
+    setSocialStatus("Friend request updated.");
+    await loadSocialData();
+  }
+
+  async function respondFriendRequest(friendshipId, accept) {
+    const { error } = await supabaseClient.rpc("respond_friend_request", {
+      p_friendship_id: friendshipId,
+      p_accept: accept
+    });
+    if (error) {
+      setSocialStatus(error.message, true);
+      return;
+    }
+    await loadSocialData();
+  }
+
+  async function removeFriend(playerId) {
+    const { error } = await supabaseClient.rpc("remove_friend", { p_friend_id: playerId });
+    if (error) {
+      setSocialStatus(error.message, true);
+      return;
+    }
+    await loadSocialData();
+  }
+
+  function prepareFriendChallenge(accountNumber) {
+    elements.duelInviteAccount.value = String(accountNumber);
+    elements.duelInviteAccount.focus();
+    setSocialStatus(`Challenge prepared for account #${accountNumber}. Choose the settings and create it.`);
+  }
+
+  async function loadDuelHistory() {
+    const { data, error } = await supabaseClient.rpc("get_duel_match_history", {
+      p_opponent_account_number: parseOptionalAccount(elements.historyOpponentFilter.value),
+      p_limit: 30
+    });
+    if (error) {
+      setSocialStatus(error.message, true);
+      return;
+    }
+    renderDuelHistory(Array.isArray(data) ? data : []);
+  }
+
+  async function createDuel() {
+    if (!isPermanentAccount()) {
+      openSocialScreen();
+      return;
+    }
+
+    const invitedAccount = parseOptionalAccount(elements.duelInviteAccount.value);
+    setSocialStatus("Creating duel…");
+    const { data, error } = await supabaseClient.rpc("create_duel", {
+      p_category: elements.duelCategorySelect.value,
+      p_duration_seconds: Number(elements.duelDurationSelect.value),
+      p_invited_account_number: invitedAccount
+    });
+
+    if (error) {
+      setSocialStatus(error.message || "The duel could not be created.", true);
+      return;
+    }
+
+    state.rematchSettings = {
+      category: data.category_id,
+      duration: Number(data.duration_seconds),
+      opponentAccount: invitedAccount
+    };
+    enterDuelRoom(data.match_id, data.room_code, true);
+  }
+
+  async function joinDuel(roomCode) {
+    if (!isPermanentAccount()) {
+      openSocialScreen();
+      setSocialStatus("A permanent account is required to join this duel.", true);
+      return;
+    }
+
+    const code = String(roomCode || "").trim().toUpperCase();
+    if (!/^[A-Z0-9]{8}$/.test(code)) {
+      setSocialStatus("Enter the complete eight-character room code.", true);
+      return;
+    }
+
+    setSocialStatus("Joining duel…");
+    const { data, error } = await supabaseClient.rpc("join_duel", {
+      p_room_code: code
+    });
+    if (error) {
+      setSocialStatus(error.message || "The duel could not be joined.", true);
+      return;
+    }
+
+    enterDuelRoom(data.match_id, code, false);
+  }
+
+  function enterDuelRoom(matchId, roomCode, isHost) {
+    stopDuelRuntime();
+    state.activeDuelId = matchId;
+    state.activeDuelCode = roomCode;
+    state.duelQuestion = null;
+    state.duelLocked = true;
+    localStorage.setItem("triviaRushActiveDuel", JSON.stringify({
+      matchId,
+      roomCode,
+      isHost
+    }));
+    const cleanUrl = new URL(window.location.href);
+    if (cleanUrl.searchParams.has("duel")) {
+      cleanUrl.searchParams.delete("duel");
+      window.history.replaceState({}, "", cleanUrl);
+    }
+    elements.duelWaitingCode.textContent = roomCode;
+    elements.cancelDuelButton.hidden = !isHost;
+    elements.duelWaitingStatus.textContent = isHost
+      ? "Waiting for an opponent…"
+      : "Opponent found. Preparing the match…";
+    showScreen(elements.duelWaitingScreen);
+    subscribeToDuel(matchId);
+    state.duelPollTimer = window.setInterval(() => void refreshDuelState(), 1000);
+    void refreshDuelState();
+  }
+
+  function subscribeToDuel(matchId) {
+    if (typeof supabaseClient.channel !== "function") {
+      return;
+    }
+
+    state.duelSubscription = supabaseClient
+      .channel(`duel:${matchId}`)
+      .on("postgres_changes", {
+        event: "*",
+        schema: "public",
+        table: "duel_matches",
+        filter: `id=eq.${matchId}`
+      }, () => void refreshDuelState())
+      .on("postgres_changes", {
+        event: "*",
+        schema: "public",
+        table: "duel_live_progress",
+        filter: `match_id=eq.${matchId}`
+      }, () => void refreshDuelState())
+      .subscribe();
+  }
+
+  async function refreshDuelState() {
+    if (!state.activeDuelId || state.duelRefreshPending) {
+      return;
+    }
+
+    state.duelRefreshPending = true;
+    const { data, error } = await supabaseClient.rpc("get_duel_state", {
+      p_match_id: state.activeDuelId
+    });
+    state.duelRefreshPending = false;
+
+    if (error) {
+      console.warn("Could not refresh duel:", error);
+      const target = elements.duelGameScreen.classList.contains("active")
+        ? elements.duelFeedback
+        : elements.duelWaitingStatus;
+      target.textContent = "Connection interrupted — reconnecting…";
+      return;
+    }
+
+    state.duelState = data;
+    syncDuelClock(data.server_now);
+    updateDuelScoreboard(data);
+
+    if (data.status === "waiting") {
+      showScreen(elements.duelWaitingScreen);
+      elements.duelWaitingCode.textContent = data.room_code;
+      elements.duelWaitingStatus.textContent = data.can_accept
+        ? "Accept this direct challenge from the Friends & duels screen."
+        : "Waiting for an opponent…";
+      return;
+    }
+
+    if (data.status === "cancelled") {
+      stopDuelRuntime();
+      openSocialScreen();
+      setSocialStatus("That duel room was cancelled or expired.", true);
+      return;
+    }
+
+    if (data.status === "completed") {
+      showDuelResults(data);
+      return;
+    }
+
+    if (data.status === "countdown" || data.status === "active") {
+      showScreen(elements.duelGameScreen);
+      startDuelTimer();
+    }
+
+    if (data.status === "active" && data.question) {
+      const position = Number(data.question.position);
+      if (!state.duelQuestion || state.duelQuestion.position !== position) {
+        state.duelQuestion = {
+          position,
+          question: data.question.question,
+          answers: Array.isArray(data.question.answers) ? data.question.answers : [],
+          categoryLabel: data.question.category_label
+        };
+        state.duelLocked = false;
+        renderDuelQuestion();
+      }
+    }
+  }
+
+  function updateDuelScoreboard(data) {
+    const self = data.self || {};
+    const opponent = data.opponent || {};
+    elements.duelSelfScore.textContent = Number(self.score || 0).toLocaleString();
+    elements.duelSelfProgress.textContent = String(self.questions_answered || 0);
+    elements.duelOpponentName.textContent = opponent.display_name || "Opponent";
+    elements.duelOpponentScore.textContent = Number(opponent.score || 0).toLocaleString();
+    elements.duelOpponentProgress.textContent = String(opponent.questions_answered || 0);
+  }
+
+  function renderDuelQuestion() {
+    const question = state.duelQuestion;
+    elements.duelCategoryBadge.textContent = question.categoryLabel;
+    elements.duelQuestionNumber.textContent = String(question.position);
+    elements.duelQuestionText.textContent = question.question;
+    elements.duelFeedback.textContent = "";
+    elements.duelFeedback.className = "feedback";
+    elements.duelAnswerGrid.replaceChildren();
+    question.answers.forEach((answer, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "answer-button";
+      const key = document.createElement("span");
+      key.className = "answer-key";
+      key.textContent = String(index + 1);
+      const label = document.createElement("span");
+      label.textContent = answer;
+      button.append(key, label);
+      button.addEventListener("click", () => submitDuelAnswer(index));
+      elements.duelAnswerGrid.appendChild(button);
+    });
+  }
+
+  async function submitDuelAnswer(selectedIndex) {
+    if (state.duelLocked || !state.duelQuestion || state.duelState?.status !== "active") {
+      return;
+    }
+
+    state.duelLocked = true;
+    const buttons = [...elements.duelAnswerGrid.querySelectorAll(".answer-button")];
+    buttons.forEach((button) => { button.disabled = true; });
+    const parameters = {
+      p_match_id: state.activeDuelId,
+      p_position: state.duelQuestion.position,
+      p_selected_index: selectedIndex,
+      p_request_id: createRequestId()
+    };
+
+    let response = null;
+    for (let attempt = 0; attempt < 2; attempt += 1) {
+      const { data, error } = await supabaseClient.rpc("submit_duel_answer", parameters);
+      if (!error) {
+        response = data;
+        break;
+      }
+      console.warn("Could not submit duel answer:", error);
+      if (attempt === 0) {
+        await wait(250);
+      }
+    }
+
+    if (!response) {
+      state.duelLocked = false;
+      buttons.forEach((button) => { button.disabled = false; });
+      elements.duelFeedback.textContent = "Answer not sent — please try again.";
+      elements.duelFeedback.className = "feedback wrong";
+      return;
+    }
+
+    syncDuelClock(response.server_now);
+    if (selectedIndex !== null) {
+      buttons[selectedIndex]?.classList.add(response.is_correct ? "correct" : "wrong");
+    }
+    elements.duelFeedback.textContent = response.is_correct
+      ? `Correct! +${response.points_awarded}`
+      : `${selectedIndex === null ? "Passed" : "Incorrect"} — the answer was ${response.correct_answer}.`;
+    elements.duelFeedback.className = response.is_correct ? "feedback correct" : "feedback wrong";
+    elements.duelSelfScore.textContent = Number(response.score || 0).toLocaleString();
+    elements.duelSelfProgress.textContent = String(response.questions_answered || 0);
+    state.duelQuestion = null;
+    window.setTimeout(() => void refreshDuelState(), getDuelDelay(response.next_question_at));
+  }
+
+  function syncDuelClock(serverNow) {
+    const parsed = Date.parse(serverNow);
+    if (Number.isFinite(parsed)) {
+      state.duelServerOffsetMs = parsed - Date.now();
+    }
+  }
+
+  function duelNowMs() {
+    return Date.now() + state.duelServerOffsetMs;
+  }
+
+  function getDuelDelay(availableAt) {
+    const parsed = Date.parse(availableAt);
+    return Number.isFinite(parsed) ? Math.max(40, parsed - duelNowMs()) : QUESTION_DELAY_MS;
+  }
+
+  function startDuelTimer() {
+    if (state.duelTimerFrame !== null) {
+      return;
+    }
+
+    const draw = () => {
+      const duel = state.duelState;
+      if (!duel || !["countdown", "active"].includes(duel.status)) {
+        state.duelTimerFrame = null;
+        return;
+      }
+      const now = duelNowMs();
+      if (duel.status === "countdown") {
+        const count = Math.max(0, Math.ceil((Date.parse(duel.starts_at) - now) / 1000));
+        elements.duelTimerValue.textContent = String(count);
+        elements.duelPhaseLabel.textContent = "GET READY";
+      } else {
+        const remaining = Math.max(0, Math.ceil((Date.parse(duel.ends_at) - now) / 1000));
+        elements.duelTimerValue.textContent = String(remaining);
+        elements.duelPhaseLabel.textContent = "SECONDS";
+      }
+      state.duelTimerFrame = requestAnimationFrame(draw);
+    };
+
+    state.duelTimerFrame = requestAnimationFrame(draw);
+  }
+
+  async function copyDuelInviteLink() {
+    const url = new URL(window.location.href);
+    url.searchParams.set("duel", state.activeDuelCode);
+    try {
+      await navigator.clipboard.writeText(url.toString());
+      elements.duelWaitingStatus.textContent = "Invite link copied.";
+    } catch {
+      elements.duelWaitingStatus.textContent = `${state.activeDuelCode} — share this room code.`;
+    }
+  }
+
+  async function cancelWaitingDuel() {
+    const { error } = await supabaseClient.rpc("cancel_duel", {
+      p_match_id: state.activeDuelId
+    });
+    if (error) {
+      elements.duelWaitingStatus.textContent = error.message;
+      return;
+    }
+    stopDuelRuntime();
+    openSocialScreen();
+  }
+
+  function showDuelResults(data) {
+    stopDuelRuntime(false);
+    state.duelState = data;
+    const self = data.self || {};
+    const opponent = data.opponent || {};
+    const outcome = self.outcome;
+    elements.duelResultTitle.textContent = outcome === "win"
+      ? "You win!"
+      : outcome === "draw"
+        ? "It's a draw"
+        : outcome === "forfeit"
+          ? "Connection forfeited"
+          : "Opponent wins";
+    elements.duelResultMessage.textContent = data.result_reason === "forfeit"
+      ? "The match was decided because one player did not reconnect before time expired."
+      : "Final scores were validated by the server.";
+    elements.duelFinalSelfScore.textContent = Number(self.score || 0).toLocaleString();
+    elements.duelFinalOpponentName.textContent = opponent.display_name || "Opponent";
+    elements.duelFinalOpponentScore.textContent = Number(opponent.score || 0).toLocaleString();
+    state.rematchSettings = {
+      category: data.category_id,
+      duration: Number(String(data.game_mode || "duel_60").split("_")[1]),
+      opponentAccount: opponent.account_number || null
+    };
+    showScreen(elements.duelResultsScreen);
+  }
+
+  function stopDuelRuntime(clearMatch = true) {
+    if (state.duelPollTimer !== null) {
+      window.clearInterval(state.duelPollTimer);
+      state.duelPollTimer = null;
+    }
+    if (state.duelTimerFrame !== null) {
+      cancelAnimationFrame(state.duelTimerFrame);
+      state.duelTimerFrame = null;
+    }
+    if (state.duelSubscription) {
+      if (typeof supabaseClient.removeChannel === "function") {
+        void supabaseClient.removeChannel(state.duelSubscription);
+      }
+      state.duelSubscription = null;
+    }
+    state.duelRefreshPending = false;
+    if (clearMatch) {
+      state.activeDuelId = null;
+      state.activeDuelCode = null;
+      state.duelQuestion = null;
+      localStorage.removeItem("triviaRushActiveDuel");
+    }
+  }
+
+  async function createRematch() {
+    const settings = state.rematchSettings;
+    if (!settings) {
+      openSocialScreen();
+      return;
+    }
+    openSocialScreen();
+    elements.duelCategorySelect.value = settings.category;
+    elements.duelDurationSelect.value = String(settings.duration);
+    elements.duelInviteAccount.value = settings.opponentAccount ? String(settings.opponentAccount) : "";
+    await createDuel();
+  }
+
   function showHome() {
     cancelAnimationFrame(state.timerFrame);
     state.timerFrame = null;
@@ -2943,10 +3828,16 @@
       return;
     }
 
-    if (
-      !elements.gameScreen.classList
-        .contains("active")
-    ) {
+    if (elements.duelGameScreen?.classList.contains("active")) {
+      if (["1", "2", "3"].includes(event.key)) {
+        void submitDuelAnswer(Number(event.key) - 1);
+      } else if (event.key.toLowerCase() === "p") {
+        void submitDuelAnswer(null);
+      }
+      return;
+    }
+
+    if (!elements.gameScreen.classList.contains("active")) {
       return;
     }
 
