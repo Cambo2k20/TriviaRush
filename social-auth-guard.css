@@ -11,8 +11,7 @@ body.social-page-open .duel-button {
 }
 
 .social-tabs-redesign .social-page-heading {
-  width: fit-content;
-  max-width: calc(100% - 190px);
+  width: min(760px, calc(100% - 190px));
   justify-self: center;
   text-align: center;
 }
@@ -115,7 +114,6 @@ body.social-page-open .duel-button {
 
   .social-tabs-redesign .social-page-heading {
     width: 100%;
-    max-width: 100%;
   }
 
   .social-account-prompt-dialog {
