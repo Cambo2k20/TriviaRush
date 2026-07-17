@@ -16,6 +16,14 @@ body.social-page-open .duel-button {
   text-align: center;
 }
 
+@media (min-width: 641px) {
+  .social-tabs-redesign .social-page-heading h1,
+  .social-tabs-redesign .social-page-heading p {
+    max-width: none;
+    white-space: nowrap;
+  }
+}
+
 .social-account-prompt-dialog {
   width: min(500px, calc(100% - 24px));
 }
