@@ -1656,8 +1656,8 @@
     elements.createDuelButton?.addEventListener("click", createDuel);
     elements.joinDuelButton?.addEventListener("click", () => joinDuel(elements.duelRoomCode.value));
     elements.copyDuelLinkButton?.addEventListener("click", copyDuelInviteLink);
-    elements.startTurnChallengeButton?.addEventListener("click", startTurnChallenge);
-    elements.declineTurnChallengeButton?.addEventListener("click", declineTurnChallenge);
+    elements.startTurnChallengeButton?.addEventListener("click", () => startTurnChallenge());
+    elements.declineTurnChallengeButton?.addEventListener("click", () => declineTurnChallenge());
     elements.cancelDuelButton?.addEventListener("click", cancelWaitingDuel);
     elements.backFromDuelWaitingButton?.addEventListener("click", openSocialScreen);
     elements.addFriendButton?.addEventListener("click", addFriend);
