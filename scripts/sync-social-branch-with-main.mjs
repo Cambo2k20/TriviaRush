@@ -40,6 +40,15 @@ if (!/href="mobile-home-hotfix\.css\?v=\d+"/.test(html)) {
   );
 }
 
+if (!/href="mode-navigation\.css\?v=\d+"/.test(html)) {
+  const mobileHomeStyle = html.match(/  <link rel="stylesheet" href="mobile-home-hotfix\.css\?v=\d+">/);
+  if (!mobileHomeStyle) throw new Error("Mobile Home stylesheet marker not found.");
+  html = html.replace(
+    mobileHomeStyle[0],
+    `${mobileHomeStyle[0]}\n  <link rel="stylesheet" href="mode-navigation.css?v=1">`
+  );
+}
+
 const supabaseMarker = '  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>';
 if (!/src="social-rpc-bridge\.js\?v=\d+"/.test(html)) {
   if (!html.includes(supabaseMarker)) throw new Error("Supabase script marker not found.");
@@ -61,12 +70,29 @@ if (!/src="unified-shell\.js\?v=\d+"/.test(html)) {
   );
 }
 
+if (!/src="mode-navigation\.js\?v=\d+"/.test(html)) {
+  const unifiedRuntime = html.match(/  <script src="unified-shell\.js\?v=\d+"><\/script>/);
+  if (!unifiedRuntime) throw new Error("Unified shell runtime marker not found.");
+  html = html.replace(
+    unifiedRuntime[0],
+    `${unifiedRuntime[0]}\n  <script src="mode-navigation.js?v=1"></script>`
+  );
+}
+
 writeFileSync(indexPath, html);
 
 const fixturePath = "tests/social-redesign-visual-fixture.html";
 let fixture = readFileSync(fixturePath, "utf8");
 
 fixture = fixture.replace('<body class="home-redesign-active">', "<body>");
+fixture = fixture.replace(
+  '<button class="account-button" type="button">',
+  '<button id="accountButton" class="account-button" type="button">'
+);
+fixture = fixture.replace(
+  '<button class="icon-button" type="button"><span aria-hidden="true">🔊</span></button>',
+  '<button id="soundToggle" class="icon-button" type="button"><span aria-hidden="true">🔊</span></button>'
+);
 
 if (!/href="\.\.\/unified-shell\.css\?v=\d+"/.test(fixture)) {
   const fixtureSocialStyle = fixture.match(/  <link rel="stylesheet" href="\.\.\/social-redesign\.css\?v=\d+">/);
@@ -95,12 +121,30 @@ if (!/href="\.\.\/mobile-home-hotfix\.css\?v=\d+"/.test(fixture)) {
   );
 }
 
+if (!/href="\.\.\/mode-navigation\.css\?v=\d+"/.test(fixture)) {
+  const fixtureMobileHomeStyle = fixture.match(/  <link rel="stylesheet" href="\.\.\/mobile-home-hotfix\.css\?v=\d+">/);
+  if (!fixtureMobileHomeStyle) throw new Error("Fixture mobile Home stylesheet marker not found.");
+  fixture = fixture.replace(
+    fixtureMobileHomeStyle[0],
+    `${fixtureMobileHomeStyle[0]}\n  <link rel="stylesheet" href="../mode-navigation.css?v=1">`
+  );
+}
+
 if (!/src="\.\.\/unified-shell\.js\?v=\d+"/.test(fixture)) {
   const fixtureSocialRuntime = fixture.match(/  <script src="\.\.\/social-redesign\.js\?v=\d+"><\/script>/);
   if (!fixtureSocialRuntime) throw new Error("Fixture social runtime marker not found.");
   fixture = fixture.replace(
     fixtureSocialRuntime[0],
     `${fixtureSocialRuntime[0]}\n  <script src="../unified-shell.js?v=1"></script>`
+  );
+}
+
+if (!/src="\.\.\/mode-navigation\.js\?v=\d+"/.test(fixture)) {
+  const fixtureUnifiedRuntime = fixture.match(/  <script src="\.\.\/unified-shell\.js\?v=\d+"><\/script>/);
+  if (!fixtureUnifiedRuntime) throw new Error("Fixture unified runtime marker not found.");
+  fixture = fixture.replace(
+    fixtureUnifiedRuntime[0],
+    `${fixtureUnifiedRuntime[0]}\n  <script src="../mode-navigation.js?v=1"></script>`
   );
 }
 
