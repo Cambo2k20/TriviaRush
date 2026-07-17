@@ -68,6 +68,9 @@
   body.trivia-shell-ready #duelButtonText,
   body.trivia-shell-ready #leaderboardButtonText,
   body.trivia-shell-ready #accountButtonText,
+  body.trivia-shell-ready .duel-button > span:last-child,
+  body.trivia-shell-ready .leaderboard-button > span:last-child,
+  body.trivia-shell-ready .account-button > span:last-child,
   body.trivia-shell-ready .global-progression-chip,
   body.trivia-shell-ready #hostToggle {
     display: none !important;
@@ -99,6 +102,7 @@
 
   body.trivia-shell-ready .social-back-button {
     position: static;
+    order: -1;
     align-self: flex-start;
     width: auto;
     min-width: 0;
