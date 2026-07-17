@@ -8,9 +8,12 @@
   window.__triviaRushSocialRpcBridgeInstalled = true;
   window.triviaRushSocialRpcCache = window.triviaRushSocialRpcCache || new Map();
 
+  const bridgeAssetUrl = document.currentScript?.src
+    ? new URL(document.currentScript.src, document.baseURI)
+    : new URL("social-rpc-bridge.js", document.baseURI);
   const guardStylesheet = document.createElement("link");
   guardStylesheet.rel = "stylesheet";
-  guardStylesheet.href = "social-auth-guard.css?v=1";
+  guardStylesheet.href = new URL("social-auth-guard.css?v=1", bridgeAssetUrl).href;
   guardStylesheet.dataset.socialAuthGuard = "true";
   document.head.appendChild(guardStylesheet);
 
