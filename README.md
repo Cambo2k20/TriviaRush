@@ -1,6 +1,6 @@
 # Trivia Rush
 
-Trivia Rush is a browser-based trivia game with authoritative Supabase scoring, ten controlled question categories, solo rush games, live duels, turn-based challenges, leaderboards and opt-in notifications.
+Trivia Rush is a browser-based trivia game with ten controlled question categories, solo rush games, live duels, turn-based challenges, leaderboards and opt-in notifications.
 
 ## Current state
 
