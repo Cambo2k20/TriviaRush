@@ -641,9 +641,9 @@
   }
 
   function findProxyButton(proxyId) {
-    return proxyId
-      ? document.querySelector(`[data-social-proxy-id="${CSS.escape(proxyId)}"]`)
-      : null;
+    if (!proxyId) return null;
+    return [...document.querySelectorAll("[data-social-proxy-id]")]
+      .find((element) => element.dataset.socialProxyId === proxyId) || null;
   }
 
   function handleProxyAction(event) {
