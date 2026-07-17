@@ -3,6 +3,9 @@ import { readFileSync, writeFileSync } from "node:fs";
 const indexPath = "index.html";
 let html = readFileSync(indexPath, "utf8");
 
+html = html.replace('\n  <link rel="stylesheet" href="mobile-mode-menu.css?v=1">', "");
+html = html.replace('\n  <script src="mobile-mode-menu.js?v=1"></script>', "");
+
 if (html.includes('href="home-redesign.css?v=3"')) {
   html = html.replace('href="home-redesign.css?v=3"', 'href="home-redesign.css?v=4"');
 }
@@ -40,15 +43,6 @@ if (!/href="mobile-home-hotfix\.css\?v=\d+"/.test(html)) {
   );
 }
 
-if (!/href="mobile-mode-menu\.css\?v=\d+"/.test(html)) {
-  const mobileHomeStyle = html.match(/  <link rel="stylesheet" href="mobile-home-hotfix\.css\?v=\d+">/);
-  if (!mobileHomeStyle) throw new Error("Mobile Home stylesheet marker not found.");
-  html = html.replace(
-    mobileHomeStyle[0],
-    `${mobileHomeStyle[0]}\n  <link rel="stylesheet" href="mobile-mode-menu.css?v=1">`
-  );
-}
-
 const supabaseMarker = '  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>';
 if (!/src="social-rpc-bridge\.js\?v=\d+"/.test(html)) {
   if (!html.includes(supabaseMarker)) throw new Error("Supabase script marker not found.");
@@ -67,15 +61,6 @@ if (!/src="unified-shell\.js\?v=\d+"/.test(html)) {
   html = html.replace(
     homeScriptMatch[0],
     `${homeScriptMatch[0]}\n  <script src="unified-shell.js?v=1"></script>`
-  );
-}
-
-if (!/src="mobile-mode-menu\.js\?v=\d+"/.test(html)) {
-  const unifiedRuntime = html.match(/  <script src="unified-shell\.js\?v=\d+"><\/script>/);
-  if (!unifiedRuntime) throw new Error("Unified shell runtime marker not found.");
-  html = html.replace(
-    unifiedRuntime[0],
-    `${unifiedRuntime[0]}\n  <script src="mobile-mode-menu.js?v=1"></script>`
   );
 }
 
