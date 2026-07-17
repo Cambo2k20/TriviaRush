@@ -7,9 +7,10 @@ on:
   push:
     branches:
       - phase-5-foundation
+      - fix/responsive-home-alignment
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   test:
@@ -19,6 +20,25 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Regenerate responsive home layout
+        if: github.event_name == 'push' && github.ref == 'refs/heads/fix/responsive-home-alignment'
+        run: node scripts/apply-responsive-home-layout.mjs
+
+      - name: Commit regenerated home layout
+        if: github.event_name == 'push' && github.ref == 'refs/heads/fix/responsive-home-alignment'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add home-redesign.css index.html home-redesign-smoke-test.mjs
+          if git diff --cached --quiet; then
+            echo "Responsive home layout already generated."
+          else
+            git commit -m "Regenerate responsive home alignment"
+            git push
+          fi
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
