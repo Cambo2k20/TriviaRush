@@ -796,3 +796,297 @@ body.home-redesign-active .header-actions > button:hover {
     transition: none;
   }
 }
+
+@media (max-width: 640px) {
+  body.home-redesign-active {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+
+  body.home-redesign-active .app-shell {
+    width: calc(100% - 24px);
+  }
+
+  /* Keep the mobile header compact instead of splitting it into two rows. */
+  body.home-redesign-active .topbar {
+    min-height: 64px;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  body.home-redesign-active .brand {
+    min-width: 0;
+    justify-self: auto;
+    gap: 8px;
+    font-size: 1rem;
+    letter-spacing: 0;
+  }
+
+  body.home-redesign-active .brand-bolt {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+  }
+
+  body.home-redesign-active .header-actions {
+    width: auto;
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+  }
+
+  body.home-redesign-active .header-actions > button,
+  body.home-redesign-active .icon-button {
+    width: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+  }
+
+  body.home-redesign-active .duel-button,
+  body.home-redesign-active .leaderboard-button,
+  body.home-redesign-active .account-button {
+    width: 44px;
+    padding: 0;
+    font-size: 0;
+  }
+
+  body.home-redesign-active .duel-button svg,
+  body.home-redesign-active .leaderboard-button svg,
+  body.home-redesign-active .account-button svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  #startScreen.home-screen-v2 {
+    min-height: auto;
+    padding: 18px 0 24px;
+    gap: 20px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    align-items: start;
+  }
+
+  .home-hero-v2 {
+    padding: 8px 4px 0;
+  }
+
+  .home-hero-v2 .eyebrow {
+    margin-bottom: 12px;
+    font-size: 0.72rem;
+    letter-spacing: 0;
+  }
+
+  .home-hero-v2 h1 {
+    max-width: 350px;
+    font-size: 3rem;
+    line-height: 0.98;
+    letter-spacing: 0;
+  }
+
+  .home-hero-v2 h1 span {
+    margin-top: 0.08em;
+  }
+
+  .home-hero-copy {
+    margin: 18px 0 20px;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .home-selection-row {
+    margin-bottom: 18px;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .home-host-toggle {
+    min-width: 0;
+    justify-content: flex-start;
+  }
+
+  .home-switch-track {
+    width: 56px;
+    height: 32px;
+  }
+
+  .home-switch-track::after {
+    width: 22px;
+    height: 22px;
+  }
+
+  .home-host-toggle[aria-pressed="true"] .home-switch-track::after {
+    transform: translateX(24px);
+  }
+
+  /* Keep the primary action available while browsing the categories. */
+  .home-start-button {
+    position: fixed;
+    z-index: 100;
+    right: 12px;
+    bottom: calc(10px + env(safe-area-inset-bottom));
+    left: 12px;
+    width: auto;
+    max-width: none;
+    min-height: 56px;
+    border-radius: 12px;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.42), 0 8px 28px rgba(255, 186, 31, 0.24);
+  }
+
+  .home-start-status {
+    margin-top: 0;
+  }
+
+  /* Keep secondary information compact and remove desktop-only shortcuts. */
+  .home-stats-v2 {
+    margin-top: 22px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  .home-stat-v2,
+  .home-stat-v2:nth-child(3) {
+    min-width: 0;
+    min-height: 56px;
+    padding: 0 10px;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .home-stat-v2:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .home-stat-v2:nth-child(3) {
+    grid-column: auto;
+  }
+
+  .home-stat-v2 span {
+    margin-bottom: 4px;
+    font-size: 0.62rem;
+    letter-spacing: 0;
+  }
+
+  .home-stat-v2 strong {
+    font-size: 1.35rem;
+  }
+
+  .home-controls-hint {
+    display: none;
+  }
+
+  /* Remove the scroll-inside-a-scroll category panel. */
+  .home-category-browser {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    padding: 18px 14px;
+    overflow: visible;
+    border-radius: 12px;
+  }
+
+  .home-category-heading {
+    margin-bottom: 14px;
+    gap: 12px;
+  }
+
+  .home-category-mark {
+    width: 42px;
+    height: 42px;
+    font-size: 1.5rem;
+  }
+
+  .home-category-heading h2 {
+    font-size: 1.45rem;
+    letter-spacing: 0;
+  }
+
+  .home-category-heading p {
+    margin-top: 2px;
+    font-size: 0.9rem;
+  }
+
+  .home-category-grid {
+    min-height: 0;
+    max-height: none;
+    padding: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    overflow: visible;
+  }
+
+  .home-category-card {
+    min-width: 0;
+    min-height: 96px;
+    padding: 13px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .home-category-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .home-category-icon svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .home-category-card strong {
+    max-width: 100%;
+    font-size: 0.88rem;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+
+  /* Keep secondary destinations visible without creating three tall rows. */
+  .home-quick-actions {
+    min-height: 76px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .home-quick-action {
+    min-width: 0;
+    padding: 14px 8px;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.76rem;
+    line-height: 1.15;
+    text-align: center;
+  }
+
+  .home-quick-action:not(:first-child)::before {
+    inset: 20% auto 20% 0;
+    width: 1px;
+    height: auto;
+  }
+}
+
+@media (max-width: 360px) {
+  body.home-redesign-active .brand {
+    font-size: 0;
+  }
+
+  .home-hero-v2 h1 {
+    font-size: 2.7rem;
+  }
+
+  .home-category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-category-card {
+    min-height: 78px;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
