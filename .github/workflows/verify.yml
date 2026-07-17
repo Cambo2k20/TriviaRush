@@ -47,5 +47,8 @@ jobs:
       - name: Verify turn-based global progression
         run: npm run test:global-progression-turn-based
 
+      - name: Verify historical progression backfill
+        run: npm run test:global-progression-backfill
+
       - name: Verify frontend
         run: npm run test:frontend

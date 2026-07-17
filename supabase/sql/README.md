@@ -67,3 +67,13 @@ Follow `docs/phase-5-global-progression-live-duels-rollout.md`.
 This restricts live-duel XP to live matches and awards both participants when new turn-based challenges complete. It also reclassifies any turn-based awards that were temporarily labelled `live_duel` during the deployment gap. It does not backfill completed challenges that have no award.
 
 Follow `docs/phase-5-global-progression-turn-based-rollout.md`.
+
+### Historical authoritative backfill
+
+1. `phase-5-global-progression-historical-backfill-preview.sql`
+2. `phase-5-global-progression-historical-backfill.sql`
+3. `phase-5-global-progression-historical-backfill-verification.sql`
+
+The preview and verification files are read-only. The middle migration credits completed authoritative solo, live-duel and turn-based sessions that do not already have a ledger award. Candidate failures are isolated and retained in private audit tables for repair and idempotent retry.
+
+Follow `docs/phase-5-global-progression-historical-backfill-rollout.md`.
