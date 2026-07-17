@@ -58,3 +58,12 @@ Follow `docs/phase-5-global-progression-solo-rollout.md`.
 This awards both participants when new authoritative live duels complete, including score-win, draw, loss and forfeit result multipliers. It does not backfill older duels or change the frontend.
 
 Follow `docs/phase-5-global-progression-live-duels-rollout.md`.
+
+### Turn-based challenge integration
+
+1. `phase-5-global-progression-turn-based.sql`
+2. `phase-5-global-progression-turn-based-verification.sql`
+
+This restricts live-duel XP to live matches and awards both participants when new turn-based challenges complete. It also reclassifies any turn-based awards that were temporarily labelled `live_duel` during the deployment gap. It does not backfill completed challenges that have no award.
+
+Follow `docs/phase-5-global-progression-turn-based-rollout.md`.
