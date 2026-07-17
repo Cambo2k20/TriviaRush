@@ -9,7 +9,8 @@
     "test:questions": "node scripts/build-question-seed.mjs",
     "test:database": "node scripts/database-smoke-test.mjs",
     "test:frontend": "node smoke-test.mjs",
-    "test": "npm run test:questions && npm run test:database && npm run test:frontend"
+    "test": "npm run test:questions && npm run test:database && npm run test:global-progression && npm run test:frontend",
+    "test:global-progression": "node scripts/global-progression-foundation-smoke-test.mjs"
   },
   "devDependencies": {
     "@electric-sql/pglite": "0.5.4",
