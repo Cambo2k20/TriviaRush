@@ -22,6 +22,15 @@ if (!/href="unified-shell\.css\?v=\d+"/.test(html)) {
   );
 }
 
+if (!/href="mobile-shell-polish\.css\?v=\d+"/.test(html)) {
+  const unifiedStyleMatch = html.match(/  <link rel="stylesheet" href="unified-shell\.css\?v=\d+">/);
+  if (!unifiedStyleMatch) throw new Error("Unified shell stylesheet marker not found.");
+  html = html.replace(
+    unifiedStyleMatch[0],
+    `${unifiedStyleMatch[0]}\n  <link rel="stylesheet" href="mobile-shell-polish.css?v=1">`
+  );
+}
+
 const supabaseMarker = '  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>';
 if (!/src="social-rpc-bridge\.js\?v=\d+"/.test(html)) {
   if (!html.includes(supabaseMarker)) throw new Error("Supabase script marker not found.");
@@ -44,3 +53,37 @@ if (!/src="unified-shell\.js\?v=\d+"/.test(html)) {
 }
 
 writeFileSync(indexPath, html);
+
+const fixturePath = "tests/social-redesign-visual-fixture.html";
+let fixture = readFileSync(fixturePath, "utf8");
+
+fixture = fixture.replace('<body class="home-redesign-active">', "<body>");
+
+if (!/href="\.\.\/unified-shell\.css\?v=\d+"/.test(fixture)) {
+  const fixtureSocialStyle = fixture.match(/  <link rel="stylesheet" href="\.\.\/social-redesign\.css\?v=\d+">/);
+  if (!fixtureSocialStyle) throw new Error("Fixture social stylesheet marker not found.");
+  fixture = fixture.replace(
+    fixtureSocialStyle[0],
+    `${fixtureSocialStyle[0]}\n  <link rel="stylesheet" href="../unified-shell.css?v=1">`
+  );
+}
+
+if (!/href="\.\.\/mobile-shell-polish\.css\?v=\d+"/.test(fixture)) {
+  const fixtureUnifiedStyle = fixture.match(/  <link rel="stylesheet" href="\.\.\/unified-shell\.css\?v=\d+">/);
+  if (!fixtureUnifiedStyle) throw new Error("Fixture unified stylesheet marker not found.");
+  fixture = fixture.replace(
+    fixtureUnifiedStyle[0],
+    `${fixtureUnifiedStyle[0]}\n  <link rel="stylesheet" href="../mobile-shell-polish.css?v=1">`
+  );
+}
+
+if (!/src="\.\.\/unified-shell\.js\?v=\d+"/.test(fixture)) {
+  const fixtureSocialRuntime = fixture.match(/  <script src="\.\.\/social-redesign\.js\?v=\d+"><\/script>/);
+  if (!fixtureSocialRuntime) throw new Error("Fixture social runtime marker not found.");
+  fixture = fixture.replace(
+    fixtureSocialRuntime[0],
+    `${fixtureSocialRuntime[0]}\n  <script src="../unified-shell.js?v=1"></script>`
+  );
+}
+
+writeFileSync(fixturePath, fixture);

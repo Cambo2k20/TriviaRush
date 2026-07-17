@@ -71,7 +71,7 @@ jobs:
       - name: Commit generated production page
         if: github.event_name == 'pull_request'
         run: |
-          if git diff --quiet; then
+          if git diff --quiet -- index.html; then
             exit 0
           fi
           git config user.name "github-actions[bot]"
