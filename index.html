@@ -13,6 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=8">
   <link rel="stylesheet" href="progression-ui.css?v=1">
+  <link rel="stylesheet" href="home-redesign.css?v=1">
 </head>
 <body>
   <div class="background-orb orb-one" aria-hidden="true"></div>
@@ -89,53 +90,80 @@
       </div>
     </header>
 
-    <section id="startScreen" class="screen active" aria-labelledby="startTitle">
-      <div class="hero-card">
-        <div class="eyebrow">THE 60-SECOND KNOWLEDGE CHALLENGE</div>
-        <h1 id="startTitle">How many can<br><span>you answer?</span></h1>
-        <p>Race against the clock, build your streak and chase a new high score.</p>
+    <section id="startScreen" class="screen active home-screen-v2" aria-labelledby="startTitle">
+      <div class="home-hero-v2">
+        <div class="eyebrow">60 SECONDS. ONE HIGH SCORE.</div>
+        <h1 id="startTitle">How many<br>can<br><span>you answer?</span></h1>
+        <p class="home-hero-copy">Choose a category and put your knowledge to the test. Race the clock, build your streak and earn global XP.</p>
 
-        <div class="start-stats">
-          <div>
-            <span class="stat-label">High score</span>
-            <strong id="startHighScore">0</strong>
-          </div>
-          <div>
-            <span class="stat-label">Best streak</span>
-            <strong id="startBestStreak">0</strong>
-          </div>
+        <div class="home-selection-row">
+          <div class="home-selected-category">Selected:<strong id="selectedCategoryLabel">All categories</strong></div>
+          <button id="homeHostToggle" class="home-host-toggle" type="button" aria-pressed="false">
+            <span>Voice host</span>
+            <span class="home-switch-track" aria-hidden="true"></span>
+          </button>
         </div>
 
-        <div class="category-panel">
-          <label for="categorySelect">Question category</label>
-          <select id="categorySelect"></select>
-        </div>
-
-        <button id="startButton" class="primary-button" type="button" disabled>
+        <button id="startButton" class="primary-button home-start-button" type="button" disabled>
           <span>Start the challenge</span>
-          <span aria-hidden="true">→</span>
+          <span aria-hidden="true">›</span>
         </button>
 
-        <p id="startStatus" class="start-status" role="status" aria-live="polite">
-          Loading the question bank…
-        </p>
+        <p id="startStatus" class="start-status home-start-status" role="status" aria-live="polite">Loading the question bank…</p>
 
-        <div class="controls-hint">
+        <div class="home-stats-v2" aria-label="Player statistics">
+          <div class="home-stat-v2">
+            <span>High score</span>
+            <strong id="startHighScore">0</strong>
+          </div>
+          <div class="home-stat-v2">
+            <span>Best streak</span>
+            <strong id="startBestStreak">0</strong>
+          </div>
+          <div class="home-stat-v2">
+            <span>Global level</span>
+            <strong>LV <span id="homeGlobalLevel">1</span></strong>
+          </div>
+        </div>
+
+        <div class="controls-hint home-controls-hint">
           <span><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> answer</span>
           <span><kbd>P</kbd> pass</span>
           <span><kbd>V</kbd> voice</span>
         </div>
       </div>
 
-      <aside class="side-card">
-        <div class="mascot" aria-hidden="true">
-          <div class="mascot-rays"></div>
-          <div class="mascot-head">?</div>
-          <div class="mascot-shadow"></div>
+      <aside class="home-category-browser" aria-labelledby="homeCategoryTitle">
+        <header class="home-category-heading">
+          <span class="home-category-mark" aria-hidden="true">?</span>
+          <div>
+            <h2 id="homeCategoryTitle">Choose a category</h2>
+            <p>Pick one to begin</p>
+          </div>
+        </header>
+
+        <div id="categoryCardGrid" class="home-category-grid" role="group" aria-label="Question categories"></div>
+
+        <div class="home-category-fallback">
+          <label for="categorySelect">Question category</label>
+          <select id="categorySelect"></select>
         </div>
-        <h2>Fast questions.<br>Instant feedback.</h2>
-        <p>Enable the spoken host for an Alexa-like experience, then answer by tapping, keyboard or microphone.</p>
       </aside>
+
+      <nav class="home-quick-actions" aria-label="Quick actions">
+        <button id="homeChallengeShortcut" class="home-quick-action" type="button" style="--quick-accent:#25e7d1">
+          <span aria-hidden="true">◫</span>
+          <span>Solo challenge</span>
+        </button>
+        <button id="homeFriendsShortcut" class="home-quick-action" type="button" style="--quick-accent:#a15cff">
+          <span aria-hidden="true">♟</span>
+          <span>Play with friends</span>
+        </button>
+        <button id="homeLeaderboardShortcut" class="home-quick-action" type="button" style="--quick-accent:#8c55ff">
+          <span aria-hidden="true">◉</span>
+          <span>Leaderboard</span>
+        </button>
+      </nav>
     </section>
 
     <section id="countdownScreen" class="screen centered-screen" aria-live="assertive">
@@ -856,5 +884,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="progression-ui.js?v=1"></script>
   <script src="app.js?v=18"></script>
+  <script src="home-redesign.js?v=1"></script>
 </body>
 </html>
