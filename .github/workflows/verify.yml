@@ -36,7 +36,17 @@ jobs:
         run: npm run test:database
 
       - name: Verify global progression foundation
-        run: npm run test:global-progression
+        run: |
+          set -o pipefail
+          npm run test:global-progression 2>&1 | tee global-progression-test.log
+
+      - name: Upload progression test log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: global-progression-test-log
+          path: global-progression-test.log
+          if-no-files-found: ignore
 
       - name: Verify frontend
         run: npm run test:frontend
