@@ -41,5 +41,8 @@ jobs:
       - name: Verify solo global progression
         run: npm run test:global-progression-solo
 
+      - name: Verify live duel global progression
+        run: npm run test:global-progression-live-duels
+
       - name: Verify frontend
         run: npm run test:frontend
