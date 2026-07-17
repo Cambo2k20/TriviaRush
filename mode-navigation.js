@@ -27,7 +27,10 @@
     observer: null,
     screens: [],
     soloButton: null,
-    onlineButton: null
+    onlineButton: null,
+    topbar: null,
+    headerActions: null,
+    mobileQuery: null
   };
 
   function getActiveScreen() {
@@ -60,7 +63,11 @@
       const selected = state.selectedMode === mode;
       button.classList.toggle("is-selected", selected);
       button.setAttribute("aria-pressed", String(selected));
-      button.setAttribute("aria-current", selected ? "page" : "false");
+      if (selected) {
+        button.setAttribute("aria-current", "page");
+      } else {
+        button.removeAttribute("aria-current");
+      }
     });
 
     if (state.soloButton) {
@@ -132,6 +139,7 @@
 
   function configureOnlineButton(button) {
     button.classList.add("mode-nav-button", "online-mode-button");
+    button.style.setProperty("--mode-accent", "#25e7d1");
     button.setAttribute("aria-label", "Open Online mode");
     button.setAttribute("aria-pressed", "false");
 
@@ -151,6 +159,18 @@
     button.dataset.mobileLabel = label;
   }
 
+  function placeUtilityDock() {
+    if (!state.topbar || !state.headerActions || !state.mobileQuery) return;
+
+    if (state.mobileQuery.matches) {
+      if (state.headerActions.parentElement !== document.body) {
+        document.body.appendChild(state.headerActions);
+      }
+    } else if (state.headerActions.parentElement !== state.topbar) {
+      state.topbar.appendChild(state.headerActions);
+    }
+  }
+
   function initialise() {
     const topbar = document.querySelector(".topbar");
     const brand = topbar?.querySelector(".brand");
@@ -164,6 +184,12 @@
     state.screens = [...document.querySelectorAll(".screen")];
     state.soloButton = createSoloButton();
     state.onlineButton = onlineButton;
+    state.topbar = topbar;
+    state.headerActions = headerActions;
+    state.mobileQuery = window.matchMedia?.("(max-width: 700px)") || {
+      matches: false,
+      addEventListener() {}
+    };
 
     configureOnlineButton(onlineButton);
 
@@ -179,6 +205,9 @@
     configureUtility(document.querySelector("#accountButton"), "Account");
     configureUtility(document.querySelector("#soundToggle"), "Sound");
 
+    state.mobileQuery.addEventListener?.("change", placeUtilityDock);
+    state.mobileQuery.addListener?.(placeUtilityDock);
+
     state.observer = new MutationObserver(syncControls);
     state.screens.forEach((screen) => {
       state.observer.observe(screen, {
@@ -188,6 +217,7 @@
     });
 
     document.body.classList.add("shared-mode-navigation-ready");
+    placeUtilityDock();
     syncControls();
   }
 
