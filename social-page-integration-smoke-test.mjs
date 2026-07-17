@@ -136,8 +136,10 @@ const assert = (name, condition) => {
   console.log(`${condition ? "PASS" : "FAIL"}  ${name}`);
 };
 
+// The tab structure is covered by social-redesign-smoke-test.mjs. This test
+// specifically protects the real inactive-to-active click transition that
+// previously triggered a self-sustaining MutationObserver loop.
 assert("Play friends opens the social screen", window.document.querySelector("#socialScreen")?.classList.contains("active"));
-assert("the redesigned tab interface remains mounted", window.document.querySelectorAll('[role="tab"]').length === 3);
 assert("social rendering settles after the click", animationFrameCount < 100);
 assert("the merged runtime raises no browser errors", runtimeErrors.length === 0);
 
