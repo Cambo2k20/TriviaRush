@@ -29,5 +29,14 @@ jobs:
       - name: Install test dependencies
         run: npm ci
 
-      - name: Verify questions, database flow and frontend
-        run: npm test
+      - name: Verify question bank
+        run: npm run test:questions
+
+      - name: Verify authoritative database flow
+        run: npm run test:database
+
+      - name: Verify global progression foundation
+        run: npm run test:global-progression
+
+      - name: Verify frontend
+        run: npm run test:frontend
