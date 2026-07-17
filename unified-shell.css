@@ -1,0 +1,394 @@
+:root {
+  --tr-shell-max: 1540px;
+  --tr-content-max: 1320px;
+  --tr-game-max: 960px;
+  --tr-page-pad: clamp(20px, 4vw, 64px);
+  --tr-header-height: clamp(72px, 9dvh, 90px);
+  --tr-footer-height: clamp(52px, 7dvh, 66px);
+  --tr-cyan: #25e7d1;
+  --tr-yellow: #ffd335;
+  --tr-purple: #8d4dff;
+  --tr-page-line: rgba(255, 255, 255, 0.14);
+  --tr-panel-bg: linear-gradient(145deg, rgba(18, 28, 70, 0.9), rgba(13, 18, 51, 0.9));
+  --tr-panel-border: rgba(143, 99, 255, 0.45);
+  --tr-panel-shadow: 0 28px 72px rgba(0, 0, 0, 0.3);
+}
+
+html {
+  min-height: 100%;
+  background: #020b20;
+}
+
+body.trivia-shell-ready {
+  min-height: 100dvh;
+  background:
+    radial-gradient(circle at 15% 44%, rgba(0, 153, 199, 0.2), transparent 34rem),
+    radial-gradient(circle at 87% 40%, rgba(80, 62, 202, 0.23), transparent 38rem),
+    radial-gradient(circle at 72% 100%, rgba(131, 42, 191, 0.17), transparent 30rem),
+    linear-gradient(116deg, #020b20 0%, #071331 48%, #0b0d2d 72%, #190b39 100%);
+}
+
+body.trivia-shell-ready .background-orb {
+  opacity: 0.1;
+}
+
+body.trivia-shell-ready .app-shell {
+  width: 100%;
+  max-width: none;
+  min-height: 100dvh;
+  margin: 0;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+body.trivia-shell-ready .topbar {
+  width: 100%;
+  max-width: var(--tr-shell-max);
+  min-height: var(--tr-header-height);
+  margin-inline: auto;
+  padding-inline: var(--tr-page-pad);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.045);
+}
+
+body.trivia-shell-ready .brand {
+  gap: 14px;
+  font-size: 1.55rem;
+  letter-spacing: 0.08em;
+}
+
+body.trivia-shell-ready .brand-bolt {
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  font-size: 1.35rem;
+  background: linear-gradient(145deg, #ffe953, #ffc915);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.18),
+    0 10px 28px rgba(255, 201, 21, 0.24);
+}
+
+body.trivia-shell-ready .header-actions {
+  align-items: stretch;
+  gap: 0;
+}
+
+body.trivia-shell-ready .header-actions > button {
+  position: relative;
+  min-height: 46px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+body.trivia-shell-ready .header-actions > button:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  inset: 7px auto 7px 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+body.trivia-shell-ready .duel-button,
+body.trivia-shell-ready .leaderboard-button,
+body.trivia-shell-ready .account-button,
+body.trivia-shell-ready .global-progression-chip {
+  padding-inline: clamp(14px, 2vw, 28px);
+}
+
+body.trivia-shell-ready .icon-button {
+  width: 58px;
+}
+
+body.trivia-shell-ready .header-actions > button:hover:not(:disabled) {
+  transform: none;
+  color: var(--tr-yellow);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+body.trivia-shell-ready .screen {
+  width: 100%;
+}
+
+body.trivia-shell-ready #startScreen {
+  width: 100%;
+  max-width: var(--tr-shell-max);
+  margin-inline: auto;
+  padding-inline: var(--tr-page-pad);
+}
+
+body.trivia-shell-ready.social-redesign-ready .social-screen::before {
+  content: none;
+}
+
+body.trivia-shell-ready .social-screen,
+body.trivia-shell-ready .leaderboard-screen,
+body.trivia-shell-ready #gameScreen,
+body.trivia-shell-ready #duelGameScreen,
+body.trivia-shell-ready #countdownScreen,
+body.trivia-shell-ready #resultsScreen,
+body.trivia-shell-ready #duelWaitingScreen,
+body.trivia-shell-ready #duelResultsScreen {
+  min-height: calc(100dvh - var(--tr-header-height) - var(--tr-footer-height));
+  padding-inline: var(--tr-page-pad);
+}
+
+body.trivia-shell-ready .social-screen,
+body.trivia-shell-ready .leaderboard-screen {
+  padding-top: clamp(28px, 4dvh, 52px);
+  padding-bottom: clamp(32px, 5dvh, 64px);
+  align-items: start;
+}
+
+body.trivia-shell-ready .social-tabs-redesign .social-shell {
+  width: 100%;
+  max-width: var(--tr-content-max);
+  margin-inline: auto;
+}
+
+body.trivia-shell-ready .social-tabs-redesign .social-header {
+  width: 100%;
+  max-width: 980px;
+}
+
+body.trivia-shell-ready .social-page-heading h1,
+body.trivia-shell-ready .leaderboard-header h1 {
+  font-size: clamp(3.2rem, 5vw, 5rem);
+}
+
+body.trivia-shell-ready .social-play-actions {
+  width: min(100%, 1040px);
+}
+
+body.trivia-shell-ready .social-active-section,
+body.trivia-shell-ready .social-friends-layout,
+body.trivia-shell-ready .social-tab-panel[data-social-panel="history"] {
+  width: min(100%, 1160px);
+  margin-inline: auto;
+}
+
+body.trivia-shell-ready .leaderboard-card {
+  width: 100%;
+  max-width: var(--tr-content-max);
+  margin-inline: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+body.trivia-shell-ready .leaderboard-filter-panel {
+  border-color: rgba(143, 99, 255, 0.4);
+  background: linear-gradient(135deg, rgba(20, 29, 70, 0.5), rgba(38, 19, 78, 0.42));
+}
+
+body.trivia-shell-ready .leaderboard-table,
+body.trivia-shell-ready .social-compact-list {
+  background: linear-gradient(110deg, rgba(10, 25, 58, 0.58), rgba(34, 16, 78, 0.58));
+}
+
+body.trivia-shell-ready #gameScreen,
+body.trivia-shell-ready #duelGameScreen {
+  padding-top: clamp(20px, 3dvh, 36px);
+  padding-bottom: clamp(24px, 4dvh, 48px);
+  align-content: center;
+}
+
+body.trivia-shell-ready .game-header,
+body.trivia-shell-ready #gameScreen .question-card,
+body.trivia-shell-ready #duelGameScreen .question-card,
+body.trivia-shell-ready .duel-scoreboard {
+  width: 100%;
+  max-width: var(--tr-game-max);
+  margin-inline: auto;
+}
+
+body.trivia-shell-ready .question-card,
+body.trivia-shell-ready .result-card,
+body.trivia-shell-ready .duel-waiting-card {
+  border-color: var(--tr-panel-border);
+  background: var(--tr-panel-bg);
+  box-shadow: var(--tr-panel-shadow);
+}
+
+body.trivia-shell-ready #countdownScreen,
+body.trivia-shell-ready #resultsScreen,
+body.trivia-shell-ready #duelWaitingScreen,
+body.trivia-shell-ready #duelResultsScreen {
+  padding-top: clamp(24px, 4dvh, 52px);
+  padding-bottom: clamp(24px, 4dvh, 52px);
+}
+
+body.trivia-shell-ready .countdown-card {
+  width: min(560px, 100%);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+body.trivia-shell-ready .countdown-card strong {
+  text-shadow:
+    0 0 38px rgba(255, 211, 53, 0.22),
+    0 22px 64px rgba(0, 0, 0, 0.32);
+}
+
+body.trivia-shell-ready .result-card {
+  width: min(720px, 100%);
+}
+
+body.trivia-shell-ready .duel-waiting-card {
+  width: min(700px, 100%);
+}
+
+body.trivia-shell-ready footer {
+  width: 100%;
+  max-width: var(--tr-shell-max);
+  min-height: var(--tr-footer-height);
+  margin-inline: auto;
+  padding-inline: var(--tr-page-pad);
+  border-top: 1px solid rgba(255, 255, 255, 0.045);
+}
+
+body.trivia-shell-ready[data-active-screen="startScreen"] footer {
+  border-top: 0;
+}
+
+@media (max-width: 1180px) {
+  body.trivia-shell-ready .duel-button,
+  body.trivia-shell-ready .leaderboard-button,
+  body.trivia-shell-ready .account-button,
+  body.trivia-shell-ready .global-progression-chip {
+    padding-inline: 16px;
+  }
+}
+
+@media (max-width: 920px) {
+  body.trivia-shell-ready .topbar {
+    align-items: flex-start;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  body.trivia-shell-ready .header-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  body.trivia-shell-ready .header-actions > button:not(:first-child)::before {
+    display: none;
+  }
+
+  body.trivia-shell-ready .global-progression-chip {
+    order: -1;
+  }
+
+  body.trivia-shell-ready .social-screen,
+  body.trivia-shell-ready .leaderboard-screen,
+  body.trivia-shell-ready #gameScreen,
+  body.trivia-shell-ready #duelGameScreen,
+  body.trivia-shell-ready #countdownScreen,
+  body.trivia-shell-ready #resultsScreen,
+  body.trivia-shell-ready #duelWaitingScreen,
+  body.trivia-shell-ready #duelResultsScreen {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  :root {
+    --tr-page-pad: 14px;
+  }
+
+  body.trivia-shell-ready .topbar {
+    min-height: auto;
+    display: grid;
+    gap: 12px;
+  }
+
+  body.trivia-shell-ready .brand {
+    justify-self: center;
+  }
+
+  body.trivia-shell-ready .header-actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  body.trivia-shell-ready .header-actions > button {
+    min-width: 46px;
+  }
+
+  body.trivia-shell-ready .duel-button,
+  body.trivia-shell-ready .leaderboard-button,
+  body.trivia-shell-ready .account-button,
+  body.trivia-shell-ready .global-progression-chip {
+    width: 46px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  body.trivia-shell-ready #duelButtonText,
+  body.trivia-shell-ready #leaderboardButtonText,
+  body.trivia-shell-ready #accountButtonText,
+  body.trivia-shell-ready .global-progression-chip-xp {
+    display: none;
+  }
+
+  body.trivia-shell-ready .global-progression-chip-level {
+    letter-spacing: 0;
+  }
+
+  body.trivia-shell-ready .social-tabs-redesign .social-header {
+    padding-top: 44px;
+  }
+
+  body.trivia-shell-ready .leaderboard-card {
+    padding: 0;
+  }
+
+  body.trivia-shell-ready footer {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+}
+
+@media (max-width: 520px) {
+  body.trivia-shell-ready .brand > span:last-child {
+    display: inline;
+  }
+
+  body.trivia-shell-ready .brand {
+    font-size: 1.12rem;
+  }
+
+  body.trivia-shell-ready .brand-bolt {
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
+
+  body.trivia-shell-ready .social-page-heading h1,
+  body.trivia-shell-ready .leaderboard-header h1 {
+    font-size: clamp(2.6rem, 13vw, 3.4rem);
+  }
+}
+
+@supports not (height: 100dvh) {
+  body.trivia-shell-ready,
+  body.trivia-shell-ready .app-shell {
+    min-height: 100vh;
+  }
+
+  body.trivia-shell-ready .social-screen,
+  body.trivia-shell-ready .leaderboard-screen,
+  body.trivia-shell-ready #gameScreen,
+  body.trivia-shell-ready #duelGameScreen,
+  body.trivia-shell-ready #countdownScreen,
+  body.trivia-shell-ready #resultsScreen,
+  body.trivia-shell-ready #duelWaitingScreen,
+  body.trivia-shell-ready #duelResultsScreen {
+    min-height: calc(100vh - var(--tr-header-height) - var(--tr-footer-height));
+  }
+}
