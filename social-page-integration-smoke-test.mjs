@@ -19,11 +19,19 @@ const dom = new JSDOM(html, {
 });
 
 const { window } = dom;
+let animationFrameCount = 0;
 window.alert = () => {};
 window.prompt = () => "Tester";
 window.scrollTo = () => {};
 window.HTMLElement.prototype.scrollIntoView = () => {};
-window.requestAnimationFrame = (callback) => window.setTimeout(() => callback(Date.now()), 0);
+window.requestAnimationFrame = (callback) => {
+  animationFrameCount += 1;
+  if (animationFrameCount > 100) {
+    runtimeErrors.push(new Error("The social page entered a runaway animation/render loop."));
+    return 0;
+  }
+  return window.setTimeout(() => callback(Date.now()), 0);
+};
 window.cancelAnimationFrame = (identifier) => window.clearTimeout(identifier);
 window.speechSynthesis = { cancel() {}, speak() {} };
 window.AudioContext = class {
@@ -120,7 +128,7 @@ window.document.dispatchEvent(new window.Event("DOMContentLoaded"));
 
 await new Promise((resolve) => window.setTimeout(resolve, 100));
 window.document.querySelector("#duelButton")?.click();
-await new Promise((resolve) => window.setTimeout(resolve, 150));
+await new Promise((resolve) => window.setTimeout(resolve, 250));
 
 const failures = [];
 const assert = (name, condition) => {
@@ -130,8 +138,10 @@ const assert = (name, condition) => {
 
 assert("Play friends opens the social screen", window.document.querySelector("#socialScreen")?.classList.contains("active"));
 assert("the redesigned tab interface remains mounted", window.document.querySelectorAll('[role="tab"]').length === 3);
+assert("social rendering settles after the click", animationFrameCount < 100);
 assert("the merged runtime raises no browser errors", runtimeErrors.length === 0);
 
+console.log(`INFO  animation frames scheduled: ${animationFrameCount}`);
 if (runtimeErrors.length) {
   for (const error of runtimeErrors) {
     console.error(error?.stack || error?.message || String(error));
@@ -139,4 +149,4 @@ if (runtimeErrors.length) {
 }
 
 window.close();
-if (failures.length) process.exitCode = 1;
+process.exit(failures.length ? 1 : 0);
