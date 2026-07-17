@@ -1,0 +1,260 @@
+:root {
+  --tr-mobile-control: 40px;
+}
+
+@media (max-width: 700px) {
+  body.trivia-shell-ready .topbar,
+  body.trivia-shell-ready.social-page-open .topbar {
+    min-height: auto;
+    padding: 10px 14px 12px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 10px;
+  }
+
+  body.trivia-shell-ready .brand,
+  body.trivia-shell-ready.social-page-open .brand {
+    display: inline-flex;
+    justify-self: center;
+    gap: 9px;
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+  }
+
+  body.trivia-shell-ready .brand > span:last-child,
+  body.trivia-shell-ready.social-page-open .brand > span:last-child {
+    display: inline !important;
+  }
+
+  body.trivia-shell-ready .brand-bolt,
+  body.trivia-shell-ready.social-page-open .brand-bolt {
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
+
+  body.trivia-shell-ready .header-actions,
+  body.trivia-shell-ready.social-page-open .header-actions {
+    width: 100%;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: var(--tr-mobile-control);
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+  }
+
+  body.trivia-shell-ready .header-actions > button,
+  body.trivia-shell-ready.social-page-open .header-actions > button {
+    width: var(--tr-mobile-control);
+    min-width: var(--tr-mobile-control);
+    height: var(--tr-mobile-control);
+    min-height: var(--tr-mobile-control);
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.035);
+    box-shadow: none;
+  }
+
+  body.trivia-shell-ready .header-actions > button::before,
+  body.trivia-shell-ready.social-page-open .header-actions > button::before {
+    display: none !important;
+  }
+
+  body.trivia-shell-ready #duelButtonText,
+  body.trivia-shell-ready #leaderboardButtonText,
+  body.trivia-shell-ready #accountButtonText,
+  body.trivia-shell-ready .global-progression-chip,
+  body.trivia-shell-ready #hostToggle {
+    display: none !important;
+  }
+
+  body.trivia-shell-ready .notification-button > span:first-child,
+  body.trivia-shell-ready .duel-button > span:first-child,
+  body.trivia-shell-ready .leaderboard-button > span:first-child,
+  body.trivia-shell-ready .account-button > span:first-child,
+  body.trivia-shell-ready #soundToggle > span:first-child {
+    display: inline-grid !important;
+    place-items: center;
+    line-height: 1;
+  }
+
+  body.trivia-shell-ready .social-screen {
+    padding: 16px 12px 36px;
+  }
+
+  body.trivia-shell-ready .social-tabs-redesign .social-header,
+  body.trivia-shell-ready.social-page-open .social-tabs-redesign .social-header {
+    margin-bottom: 14px;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  body.trivia-shell-ready .social-back-button {
+    position: static;
+    align-self: flex-start;
+    width: auto;
+    min-width: 0;
+    min-height: 38px;
+    padding: 0 14px;
+    border-radius: 10px;
+  }
+
+  body.trivia-shell-ready .social-tabs-redesign .social-page-heading,
+  body.trivia-shell-ready.social-page-open .social-tabs-redesign .social-page-heading {
+    width: 100%;
+    text-align: center;
+  }
+
+  body.trivia-shell-ready .social-page-heading h1 {
+    font-size: clamp(2.35rem, 11vw, 3rem);
+    line-height: 0.96;
+  }
+
+  body.trivia-shell-ready .social-page-heading p {
+    margin-top: 8px;
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  body.trivia-shell-ready .social-tabs {
+    margin-bottom: 20px;
+  }
+
+  body.trivia-shell-ready .social-tab {
+    min-height: 48px;
+    padding-inline: 8px;
+  }
+
+  body.trivia-shell-ready .social-play-actions {
+    margin-bottom: 26px;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  body.trivia-shell-ready .social-play-action {
+    min-height: 0;
+    padding: 24px 0;
+  }
+
+  body.trivia-shell-ready .social-play-action:first-child {
+    padding-top: 10px;
+  }
+
+  body.trivia-shell-ready .social-play-action + .social-play-action {
+    padding-top: 24px;
+    border-top: 1px solid var(--social-line);
+    border-left: 0;
+  }
+
+  body.trivia-shell-ready .social-action-icon {
+    margin-bottom: 8px;
+  }
+
+  body.trivia-shell-ready .social-play-action p {
+    margin: 8px 0 16px;
+  }
+
+  body.trivia-shell-ready .social-primary-action,
+  body.trivia-shell-ready .social-outline-action {
+    min-height: 50px;
+  }
+
+  body.trivia-shell-ready .social-section-heading {
+    min-height: 36px;
+  }
+
+  body.trivia-shell-ready .social-compact-row {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  body.trivia-shell-ready .social-friends-layout {
+    gap: 24px;
+  }
+
+  body.trivia-shell-ready .social-request-column {
+    padding-top: 24px;
+  }
+
+  body.trivia-shell-ready .social-history-summary {
+    margin-bottom: 18px;
+  }
+
+  body.trivia-shell-ready .social-history-controls {
+    margin: 0 0 18px;
+    gap: 10px;
+  }
+
+  body.trivia-shell-ready .leaderboard-screen {
+    padding: 18px 12px 36px;
+  }
+
+  body.trivia-shell-ready .leaderboard-header {
+    gap: 14px;
+  }
+
+  body.trivia-shell-ready .leaderboard-filter-panel {
+    margin-top: 20px;
+    padding: 14px;
+  }
+
+  body.trivia-shell-ready footer {
+    padding: 16px 14px;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 430px) {
+  :root {
+    --tr-mobile-control: 38px;
+  }
+
+  body.trivia-shell-ready .topbar,
+  body.trivia-shell-ready.social-page-open .topbar {
+    padding-inline: 10px;
+  }
+
+  body.trivia-shell-ready .header-actions,
+  body.trivia-shell-ready.social-page-open .header-actions {
+    gap: 6px;
+  }
+
+  body.trivia-shell-ready .brand {
+    font-size: 1rem;
+  }
+
+  body.trivia-shell-ready .social-screen,
+  body.trivia-shell-ready .leaderboard-screen {
+    padding-inline: 10px;
+  }
+
+  body.trivia-shell-ready .social-page-heading h1 {
+    font-size: clamp(2.2rem, 10.8vw, 2.7rem);
+  }
+
+  body.trivia-shell-ready .social-compact-row {
+    grid-template-columns: 36px minmax(0, 1fr);
+  }
+
+  body.trivia-shell-ready .social-compact-controls {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+  }
+
+  body.trivia-shell-ready .social-request-list .social-compact-row {
+    grid-template-columns: 36px minmax(0, 1fr);
+  }
+
+  body.trivia-shell-ready .social-history-row {
+    grid-template-columns: 1fr auto;
+  }
+}
