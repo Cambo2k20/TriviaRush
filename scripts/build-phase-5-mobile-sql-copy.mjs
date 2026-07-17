@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-const ROOT = resolve(import.meta.dirname, "..");
+const ROOT = resolve(import.meta.dirname, "..", "supabase", "sql");
 const OUTPUT = "/workspace/trivia-rush-phase5-sql-copy.html";
 const definitions = [
   ["categoryPlatform", "1", "Category platform", "phase-5-category-platform.sql", false],

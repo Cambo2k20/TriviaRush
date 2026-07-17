@@ -29,7 +29,7 @@ hidden until both rounds finish.
 In Supabase SQL Editor, run the complete contents of:
 
 ```text
-phase-5-turn-based-challenges.sql
+supabase/sql/phase-5-turn-based-challenges.sql
 ```
 
 The deployed Phase 4 frontend remains compatible while this runs. The
@@ -42,7 +42,7 @@ canonical `game_sessions` rows only when a challenge is resolved.
 Run:
 
 ```text
-phase-5-turn-based-verification.sql
+supabase/sql/phase-5-turn-based-verification.sql
 ```
 
 The first result must report `verification_status = PASS`. In particular:
