@@ -107,11 +107,19 @@ body.social-page-open .duel-button {
     display: none !important;
   }
 
-  body.social-page-open .duel-button span:last-child,
-  body.social-page-open .leaderboard-button span:last-child,
-  body.social-page-open .account-button span:last-child,
+  body.social-page-open #duelButtonText,
+  body.social-page-open #leaderboardButtonText,
+  body.social-page-open #accountButtonText,
   body.social-page-open .global-progression-chip {
     display: none !important;
+  }
+
+  body.social-page-open .duel-button > span:first-child,
+  body.social-page-open .leaderboard-button > span:first-child,
+  body.social-page-open .account-button > span:first-child {
+    display: inline-grid !important;
+    place-items: center;
+    line-height: 1;
   }
 
   body.social-page-open .duel-button {
