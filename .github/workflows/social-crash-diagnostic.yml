@@ -1,0 +1,34 @@
+name: Diagnose Play Friends
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  social-runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Check out hotfix branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Apply observer fix
+        run: node scripts/fix-social-page-observer.mjs
+
+      - name: Reproduce Play friends click
+        run: node social-page-integration-smoke-test.mjs
