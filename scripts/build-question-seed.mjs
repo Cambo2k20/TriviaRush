@@ -1,51 +1,55 @@
 import { readFileSync, writeFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { basename, resolve } from "node:path";
 
 const ROOT = resolve(import.meta.dirname, "..");
 const INPUT = resolve(ROOT, "data", "questions.json");
-const OUTPUT = resolve(ROOT, "phase-4a-question-seed.sql");
-
-const CATEGORY_ORDER = [
-  "science",
-  "history",
-  "geography",
-  "entertainment",
-  "sport",
-  "technology",
-  "gaming"
-];
-
-const EXPECTED_DIFFICULTY = {
-  easy: 40,
-  medium: 40,
-  hard: 20
-};
+const OUTPUT = resolve(ROOT, "phase-5-question-seed.sql");
+const WRITE_OUTPUT = process.argv.includes("--write");
+const ALLOWED_STATUSES = new Set(["active", "planned"]);
+const ALLOWED_DIFFICULTIES = new Set(["easy", "medium", "hard"]);
 
 const bank = JSON.parse(readFileSync(INPUT, "utf8"));
+const categories = validateBankAndCategories();
+const activeCategories = categories.filter((category) => category.status === "active");
+const activeCategoryIds = new Set(activeCategories.map((category) => category.id));
 
-assertBankShape();
-
-const questions = CATEGORY_ORDER.flatMap((category) => {
+const questions = activeCategories.flatMap((category) => {
   const records = JSON.parse(
-    readFileSync(resolve(ROOT, "data", "categories", category + ".json"), "utf8")
+    readFileSync(
+      resolve(ROOT, "data", "categories", category.id + ".json"),
+      "utf8"
+    )
   );
 
-  assert(Array.isArray(records), category + ": category file must contain an array.");
+  assert(Array.isArray(records), category.id + ": category file must contain an array.");
 
   return records.map((record, categoryIndex) => {
     assert(
-      Array.isArray(record) && record.length === 6,
-      category + " question " + (categoryIndex + 1) +
-        " must contain difficulty, question, answer, two distractors and source key."
+      Array.isArray(record) && record.length === 7,
+      category.id + " question " + (categoryIndex + 1) +
+        " must contain a stable key, difficulty, question, answer, two distractors and source key."
     );
 
-    const [difficulty, question, answer, distractorOne, distractorTwo, sourceKey] = record;
+    const [
+      key,
+      difficulty,
+      question,
+      answer,
+      distractorOne,
+      distractorTwo,
+      sourceKey
+    ] = record;
     const source = bank.sources[sourceKey];
-    assert(source, category + " question " + (categoryIndex + 1) + ": unknown source " + sourceKey + ".");
+
+    assert(
+      source,
+      category.id + " question " + (categoryIndex + 1) +
+        ": unknown source " + sourceKey + "."
+    );
 
     return {
-      key: category + "-" + String(categoryIndex + 1).padStart(3, "0"),
-      category,
+      key,
+      category: category.id,
       difficulty,
       question,
       answer,
@@ -57,9 +61,10 @@ const questions = CATEGORY_ORDER.flatMap((category) => {
   });
 });
 
-function assertBankShape() {
+function validateBankAndCategories() {
   assert(bank && typeof bank === "object", "questions.json must contain an object.");
   assert(bank.sources && typeof bank.sources === "object", "A source registry is required.");
+  assert(Array.isArray(bank.categories), "A category manifest array is required.");
   assert(
     typeof bank.verified_at === "string" && /^\d{4}-\d{2}-\d{2}$/.test(bank.verified_at),
     "verified_at must use YYYY-MM-DD."
@@ -73,6 +78,68 @@ function assertBankShape() {
     );
   }
 
+  const ids = new Set();
+  const labels = new Set();
+  const sortOrders = new Set();
+
+  for (const category of bank.categories) {
+    assert(category && typeof category === "object", "Every category must be an object.");
+    assert(
+      typeof category.id === "string" && /^[a-z0-9]+(?:_[a-z0-9]+)*$/.test(category.id),
+      "Category IDs must use lowercase snake_case."
+    );
+    assert(
+      typeof category.label === "string" && category.label.trim(),
+      category.id + ": label is required."
+    );
+    assert(
+      Number.isInteger(category.sort_order) && category.sort_order > 0,
+      category.id + ": sort_order must be a positive integer."
+    );
+    assert(
+      typeof category.icon_key === "string" && /^[a-z0-9]+(?:_[a-z0-9]+)*$/.test(category.icon_key),
+      category.id + ": icon_key must use lowercase snake_case."
+    );
+    assert(
+      typeof category.color === "string" && /^#[0-9A-F]{6}$/.test(category.color),
+      category.id + ": color must be an uppercase six-digit hex value."
+    );
+    assert(
+      ALLOWED_STATUSES.has(category.status),
+      category.id + ": status must be active or planned."
+    );
+    assert(
+      category.target && typeof category.target === "object",
+      category.id + ": difficulty target is required."
+    );
+
+    for (const difficulty of ALLOWED_DIFFICULTIES) {
+      assert(
+        Number.isInteger(category.target[difficulty]) && category.target[difficulty] >= 0,
+        category.id + "/" + difficulty + ": target must be a non-negative integer."
+      );
+    }
+
+    const targetTotal = Object.values(category.target).reduce((sum, count) => sum + count, 0);
+    assert(
+      targetTotal >= 80,
+      category.id + ": target must contain at least 80 questions for rush_60."
+    );
+    assert(!ids.has(category.id), category.id + ": duplicate category ID.");
+    assert(!labels.has(normalise(category.label)), category.label + ": duplicate category label.");
+    assert(!sortOrders.has(category.sort_order), category.id + ": duplicate sort_order.");
+
+    ids.add(category.id);
+    labels.add(normalise(category.label));
+    sortOrders.add(category.sort_order);
+  }
+
+  assert(
+    bank.categories.some((category) => category.status === "active"),
+    "At least one category must be active."
+  );
+
+  return [...bank.categories].sort((left, right) => left.sort_order - right.sort_order);
 }
 
 function normalise(value) {
@@ -106,9 +173,15 @@ function orderedAnswers(question, correctIndex) {
   return answers;
 }
 
+const expectedTotal = activeCategories.reduce(
+  (sum, category) =>
+    sum + Object.values(category.target).reduce((categorySum, count) => categorySum + count, 0),
+  0
+);
+
 assert(
-  questions.length === 700,
-  "Expected 700 questions, found " + questions.length + "."
+  questions.length === expectedTotal,
+  "Expected " + expectedTotal + " active questions, found " + questions.length + "."
 );
 
 const keys = new Set();
@@ -137,11 +210,15 @@ const prepared = questions.map((question, globalIndex) => {
   }
 
   assert(
-    CATEGORY_ORDER.includes(question.category),
-    question.key + ": unknown category " + question.category + "."
+    /^[a-z0-9_]+-\d{3,}$/.test(question.key),
+    question.key + ": stable keys must end in a numeric suffix of at least three digits."
   );
   assert(
-    Object.hasOwn(EXPECTED_DIFFICULTY, question.difficulty),
+    activeCategoryIds.has(question.category),
+    question.key + ": unknown or inactive category " + question.category + "."
+  );
+  assert(
+    ALLOWED_DIFFICULTIES.has(question.difficulty),
     question.key + ": unknown difficulty " + question.difficulty + "."
   );
   assert(
@@ -160,9 +237,7 @@ const prepared = questions.map((question, globalIndex) => {
   keys.add(key);
   prompts.add(prompt);
 
-  const answerSet = new Set(
-    [question.answer, ...question.distractors].map(normalise)
-  );
+  const answerSet = new Set([question.answer, ...question.distractors].map(normalise));
   assert(answerSet.size === 3, question.key + ": answers must be distinct.");
 
   const correctIndex = globalIndex % 3;
@@ -186,25 +261,31 @@ const prepared = questions.map((question, globalIndex) => {
   };
 });
 
-for (const category of CATEGORY_ORDER) {
+for (const category of activeCategories) {
+  const expectedCategoryTotal = Object.values(category.target).reduce(
+    (sum, count) => sum + count,
+    0
+  );
+  const actualCategoryTotal = categoryCounts.get(category.id) || 0;
+
   assert(
-    categoryCounts.get(category) === 100,
-    category + ": expected 100 questions, found " +
-      (categoryCounts.get(category) || 0) + "."
+    actualCategoryTotal === expectedCategoryTotal,
+    category.id + ": expected " + expectedCategoryTotal +
+      " questions, found " + actualCategoryTotal + "."
   );
 
-  for (const [difficulty, expected] of Object.entries(EXPECTED_DIFFICULTY)) {
-    const actual = difficultyCounts.get(category + ":" + difficulty) || 0;
+  for (const [difficulty, expected] of Object.entries(category.target)) {
+    const actual = difficultyCounts.get(category.id + ":" + difficulty) || 0;
     assert(
       actual === expected,
-      category + "/" + difficulty + ": expected " + expected +
+      category.id + "/" + difficulty + ": expected " + expected +
         ", found " + actual + "."
     );
   }
 }
 
 assert(
-  positionCounts.join(",") === "234,233,233",
+  Math.max(...positionCounts) - Math.min(...positionCounts) <= 1,
   "Correct answer positions are not balanced: " + positionCounts.join(",") + "."
 );
 
@@ -228,7 +309,7 @@ const rows = prepared.map((question) => {
 });
 
 const sql = [
-  "-- Trivia Rush Phase 4A verified 700-question seed",
+  "-- Trivia Rush Phase 5 verified " + expectedTotal + "-question seed",
   "-- Generated by scripts/build-question-seed.mjs. Do not edit this SQL by hand.",
   "",
   "begin;",
@@ -277,8 +358,9 @@ const sql = [
   "  from public.trivia_questions",
   "  where is_active;",
   "",
-  "  if v_total <> 700 then",
-  "    raise exception 'Expected exactly 700 active questions after seed, found %.', v_total;",
+  "  if v_total <> " + expectedTotal + " then",
+  "    raise exception 'Expected exactly " + expectedTotal +
+    " active questions after seed, found %.', v_total;",
   "  end if;",
   "end;",
   "$$;",
@@ -289,15 +371,21 @@ const sql = [
   ""
 ].join("\n");
 
-writeFileSync(OUTPUT, sql, "utf8");
+if (WRITE_OUTPUT) {
+  writeFileSync(OUTPUT, sql, "utf8");
+}
 
 console.log(
   JSON.stringify(
     {
       questions: prepared.length,
-      categories: Object.fromEntries(categoryCounts),
+      active_categories: Object.fromEntries(categoryCounts),
+      planned_categories: categories
+        .filter((category) => category.status === "planned")
+        .map((category) => category.id),
       correct_positions: positionCounts,
-      output: OUTPUT
+      wrote_output: WRITE_OUTPUT,
+      output: basename(OUTPUT)
     },
     null,
     2

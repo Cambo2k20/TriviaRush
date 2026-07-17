@@ -1,105 +1,902 @@
 [
-  ["easy","Which fictional archaeologist carries a whip and wears a fedora?","Indiana Jones","Lara Croft","Rick O'Connell","bfi"],
-  ["easy","What colour is the famous brick road in The Wizard of Oz?","Yellow","Red","Blue","bfi"],
-  ["easy","Which instrument commonly has black and white keys?","Piano","Violin","Trumpet","loc_entertainment"],
-  ["easy","Which superhero is known as the Dark Knight?","Batman","Superman","Spider-Man","bfi"],
-  ["easy","Which board game includes Boardwalk and Park Place?","Monopoly","Cluedo","Risk","strong_museum"],
-  ["easy","At which fictional address does Sherlock Holmes live?","221B Baker Street","12 Grimmauld Place","10 Downing Street","british_library"],
-  ["easy","Who wrote the novel Frankenstein?","Mary Shelley","Jane Austen","Emily Brontë","british_library"],
-  ["easy","Which animated family lives in Springfield?","The Simpsons","The Griffins","The Flintstones","bfi"],
-  ["easy","What type of animal is Paddington?","Bear","Rabbit","Fox","british_library"],
-  ["easy","Which Belgian detective was created by Agatha Christie?","Hercule Poirot","Philip Marlowe","Sam Spade","british_library"],
-  ["easy","Who wrote Hamlet?","William Shakespeare","Charles Dickens","Oscar Wilde","british_library"],
-  ["easy","Who wrote The Hobbit?","J. R. R. Tolkien","C. S. Lewis","Roald Dahl","british_library"],
-  ["easy","Who wrote the Harry Potter novels?","J. K. Rowling","Suzanne Collins","Philip Pullman","british_library"],
-  ["easy","What is the name of the lion in The Chronicles of Narnia?","Aslan","Simba","Shere Khan","british_library"],
-  ["easy","What kind of animal is Moby Dick?","Whale","Shark","Giant squid","british_library"],
-  ["easy","Who wrote the novel Nineteen Eighty-Four?","George Orwell","Aldous Huxley","H. G. Wells","british_library"],
-  ["easy","Who wrote Pride and Prejudice?","Jane Austen","George Eliot","Virginia Woolf","british_library"],
-  ["easy","Who wrote the novel Dracula?","Bram Stoker","Mary Shelley","Robert Louis Stevenson","british_library"],
-  ["easy","In which fictional place does Peter Pan live?","Neverland","Wonderland","Narnia","british_library"],
-  ["easy","Alice follows which animal into Wonderland?","White Rabbit","Cheshire Cat","Dormouse","british_library"],
-  ["easy","Which Star Wars villain is Luke Skywalker's father?","Darth Vader","Darth Maul","Emperor Palpatine","bfi"],
-  ["easy","What is the first name of the heroine in The Wizard of Oz?","Dorothy","Alice","Wendy","bfi"],
-  ["easy","What is the name of the cowboy toy in Toy Story?","Woody","Buzz","Rex","bfi"],
-  ["easy","What is the name of the young lion in The Lion King?","Simba","Mufasa","Scar","bfi"],
-  ["easy","Which character in Frozen has ice powers?","Elsa","Anna","Olaf","bfi"],
-  ["easy","Which prehistoric animals feature prominently in Jurassic Park?","Dinosaurs","Mammoths","Sabre-toothed cats","bfi"],
-  ["easy","What type of being is E.T. in E.T. the Extra-Terrestrial?","Alien","Robot","Ghost","bfi"],
-  ["easy","Which car is used as a time machine in Back to the Future?","DeLorean","Mustang","Volkswagen Beetle","bfi"],
-  ["easy","Which animal terrorises Amity Island in Jaws?","Great white shark","Crocodile","Giant octopus","bfi"],
-  ["easy","What is the hacker name used by Thomas Anderson in The Matrix?","Neo","Morpheus","Cypher","bfi"],
-  ["easy","How many members were in the core line-up of The Beatles?","Four","Three","Five","loc_entertainment"],
-  ["easy","Wolfgang Amadeus Mozart was famous primarily as what?","Composer","Painter","Novelist","loc_entertainment"],
-  ["easy","Ludwig van Beethoven is associated with which art form?","Classical music","Sculpture","Ballet dancing","loc_entertainment"],
-  ["easy","How many strings does a standard guitar usually have?","Six","Four","Eight","loc_entertainment"],
-  ["easy","Who directs the musicians during an orchestral performance?","Conductor","Producer","Librettist","loc_entertainment"],
-  ["easy","Reggae music originated in which country?","Jamaica","Cuba","Brazil","loc_entertainment"],
-  ["easy","Which singer is often called the King of Rock and Roll?","Elvis Presley","Frank Sinatra","Chuck Berry","loc_entertainment"],
-  ["easy","Who was the lead singer of Queen?","Freddie Mercury","David Bowie","Robert Plant","loc_entertainment"],
-  ["easy","ABBA originated in which country?","Sweden","Norway","Finland","loc_entertainment"],
-  ["easy","Bagpipes are strongly associated with which part of the United Kingdom?","Scotland","Wales","Cornwall","loc_entertainment"],
-
-  ["medium","Who wrote Don Quixote?","Miguel de Cervantes","Federico García Lorca","Gabriel García Márquez","british_library"],
-  ["medium","Which ancient poet is traditionally credited with The Odyssey?","Homer","Virgil","Ovid","british_library"],
-  ["medium","Who wrote The Picture of Dorian Gray?","Oscar Wilde","Thomas Hardy","James Joyce","british_library"],
-  ["medium","Who wrote The Great Gatsby?","F. Scott Fitzgerald","Ernest Hemingway","John Steinbeck","british_library"],
-  ["medium","Who wrote Les Misérables?","Victor Hugo","Alexandre Dumas","Émile Zola","british_library"],
-  ["medium","Who wrote War and Peace?","Leo Tolstoy","Fyodor Dostoevsky","Anton Chekhov","british_library"],
-  ["medium","Who wrote The Handmaid's Tale?","Margaret Atwood","Ursula K. Le Guin","Doris Lessing","british_library"],
-  ["medium","Which elderly amateur detective was created by Agatha Christie?","Miss Marple","Nancy Drew","V. I. Warshawski","british_library"],
-  ["medium","On which fictional continent is most of The Lord of the Rings set?","Middle-earth","Westeros","Earthsea","british_library"],
-  ["medium","Who wrote Catch-22?","Joseph Heller","Kurt Vonnegut","Norman Mailer","british_library"],
-  ["medium","Who directed and starred in Citizen Kane?","Orson Welles","John Ford","Billy Wilder","bfi"],
-  ["medium","Who directed Psycho?","Alfred Hitchcock","Stanley Kubrick","David Lean","bfi"],
-  ["medium","Who directed Seven Samurai?","Akira Kurosawa","Yasujirō Ozu","Kenji Mizoguchi","bfi"],
-  ["medium","Who directed the animated film Spirited Away?","Hayao Miyazaki","Satoshi Kon","Isao Takahata","bfi"],
-  ["medium","Who directed The Godfather?","Francis Ford Coppola","Martin Scorsese","Brian De Palma","bfi"],
-  ["medium","Who directed 2001: A Space Odyssey?","Stanley Kubrick","Ridley Scott","George Lucas","bfi"],
-  ["medium","What is the first name of Humphrey Bogart's character in Casablanca?","Rick","Sam","Victor","bfi"],
-  ["medium","What are the bioengineered humans in Blade Runner called?","Replicants","Synths","Cylons","bfi"],
-  ["medium","In which US city is Rocky primarily set?","Philadelphia","Boston","Chicago","bfi"],
-  ["medium","Which performer co-directed and starred in Singin' in the Rain?","Gene Kelly","Fred Astaire","Bing Crosby","bfi"],
-  ["medium","What is the Doctor's time machine in Doctor Who called?","TARDIS","Enterprise","Serenity","bfi"],
-  ["medium","What is the name of the coffee shop in Friends?","Central Perk","Monk's Café","Luke's Diner","bfi"],
-  ["medium","What subject does Walter White teach at the start of Breaking Bad?","Chemistry","Physics","Biology","bfi"],
-  ["medium","What is Captain Kirk's starship called in Star Trek?","Enterprise","Voyager","Defiant","bfi"],
-  ["medium","On which fictional continent is King's Landing located?","Westeros","Essos","Númenor","bfi"],
-  ["medium","Whose murder drives the mystery in Twin Peaks?","Laura Palmer","Maddy Ferguson","Audrey Horne","bfi"],
-  ["medium","What company employs the office workers in the US version of The Office?","Dunder Mifflin","Initech","Waystar Royco","bfi"],
-  ["medium","In which fictional Indiana town is Stranger Things set?","Hawkins","Riverdale","Sunnydale","bfi"],
-  ["medium","Which institution is the central subject of The Crown?","British monarchy","BBC","Parliament alone","bfi"],
-  ["medium","Which actor played the title character in Blackadder?","Rowan Atkinson","Hugh Laurie","Stephen Fry","bfi"],
-  ["medium","Who composed Boléro?","Maurice Ravel","Claude Debussy","Erik Satie","loc_entertainment"],
-  ["medium","Who composed The Four Seasons?","Antonio Vivaldi","George Frideric Handel","Johann Pachelbel","loc_entertainment"],
-  ["medium","Who composed the ballet Swan Lake?","Pyotr Ilyich Tchaikovsky","Igor Stravinsky","Sergei Prokofiev","loc_entertainment"],
-  ["medium","Who composed the opera Carmen?","Georges Bizet","Giacomo Puccini","Giuseppe Verdi","loc_entertainment"],
-  ["medium","Who composed The Magic Flute?","Wolfgang Amadeus Mozart","Joseph Haydn","Franz Schubert","loc_entertainment"],
-  ["medium","Who wrote the musical Hamilton?","Lin-Manuel Miranda","Stephen Sondheim","Jonathan Larson","loc_entertainment"],
-  ["medium","Who composed The Phantom of the Opera musical?","Andrew Lloyd Webber","Claude-Michel Schönberg","Tim Rice","loc_entertainment"],
-  ["medium","Les Misérables the musical is based on a novel by whom?","Victor Hugo","Émile Zola","Gustave Flaubert","british_library"],
-  ["medium","Which US city is widely recognised as a birthplace of jazz?","New Orleans","Seattle","Nashville","loc_entertainment"],
-  ["medium","A common blues progression spans how many bars?","Twelve","Eight","Sixteen","loc_entertainment"],
-
-  ["hard","In which historical form of English was Beowulf composed?","Old English","Middle English","Early Modern English","british_library"],
-  ["hard","James Joyce's Ulysses is set largely during one day in which city?","Dublin","London","Paris","british_library"],
-  ["hard","Who wrote One Hundred Years of Solitude?","Gabriel García Márquez","Jorge Luis Borges","Mario Vargas Llosa","nobel"],
-  ["hard","What is the first name of the protagonist transformed in Kafka's The Metamorphosis?","Gregor","Josef","Franz","british_library"],
-  ["hard","Who wrote the poem The Waste Land?","T. S. Eliot","W. B. Yeats","Ezra Pound","british_library"],
-  ["hard","Which director's film gave its name to the Rashomon effect?","Akira Kurosawa","Ingmar Bergman","Federico Fellini","bfi"],
-  ["hard","Who directed the 1922 silent film Nosferatu?","F. W. Murnau","Fritz Lang","Robert Wiene","bfi"],
-  ["hard","Who directed Battleship Potemkin?","Sergei Eisenstein","Dziga Vertov","Vsevolod Pudovkin","bfi"],
-  ["hard","Who directed the Italian neorealist film Bicycle Thieves?","Vittorio De Sica","Roberto Rossellini","Luchino Visconti","bfi"],
-  ["hard","Who directed the 1927 film Metropolis?","Fritz Lang","F. W. Murnau","G. W. Pabst","bfi"],
-  ["hard","Who composed The Rite of Spring?","Igor Stravinsky","Sergei Rachmaninoff","Dmitri Shostakovich","loc_entertainment"],
-  ["hard","Who composed the four-opera Ring cycle?","Richard Wagner","Richard Strauss","Gustav Mahler","loc_entertainment"],
-  ["hard","What is Beethoven's only completed opera?","Fidelio","The Magic Flute","Der Freischütz","loc_entertainment"],
-  ["hard","Who composed the Enigma Variations?","Edward Elgar","Ralph Vaughan Williams","Benjamin Britten","loc_entertainment"],
-  ["hard","Which record label became especially associated with hard bop jazz?","Blue Note Records","Sun Records","Motown Records","loc_entertainment"],
-  ["hard","Who was the first actor to portray the Doctor on television?","William Hartnell","Patrick Troughton","Jon Pertwee","bfi"],
-  ["hard","In which US state is The Sopranos primarily set?","New Jersey","New York","Connecticut","bfi"],
-  ["hard","Who created and starred in Fleabag?","Phoebe Waller-Bridge","Michaela Coel","Sharon Horgan","bfi"],
-  ["hard","In which US city is The Wire set?","Baltimore","Detroit","Cleveland","bfi"],
-  ["hard","What was the full title of Monty Python's television series?","Monty Python's Flying Circus","Monty Python's Comedy Hour","The Python Players","bfi"]
+  [
+    "entertainment-001",
+    "easy",
+    "Which fictional archaeologist carries a whip and wears a fedora?",
+    "Indiana Jones",
+    "Lara Croft",
+    "Rick O'Connell",
+    "bfi"
+  ],
+  [
+    "entertainment-002",
+    "easy",
+    "What colour is the famous brick road in The Wizard of Oz?",
+    "Yellow",
+    "Red",
+    "Blue",
+    "bfi"
+  ],
+  [
+    "entertainment-003",
+    "easy",
+    "Which instrument commonly has black and white keys?",
+    "Piano",
+    "Violin",
+    "Trumpet",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-004",
+    "easy",
+    "Which superhero is known as the Dark Knight?",
+    "Batman",
+    "Superman",
+    "Spider-Man",
+    "bfi"
+  ],
+  [
+    "entertainment-005",
+    "easy",
+    "Which board game includes Boardwalk and Park Place?",
+    "Monopoly",
+    "Cluedo",
+    "Risk",
+    "strong_museum"
+  ],
+  [
+    "entertainment-006",
+    "easy",
+    "At which fictional address does Sherlock Holmes live?",
+    "221B Baker Street",
+    "12 Grimmauld Place",
+    "10 Downing Street",
+    "british_library"
+  ],
+  [
+    "entertainment-007",
+    "easy",
+    "Who wrote the novel Frankenstein?",
+    "Mary Shelley",
+    "Jane Austen",
+    "Emily Brontë",
+    "british_library"
+  ],
+  [
+    "entertainment-008",
+    "easy",
+    "Which animated family lives in Springfield?",
+    "The Simpsons",
+    "The Griffins",
+    "The Flintstones",
+    "bfi"
+  ],
+  [
+    "entertainment-009",
+    "easy",
+    "What type of animal is Paddington?",
+    "Bear",
+    "Rabbit",
+    "Fox",
+    "british_library"
+  ],
+  [
+    "entertainment-010",
+    "easy",
+    "Which Belgian detective was created by Agatha Christie?",
+    "Hercule Poirot",
+    "Philip Marlowe",
+    "Sam Spade",
+    "british_library"
+  ],
+  [
+    "entertainment-011",
+    "easy",
+    "Who wrote Hamlet?",
+    "William Shakespeare",
+    "Charles Dickens",
+    "Oscar Wilde",
+    "british_library"
+  ],
+  [
+    "entertainment-012",
+    "easy",
+    "Who wrote The Hobbit?",
+    "J. R. R. Tolkien",
+    "C. S. Lewis",
+    "Roald Dahl",
+    "british_library"
+  ],
+  [
+    "entertainment-013",
+    "easy",
+    "Who wrote the Harry Potter novels?",
+    "J. K. Rowling",
+    "Suzanne Collins",
+    "Philip Pullman",
+    "british_library"
+  ],
+  [
+    "entertainment-014",
+    "easy",
+    "What is the name of the lion in The Chronicles of Narnia?",
+    "Aslan",
+    "Simba",
+    "Shere Khan",
+    "british_library"
+  ],
+  [
+    "entertainment-015",
+    "easy",
+    "What kind of animal is Moby Dick?",
+    "Whale",
+    "Shark",
+    "Giant squid",
+    "british_library"
+  ],
+  [
+    "entertainment-016",
+    "easy",
+    "Who wrote the novel Nineteen Eighty-Four?",
+    "George Orwell",
+    "Aldous Huxley",
+    "H. G. Wells",
+    "british_library"
+  ],
+  [
+    "entertainment-017",
+    "easy",
+    "Who wrote Pride and Prejudice?",
+    "Jane Austen",
+    "George Eliot",
+    "Virginia Woolf",
+    "british_library"
+  ],
+  [
+    "entertainment-018",
+    "easy",
+    "Who wrote the novel Dracula?",
+    "Bram Stoker",
+    "Mary Shelley",
+    "Robert Louis Stevenson",
+    "british_library"
+  ],
+  [
+    "entertainment-019",
+    "easy",
+    "In which fictional place does Peter Pan live?",
+    "Neverland",
+    "Wonderland",
+    "Narnia",
+    "british_library"
+  ],
+  [
+    "entertainment-020",
+    "easy",
+    "Alice follows which animal into Wonderland?",
+    "White Rabbit",
+    "Cheshire Cat",
+    "Dormouse",
+    "british_library"
+  ],
+  [
+    "entertainment-021",
+    "easy",
+    "Which Star Wars villain is Luke Skywalker's father?",
+    "Darth Vader",
+    "Darth Maul",
+    "Emperor Palpatine",
+    "bfi"
+  ],
+  [
+    "entertainment-022",
+    "easy",
+    "What is the first name of the heroine in The Wizard of Oz?",
+    "Dorothy",
+    "Alice",
+    "Wendy",
+    "bfi"
+  ],
+  [
+    "entertainment-023",
+    "easy",
+    "What is the name of the cowboy toy in Toy Story?",
+    "Woody",
+    "Buzz",
+    "Rex",
+    "bfi"
+  ],
+  [
+    "entertainment-024",
+    "easy",
+    "What is the name of the young lion in The Lion King?",
+    "Simba",
+    "Mufasa",
+    "Scar",
+    "bfi"
+  ],
+  [
+    "entertainment-025",
+    "easy",
+    "Which character in Frozen has ice powers?",
+    "Elsa",
+    "Anna",
+    "Olaf",
+    "bfi"
+  ],
+  [
+    "entertainment-026",
+    "easy",
+    "Which prehistoric animals feature prominently in Jurassic Park?",
+    "Dinosaurs",
+    "Mammoths",
+    "Sabre-toothed cats",
+    "bfi"
+  ],
+  [
+    "entertainment-027",
+    "easy",
+    "What type of being is E.T. in E.T. the Extra-Terrestrial?",
+    "Alien",
+    "Robot",
+    "Ghost",
+    "bfi"
+  ],
+  [
+    "entertainment-028",
+    "easy",
+    "Which car is used as a time machine in Back to the Future?",
+    "DeLorean",
+    "Mustang",
+    "Volkswagen Beetle",
+    "bfi"
+  ],
+  [
+    "entertainment-029",
+    "easy",
+    "Which animal terrorises Amity Island in Jaws?",
+    "Great white shark",
+    "Crocodile",
+    "Giant octopus",
+    "bfi"
+  ],
+  [
+    "entertainment-030",
+    "easy",
+    "What is the hacker name used by Thomas Anderson in The Matrix?",
+    "Neo",
+    "Morpheus",
+    "Cypher",
+    "bfi"
+  ],
+  [
+    "entertainment-031",
+    "easy",
+    "How many members were in the core line-up of The Beatles?",
+    "Four",
+    "Three",
+    "Five",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-032",
+    "easy",
+    "Wolfgang Amadeus Mozart was famous primarily as what?",
+    "Composer",
+    "Painter",
+    "Novelist",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-033",
+    "easy",
+    "Ludwig van Beethoven is associated with which art form?",
+    "Classical music",
+    "Sculpture",
+    "Ballet dancing",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-034",
+    "easy",
+    "How many strings does a standard guitar usually have?",
+    "Six",
+    "Four",
+    "Eight",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-035",
+    "easy",
+    "Who directs the musicians during an orchestral performance?",
+    "Conductor",
+    "Producer",
+    "Librettist",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-036",
+    "easy",
+    "Reggae music originated in which country?",
+    "Jamaica",
+    "Cuba",
+    "Brazil",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-037",
+    "easy",
+    "Which singer is often called the King of Rock and Roll?",
+    "Elvis Presley",
+    "Frank Sinatra",
+    "Chuck Berry",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-038",
+    "easy",
+    "Who was the lead singer of Queen?",
+    "Freddie Mercury",
+    "David Bowie",
+    "Robert Plant",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-039",
+    "easy",
+    "ABBA originated in which country?",
+    "Sweden",
+    "Norway",
+    "Finland",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-040",
+    "easy",
+    "Bagpipes are strongly associated with which part of the United Kingdom?",
+    "Scotland",
+    "Wales",
+    "Cornwall",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-041",
+    "medium",
+    "Who wrote Don Quixote?",
+    "Miguel de Cervantes",
+    "Federico García Lorca",
+    "Gabriel García Márquez",
+    "british_library"
+  ],
+  [
+    "entertainment-042",
+    "medium",
+    "Which ancient poet is traditionally credited with The Odyssey?",
+    "Homer",
+    "Virgil",
+    "Ovid",
+    "british_library"
+  ],
+  [
+    "entertainment-043",
+    "medium",
+    "Who wrote The Picture of Dorian Gray?",
+    "Oscar Wilde",
+    "Thomas Hardy",
+    "James Joyce",
+    "british_library"
+  ],
+  [
+    "entertainment-044",
+    "medium",
+    "Who wrote The Great Gatsby?",
+    "F. Scott Fitzgerald",
+    "Ernest Hemingway",
+    "John Steinbeck",
+    "british_library"
+  ],
+  [
+    "entertainment-045",
+    "medium",
+    "Who wrote Les Misérables?",
+    "Victor Hugo",
+    "Alexandre Dumas",
+    "Émile Zola",
+    "british_library"
+  ],
+  [
+    "entertainment-046",
+    "medium",
+    "Who wrote War and Peace?",
+    "Leo Tolstoy",
+    "Fyodor Dostoevsky",
+    "Anton Chekhov",
+    "british_library"
+  ],
+  [
+    "entertainment-047",
+    "medium",
+    "Who wrote The Handmaid's Tale?",
+    "Margaret Atwood",
+    "Ursula K. Le Guin",
+    "Doris Lessing",
+    "british_library"
+  ],
+  [
+    "entertainment-048",
+    "medium",
+    "Which elderly amateur detective was created by Agatha Christie?",
+    "Miss Marple",
+    "Nancy Drew",
+    "V. I. Warshawski",
+    "british_library"
+  ],
+  [
+    "entertainment-049",
+    "medium",
+    "On which fictional continent is most of The Lord of the Rings set?",
+    "Middle-earth",
+    "Westeros",
+    "Earthsea",
+    "british_library"
+  ],
+  [
+    "entertainment-050",
+    "medium",
+    "Who wrote Catch-22?",
+    "Joseph Heller",
+    "Kurt Vonnegut",
+    "Norman Mailer",
+    "british_library"
+  ],
+  [
+    "entertainment-051",
+    "medium",
+    "Who directed and starred in Citizen Kane?",
+    "Orson Welles",
+    "John Ford",
+    "Billy Wilder",
+    "bfi"
+  ],
+  [
+    "entertainment-052",
+    "medium",
+    "Who directed Psycho?",
+    "Alfred Hitchcock",
+    "Stanley Kubrick",
+    "David Lean",
+    "bfi"
+  ],
+  [
+    "entertainment-053",
+    "medium",
+    "Who directed Seven Samurai?",
+    "Akira Kurosawa",
+    "Yasujirō Ozu",
+    "Kenji Mizoguchi",
+    "bfi"
+  ],
+  [
+    "entertainment-054",
+    "medium",
+    "Who directed the animated film Spirited Away?",
+    "Hayao Miyazaki",
+    "Satoshi Kon",
+    "Isao Takahata",
+    "bfi"
+  ],
+  [
+    "entertainment-055",
+    "medium",
+    "Who directed The Godfather?",
+    "Francis Ford Coppola",
+    "Martin Scorsese",
+    "Brian De Palma",
+    "bfi"
+  ],
+  [
+    "entertainment-056",
+    "medium",
+    "Who directed 2001: A Space Odyssey?",
+    "Stanley Kubrick",
+    "Ridley Scott",
+    "George Lucas",
+    "bfi"
+  ],
+  [
+    "entertainment-057",
+    "medium",
+    "What is the first name of Humphrey Bogart's character in Casablanca?",
+    "Rick",
+    "Sam",
+    "Victor",
+    "bfi"
+  ],
+  [
+    "entertainment-058",
+    "medium",
+    "What are the bioengineered humans in Blade Runner called?",
+    "Replicants",
+    "Synths",
+    "Cylons",
+    "bfi"
+  ],
+  [
+    "entertainment-059",
+    "medium",
+    "In which US city is Rocky primarily set?",
+    "Philadelphia",
+    "Boston",
+    "Chicago",
+    "bfi"
+  ],
+  [
+    "entertainment-060",
+    "medium",
+    "Which performer co-directed and starred in Singin' in the Rain?",
+    "Gene Kelly",
+    "Fred Astaire",
+    "Bing Crosby",
+    "bfi"
+  ],
+  [
+    "entertainment-061",
+    "medium",
+    "What is the Doctor's time machine in Doctor Who called?",
+    "TARDIS",
+    "Enterprise",
+    "Serenity",
+    "bfi"
+  ],
+  [
+    "entertainment-062",
+    "medium",
+    "What is the name of the coffee shop in Friends?",
+    "Central Perk",
+    "Monk's Café",
+    "Luke's Diner",
+    "bfi"
+  ],
+  [
+    "entertainment-063",
+    "medium",
+    "What subject does Walter White teach at the start of Breaking Bad?",
+    "Chemistry",
+    "Physics",
+    "Biology",
+    "bfi"
+  ],
+  [
+    "entertainment-064",
+    "medium",
+    "What is Captain Kirk's starship called in Star Trek?",
+    "Enterprise",
+    "Voyager",
+    "Defiant",
+    "bfi"
+  ],
+  [
+    "entertainment-065",
+    "medium",
+    "On which fictional continent is King's Landing located?",
+    "Westeros",
+    "Essos",
+    "Númenor",
+    "bfi"
+  ],
+  [
+    "entertainment-066",
+    "medium",
+    "Whose murder drives the mystery in Twin Peaks?",
+    "Laura Palmer",
+    "Maddy Ferguson",
+    "Audrey Horne",
+    "bfi"
+  ],
+  [
+    "entertainment-067",
+    "medium",
+    "What company employs the office workers in the US version of The Office?",
+    "Dunder Mifflin",
+    "Initech",
+    "Waystar Royco",
+    "bfi"
+  ],
+  [
+    "entertainment-068",
+    "medium",
+    "In which fictional Indiana town is Stranger Things set?",
+    "Hawkins",
+    "Riverdale",
+    "Sunnydale",
+    "bfi"
+  ],
+  [
+    "entertainment-069",
+    "medium",
+    "Which institution is the central subject of The Crown?",
+    "British monarchy",
+    "BBC",
+    "Parliament alone",
+    "bfi"
+  ],
+  [
+    "entertainment-070",
+    "medium",
+    "Which actor played the title character in Blackadder?",
+    "Rowan Atkinson",
+    "Hugh Laurie",
+    "Stephen Fry",
+    "bfi"
+  ],
+  [
+    "entertainment-071",
+    "medium",
+    "Who composed Boléro?",
+    "Maurice Ravel",
+    "Claude Debussy",
+    "Erik Satie",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-072",
+    "medium",
+    "Who composed The Four Seasons?",
+    "Antonio Vivaldi",
+    "George Frideric Handel",
+    "Johann Pachelbel",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-073",
+    "medium",
+    "Who composed the ballet Swan Lake?",
+    "Pyotr Ilyich Tchaikovsky",
+    "Igor Stravinsky",
+    "Sergei Prokofiev",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-074",
+    "medium",
+    "Who composed the opera Carmen?",
+    "Georges Bizet",
+    "Giacomo Puccini",
+    "Giuseppe Verdi",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-075",
+    "medium",
+    "Who composed The Magic Flute?",
+    "Wolfgang Amadeus Mozart",
+    "Joseph Haydn",
+    "Franz Schubert",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-076",
+    "medium",
+    "Who wrote the musical Hamilton?",
+    "Lin-Manuel Miranda",
+    "Stephen Sondheim",
+    "Jonathan Larson",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-077",
+    "medium",
+    "Who composed The Phantom of the Opera musical?",
+    "Andrew Lloyd Webber",
+    "Claude-Michel Schönberg",
+    "Tim Rice",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-078",
+    "medium",
+    "Les Misérables the musical is based on a novel by whom?",
+    "Victor Hugo",
+    "Émile Zola",
+    "Gustave Flaubert",
+    "british_library"
+  ],
+  [
+    "entertainment-079",
+    "medium",
+    "Which US city is widely recognised as a birthplace of jazz?",
+    "New Orleans",
+    "Seattle",
+    "Nashville",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-080",
+    "medium",
+    "A common blues progression spans how many bars?",
+    "Twelve",
+    "Eight",
+    "Sixteen",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-081",
+    "hard",
+    "In which historical form of English was Beowulf composed?",
+    "Old English",
+    "Middle English",
+    "Early Modern English",
+    "british_library"
+  ],
+  [
+    "entertainment-082",
+    "hard",
+    "James Joyce's Ulysses is set largely during one day in which city?",
+    "Dublin",
+    "London",
+    "Paris",
+    "british_library"
+  ],
+  [
+    "entertainment-083",
+    "hard",
+    "Who wrote One Hundred Years of Solitude?",
+    "Gabriel García Márquez",
+    "Jorge Luis Borges",
+    "Mario Vargas Llosa",
+    "nobel"
+  ],
+  [
+    "entertainment-084",
+    "hard",
+    "What is the first name of the protagonist transformed in Kafka's The Metamorphosis?",
+    "Gregor",
+    "Josef",
+    "Franz",
+    "british_library"
+  ],
+  [
+    "entertainment-085",
+    "hard",
+    "Who wrote the poem The Waste Land?",
+    "T. S. Eliot",
+    "W. B. Yeats",
+    "Ezra Pound",
+    "british_library"
+  ],
+  [
+    "entertainment-086",
+    "hard",
+    "Which director's film gave its name to the Rashomon effect?",
+    "Akira Kurosawa",
+    "Ingmar Bergman",
+    "Federico Fellini",
+    "bfi"
+  ],
+  [
+    "entertainment-087",
+    "hard",
+    "Who directed the 1922 silent film Nosferatu?",
+    "F. W. Murnau",
+    "Fritz Lang",
+    "Robert Wiene",
+    "bfi"
+  ],
+  [
+    "entertainment-088",
+    "hard",
+    "Who directed Battleship Potemkin?",
+    "Sergei Eisenstein",
+    "Dziga Vertov",
+    "Vsevolod Pudovkin",
+    "bfi"
+  ],
+  [
+    "entertainment-089",
+    "hard",
+    "Who directed the Italian neorealist film Bicycle Thieves?",
+    "Vittorio De Sica",
+    "Roberto Rossellini",
+    "Luchino Visconti",
+    "bfi"
+  ],
+  [
+    "entertainment-090",
+    "hard",
+    "Who directed the 1927 film Metropolis?",
+    "Fritz Lang",
+    "F. W. Murnau",
+    "G. W. Pabst",
+    "bfi"
+  ],
+  [
+    "entertainment-091",
+    "hard",
+    "Who composed The Rite of Spring?",
+    "Igor Stravinsky",
+    "Sergei Rachmaninoff",
+    "Dmitri Shostakovich",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-092",
+    "hard",
+    "Who composed the four-opera Ring cycle?",
+    "Richard Wagner",
+    "Richard Strauss",
+    "Gustav Mahler",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-093",
+    "hard",
+    "What is Beethoven's only completed opera?",
+    "Fidelio",
+    "The Magic Flute",
+    "Der Freischütz",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-094",
+    "hard",
+    "Who composed the Enigma Variations?",
+    "Edward Elgar",
+    "Ralph Vaughan Williams",
+    "Benjamin Britten",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-095",
+    "hard",
+    "Which record label became especially associated with hard bop jazz?",
+    "Blue Note Records",
+    "Sun Records",
+    "Motown Records",
+    "loc_entertainment"
+  ],
+  [
+    "entertainment-096",
+    "hard",
+    "Who was the first actor to portray the Doctor on television?",
+    "William Hartnell",
+    "Patrick Troughton",
+    "Jon Pertwee",
+    "bfi"
+  ],
+  [
+    "entertainment-097",
+    "hard",
+    "In which US state is The Sopranos primarily set?",
+    "New Jersey",
+    "New York",
+    "Connecticut",
+    "bfi"
+  ],
+  [
+    "entertainment-098",
+    "hard",
+    "Who created and starred in Fleabag?",
+    "Phoebe Waller-Bridge",
+    "Michaela Coel",
+    "Sharon Horgan",
+    "bfi"
+  ],
+  [
+    "entertainment-099",
+    "hard",
+    "In which US city is The Wire set?",
+    "Baltimore",
+    "Detroit",
+    "Cleveland",
+    "bfi"
+  ],
+  [
+    "entertainment-100",
+    "hard",
+    "What was the full title of Monty Python's television series?",
+    "Monty Python's Flying Circus",
+    "Monty Python's Comedy Hour",
+    "The Python Players",
+    "bfi"
+  ]
 ]
-

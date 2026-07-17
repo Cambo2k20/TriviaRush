@@ -38,13 +38,16 @@
     "strong_museum": {"name": "The Strong National Museum of Play", "url": "https://www.museumofplay.org/exhibits/world-video-game-hall-of-fame/"},
     "esrb": {"name": "Entertainment Software Rating Board", "url": "https://www.esrb.org/ratings-guide/"}
   },
-  "categories": {
-    "science": [],
-    "history": [],
-    "geography": [],
-    "entertainment": [],
-    "sport": [],
-    "technology": [],
-    "gaming": []
-  }
+  "categories": [
+    {"id":"science","label":"Science","sort_order":10,"icon_key":"flask","color":"#41E28C","status":"active","target":{"easy":40,"medium":40,"hard":20}},
+    {"id":"history","label":"History","sort_order":20,"icon_key":"landmark","color":"#FFD54A","status":"active","target":{"easy":40,"medium":40,"hard":20}},
+    {"id":"geography","label":"Geography","sort_order":30,"icon_key":"globe","color":"#3EE7DB","status":"active","target":{"easy":40,"medium":40,"hard":20}},
+    {"id":"entertainment","label":"Entertainment","sort_order":40,"icon_key":"film","color":"#FF4F9B","status":"active","target":{"easy":40,"medium":40,"hard":20}},
+    {"id":"sport","label":"Sport","sort_order":50,"icon_key":"trophy","color":"#FF8A4C","status":"active","target":{"easy":40,"medium":40,"hard":20}},
+    {"id":"technology","label":"Technology","sort_order":60,"icon_key":"cpu","color":"#7C83FF","status":"active","target":{"easy":40,"medium":40,"hard":20}},
+    {"id":"gaming","label":"Gaming","sort_order":70,"icon_key":"gamepad","color":"#B66CFF","status":"active","target":{"easy":40,"medium":40,"hard":20}},
+    {"id":"food_drink","label":"Food & Drink","sort_order":80,"icon_key":"utensils","color":"#FFB347","status":"planned","target":{"easy":40,"medium":40,"hard":20}},
+    {"id":"nature_animals","label":"Nature & Animals","sort_order":90,"icon_key":"paw","color":"#62D26F","status":"planned","target":{"easy":40,"medium":40,"hard":20}},
+    {"id":"art_literature","label":"Art & Literature","sort_order":100,"icon_key":"palette_book","color":"#F47CD4","status":"planned","target":{"easy":40,"medium":40,"hard":20}}
+  ]
 }

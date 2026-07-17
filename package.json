@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build:questions": "node scripts/build-question-seed.mjs",
+    "build:questions": "node scripts/build-question-seed.mjs --write",
     "test:questions": "node scripts/build-question-seed.mjs",
     "test:database": "node scripts/database-smoke-test.mjs",
     "test:frontend": "node smoke-test.mjs",
