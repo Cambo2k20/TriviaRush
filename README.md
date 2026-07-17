@@ -1,8 +1,27 @@
-# Trivia Rush — Phase 4: Authoritative Questions, Friends and Live Duels
+# Trivia Rush — Phase 5: Authoritative Trivia and Multiplayer
 
-## Phase 5 category expansion prepared
+## Turn-based challenges prepared
 
-The repository now also contains the next additive content checkpoint:
+The repository now contains the additive turn-based multiplayer checkpoint:
+
+- challenge any permanent account; friendship remains optional;
+- challenger plays first and the opponent has 72 hours to respond;
+- independent 30/60/90-second server clocks with no pausing;
+- identical questions and order, server-validated answers and scoring;
+- challenger score and progress hidden until the second round finishes;
+- draw on equal score and no competitive result for declined/expired matches;
+- one multiplayer leaderboard with All, Live and Turn-based filters;
+- private match history labels and recent expired/declined activity;
+- in-app friend, invitation, reminder and result notifications;
+- opt-in standards-based Web Push with an installable PWA;
+- optional verified-email fallback through a server-only delivery outbox.
+
+Deploy this checkpoint only by following
+[`docs/phase-5-turn-based-rollout.md`](docs/phase-5-turn-based-rollout.md).
+
+## Current question bank
+
+The repository contains the verified Phase 5 content checkpoint:
 
 - ten controlled categories, adding Food & Drink, Nature & Animals, and Art &
   Literature;
@@ -13,11 +32,10 @@ The repository now also contains the next additive content checkpoint:
 - a safe staged migration, generated idempotent seed, verification script and
   reversible rollback.
 
-This code is not a claim that the Phase 5 database scripts have already been
-run in production. Follow
+Follow
 [`docs/phase-5-category-rollout.md`](docs/phase-5-category-rollout.md) exactly.
 
-Phase 4 remains the deployed architectural baseline described below.
+Phase 4 remains the architectural baseline described below.
 
 Phase 4A is the safe first checkpoint for live 1v1 multiplayer. It moves the
 question bank and solo answer validation into Supabase before duel rooms are
@@ -28,12 +46,11 @@ keeping solo and multiplayer statistics isolated. The two deployment stages
 remain separate so the authoritative question cutover can be production-tested
 before Realtime match state is introduced.
 
-## Delivered in this checkpoint
+## Delivered platform baseline
 
-- 700 sourced questions: exactly 100 each for Science, History, Geography,
-  Entertainment, Sport, Technology and Gaming.
+- 1,000 sourced questions: exactly 100 in each of ten controlled categories.
 - Per category: 40 easy, 40 medium and 20 hard questions.
-- Balanced correct-answer positions: 234 / 233 / 233.
+- Balanced correct-answer positions: 334 / 333 / 333.
 - Stable question keys, source URLs and a verification date for every record.
 - Controlled category and question RPCs; clients never read answer keys.
 - Server-owned question order, timing, answer validation, streaks and score.
@@ -60,13 +77,26 @@ before Realtime match state is introduced.
 - `scripts/build-question-seed.mjs` — validates the bank and regenerates SQL.
 - `scripts/database-smoke-test.mjs` — executable PostgreSQL-compatible flow
   test using PGlite.
-- `app.js`, `index.html`, `styles.css` — authoritative solo and live-duel
-  frontend.
+- `app.js`, `index.html`, `styles.css` — authoritative solo, live-duel,
+  turn-based and notification frontend.
 - `smoke-test.mjs` — DOM/category/leaderboard/social/lobby frontend checks.
+- `phase-5-turn-based-challenges.sql` — additive per-player turn clocks,
+  private challenge state, filtered multiplayer rankings and notification
+  outbox.
+- `phase-5-turn-based-verification.sql` — read-only production security and
+  integrity checks for turn-based play and notifications.
+- `supabase/functions/dispatch-notifications/index.ts` — authenticated Web Push
+  and optional email delivery worker.
+- `manifest.webmanifest`, `sw.js`, `icons/*` — installable web app and push
+  notification receiver.
+- `scripts/generate-vapid-keys.mjs` — local VAPID key generator; private keys
+  must be saved only as Supabase secrets.
 
-## Exact combined deployment order
+## Original Phase 4 deployment order
 
-Use this order when deploying the complete package:
+This historical order documents how the Phase 4 baseline was installed. Do not
+rerun it on the current production database. For the current incremental
+changes, use the two Phase 5 rollout documents linked above.
 
 1. Run `phase-4a-question-platform.sql`.
 2. Run `phase-4a-question-seed.sql`.

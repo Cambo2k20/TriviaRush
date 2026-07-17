@@ -1,0 +1,24 @@
+{
+  "name": "Trivia Rush",
+  "short_name": "Trivia Rush",
+  "description": "Fast solo trivia, live duels and turn-based challenges.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#111936",
+  "theme_color": "#111936",
+  "icons": [
+    {
+      "src": "icons/trivia-rush-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/trivia-rush-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

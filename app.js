@@ -53,6 +53,7 @@
     socialReturnScreen: null,
     activeDuelId: null,
     activeDuelCode: null,
+    activeDuelFormat: "live",
     duelState: null,
     duelQuestion: null,
     duelLocked: true,
@@ -61,7 +62,11 @@
     duelSubscription: null,
     duelServerOffsetMs: 0,
     duelRefreshPending: false,
-    rematchSettings: null
+    rematchSettings: null,
+    duelLeaderboardFormat: "all",
+    notificationSubscription: null,
+    notificationPreferences: null,
+    notificationDispatchKey: null
   };
 
   const elements = {
@@ -77,6 +82,8 @@
     resultsLeaderboardButton: document.querySelector("#resultsLeaderboardButton"),
     categorySelect: document.querySelector("#categorySelect"),
     startStatus: document.querySelector("#startStatus"),
+    notificationButton: document.querySelector("#notificationButton"),
+    notificationBadge: document.querySelector("#notificationBadge"),
     duelButton: document.querySelector("#duelButton"),
     socialScreen: document.querySelector("#socialScreen"),
     closeSocialButton: document.querySelector("#closeSocialButton"),
@@ -84,6 +91,9 @@
     openAccountForDuelButton: document.querySelector("#openAccountForDuelButton"),
     socialContent: document.querySelector("#socialContent"),
     socialStatus: document.querySelector("#socialStatus"),
+    duelFormatSelect: document.querySelector("#duelFormatSelect"),
+    duelFormatNote: document.querySelector("#duelFormatNote"),
+    duelInviteAccountLabel: document.querySelector("#duelInviteAccountLabel"),
     duelCategorySelect: document.querySelector("#duelCategorySelect"),
     duelDurationSelect: document.querySelector("#duelDurationSelect"),
     duelInviteAccount: document.querySelector("#duelInviteAccount"),
@@ -91,6 +101,8 @@
     duelRoomCode: document.querySelector("#duelRoomCode"),
     joinDuelButton: document.querySelector("#joinDuelButton"),
     duelInvitations: document.querySelector("#duelInvitations"),
+    turnChallenges: document.querySelector("#turnChallenges"),
+    turnChallengeActivity: document.querySelector("#turnChallengeActivity"),
     friendAccountNumber: document.querySelector("#friendAccountNumber"),
     addFriendButton: document.querySelector("#addFriendButton"),
     friendRequests: document.querySelector("#friendRequests"),
@@ -98,17 +110,34 @@
     historyOpponentFilter: document.querySelector("#historyOpponentFilter"),
     duelHistory: document.querySelector("#duelHistory"),
     duelLeaderboard: document.querySelector("#duelLeaderboard"),
+    duelLeaderboardFormatButtons: [
+      ...document.querySelectorAll("[data-duel-leaderboard-format]")
+    ],
+    notificationCard: document.querySelector("#notificationCard"),
+    notificationList: document.querySelector("#notificationList"),
+    markNotificationsReadButton: document.querySelector("#markNotificationsReadButton"),
+    challengeNotificationsToggle: document.querySelector("#challengeNotificationsToggle"),
+    friendNotificationsToggle: document.querySelector("#friendNotificationsToggle"),
+    emailNotificationsToggle: document.querySelector("#emailNotificationsToggle"),
+    pushNotificationsButton: document.querySelector("#pushNotificationsButton"),
+    notificationStatus: document.querySelector("#notificationStatus"),
     duelWaitingScreen: document.querySelector("#duelWaitingScreen"),
+    duelWaitingEyebrow: document.querySelector("#duelWaitingEyebrow"),
+    duelWaitingTitle: document.querySelector("#duelWaitingTitle"),
+    duelWaitingDescription: document.querySelector("#duelWaitingDescription"),
     duelWaitingCode: document.querySelector("#duelWaitingCode"),
     duelWaitingStatus: document.querySelector("#duelWaitingStatus"),
     copyDuelLinkButton: document.querySelector("#copyDuelLinkButton"),
+    startTurnChallengeButton: document.querySelector("#startTurnChallengeButton"),
+    declineTurnChallengeButton: document.querySelector("#declineTurnChallengeButton"),
     cancelDuelButton: document.querySelector("#cancelDuelButton"),
+    backFromDuelWaitingButton: document.querySelector("#backFromDuelWaitingButton"),
     duelGameScreen: document.querySelector("#duelGameScreen"),
     duelSelfScore: document.querySelector("#duelSelfScore"),
     duelSelfProgress: document.querySelector("#duelSelfProgress"),
     duelOpponentName: document.querySelector("#duelOpponentName"),
     duelOpponentScore: document.querySelector("#duelOpponentScore"),
-    duelOpponentProgress: document.querySelector("#duelOpponentProgress"),
+    duelOpponentProgressText: document.querySelector("#duelOpponentProgressText"),
     duelTimerValue: document.querySelector("#duelTimerValue"),
     duelPhaseLabel: document.querySelector("#duelPhaseLabel"),
     duelCategoryBadge: document.querySelector("#duelCategoryBadge"),
@@ -118,6 +147,7 @@
     duelPassButton: document.querySelector("#duelPassButton"),
     duelFeedback: document.querySelector("#duelFeedback"),
     duelResultsScreen: document.querySelector("#duelResultsScreen"),
+    duelResultBadge: document.querySelector("#duelResultBadge"),
     duelResultTitle: document.querySelector("#duelResultTitle"),
     duelResultMessage: document.querySelector("#duelResultMessage"),
     duelFinalSelfScore: document.querySelector("#duelFinalSelfScore"),
@@ -213,6 +243,7 @@
     configureSpeechRecognition();
     setupAuthStateListener();
     bindEvents();
+    updateDuelFormatUI();
     updateLeaderboardFilterButtons();
 
     if (elements.timerProgress) {
@@ -224,6 +255,7 @@
     await initialisePlayer();
     await loadQuestionCategories();
     updateAccountUI();
+    await refreshNotificationRuntime();
     await handleDuelLink();
   }
 
@@ -267,6 +299,7 @@
     }
 
     if (event === "SIGNED_OUT") {
+      stopNotificationRuntime();
       state.user = null;
       state.profile = null;
       state.recoveryMode = false;
@@ -297,6 +330,7 @@
       }
 
       await loadPlayerProfile();
+      await refreshNotificationRuntime();
     }
   }
 
@@ -572,6 +606,10 @@
       elements.accountButtonText.textContent =
         state.profile?.display_name ||
         "Account";
+    }
+
+    if (elements.notificationButton) {
+      elements.notificationButton.hidden = !isPermanentAccount;
     }
 
     if (elements.accountPlayerName) {
@@ -1610,18 +1648,35 @@
     ];
   }
   function bindEvents() {
+    elements.notificationButton?.addEventListener("click", openNotifications);
     elements.duelButton?.addEventListener("click", openSocialScreen);
     elements.closeSocialButton?.addEventListener("click", closeSocialScreen);
     elements.openAccountForDuelButton?.addEventListener("click", () => openAccountDialog(true));
+    elements.duelFormatSelect?.addEventListener("change", updateDuelFormatUI);
     elements.createDuelButton?.addEventListener("click", createDuel);
     elements.joinDuelButton?.addEventListener("click", () => joinDuel(elements.duelRoomCode.value));
     elements.copyDuelLinkButton?.addEventListener("click", copyDuelInviteLink);
+    elements.startTurnChallengeButton?.addEventListener("click", startTurnChallenge);
+    elements.declineTurnChallengeButton?.addEventListener("click", declineTurnChallenge);
     elements.cancelDuelButton?.addEventListener("click", cancelWaitingDuel);
+    elements.backFromDuelWaitingButton?.addEventListener("click", openSocialScreen);
     elements.addFriendButton?.addEventListener("click", addFriend);
     elements.historyOpponentFilter?.addEventListener("change", loadDuelHistory);
     elements.duelPassButton?.addEventListener("click", () => submitDuelAnswer(null));
     elements.duelRematchButton?.addEventListener("click", createRematch);
     elements.duelResultsHomeButton?.addEventListener("click", openSocialScreen);
+    elements.duelLeaderboardFormatButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        setDuelLeaderboardFormat(button.dataset.duelLeaderboardFormat);
+      });
+    });
+    elements.markNotificationsReadButton?.addEventListener("click", markAllNotificationsRead);
+    elements.pushNotificationsButton?.addEventListener("click", togglePushNotifications);
+    [
+      elements.challengeNotificationsToggle,
+      elements.friendNotificationsToggle,
+      elements.emailNotificationsToggle
+    ].forEach((control) => control?.addEventListener("change", saveNotificationPreferences));
     elements.startButton?.addEventListener(
       "click",
       beginCountdown
@@ -1822,6 +1877,10 @@
 
     if (elements.duelButton) {
       elements.duelButton.disabled = gameIsRunning;
+    }
+
+    if (elements.notificationButton) {
+      elements.notificationButton.disabled = gameIsRunning;
     }
   }
 
@@ -3146,16 +3205,42 @@
   }
 
   async function handleDuelLink() {
-    const savedDuel = readSavedDuel();
-    if (savedDuel && isPermanentAccount()) {
-      enterDuelRoom(savedDuel.matchId, savedDuel.roomCode, savedDuel.isHost);
+    const url = new URL(window.location.href);
+    const challengeId = url.searchParams.get("challenge")?.trim();
+    if (challengeId) {
+      if (isPermanentAccount()) {
+        await openTurnChallenge(challengeId);
+      } else {
+        openSocialScreen();
+        setSocialStatus("Sign in or create a permanent account to open this turn-based challenge.");
+      }
       return;
     }
 
-    const url = new URL(window.location.href);
+    const socialView = url.searchParams.get("social")?.trim();
+    if (socialView) {
+      openSocialScreen();
+      window.setTimeout(() => {
+        const target = socialView === "friends"
+          ? elements.friendRequests
+          : elements.notificationCard;
+        target?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 120);
+      return;
+    }
+
     const roomCode = url.searchParams.get("duel")?.trim().toUpperCase();
 
     if (!roomCode) {
+      const savedDuel = readSavedDuel();
+      if (savedDuel && isPermanentAccount()) {
+        enterDuelRoom(
+          savedDuel.matchId,
+          savedDuel.roomCode || "",
+          savedDuel.isHost,
+          savedDuel.matchFormat || "live"
+        );
+      }
       return;
     }
 
@@ -3171,7 +3256,7 @@
   function readSavedDuel() {
     try {
       const value = JSON.parse(localStorage.getItem("triviaRushActiveDuel") || "null");
-      return value?.matchId && value?.roomCode ? value : null;
+      return value?.matchId ? value : null;
     } catch {
       return null;
     }
@@ -3218,17 +3303,40 @@
     }
 
     setSocialStatus("Loading friends, challenges and match history…");
-    const [social, invitations, history, leaderboard] = await Promise.all([
+    const [
+      social,
+      invitations,
+      turnChallenges,
+      history,
+      leaderboard,
+      notifications,
+      notificationPreferences
+    ] = await Promise.all([
       supabaseClient.rpc("get_social_dashboard"),
       supabaseClient.rpc("get_duel_invitations"),
-      supabaseClient.rpc("get_duel_match_history", {
+      supabaseClient.rpc("get_turn_challenges", { p_limit: 30 }),
+      supabaseClient.rpc("get_duel_match_history_v2", {
         p_opponent_account_number: parseOptionalAccount(elements.historyOpponentFilter?.value),
+        p_match_format: "all",
         p_limit: 30
       }),
-      supabaseClient.rpc("get_duel_leaderboard", { p_limit: 20 })
+      supabaseClient.rpc("get_duel_leaderboard_v2", {
+        p_match_format: state.duelLeaderboardFormat,
+        p_limit: 20
+      }),
+      supabaseClient.rpc("get_notifications", { p_limit: 30 }),
+      supabaseClient.rpc("get_notification_preferences")
     ]);
 
-    const failed = [social, invitations, history, leaderboard].find((response) => response.error);
+    const failed = [
+      social,
+      invitations,
+      turnChallenges,
+      history,
+      leaderboard,
+      notifications,
+      notificationPreferences
+    ].find((response) => response.error);
     if (failed) {
       console.error("Could not load social data:", failed.error);
       setSocialStatus(failed.error.message || "Friends and duels could not be loaded.", true);
@@ -3237,8 +3345,16 @@
 
     renderSocialDashboard(social.data || {});
     renderDuelInvitations(Array.isArray(invitations.data) ? invitations.data : []);
+    renderTurnChallenges(turnChallenges.data || {});
     renderDuelHistory(Array.isArray(history.data) ? history.data : []);
     renderDuelLeaderboard(Array.isArray(leaderboard.data) ? leaderboard.data : []);
+    renderNotifications(Array.isArray(notifications.data) ? notifications.data : []);
+    renderNotificationPreferences(
+      Array.isArray(notificationPreferences.data)
+        ? notificationPreferences.data[0]
+        : notificationPreferences.data
+    );
+    await updateUnreadNotificationCount();
     setSocialStatus("");
   }
 
@@ -3316,7 +3432,8 @@
         friend.display_name,
         `Account #${friend.account_number}`,
         [
-          { label: "Challenge", handler: () => prepareFriendChallenge(friend.account_number) },
+          { label: "Live", handler: () => prepareFriendChallenge(friend.account_number, "live") },
+          { label: "Take turns", handler: () => prepareFriendChallenge(friend.account_number, "turn_based") },
           { label: "Remove", handler: () => removeFriend(friend.player_id) }
         ]
       ));
@@ -3340,13 +3457,77 @@
     }
   }
 
+  function renderTurnChallenges(data) {
+    const active = Array.isArray(data.active) ? data.active : [];
+    const recentClosed = Array.isArray(data.recent_closed) ? data.recent_closed : [];
+
+    elements.turnChallenges.replaceChildren();
+    active.forEach((challenge) => {
+      const statusCopy = getTurnChallengeStatusCopy(challenge);
+      const actions = [];
+      if (challenge.can_start) {
+        actions.push({ label: "Play", handler: () => openTurnChallenge(challenge.match_id) });
+      } else if (["host_turn", "guest_turn"].includes(challenge.status) && challenge.self_round_status !== "completed") {
+        actions.push({ label: "Resume", handler: () => openTurnChallenge(challenge.match_id) });
+      } else {
+        actions.push({ label: "View", handler: () => openTurnChallenge(challenge.match_id) });
+      }
+      if (challenge.can_decline) {
+        actions.push({ label: "Decline", handler: () => declineTurnChallenge(challenge.match_id) });
+      }
+      if (challenge.can_cancel) {
+        actions.push({ label: "Cancel", handler: () => cancelTurnChallenge(challenge.match_id) });
+      }
+
+      elements.turnChallenges.appendChild(createSocialRow(
+        challenge.opponent_display_name,
+        `${statusCopy} · ${challenge.duration_seconds}s ${formatCategory(challenge.category_id)} · #${challenge.opponent_account_number}`,
+        actions
+      ));
+    });
+    if (!active.length) {
+      renderEmpty(elements.turnChallenges, "No active turn-based challenges.");
+    }
+
+    elements.turnChallengeActivity.replaceChildren();
+    recentClosed.forEach((challenge) => {
+      const reason = challenge.closed_reason === "declined"
+        ? "Declined"
+        : challenge.closed_reason === "expired"
+          ? "Expired"
+          : "Cancelled";
+      elements.turnChallengeActivity.appendChild(createSocialRow(
+        `${reason} · ${challenge.opponent_display_name}`,
+        `${challenge.duration_seconds}s ${formatCategory(challenge.category_id)} · ${formatRelativeTime(challenge.closed_at)}`
+      ));
+    });
+    if (!recentClosed.length) {
+      renderEmpty(elements.turnChallengeActivity, "No recently closed challenges.");
+    }
+  }
+
+  function getTurnChallengeStatusCopy(challenge) {
+    if (challenge.can_start) {
+      return `Your turn · expires ${formatRelativeTime(challenge.response_expires_at)}`;
+    }
+    if (challenge.status === "host_turn") {
+      return "Your round is in progress";
+    }
+    if (challenge.status === "guest_turn") {
+      return challenge.self_round_status === "completed"
+        ? "Opponent is playing"
+        : "Your round is in progress";
+    }
+    return `Awaiting response · expires ${formatRelativeTime(challenge.response_expires_at)}`;
+  }
+
   function renderDuelHistory(rows) {
     elements.duelHistory.replaceChildren();
     rows.forEach((match) => {
       const outcome = match.outcome === "forfeit" ? "FORFEIT" : String(match.outcome || "").toUpperCase();
       elements.duelHistory.appendChild(createSocialRow(
         `${outcome} vs ${match.opponent_display_name}`,
-        `${match.player_score}–${match.opponent_score} · ${match.duration_seconds}s ${formatCategory(match.category_id)} · #${match.opponent_account_number}`
+        `${match.player_score}–${match.opponent_score} · ${formatDuelFormat(match.match_format)} · ${match.duration_seconds}s ${formatCategory(match.category_id)} · #${match.opponent_account_number}`
       ));
     });
     if (!rows.length) {
@@ -3368,11 +3549,383 @@
     }
   }
 
+  async function setDuelLeaderboardFormat(format) {
+    const normalised = ["all", "live", "turn_based"].includes(format)
+      ? format
+      : "all";
+    state.duelLeaderboardFormat = normalised;
+    elements.duelLeaderboardFormatButtons.forEach((button) => {
+      const active = button.dataset.duelLeaderboardFormat === normalised;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+    renderEmpty(elements.duelLeaderboard, "Loading multiplayer rankings…");
+    const { data, error } = await supabaseClient.rpc("get_duel_leaderboard_v2", {
+      p_match_format: normalised,
+      p_limit: 20
+    });
+    if (error) {
+      setSocialStatus(error.message || "The multiplayer leaderboard could not be loaded.", true);
+      return;
+    }
+    renderDuelLeaderboard(Array.isArray(data) ? data : []);
+  }
+
+  function renderNotifications(rows) {
+    elements.notificationList.replaceChildren();
+    rows.forEach((notification) => {
+      const actions = [];
+      if (notification.data?.challenge) {
+        actions.push({
+          label: "Open",
+          handler: () => openNotification(notification, () => openTurnChallenge(notification.data.challenge))
+        });
+      } else if (notification.data?.duel) {
+        actions.push({
+          label: "Join",
+          handler: () => openNotification(notification, () => joinDuel(notification.data.duel))
+        });
+      } else if (notification.notification_type === "friend_request") {
+        actions.push({
+          label: "View",
+          handler: () => openNotification(notification)
+        });
+      }
+
+      const row = createSocialRow(
+        notification.title,
+        `${notification.body} · ${formatRelativeTime(notification.created_at)}`,
+        actions
+      );
+      row.classList.toggle("unread", !notification.read_at);
+      elements.notificationList.appendChild(row);
+    });
+    if (!rows.length) {
+      renderEmpty(elements.notificationList, "No notifications yet.");
+    }
+  }
+
+  async function openNotification(notification, action = null) {
+    if (!notification.read_at) {
+      await supabaseClient.rpc("mark_notification_read", {
+        p_notification_id: notification.notification_id
+      });
+      await updateUnreadNotificationCount();
+    }
+    if (action) {
+      await action();
+    } else {
+      await loadSocialData();
+      elements.friendRequests?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }
+
+  async function openNotifications() {
+    openSocialScreen();
+    window.setTimeout(() => {
+      elements.notificationCard?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 120);
+  }
+
+  async function markAllNotificationsRead() {
+    const { error } = await supabaseClient.rpc("mark_notification_read", {
+      p_notification_id: null
+    });
+    if (error) {
+      setNotificationStatus(error.message || "Notifications could not be updated.", true);
+      return;
+    }
+    await Promise.all([loadSocialData(), updateUnreadNotificationCount()]);
+  }
+
+  async function updateUnreadNotificationCount() {
+    if (!isPermanentAccount()) {
+      setUnreadNotificationCount(0);
+      return;
+    }
+    const { data, error } = await supabaseClient.rpc("get_unread_notification_count");
+    if (error) {
+      console.warn("Could not load notification count:", error);
+      return;
+    }
+    setUnreadNotificationCount(Number(data || 0));
+  }
+
+  function setUnreadNotificationCount(count) {
+    const safeCount = Math.max(0, Number.isFinite(count) ? Math.round(count) : 0);
+    if (elements.notificationBadge) {
+      elements.notificationBadge.hidden = safeCount === 0;
+      elements.notificationBadge.textContent = safeCount > 99 ? "99+" : String(safeCount);
+    }
+    elements.notificationButton?.setAttribute(
+      "aria-label",
+      safeCount ? `Open ${safeCount} unread notifications` : "Open notifications"
+    );
+    if ("setAppBadge" in navigator && safeCount) {
+      void Promise.resolve(navigator.setAppBadge(safeCount)).catch(() => {});
+    } else if ("clearAppBadge" in navigator && safeCount === 0) {
+      void Promise.resolve(navigator.clearAppBadge()).catch(() => {});
+    }
+  }
+
+  async function refreshNotificationRuntime() {
+    stopNotificationRuntime();
+    if (!isPermanentAccount()) {
+      setUnreadNotificationCount(0);
+      return;
+    }
+
+    await updateUnreadNotificationCount();
+    if ("serviceWorker" in navigator) {
+      void navigator.serviceWorker.register("./sw.js").catch((error) => {
+        console.warn("Service worker registration failed:", error);
+      });
+    }
+    if (typeof supabaseClient.channel !== "function") {
+      return;
+    }
+    state.notificationSubscription = supabaseClient
+      .channel(`notifications:${state.user.id}`)
+      .on("postgres_changes", {
+        event: "*",
+        schema: "public",
+        table: "notifications",
+        filter: `recipient_id=eq.${state.user.id}`
+      }, () => {
+        void updateUnreadNotificationCount();
+        if (elements.socialScreen?.classList.contains("active")) {
+          void loadSocialData();
+        }
+      })
+      .subscribe();
+  }
+
+  function stopNotificationRuntime() {
+    if (state.notificationSubscription && typeof supabaseClient.removeChannel === "function") {
+      void supabaseClient.removeChannel(state.notificationSubscription);
+    }
+    state.notificationSubscription = null;
+  }
+
+  function renderNotificationPreferences(preferences) {
+    const current = preferences || {
+      push_enabled: false,
+      email_enabled: false,
+      challenge_notifications: true,
+      friend_request_notifications: true,
+      active_push_subscriptions: 0
+    };
+    state.notificationPreferences = current;
+    elements.challengeNotificationsToggle.checked = current.challenge_notifications !== false;
+    elements.friendNotificationsToggle.checked = current.friend_request_notifications !== false;
+    elements.emailNotificationsToggle.checked = current.email_enabled === true;
+    elements.pushNotificationsButton.textContent = current.push_enabled
+      ? "Disable phone push"
+      : "Enable phone push";
+  }
+
+  async function saveNotificationPreferences() {
+    if (!state.notificationPreferences) {
+      return;
+    }
+    const { error } = await supabaseClient.rpc("update_notification_preferences", {
+      p_push_enabled: state.notificationPreferences.push_enabled === true,
+      p_email_enabled: elements.emailNotificationsToggle.checked,
+      p_challenge_notifications: elements.challengeNotificationsToggle.checked,
+      p_friend_request_notifications: elements.friendNotificationsToggle.checked
+    });
+    if (error) {
+      setNotificationStatus(error.message || "Notification settings could not be saved.", true);
+      return;
+    }
+    state.notificationPreferences = {
+      ...state.notificationPreferences,
+      email_enabled: elements.emailNotificationsToggle.checked,
+      challenge_notifications: elements.challengeNotificationsToggle.checked,
+      friend_request_notifications: elements.friendNotificationsToggle.checked
+    };
+    setNotificationStatus("Notification settings saved.");
+  }
+
+  async function togglePushNotifications() {
+    if (state.notificationPreferences?.push_enabled) {
+      await disablePushNotifications();
+    } else {
+      await enablePushNotifications();
+    }
+  }
+
+  async function enablePushNotifications() {
+    if (!("serviceWorker" in navigator) || !("PushManager" in window) || !("Notification" in window)) {
+      setNotificationStatus("Phone push is not supported by this browser. Email alerts can still be enabled.", true);
+      return;
+    }
+
+    const isiPhoneOrIPad = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isStandalone = window.matchMedia?.("(display-mode: standalone)").matches
+      || window.navigator.standalone === true;
+    if (isiPhoneOrIPad && !isStandalone) {
+      setNotificationStatus("On iPhone or iPad, add Trivia Rush to your Home Screen, open it there, then enable push.", true);
+      return;
+    }
+
+    elements.pushNotificationsButton.disabled = true;
+    try {
+      setNotificationStatus("Requesting notification permission…");
+      const permission = await Notification.requestPermission();
+      if (permission !== "granted") {
+        setNotificationStatus("Notification permission was not granted.", true);
+        return;
+      }
+
+      const registration = await navigator.serviceWorker.register("./sw.js");
+      const { data: config, error: configError } = await supabaseClient.functions.invoke(
+        "dispatch-notifications",
+        { method: "GET" }
+      );
+      if (configError || !config?.vapid_public_key) {
+        setNotificationStatus("Push delivery is not configured on the server yet.", true);
+        return;
+      }
+
+      let subscription = await registration.pushManager.getSubscription();
+      if (!subscription) {
+        subscription = await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(config.vapid_public_key)
+        });
+      }
+      const serialised = subscription.toJSON();
+      const { error: registerError } = await supabaseClient.rpc("register_push_subscription", {
+        p_endpoint: subscription.endpoint,
+        p_p256dh: serialised.keys?.p256dh,
+        p_auth_secret: serialised.keys?.auth,
+        p_user_agent: navigator.userAgent
+      });
+      if (registerError) {
+        setNotificationStatus(registerError.message || "This device could not be registered.", true);
+        return;
+      }
+
+      const { error: preferenceError } = await supabaseClient.rpc("update_notification_preferences", {
+        p_push_enabled: true,
+        p_email_enabled: elements.emailNotificationsToggle.checked,
+        p_challenge_notifications: elements.challengeNotificationsToggle.checked,
+        p_friend_request_notifications: elements.friendNotificationsToggle.checked
+      });
+      if (preferenceError) {
+        setNotificationStatus(preferenceError.message || "Push preference could not be saved.", true);
+        return;
+      }
+      state.notificationPreferences = {
+        ...(state.notificationPreferences || {}),
+        push_enabled: true
+      };
+      elements.pushNotificationsButton.textContent = "Disable phone push";
+      setNotificationStatus("Phone push is enabled on this device.");
+    } catch (error) {
+      setNotificationStatus(
+        error instanceof Error ? error.message : "Phone push could not be enabled on this device.",
+        true
+      );
+    } finally {
+      elements.pushNotificationsButton.disabled = false;
+    }
+  }
+
+  async function disablePushNotifications() {
+    const registration = "serviceWorker" in navigator
+      ? await navigator.serviceWorker.getRegistration("./")
+      : null;
+    const subscription = await registration?.pushManager?.getSubscription();
+    if (subscription) {
+      await supabaseClient.rpc("remove_push_subscription", {
+        p_endpoint: subscription.endpoint
+      });
+      await subscription.unsubscribe();
+    }
+    const { error } = await supabaseClient.rpc("update_notification_preferences", {
+      p_push_enabled: false,
+      p_email_enabled: elements.emailNotificationsToggle.checked,
+      p_challenge_notifications: elements.challengeNotificationsToggle.checked,
+      p_friend_request_notifications: elements.friendNotificationsToggle.checked
+    });
+    if (error) {
+      setNotificationStatus(error.message || "Push could not be disabled.", true);
+      return;
+    }
+    state.notificationPreferences = {
+      ...(state.notificationPreferences || {}),
+      push_enabled: false
+    };
+    elements.pushNotificationsButton.textContent = "Enable phone push";
+    setNotificationStatus("Phone push is disabled.");
+  }
+
+  function setNotificationStatus(message, isError = false) {
+    if (!elements.notificationStatus) {
+      return;
+    }
+    elements.notificationStatus.textContent = message;
+    elements.notificationStatus.classList.toggle("error", isError);
+  }
+
+  function urlBase64ToUint8Array(value) {
+    const padding = "=".repeat((4 - value.length % 4) % 4);
+    const base64 = (value + padding).replaceAll("-", "+").replaceAll("_", "/");
+    const raw = window.atob(base64);
+    return Uint8Array.from([...raw].map((character) => character.charCodeAt(0)));
+  }
+
+  async function requestNotificationDispatch(key) {
+    if (!isPermanentAccount() || state.notificationDispatchKey === key) {
+      return;
+    }
+    state.notificationDispatchKey = key;
+    try {
+      const { error } = await supabaseClient.functions.invoke("dispatch-notifications", {
+        method: "POST",
+        body: {}
+      });
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      console.warn("Notification dispatch will be retried later:", error);
+      state.notificationDispatchKey = null;
+    }
+  }
+
   function formatCategory(categoryId) {
     if (categoryId === "mixed") {
       return "Mixed";
     }
     return state.categories.find((category) => category.id === categoryId)?.label || categoryId;
+  }
+
+  function formatDuelFormat(matchFormat) {
+    return matchFormat === "turn_based" ? "Turn-based" : "Live";
+  }
+
+  function formatRelativeTime(value) {
+    const timestamp = Date.parse(value);
+    if (!Number.isFinite(timestamp)) {
+      return "recently";
+    }
+    const difference = timestamp - Date.now();
+    const absolute = Math.abs(difference);
+    if (absolute < 60_000) {
+      return difference >= 0 ? "in under a minute" : "just now";
+    }
+    const units = absolute < 3_600_000
+      ? [60_000, "minute"]
+      : absolute < 86_400_000
+        ? [3_600_000, "hour"]
+        : [86_400_000, "day"];
+    const amount = Math.max(1, Math.round(absolute / units[0]));
+    return difference >= 0
+      ? `in ${amount} ${units[1]}${amount === 1 ? "" : "s"}`
+      : `${amount} ${units[1]}${amount === 1 ? "" : "s"} ago`;
   }
 
   async function addFriend() {
@@ -3391,6 +3944,7 @@
     }
     elements.friendAccountNumber.value = "";
     setSocialStatus("Friend request updated.");
+    void requestNotificationDispatch("friend-request");
     await loadSocialData();
   }
 
@@ -3415,15 +3969,40 @@
     await loadSocialData();
   }
 
-  function prepareFriendChallenge(accountNumber) {
+  function prepareFriendChallenge(accountNumber, format = "live") {
+    elements.duelFormatSelect.value = format;
+    updateDuelFormatUI();
     elements.duelInviteAccount.value = String(accountNumber);
     elements.duelInviteAccount.focus();
-    setSocialStatus(`Challenge prepared for account #${accountNumber}. Choose the settings and create it.`);
+    setSocialStatus(
+      `${format === "turn_based" ? "Turn-based challenge" : "Live duel"} prepared for account #${accountNumber}. Choose the settings and create it.`
+    );
+  }
+
+  function updateDuelFormatUI() {
+    if (!elements.duelFormatSelect) {
+      return;
+    }
+    const turnBased = elements.duelFormatSelect.value === "turn_based";
+    elements.duelInviteAccount.required = turnBased;
+    elements.duelInviteAccountLabel.textContent = turnBased
+      ? "Opponent account number"
+      : "Optional account number";
+    elements.duelInviteAccount.placeholder = turnBased
+      ? "Required for turn-based play"
+      : "Leave blank for an open room";
+    elements.duelFormatNote.textContent = turnBased
+      ? "You play first. Your opponent then has 72 hours to complete the same round."
+      : "Live rooms start when both players arrive.";
+    elements.createDuelButton.textContent = turnBased
+      ? "Play & send challenge"
+      : "Create live duel";
   }
 
   async function loadDuelHistory() {
-    const { data, error } = await supabaseClient.rpc("get_duel_match_history", {
+    const { data, error } = await supabaseClient.rpc("get_duel_match_history_v2", {
       p_opponent_account_number: parseOptionalAccount(elements.historyOpponentFilter.value),
+      p_match_format: "all",
       p_limit: 30
     });
     if (error) {
@@ -3440,8 +4019,19 @@
     }
 
     const invitedAccount = parseOptionalAccount(elements.duelInviteAccount.value);
-    setSocialStatus("Creating duel…");
-    const { data, error } = await supabaseClient.rpc("create_duel", {
+    const matchFormat = elements.duelFormatSelect.value === "turn_based"
+      ? "turn_based"
+      : "live";
+    if (matchFormat === "turn_based" && !invitedAccount) {
+      setSocialStatus("Enter the permanent account number of the player you want to challenge.", true);
+      return;
+    }
+
+    setSocialStatus(matchFormat === "turn_based" ? "Preparing your turn…" : "Creating live duel…");
+    const rpcName = matchFormat === "turn_based"
+      ? "create_turn_challenge"
+      : "create_duel";
+    const { data, error } = await supabaseClient.rpc(rpcName, {
       p_category: elements.duelCategorySelect.value,
       p_duration_seconds: Number(elements.duelDurationSelect.value),
       p_invited_account_number: invitedAccount
@@ -3455,9 +4045,13 @@
     state.rematchSettings = {
       category: data.category_id,
       duration: Number(data.duration_seconds),
-      opponentAccount: invitedAccount
+      opponentAccount: invitedAccount,
+      matchFormat
     };
-    enterDuelRoom(data.match_id, data.room_code, true);
+    if (matchFormat === "live" && invitedAccount) {
+      void requestNotificationDispatch(`live:${data.match_id}`);
+    }
+    enterDuelRoom(data.match_id, data.room_code || "", true, matchFormat);
   }
 
   async function joinDuel(roomCode) {
@@ -3485,27 +4079,140 @@
     enterDuelRoom(data.match_id, code, false);
   }
 
-  function enterDuelRoom(matchId, roomCode, isHost) {
+  async function openTurnChallenge(matchId) {
+    if (!isPermanentAccount()) {
+      openSocialScreen();
+      setSocialStatus("A permanent account is required to play turn-based challenges.", true);
+      return;
+    }
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete("challenge");
+    window.history.replaceState({}, "", cleanUrl);
+    enterDuelRoom(matchId, "", false, "turn_based");
+  }
+
+  async function startTurnChallenge(matchId = state.activeDuelId) {
+    if (!matchId) {
+      return;
+    }
+    elements.duelWaitingStatus.textContent = "Preparing your private round…";
+    const { data, error } = await supabaseClient.rpc("start_turn_challenge", {
+      p_match_id: matchId
+    });
+    if (error) {
+      elements.duelWaitingStatus.textContent = error.message || "This challenge could not be started.";
+      return;
+    }
+    enterDuelRoom(data.match_id, "", false, "turn_based");
+  }
+
+  async function declineTurnChallenge(matchId = state.activeDuelId) {
+    if (!matchId) {
+      return;
+    }
+    const { error } = await supabaseClient.rpc("decline_turn_challenge", {
+      p_match_id: matchId
+    });
+    if (error) {
+      setSocialStatus(error.message || "This challenge could not be declined.", true);
+      return;
+    }
+    stopDuelRuntime();
+    openSocialScreen();
+    setSocialStatus("Challenge declined.");
+  }
+
+  async function cancelTurnChallenge(matchId = state.activeDuelId) {
+    if (!matchId) {
+      return;
+    }
+    const { error } = await supabaseClient.rpc("cancel_turn_challenge", {
+      p_match_id: matchId
+    });
+    if (error) {
+      setSocialStatus(error.message || "This challenge could not be cancelled.", true);
+      return;
+    }
+    stopDuelRuntime();
+    openSocialScreen();
+    setSocialStatus("Turn-based challenge cancelled.");
+  }
+
+  function resetDuelWaitingUI() {
+    elements.duelWaitingEyebrow.textContent = "DUEL ROOM";
+    elements.duelWaitingTitle.textContent = "Waiting for an opponent";
+    elements.duelWaitingDescription.textContent = "Share this code or link. The match starts automatically when both players arrive.";
+    elements.duelWaitingCode.hidden = false;
+    elements.copyDuelLinkButton.hidden = false;
+    elements.startTurnChallengeButton.hidden = true;
+    elements.declineTurnChallengeButton.hidden = true;
+    elements.backFromDuelWaitingButton.hidden = true;
+  }
+
+  function renderTurnWaitingState(data) {
+    showScreen(elements.duelWaitingScreen);
+    elements.duelWaitingEyebrow.textContent = "TURN-BASED CHALLENGE";
+    elements.duelWaitingCode.hidden = true;
+    elements.copyDuelLinkButton.hidden = true;
+    elements.startTurnChallengeButton.hidden = !data.can_start;
+    elements.declineTurnChallengeButton.hidden = !data.can_decline;
+    elements.cancelDuelButton.hidden = !data.can_cancel;
+    elements.backFromDuelWaitingButton.hidden = false;
+    void requestNotificationDispatch(`turn-waiting:${data.match_id}:${data.status}`);
+
+    const opponent = data.opponent || {};
+    if (data.can_start) {
+      elements.duelWaitingTitle.textContent = `Your turn against ${opponent.display_name || "an opponent"}`;
+      elements.duelWaitingDescription.textContent = `${formatCategory(data.category_id)} · ${getDuelDuration(data)} seconds. Once started, the server timer cannot be paused.`;
+      elements.duelWaitingStatus.textContent = `The challenge expires ${formatRelativeTime(data.response_expires_at)}. Their score stays hidden until you finish.`;
+      return;
+    }
+
+    elements.duelWaitingTitle.textContent = `Waiting for ${opponent.display_name || "your opponent"}`;
+    elements.duelWaitingDescription.textContent = data.status === "guest_turn"
+      ? "Your opponent is playing now. Your score stays private until their timer finishes."
+      : "Your score is saved privately. The result will be revealed after your opponent completes the same round.";
+    elements.duelWaitingStatus.textContent = `You scored ${Number(data.self?.score || 0).toLocaleString()} · response window ends ${formatRelativeTime(data.response_expires_at)}.`;
+  }
+
+  function getDuelDuration(data) {
+    const fromMode = Number(String(data.game_mode || "").split("_")[1]);
+    if (Number.isFinite(fromMode)) {
+      return fromMode;
+    }
+    const start = Date.parse(data.starts_at);
+    const end = Date.parse(data.ends_at);
+    return Number.isFinite(start) && Number.isFinite(end)
+      ? Math.round((end - start) / 1000)
+      : 60;
+  }
+
+  function enterDuelRoom(matchId, roomCode, isHost, matchFormat = "live") {
     stopDuelRuntime();
     state.activeDuelId = matchId;
     state.activeDuelCode = roomCode;
+    state.activeDuelFormat = matchFormat;
     state.duelQuestion = null;
     state.duelLocked = true;
     localStorage.setItem("triviaRushActiveDuel", JSON.stringify({
       matchId,
       roomCode,
-      isHost
+      isHost,
+      matchFormat
     }));
     const cleanUrl = new URL(window.location.href);
     if (cleanUrl.searchParams.has("duel")) {
       cleanUrl.searchParams.delete("duel");
       window.history.replaceState({}, "", cleanUrl);
     }
-    elements.duelWaitingCode.textContent = roomCode;
+    resetDuelWaitingUI();
+    elements.duelWaitingCode.textContent = roomCode || "";
     elements.cancelDuelButton.hidden = !isHost;
-    elements.duelWaitingStatus.textContent = isHost
-      ? "Waiting for an opponent…"
-      : "Opponent found. Preparing the match…";
+    elements.duelWaitingStatus.textContent = matchFormat === "turn_based"
+      ? "Loading challenge…"
+      : isHost
+        ? "Waiting for an opponent…"
+        : "Opponent found. Preparing the match…";
     showScreen(elements.duelWaitingScreen);
     subscribeToDuel(matchId);
     state.duelPollTimer = window.setInterval(() => void refreshDuelState(), 1000);
@@ -3524,14 +4231,16 @@
         schema: "public",
         table: "duel_matches",
         filter: `id=eq.${matchId}`
-      }, () => void refreshDuelState())
-      .on("postgres_changes", {
-        event: "*",
-        schema: "public",
-        table: "duel_live_progress",
-        filter: `match_id=eq.${matchId}`
-      }, () => void refreshDuelState())
-      .subscribe();
+      }, () => void refreshDuelState());
+    if (state.activeDuelFormat === "live") {
+      state.duelSubscription.on("postgres_changes", {
+          event: "*",
+          schema: "public",
+          table: "duel_live_progress",
+          filter: `match_id=eq.${matchId}`
+        }, () => void refreshDuelState());
+    }
+    state.duelSubscription.subscribe();
   }
 
   async function refreshDuelState() {
@@ -3540,7 +4249,10 @@
     }
 
     state.duelRefreshPending = true;
-    const { data, error } = await supabaseClient.rpc("get_duel_state", {
+    const rpcName = state.activeDuelFormat === "turn_based"
+      ? "get_turn_challenge_state"
+      : "get_duel_state";
+    const { data, error } = await supabaseClient.rpc(rpcName, {
       p_match_id: state.activeDuelId
     });
     state.duelRefreshPending = false;
@@ -3555,8 +4267,25 @@
     }
 
     state.duelState = data;
+    state.activeDuelFormat = data.match_format || state.activeDuelFormat;
     syncDuelClock(data.server_now);
     updateDuelScoreboard(data);
+
+    const turnWaiting = state.activeDuelFormat === "turn_based"
+      && (
+        data.status === "awaiting_response"
+        || (data.status === "guest_turn" && data.self?.round_status === "completed")
+      );
+    if (state.activeDuelFormat === "turn_based" && (turnWaiting || data.status === "cancelled")) {
+      if (data.status === "cancelled") {
+        stopDuelRuntime();
+        openSocialScreen();
+        setSocialStatus(`That challenge was ${data.closed_reason || "closed"}.`);
+      } else {
+        renderTurnWaitingState(data);
+      }
+      return;
+    }
 
     if (data.status === "waiting") {
       showScreen(elements.duelWaitingScreen);
@@ -3579,12 +4308,19 @@
       return;
     }
 
-    if (data.status === "countdown" || data.status === "active") {
+    const timedRound = state.activeDuelFormat === "turn_based"
+      ? ["host_turn", "guest_turn"].includes(data.status)
+        && ["countdown", "active"].includes(data.self?.round_status)
+      : data.status === "countdown" || data.status === "active";
+    if (timedRound) {
       showScreen(elements.duelGameScreen);
       startDuelTimer();
     }
 
-    if (data.status === "active" && data.question) {
+    const questionReady = state.activeDuelFormat === "turn_based"
+      ? data.self?.round_status === "active"
+      : data.status === "active";
+    if (questionReady && data.question) {
       const position = Number(data.question.position);
       if (!state.duelQuestion || state.duelQuestion.position !== position) {
         state.duelQuestion = {
@@ -3602,11 +4338,17 @@
   function updateDuelScoreboard(data) {
     const self = data.self || {};
     const opponent = data.opponent || {};
+    const hideOpponentProgress = data.match_format === "turn_based"
+      && data.status !== "completed";
     elements.duelSelfScore.textContent = Number(self.score || 0).toLocaleString();
     elements.duelSelfProgress.textContent = String(self.questions_answered || 0);
     elements.duelOpponentName.textContent = opponent.display_name || "Opponent";
-    elements.duelOpponentScore.textContent = Number(opponent.score || 0).toLocaleString();
-    elements.duelOpponentProgress.textContent = String(opponent.questions_answered || 0);
+    elements.duelOpponentScore.textContent = hideOpponentProgress
+      ? "—"
+      : Number(opponent.score || 0).toLocaleString();
+    elements.duelOpponentProgressText.textContent = hideOpponentProgress
+      ? "Hidden until finish"
+      : `${opponent.questions_answered || 0} answered`;
   }
 
   function renderDuelQuestion() {
@@ -3633,7 +4375,10 @@
   }
 
   async function submitDuelAnswer(selectedIndex) {
-    if (state.duelLocked || !state.duelQuestion || state.duelState?.status !== "active") {
+    const roundIsActive = state.activeDuelFormat === "turn_based"
+      ? state.duelState?.self?.round_status === "active"
+      : state.duelState?.status === "active";
+    if (state.duelLocked || !state.duelQuestion || !roundIsActive) {
       return;
     }
 
@@ -3649,7 +4394,10 @@
 
     let response = null;
     for (let attempt = 0; attempt < 2; attempt += 1) {
-      const { data, error } = await supabaseClient.rpc("submit_duel_answer", parameters);
+      const rpcName = state.activeDuelFormat === "turn_based"
+        ? "submit_turn_challenge_answer"
+        : "submit_duel_answer";
+      const { data, error } = await supabaseClient.rpc(rpcName, parameters);
       if (!error) {
         response = data;
         break;
@@ -3665,6 +4413,12 @@
       buttons.forEach((button) => { button.disabled = false; });
       elements.duelFeedback.textContent = "Answer not sent — please try again.";
       elements.duelFeedback.className = "feedback wrong";
+      return;
+    }
+
+    if (response.status === "round_completed" || response.status === "completed") {
+      state.duelQuestion = null;
+      await refreshDuelState();
       return;
     }
 
@@ -3705,12 +4459,15 @@
 
     const draw = () => {
       const duel = state.duelState;
-      if (!duel || !["countdown", "active"].includes(duel.status)) {
+      const roundStatus = state.activeDuelFormat === "turn_based"
+        ? duel?.self?.round_status
+        : duel?.status;
+      if (!duel || !["countdown", "active"].includes(roundStatus)) {
         state.duelTimerFrame = null;
         return;
       }
       const now = duelNowMs();
-      if (duel.status === "countdown") {
+      if (roundStatus === "countdown") {
         const count = Math.max(0, Math.ceil((Date.parse(duel.starts_at) - now) / 1000));
         elements.duelTimerValue.textContent = String(count);
         elements.duelPhaseLabel.textContent = "GET READY";
@@ -3737,9 +4494,11 @@
   }
 
   async function cancelWaitingDuel() {
-    const { error } = await supabaseClient.rpc("cancel_duel", {
-      p_match_id: state.activeDuelId
-    });
+    if (state.activeDuelFormat === "turn_based") {
+      await cancelTurnChallenge();
+      return;
+    }
+    const { error } = await supabaseClient.rpc("cancel_duel", { p_match_id: state.activeDuelId });
     if (error) {
       elements.duelWaitingStatus.textContent = error.message;
       return;
@@ -3754,6 +4513,12 @@
     const self = data.self || {};
     const opponent = data.opponent || {};
     const outcome = self.outcome;
+    if (data.match_format === "turn_based") {
+      void requestNotificationDispatch(`turn-result:${data.match_id}`);
+    }
+    elements.duelResultBadge.textContent = data.match_format === "turn_based"
+      ? "CHALLENGE COMPLETE"
+      : "DUEL COMPLETE";
     elements.duelResultTitle.textContent = outcome === "win"
       ? "You win!"
       : outcome === "draw"
@@ -3763,14 +4528,17 @@
           : "Opponent wins";
     elements.duelResultMessage.textContent = data.result_reason === "forfeit"
       ? "The match was decided because one player did not reconnect before time expired."
-      : "Final scores were validated by the server.";
+      : data.match_format === "turn_based"
+        ? "Both private rounds used the same questions, order and server-validated scoring."
+        : "Final scores were validated by the server.";
     elements.duelFinalSelfScore.textContent = Number(self.score || 0).toLocaleString();
     elements.duelFinalOpponentName.textContent = opponent.display_name || "Opponent";
     elements.duelFinalOpponentScore.textContent = Number(opponent.score || 0).toLocaleString();
     state.rematchSettings = {
       category: data.category_id,
       duration: Number(String(data.game_mode || "duel_60").split("_")[1]),
-      opponentAccount: opponent.account_number || null
+      opponentAccount: opponent.account_number || null,
+      matchFormat: data.match_format || "live"
     };
     showScreen(elements.duelResultsScreen);
   }
@@ -3794,7 +4562,9 @@
     if (clearMatch) {
       state.activeDuelId = null;
       state.activeDuelCode = null;
+      state.activeDuelFormat = "live";
       state.duelQuestion = null;
+      state.notificationDispatchKey = null;
       localStorage.removeItem("triviaRushActiveDuel");
     }
   }
@@ -3808,6 +4578,8 @@
     openSocialScreen();
     elements.duelCategorySelect.value = settings.category;
     elements.duelDurationSelect.value = String(settings.duration);
+    elements.duelFormatSelect.value = settings.matchFormat || "live";
+    updateDuelFormatUI();
     elements.duelInviteAccount.value = settings.opponentAccount ? String(settings.opponentAccount) : "";
     await createDuel();
   }

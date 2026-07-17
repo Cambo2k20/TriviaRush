@@ -6,10 +6,12 @@
   <meta name="theme-color" content="#111936">
   <meta name="description" content="A fast, voice-enabled browser trivia game built for GitHub Pages.">
   <title>Trivia Rush</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/trivia-rush-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=7">
+  <link rel="stylesheet" href="styles.css?v=8">
 </head>
 <body>
   <div class="background-orb orb-one" aria-hidden="true"></div>
@@ -23,6 +25,17 @@
       </a>
 
       <div class="header-actions">
+        <button
+          id="notificationButton"
+          class="icon-button notification-button"
+          type="button"
+          aria-label="Open notifications"
+          hidden
+        >
+          <span aria-hidden="true">🔔</span>
+          <span id="notificationBadge" class="notification-badge" hidden>0</span>
+        </button>
+
         <button
           id="duelButton"
           class="duel-button"
@@ -217,16 +230,16 @@
       <div class="social-shell">
         <header class="social-header">
           <div>
-            <div class="eyebrow">LIVE 1 VS 1</div>
+            <div class="eyebrow">1 VS 1</div>
             <h1 id="socialTitle">Friends &amp; duels</h1>
-            <p>Challenge anyone by room code or account number. Friendship is optional.</p>
+            <p>Play live together or take your turns up to 72 hours apart. Friendship is optional.</p>
           </div>
           <button id="closeSocialButton" class="secondary-button compact-button" type="button">Back</button>
         </header>
 
         <section id="duelAccountGate" class="social-card account-gate" hidden>
           <h2>Permanent account required</h2>
-          <p>Live duels, friends and match history are available after upgrading your guest account.</p>
+          <p>Duels, turn-based challenges, notifications and match history require a permanent account.</p>
           <button id="openAccountForDuelButton" class="primary-button" type="button">Create or sign in</button>
         </section>
 
@@ -236,6 +249,11 @@
           <div class="social-grid">
             <section class="social-card">
               <h2>Create a duel</h2>
+              <label for="duelFormatSelect">How to play</label>
+              <select id="duelFormatSelect">
+                <option value="live">Live — play together</option>
+                <option value="turn_based">Turn-based — play within 72 hours</option>
+              </select>
               <label for="duelCategorySelect">Category</label>
               <select id="duelCategorySelect"></select>
               <label for="duelDurationSelect">Game length</label>
@@ -244,8 +262,9 @@
                 <option value="60" selected>60 seconds</option>
                 <option value="90">90 seconds</option>
               </select>
-              <label for="duelInviteAccount">Optional account number</label>
+              <label id="duelInviteAccountLabel" for="duelInviteAccount">Optional account number</label>
               <input id="duelInviteAccount" inputmode="numeric" placeholder="Leave blank for an open room">
+              <p id="duelFormatNote" class="card-note">Live rooms start when both players arrive.</p>
               <button id="createDuelButton" class="primary-button" type="button">Create duel</button>
             </section>
 
@@ -256,6 +275,14 @@
               <button id="joinDuelButton" class="primary-button" type="button">Join duel</button>
               <h3>Direct challenges</h3>
               <div id="duelInvitations" class="social-list"></div>
+            </section>
+
+            <section class="social-card history-card">
+              <h2>Turn-based challenges</h2>
+              <p class="card-note">The challenger plays first. Scores stay hidden until both turns are complete.</p>
+              <div id="turnChallenges" class="social-list"></div>
+              <h3>Recent activity</h3>
+              <div id="turnChallengeActivity" class="social-list"></div>
             </section>
 
             <section class="social-card">
@@ -281,7 +308,29 @@
             <section class="social-card history-card">
               <h2>Duel leaderboard</h2>
               <p class="card-note">Ranked by wins, then win rate after five matches, then total duel score.</p>
+              <div class="compact-filter" role="group" aria-label="Multiplayer leaderboard format">
+                <button class="row-action active" type="button" data-duel-leaderboard-format="all" aria-pressed="true">All</button>
+                <button class="row-action" type="button" data-duel-leaderboard-format="live" aria-pressed="false">Live</button>
+                <button class="row-action" type="button" data-duel-leaderboard-format="turn_based" aria-pressed="false">Turn-based</button>
+              </div>
               <div id="duelLeaderboard" class="social-list"></div>
+            </section>
+
+            <section id="notificationCard" class="social-card history-card">
+              <div class="card-title-row">
+                <h2>Notifications</h2>
+                <button id="markNotificationsReadButton" class="row-action" type="button">Mark all read</button>
+              </div>
+              <div id="notificationList" class="social-list"></div>
+              <h3>External alert settings</h3>
+              <p class="card-note">In-app notifications always remain available. These controls choose which events may also use push or email.</p>
+              <div class="notification-settings">
+                <label><input id="challengeNotificationsToggle" type="checkbox" checked> Duel invitations and results</label>
+                <label><input id="friendNotificationsToggle" type="checkbox" checked> Friend requests</label>
+                <label><input id="emailNotificationsToggle" type="checkbox"> Email fallback</label>
+                <button id="pushNotificationsButton" class="secondary-button compact-button" type="button">Enable phone push</button>
+              </div>
+              <p id="notificationStatus" class="card-note" role="status" aria-live="polite"></p>
             </section>
           </div>
         </div>
@@ -290,13 +339,16 @@
 
     <section id="duelWaitingScreen" class="screen centered-screen" aria-labelledby="duelWaitingTitle">
       <div class="duel-waiting-card">
-        <div class="eyebrow">DUEL ROOM</div>
+        <div id="duelWaitingEyebrow" class="eyebrow">DUEL ROOM</div>
         <h1 id="duelWaitingTitle">Waiting for an opponent</h1>
-        <p>Share this code or link. The match starts automatically when both players arrive.</p>
+        <p id="duelWaitingDescription">Share this code or link. The match starts automatically when both players arrive.</p>
         <strong id="duelWaitingCode" class="room-code">--------</strong>
         <div class="duel-waiting-actions">
           <button id="copyDuelLinkButton" class="primary-button" type="button">Copy invite link</button>
+          <button id="startTurnChallengeButton" class="primary-button" type="button" hidden>Start my turn</button>
+          <button id="declineTurnChallengeButton" class="secondary-button" type="button" hidden>Decline</button>
           <button id="cancelDuelButton" class="secondary-button" type="button">Cancel room</button>
+          <button id="backFromDuelWaitingButton" class="secondary-button" type="button" hidden>Back to challenges</button>
         </div>
         <p id="duelWaitingStatus" class="social-status" role="status" aria-live="polite"></p>
       </div>
@@ -316,7 +368,7 @@
         <div class="duel-player opponent">
           <span id="duelOpponentName">Opponent</span>
           <strong id="duelOpponentScore">0</strong>
-          <small><span id="duelOpponentProgress">0</span> answered</small>
+          <small id="duelOpponentProgressText">0 answered</small>
         </div>
       </div>
 
@@ -336,7 +388,7 @@
 
     <section id="duelResultsScreen" class="screen centered-screen" aria-labelledby="duelResultTitle">
       <div class="result-card">
-        <div class="result-badge">DUEL COMPLETE</div>
+        <div id="duelResultBadge" class="result-badge">DUEL COMPLETE</div>
         <h1 id="duelResultTitle">Result</h1>
         <p id="duelResultMessage"></p>
         <div class="duel-final-scores">
@@ -801,6 +853,6 @@
     </ul>
   </dialog>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="app.js?v=14"></script>
+  <script src="app.js?v=15"></script>
 </body>
 </html>
