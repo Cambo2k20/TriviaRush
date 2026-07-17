@@ -48,7 +48,7 @@ const assert = (name, condition) => {
 assert("signed-out users can see the tab content", window.document.querySelector("#socialContent")?.hidden === false);
 assert("the permanent-account explanation is moved into a dialog", Boolean(window.document.querySelector("#socialAccountPromptDialog #duelAccountGate")));
 assert("the Play friends header state is exposed on the body", window.document.body.classList.contains("social-page-open"));
-assert("the guard stylesheet is loaded", window.document.querySelector('link[data-social-auth-guard="true"]')?.getAttribute("href") === "social-auth-guard.css?v=1");
+assert("the guard stylesheet is loaded", window.document.querySelector('link[data-social-auth-guard="true"]')?.getAttribute("href")?.endsWith("/social-auth-guard.css?v=1"));
 assert("the social page heading remains centred", guardStyles.includes(".social-tabs-redesign .social-page-heading") && guardStyles.includes("justify-self: center"));
 assert("the mobile header uses fixed icon columns", guardStyles.includes("grid-auto-columns: 42px") && guardStyles.includes("body.social-page-open .header-actions"));
 assert("mobile navigation labels collapse without losing buttons", guardStyles.includes(".duel-button span:last-child") && guardStyles.includes(".leaderboard-button span:last-child") && guardStyles.includes(".account-button span:last-child"));
