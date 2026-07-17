@@ -44,6 +44,10 @@ function show(id) {
   });
 }
 
+function flush() {
+  return new Promise((resolve) => window.setTimeout(resolve, 0));
+}
+
 document.querySelector("#duelButton").addEventListener("click", () => {
   onlineClicks += 1;
   show("socialScreen");
@@ -55,35 +59,41 @@ document.querySelector("#closeLeaderboardButton").addEventListener("click", () =
 
 window.eval(runtime);
 document.dispatchEvent(new window.Event("DOMContentLoaded"));
-await new Promise((resolve) => window.setTimeout(resolve, 0));
+await flush();
 
 const modeNavigation = document.querySelector("#modeNavigation");
 const soloButton = document.querySelector("#soloModeButton");
 const onlineButton = document.querySelector("#duelButton");
+const soloSelectedAtStartup = soloButton?.classList.contains("is-selected") && soloButton.getAttribute("aria-pressed") === "true";
+
+onlineButton.click();
+await flush();
+const existingOnlineHandlerWorked = onlineClicks === 1 && document.querySelector("#socialScreen").classList.contains("active");
+const onlineSelectedOnSocial = onlineButton.classList.contains("is-selected") && !soloButton.classList.contains("is-selected");
+
+soloButton.click();
+await flush();
+const soloReturnedThroughExistingBack = document.querySelector("#startScreen").classList.contains("active") && soloButton.classList.contains("is-selected");
+
+show("leaderboardScreen");
+await flush();
+const leaderboardPreservedMode = soloButton.classList.contains("is-selected");
+
+show("gameScreen");
+await flush();
+const gameLockedModeSwitch = soloButton.disabled === true;
 
 const checks = [
   ["one shared mode navigation is added", Boolean(modeNavigation) && document.querySelectorAll("#modeNavigation").length === 1],
   ["the existing Online button is reused rather than duplicated", modeNavigation?.contains(onlineButton) && document.querySelectorAll("#duelButton").length === 1],
-  ["Solo is selected on startup", soloButton?.classList.contains("is-selected") && soloButton.getAttribute("aria-pressed") === "true"],
+  ["Solo is selected on startup", soloSelectedAtStartup],
   ["the existing Play friends control is relabelled Online", document.querySelector("#duelButtonText")?.textContent === "Online"],
-  ["Online still uses the existing click handler", (() => {
-    onlineButton.click();
-    return onlineClicks === 1 && document.querySelector("#socialScreen").classList.contains("active");
-  })()],
-  ["Online remains highlighted across the Online screen", onlineButton.classList.contains("is-selected") && !soloButton.classList.contains("is-selected")],
-  ["Solo returns through the existing social Back handler", (() => {
-    soloButton.click();
-    return document.querySelector("#startScreen").classList.contains("active") && soloButton.classList.contains("is-selected");
-  })()],
+  ["Online still uses the existing click handler", existingOnlineHandlerWorked],
+  ["Online remains highlighted across the Online screen", onlineSelectedOnSocial],
+  ["Solo returns through the existing social Back handler", soloReturnedThroughExistingBack],
   ["Solo and Online category selectors remain separate", document.querySelector("#categorySelect") !== document.querySelector("#duelCategorySelect")],
-  ["leaderboard does not replace the selected game mode", (() => {
-    show("leaderboardScreen");
-    return soloButton.classList.contains("is-selected");
-  })()],
-  ["mode switching is locked while a game is active", (() => {
-    show("gameScreen");
-    return soloButton.disabled === true;
-  })()],
+  ["leaderboard does not replace the selected game mode", leaderboardPreservedMode],
+  ["mode switching is locked while a game is active", gameLockedModeSwitch],
   ["mobile utility controls use the existing buttons", ["notificationButton", "leaderboardButton", "accountButton", "soundToggle"].every((id) => document.querySelector(`#${id}`)?.classList.contains("mobile-utility-button"))],
   ["desktop navigation includes a selected mode treatment", styles.includes(".mode-nav-button.is-selected") && styles.includes("#duelButton.is-selected")],
   ["mobile header contains only mode navigation controls", styles.includes(".topbar > .brand") && styles.includes("display: none !important")],
