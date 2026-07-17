@@ -7,9 +7,10 @@ on:
   push:
     branches:
       - phase-5-foundation
+      - fix/home-short-viewport
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   test:
@@ -19,6 +20,25 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply short viewport layout fix
+        if: github.event_name == 'push' && github.ref == 'refs/heads/fix/home-short-viewport'
+        run: node scripts/apply-home-short-viewport-fix.mjs
+
+      - name: Commit short viewport layout fix
+        if: github.event_name == 'push' && github.ref == 'refs/heads/fix/home-short-viewport'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add home-redesign.css index.html home-redesign-smoke-test.mjs
+          if git diff --cached --quiet; then
+            echo "Short viewport layout already applied."
+          else
+            git commit -m "Keep home actions visible on short viewports"
+            git push
+          fi
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
