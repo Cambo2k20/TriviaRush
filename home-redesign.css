@@ -623,6 +623,13 @@ body.home-redesign-active .header-actions > button:hover {
   }
 }
 
+@media (min-width: 921px) {
+  .home-category-browser {
+    align-self: center;
+    transform: translateY(30px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .home-category-card,
   .home-switch-track,
