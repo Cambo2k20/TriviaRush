@@ -1,0 +1,63 @@
+name: Deploy notification function
+
+on:
+  workflow_dispatch:
+    inputs:
+      initialise_vapid:
+        description: Generate and install VAPID keys (run once only)
+        required: true
+        type: boolean
+        default: false
+      vapid_contact_email:
+        description: Contact email used in the VAPID subject
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      PROJECT_REF: kgdnuzasbeavpqharbpf
+      SITE_URL: https://cambo2k20.github.io/TriviaRush/
+      DISPATCH_SECRET: ${{ secrets.NOTIFICATION_DISPATCH_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check deployment secrets
+        shell: bash
+        run: |
+          test -n "$SUPABASE_ACCESS_TOKEN" || { echo "Missing SUPABASE_ACCESS_TOKEN repository secret"; exit 1; }
+          test -n "$DISPATCH_SECRET" || { echo "Missing NOTIFICATION_DISPATCH_SECRET repository secret"; exit 1; }
+
+      - name: Initialise private push keys
+        if: ${{ inputs.initialise_vapid }}
+        shell: bash
+        env:
+          VAPID_EMAIL: ${{ inputs.vapid_contact_email }}
+        run: |
+          node scripts/generate-vapid-keys.mjs > /tmp/vapid.json
+          VAPID_PUBLIC_KEY=$(node -e "const k=require('/tmp/vapid.json'); process.stdout.write(k.VAPID_PUBLIC_KEY)")
+          VAPID_PRIVATE_KEY=$(node -e "const k=require('/tmp/vapid.json'); process.stdout.write(k.VAPID_PRIVATE_KEY)")
+          echo "::add-mask::$VAPID_PRIVATE_KEY"
+          npx --yes supabase@2.109.1 secrets set \
+            --project-ref "$PROJECT_REF" \
+            VAPID_PUBLIC_KEY="$VAPID_PUBLIC_KEY" \
+            VAPID_PRIVATE_KEY="$VAPID_PRIVATE_KEY" \
+            VAPID_SUBJECT="mailto:$VAPID_EMAIL" \
+            SITE_URL="$SITE_URL" \
+            NOTIFICATION_DISPATCH_SECRET="$DISPATCH_SECRET"
+
+      - name: Deploy dispatch-notifications
+        shell: bash
+        run: |
+          npx --yes supabase@2.109.1 functions deploy dispatch-notifications \
+            --project-ref "$PROJECT_REF" \
+            --no-verify-jwt

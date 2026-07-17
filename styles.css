@@ -136,6 +136,27 @@ select:focus-visible {
   transition: transform 160ms ease, background 160ms ease;
 }
 
+.notification-button {
+  position: relative;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #111936;
+  border-radius: 999px;
+  background: #ff4f9b;
+  color: #fff;
+  font: 800 0.7rem/1 Inter, sans-serif;
+  box-shadow: 0 4px 14px rgba(255, 79, 155, 0.42);
+}
+
 .icon-button:hover {
   transform: translateY(-2px);
   background: rgba(255, 255, 255, 0.12);
@@ -1446,6 +1467,53 @@ dialog ol {
   background: rgba(255,255,255,0.035);
 }
 
+.social-row.unread {
+  border-color: rgba(62, 231, 219, 0.68);
+  background: linear-gradient(135deg, rgba(62, 231, 219, 0.12), rgba(124, 131, 255, 0.1));
+  box-shadow: inset 4px 0 0 #3ee7db;
+}
+
+.compact-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.compact-filter .row-action.active {
+  border-color: #3ee7db;
+  background: rgba(62, 231, 219, 0.15);
+  color: #dffffb;
+}
+
+.notification-settings {
+  display: grid;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.notification-settings label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.notification-settings input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #3ee7db;
+}
+
+.notification-settings .compact-button {
+  justify-self: start;
+}
+
+.card-note.error {
+  color: var(--red);
+}
+
 .social-row-copy {
   min-width: 0;
   display: grid;
@@ -1948,6 +2016,10 @@ dialog ol {
 }
 
 @media (max-width: 580px) {
+  .brand > span:last-child {
+    display: none;
+  }
+
   #leaderboardButtonText {
     display: none;
   }

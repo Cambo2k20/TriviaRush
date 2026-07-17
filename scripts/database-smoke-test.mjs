@@ -16,6 +16,7 @@ function assert(condition, message) {
 const baseline = [
   "create role anon nologin;",
   "create role authenticated nologin;",
+  "create role service_role nologin;",
   "create schema auth;",
   "create schema trivia_private;",
   "create table auth.users (id uuid primary key, is_anonymous boolean not null);",
@@ -235,6 +236,7 @@ assert(
 await db.exec(readFileSync(resolve(ROOT, "phase-4b-multiplayer.sql"), "utf8"));
 await db.exec(readFileSync(resolve(ROOT, "phase-5-category-platform.sql"), "utf8"));
 await db.exec(readFileSync(resolve(ROOT, "phase-5-question-seed.sql"), "utf8"));
+await db.exec(readFileSync(resolve(ROOT, "phase-5-turn-based-challenges.sql"), "utf8"));
 
 const phaseFiveCategoryResult = await db.query(
   "select * from public.get_question_categories() order by sort_order"
@@ -421,6 +423,200 @@ assert(forfeitResult.rows[0].payload.self.outcome === "win", "Connected opponent
 const duelLeaderboardResult = await db.query("select * from public.get_duel_leaderboard(20)");
 assert(duelLeaderboardResult.rows.length === 2, "Duel leaderboard must remain separate and include both players.");
 
+// Turn-based challenges use the same questions and canonical session history,
+// but each player receives an independent server clock and cannot inspect the
+// other player's target score before both rounds are complete.
+await db.query("select set_config('request.jwt.claim.sub', $1, false)", [PLAYER_TWO_ID]);
+await db.query(
+  "select public.register_push_subscription($1, $2, $3, $4)",
+  [
+    "https://push.example.test/subscriptions/player-two",
+    "B".repeat(88),
+    "A".repeat(24),
+    "Trivia Rush smoke test"
+  ]
+);
+await db.query(
+  "select public.update_notification_preferences(true, false, true, true)"
+);
+
+await db.query("select set_config('request.jwt.claim.sub', $1, false)", [PLAYER_ID]);
+const turnCreateResult = await db.query(
+  "select public.create_turn_challenge('science', 30, 2) as payload"
+);
+const turnChallenge = turnCreateResult.rows[0].payload;
+assert(turnChallenge.match_format === "turn_based", "Turn-based match format must be explicit.");
+assert(turnChallenge.status === "host_turn", "The challenger must play first.");
+
+await db.query(
+  [
+    "update public.duel_players",
+    "set round_status = 'active',",
+    "    round_starts_at = clock_timestamp() - interval '1 second',",
+    "    round_ends_at = clock_timestamp() + interval '30 seconds',",
+    "    current_question_started_at = clock_timestamp() - interval '200 milliseconds'",
+    "where match_id = $1 and player_role = 'host'"
+  ].join("\n"),
+  [turnChallenge.match_id]
+);
+
+const hostTurnStateResult = await db.query(
+  "select public.get_turn_challenge_state($1) as payload",
+  [turnChallenge.match_id]
+);
+const hostTurnState = hostTurnStateResult.rows[0].payload;
+assert(hostTurnState.question, "The challenger must receive a server-issued question.");
+assert(!Object.hasOwn(hostTurnState.question, "correct_index"), "Turn-based answer key leaked.");
+
+await db.query("select set_config('request.jwt.claim.sub', $1, false)", [PLAYER_TWO_ID]);
+const waitingGuestStateResult = await db.query(
+  "select public.get_turn_challenge_state($1) as payload",
+  [turnChallenge.match_id]
+);
+assert(
+  waitingGuestStateResult.rows[0].payload.opponent.score === null,
+  "Invited player must not see the challenger's live target score."
+);
+
+await db.query("select set_config('request.jwt.claim.sub', $1, false)", [PLAYER_ID]);
+const turnCorrectLookup = await db.query(
+  "select correct_index from public.trivia_questions where id = $1",
+  [hostTurnState.question.question_id]
+);
+const turnHostAnswerResult = await db.query(
+  "select public.submit_turn_challenge_answer($1, 1, $2, $3) as payload",
+  [
+    turnChallenge.match_id,
+    Number(turnCorrectLookup.rows[0].correct_index),
+    "77777777-7777-4777-8777-777777777777"
+  ]
+);
+assert(turnHostAnswerResult.rows[0].payload.is_correct === true, "Host turn answer must be validated.");
+
+await db.query(
+  "update public.duel_players set round_ends_at = clock_timestamp() - interval '1 ms' where match_id = $1 and player_role = 'host'",
+  [turnChallenge.match_id]
+);
+const hostFinishedResult = await db.query(
+  "select public.get_turn_challenge_state($1) as payload",
+  [turnChallenge.match_id]
+);
+assert(hostFinishedResult.rows[0].payload.status === "awaiting_response", "Host completion must open the response window.");
+
+await db.query("select set_config('request.jwt.claim.sub', $1, false)", [PLAYER_TWO_ID]);
+const turnNotificationResult = await db.query("select * from public.get_notifications(30)");
+assert(
+  turnNotificationResult.rows.some((row) => row.notification_type === "turn_challenge_ready"),
+  "Invited player must receive an in-app challenge notification."
+);
+const queuedPushResult = await db.query(
+  "select count(*)::integer as count from public.notification_deliveries where channel = 'push'"
+);
+assert(queuedPushResult.rows[0].count >= 1, "Opted-in device must receive a push outbox delivery.");
+
+const claimedDeliveryResult = await db.query(
+  "select * from public.claim_notification_deliveries(10) where channel = 'push' limit 1"
+);
+assert(claimedDeliveryResult.rows.length === 1, "The service worker must be able to claim a push delivery.");
+assert(
+  claimedDeliveryResult.rows[0].expires_at,
+  "Claimed challenge deliveries must carry their expiry into Web Push TTL handling."
+);
+await db.query(
+  "select public.complete_notification_delivery($1, false, 'expired', true, false)",
+  [claimedDeliveryResult.rows[0].delivery_id]
+);
+const healthySubscriptionResult = await db.query(
+  "select is_active from public.push_subscriptions where id = $1",
+  [claimedDeliveryResult.rows[0].push_subscription_id]
+);
+assert(
+  healthySubscriptionResult.rows[0].is_active === true,
+  "An expired notification must not disable a healthy device subscription."
+);
+await db.query(
+  "select public.complete_notification_delivery($1, false, 'gone', true, true)",
+  [claimedDeliveryResult.rows[0].delivery_id]
+);
+const invalidSubscriptionResult = await db.query(
+  "select is_active from public.push_subscriptions where id = $1",
+  [claimedDeliveryResult.rows[0].push_subscription_id]
+);
+assert(
+  invalidSubscriptionResult.rows[0].is_active === false,
+  "An explicitly invalid push endpoint must be disabled."
+);
+
+const turnDashboardResult = await db.query("select public.get_turn_challenges(30) as payload");
+assert(turnDashboardResult.rows[0].payload.active[0].can_start === true, "Invited challenge must be playable later.");
+await db.query("select public.start_turn_challenge($1)", [turnChallenge.match_id]);
+await db.query(
+  [
+    "update public.duel_players",
+    "set round_status = 'active',",
+    "    round_starts_at = clock_timestamp() - interval '1 second',",
+    "    round_ends_at = clock_timestamp() + interval '30 seconds',",
+    "    current_question_started_at = clock_timestamp() - interval '200 milliseconds'",
+    "where match_id = $1 and player_role = 'guest'"
+  ].join("\n"),
+  [turnChallenge.match_id]
+);
+
+const guestTurnStateResult = await db.query(
+  "select public.get_turn_challenge_state($1) as payload",
+  [turnChallenge.match_id]
+);
+const guestTurnState = guestTurnStateResult.rows[0].payload;
+assert(
+  guestTurnState.question.question_id === hostTurnState.question.question_id,
+  "Turn-based players must receive the same questions in the same order."
+);
+assert(guestTurnState.opponent.score === null, "Host score must remain hidden during the response round.");
+
+const turnGuestAnswerResult = await db.query(
+  "select public.submit_turn_challenge_answer($1, 1, $2, $3) as payload",
+  [
+    turnChallenge.match_id,
+    Number(turnCorrectLookup.rows[0].correct_index),
+    "88888888-8888-4888-8888-888888888888"
+  ]
+);
+assert(turnGuestAnswerResult.rows[0].payload.is_correct === true, "Guest turn answer must be validated.");
+
+await db.query(
+  "update public.duel_players set round_ends_at = clock_timestamp() - interval '1 ms' where match_id = $1 and player_role = 'guest'",
+  [turnChallenge.match_id]
+);
+const completedTurnResult = await db.query(
+  "select public.get_turn_challenge_state($1) as payload",
+  [turnChallenge.match_id]
+);
+assert(completedTurnResult.rows[0].payload.status === "completed", "Second round must finalise the challenge.");
+assert(
+  completedTurnResult.rows[0].payload.opponent.score !== null,
+  "Opponent score must be revealed after both rounds finish."
+);
+
+const turnSessionsResult = await db.query(
+  "select * from public.game_sessions where duel_match_id = $1",
+  [turnChallenge.match_id]
+);
+assert(turnSessionsResult.rows.length === 2, "Completed turn-based challenge must create two canonical sessions.");
+
+const turnHistoryResult = await db.query(
+  "select * from public.get_duel_match_history_v2(1, 'turn_based', 30)"
+);
+assert(turnHistoryResult.rows.length === 1, "Turn-based history filter must return the completed challenge.");
+assert(turnHistoryResult.rows[0].match_format === "turn_based", "History must label the match format.");
+
+const turnLeaderboardResult = await db.query(
+  "select * from public.get_duel_leaderboard_v2('turn_based', 20)"
+);
+assert(turnLeaderboardResult.rows.length === 2, "Turn-based leaderboard filter must include both players.");
+
+// Keep the production verification file executable as the schema evolves.
+await db.exec(readFileSync(resolve(ROOT, "phase-5-turn-based-verification.sql"), "utf8"));
+
 console.log(
   JSON.stringify(
     {
@@ -439,7 +635,14 @@ console.log(
       solo_stats_isolated: true,
       draw_rule: true,
       reconnect_forfeit_rule: true,
-      duel_leaderboard_players: duelLeaderboardResult.rows.length
+      duel_leaderboard_players: duelLeaderboardResult.rows.length,
+      turn_based_same_questions: true,
+      hidden_target_score: true,
+      turn_based_sessions: turnSessionsResult.rows.length,
+      in_app_notifications: true,
+      push_outbox: true,
+      notification_expiry_preserves_subscription: true,
+      invalid_push_endpoint_disabled: true
     },
     null,
     2

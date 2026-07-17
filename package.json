@@ -5,6 +5,7 @@
   "scripts": {
     "build:questions": "node scripts/build-question-seed.mjs --write",
     "build:phase5-mobile-sql": "node scripts/build-phase-5-mobile-sql-copy.mjs",
+    "generate:vapid": "node scripts/generate-vapid-keys.mjs",
     "test:questions": "node scripts/build-question-seed.mjs",
     "test:database": "node scripts/database-smoke-test.mjs",
     "test:frontend": "node smoke-test.mjs",

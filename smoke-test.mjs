@@ -39,11 +39,11 @@ window.supabase = {
     auth: {
       onAuthStateChange: () => ({ data: { subscription: { unsubscribe() {} } } }),
       getSession: async () => ({
-        data: { session: { user: { id: "user-1", is_anonymous: false, user_metadata: { password_setup_complete: true } } } },
+        data: { session: { user: { id: "user-1", email: "tester@example.com", is_anonymous: false, user_metadata: { password_setup_complete: true } } } },
         error: null
       }),
       signInAnonymously: async () => ({
-        data: { session: { user: { id: "user-1", is_anonymous: false, user_metadata: { password_setup_complete: true } } } },
+        data: { session: { user: { id: "user-1", email: "tester@example.com", is_anonymous: false, user_metadata: { password_setup_complete: true } } } },
         error: null
       })
     },
@@ -73,6 +73,22 @@ window.supabase = {
           error: null
         };
       }
+      if (name === "create_turn_challenge") {
+        return {
+          data: {
+            match_id: "99999999-9999-4999-8999-999999999999",
+            match_format: "turn_based",
+            status: "host_turn",
+            game_mode: "duel_60",
+            duration_seconds: 60,
+            category_id: "science",
+            starts_at: new Date(Date.now() + 5000).toISOString(),
+            ends_at: new Date(Date.now() + 65000).toISOString(),
+            server_now: new Date().toISOString()
+          },
+          error: null
+        };
+      }
       if (name === "get_duel_state") {
         return {
           data: {
@@ -87,6 +103,41 @@ window.supabase = {
           },
           error: null
         };
+      }
+      if (name === "get_turn_challenge_state") {
+        return {
+          data: {
+            match_id: "99999999-9999-4999-8999-999999999999",
+            match_format: "turn_based",
+            status: "host_turn",
+            category_id: "science",
+            game_mode: "duel_60",
+            server_now: new Date().toISOString(),
+            starts_at: new Date(Date.now() + 5000).toISOString(),
+            ends_at: new Date(Date.now() + 65000).toISOString(),
+            self: { round_status: "countdown", score: 0, questions_answered: 0 },
+            opponent: { display_name: "Opponent", score: null, questions_answered: null }
+          },
+          error: null
+        };
+      }
+      if (name === "get_turn_challenges") {
+        return { data: { active: [], recent_closed: [] }, error: null };
+      }
+      if (name === "get_notification_preferences") {
+        return {
+          data: [{
+            push_enabled: false,
+            email_enabled: false,
+            challenge_notifications: true,
+            friend_request_notifications: true,
+            active_push_subscriptions: 0
+          }],
+          error: null
+        };
+      }
+      if (name === "get_unread_notification_count") {
+        return { data: 2, error: null };
       }
       return { data: [], error: null };
     }
@@ -187,8 +238,11 @@ assert("friends and duels screen opens", window.document.querySelector("#socialS
 assert("permanent account sees social content", window.document.querySelector("#socialContent")?.hidden === false);
 assert("social dashboard RPC called", rpcCalls.some((c) => c.name === "get_social_dashboard"));
 assert("direct challenge RPC called", rpcCalls.some((c) => c.name === "get_duel_invitations"));
-assert("private match history RPC called", rpcCalls.some((c) => c.name === "get_duel_match_history"));
-assert("separate duel leaderboard RPC called", rpcCalls.some((c) => c.name === "get_duel_leaderboard"));
+assert("private match history v2 RPC called", rpcCalls.some((c) => c.name === "get_duel_match_history_v2"));
+assert("filtered duel leaderboard RPC called", rpcCalls.some((c) => c.name === "get_duel_leaderboard_v2"));
+assert("turn-based challenge dashboard RPC called", rpcCalls.some((c) => c.name === "get_turn_challenges"));
+assert("in-app notifications RPC called", rpcCalls.some((c) => c.name === "get_notifications"));
+assert("notification preferences RPC called", rpcCalls.some((c) => c.name === "get_notification_preferences"));
 assert("duel category selector includes gaming", [...window.document.querySelectorAll("#duelCategorySelect option")].some((option) => option.value === "gaming"));
 assert("live duel state RPC implemented", appJs.includes('"get_duel_state"'));
 assert("authoritative duel answer RPC implemented", appJs.includes('"submit_duel_answer"'));
@@ -205,4 +259,25 @@ window.document.querySelector("#cancelDuelButton").click();
 await new Promise((resolve) => setTimeout(resolve, 20));
 assert("waiting room cancellation RPC used", rpcCalls.some((call) => call.name === "cancel_duel"));
 
+// 6. Turn-based creation requires a named opponent and starts a private host round.
+window.document.querySelector("#duelFormatSelect").value = "turn_based";
+window.document.querySelector("#duelFormatSelect").dispatchEvent(new window.Event("change"));
+window.document.querySelector("#duelCategorySelect").value = "science";
+window.document.querySelector("#duelInviteAccount").value = "2";
+window.document.querySelector("#createDuelButton").click();
+await new Promise((resolve) => setTimeout(resolve, 30));
+const createTurnCall = rpcCalls.find((call) => call.name === "create_turn_challenge");
+assert("turn-based creator uses dedicated authoritative RPC", Boolean(createTurnCall));
+assert("turn-based creator sends opponent account", createTurnCall?.params?.p_invited_account_number === 2);
+assert("turn-based host round opens", window.document.querySelector("#duelGameScreen")?.classList.contains("active"));
+assert("turn-based answer RPC implemented", appJs.includes('"submit_turn_challenge_answer"'));
+assert("target score hiding implemented", appJs.includes("Hidden until finish"));
+
+// 7. Installable web app and notification controls ship with the UI.
+assert("web app manifest linked", html.includes('rel="manifest"'));
+assert("notification bell is visible for permanent accounts", window.document.querySelector("#notificationButton")?.hidden === false);
+assert("unread notification badge updates", window.document.querySelector("#notificationBadge")?.textContent === "2");
+assert("push opt-in control exists", Boolean(window.document.querySelector("#pushNotificationsButton")));
+
 console.log(results.join("\n"));
+window.close();
