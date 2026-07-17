@@ -22,11 +22,11 @@ same controlled RPCs serve solo games, duels and category filters.
 - The frontend update accepts database-controlled category counts instead of
   requiring exactly seven. It still works against the current seven-category
   production database.
-- `phase-5-category-platform.sql` initially inserts the three new categories as
-  inactive, so running it alone does not expose an empty category.
-- `phase-5-question-seed.sql` inserts and validates all questions in one
-  transaction. It activates the new categories only after every category has
-  exactly 100 active questions.
+- `supabase/sql/phase-5-category-platform.sql` initially inserts the three new
+  categories as inactive, so running it alone does not expose an empty category.
+- `supabase/sql/phase-5-question-seed.sql` inserts and validates all questions in
+  one transaction. It activates the new categories only after every category
+  has exactly 100 active questions.
 - Existing question keys are updated in place during taxonomy moves. History
   and future progression backfill retain the same identities.
 - The rollback hides the three new categories and their questions without
@@ -45,7 +45,7 @@ categories because the database has not changed yet.
 In **Supabase → SQL Editor → New query**, run the complete contents of:
 
 ```text
-phase-5-category-platform.sql
+supabase/sql/phase-5-category-platform.sql
 ```
 
 This adds safe card metadata, replaces the controlled category RPC and stages
@@ -57,7 +57,7 @@ categories after this step.
 In a fresh SQL Editor query, run:
 
 ```text
-phase-5-question-seed.sql
+supabase/sql/phase-5-question-seed.sql
 ```
 
 The script is generated and idempotent. It upserts all 1,000 stable keys,
@@ -69,7 +69,7 @@ Any error rolls back the complete seed and leaves the staged categories hidden.
 In a fresh query, run:
 
 ```text
-phase-5-category-verification.sql
+supabase/sql/phase-5-category-verification.sql
 ```
 
 Confirm:
@@ -99,9 +99,9 @@ Confirm:
 If the new content must be hidden, run:
 
 ```text
-phase-5-category-rollback.sql
+supabase/sql/phase-5-category-rollback.sql
 ```
 
 It disables the three new category banks and checks that the remaining active
 surface is seven categories and 700 questions. It deletes nothing. Rerunning
-`phase-5-question-seed.sql` restores the ten-category bank.
+`supabase/sql/phase-5-question-seed.sql` restores the ten-category bank.
