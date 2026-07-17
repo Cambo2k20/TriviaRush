@@ -52,7 +52,7 @@ where n.nspname = 'public'
 order by c.relname;
 
 select
-  role_name,
+  grantee as role_name,
   table_name,
   privilege_type
 from information_schema.role_table_grants
@@ -62,8 +62,8 @@ where table_schema = 'public'
     'player_global_progress',
     'global_xp_awards'
   )
-  and role_name in ('anon', 'authenticated')
-order by role_name, table_name, privilege_type;
+  and grantee in ('anon', 'authenticated')
+order by grantee, table_name, privilege_type;
 
 select
   role_name,
