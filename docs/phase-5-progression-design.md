@@ -156,7 +156,8 @@ Every milestone grants two permanent rewards:
 | 25 | Diamond | `diamond` |
 
 Badge assets are assembled from one category icon plus one shared tier frame.
-This produces 35 distinct category badges from 12 reusable visual components.
+This produces 50 distinct category badges from 15 reusable visual components:
+ten category icons and five shared milestone frames.
 
 ### 6.2 Titles
 
@@ -361,7 +362,7 @@ sequential answers. Reward ownership uniqueness prevents duplicate unlocks.
 
 Authenticated and anonymous players with a profile receive:
 
-- seven category progress records;
+- ten category progress records;
 - current level and XP;
 - current and next level thresholds;
 - answered/correct totals and accuracy;
@@ -456,7 +457,7 @@ Keep the existing category selector and fast start action. Add a compact
 - the player's three highest category levels;
 - a link to the full profile/progression screen.
 
-Do not turn the home screen into seven large progress cards on small phones.
+Do not turn the home screen into ten large progress cards on small phones.
 
 ### 11.2 Results screen
 
@@ -488,7 +489,7 @@ colour alone.
 ### 11.4 Social and leaderboard surfaces
 
 Show the equipped title beneath a permanent player's display name. Avoid
-placing seven levels in every row; full mastery belongs on the profile.
+placing ten levels in every row; full mastery belongs on the profile.
 
 ## 12. Frontend structure
 
@@ -610,7 +611,7 @@ Phase 5 is complete only when:
 
 - every trusted answer updates exactly one real category track;
 - retries cannot duplicate XP or rewards;
-- all seven categories level independently;
+- all ten categories level independently;
 - guests keep progress through upgrade;
 - badges and titles unlock at levels 5/10/15/20/25;
 - a permanent player can equip one owned title;

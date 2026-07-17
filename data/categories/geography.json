@@ -1,104 +1,902 @@
 [
-  ["easy","What is the capital of Canada?","Ottawa","Toronto","Vancouver","undata"],
-  ["easy","What is the capital of Australia?","Canberra","Sydney","Melbourne","undata"],
-  ["easy","What is the capital of New Zealand?","Wellington","Auckland","Christchurch","undata"],
-  ["easy","What is the capital of Japan?","Tokyo","Osaka","Kyoto","undata"],
-  ["easy","What is the capital of Brazil?","Brasília","Rio de Janeiro","São Paulo","undata"],
-  ["easy","What is the capital of Egypt?","Cairo","Alexandria","Giza","undata"],
-  ["easy","What is the capital of Kenya?","Nairobi","Mombasa","Kampala","undata"],
-  ["easy","What is the capital of India?","New Delhi","Mumbai","Kolkata","undata"],
-  ["easy","What is the capital of Argentina?","Buenos Aires","Córdoba","Rosario","undata"],
-  ["easy","What is the capital of Norway?","Oslo","Bergen","Stockholm","undata"],
-  ["easy","What is the capital of Spain?","Madrid","Barcelona","Seville","undata"],
-  ["easy","What is the capital of Italy?","Rome","Milan","Naples","undata"],
-  ["easy","What is the capital of Germany?","Berlin","Munich","Frankfurt","undata"],
-  ["easy","What is the capital of Greece?","Athens","Thessaloniki","Patras","undata"],
-  ["easy","What is the capital of Thailand?","Bangkok","Phuket","Chiang Mai","undata"],
-  ["easy","What is the capital of South Korea?","Seoul","Busan","Incheon","undata"],
-  ["easy","What is the capital of Mexico?","Mexico City","Guadalajara","Monterrey","undata"],
-  ["easy","What is the capital of Morocco?","Rabat","Casablanca","Marrakesh","undata"],
-  ["easy","What is the capital of Turkey?","Ankara","Istanbul","Izmir","undata"],
-  ["easy","What is the federal city and capital of Switzerland?","Bern","Zurich","Geneva","undata"],
-  ["easy","Which ocean covers the greatest area of Earth's surface?","Pacific Ocean","Atlantic Ocean","Indian Ocean","noaa_facts"],
-  ["easy","Which continent contains the greatest number of sovereign states?","Africa","Europe","South America","un_states"],
-  ["easy","What is the world's smallest sovereign state by area?","Vatican City","Monaco","San Marino","undata"],
-  ["easy","Which country is the largest by land area?","Russia","Canada","China","undata"],
-  ["easy","Which desert covers much of northern Africa?","Sahara","Gobi","Kalahari","undata"],
-  ["easy","On which continent is the Amazon River?","South America","Africa","Asia","undata"],
-  ["easy","Mount Everest belongs to which mountain range?","Himalayas","Andes","Alps","undata"],
-  ["easy","Mount Kilimanjaro is in which country?","Tanzania","Kenya","Ethiopia","undata"],
-  ["easy","Into which sea does the Nile flow?","Mediterranean Sea","Red Sea","Black Sea","undata"],
-  ["easy","Into which sea does the Danube flow?","Black Sea","Baltic Sea","Adriatic Sea","undata"],
-  ["easy","Which country has a maple leaf on its national flag?","Canada","Denmark","Austria","undata"],
-  ["easy","Which US state consists entirely of islands?","Hawaii","Florida","Alaska","undata"],
-  ["easy","Which imaginary line divides Earth into Northern and Southern Hemispheres?","Equator","Prime Meridian","Tropic of Cancer","ordnance_survey"],
-  ["easy","Through which London district does the Prime Meridian pass?","Greenwich","Camden","Westminster","ordnance_survey"],
-  ["easy","Which ocean surrounds the North Pole?","Arctic Ocean","Southern Ocean","Indian Ocean","noaa_facts"],
-  ["easy","Which continent surrounds the South Pole?","Antarctica","South America","Australia","undata"],
-  ["easy","How many constituent countries make up the United Kingdom?","Four","Three","Five","undata"],
-  ["easy","The Great Barrier Reef lies off the coast of which country?","Australia","Indonesia","South Africa","unesco"],
-  ["easy","The Gobi Desert lies mainly in Mongolia and which other country?","China","India","Kazakhstan","undata"],
-  ["easy","The Andes run along which continent?","South America","North America","Europe","undata"],
-
-  ["medium","Which European capital stands on the River Vltava?","Prague","Vienna","Warsaw","undata"],
-  ["medium","Which river flows through Paris?","Seine","Rhine","Loire","undata"],
-  ["medium","Which river flows through central London?","Thames","Severn","Mersey","ordnance_survey"],
-  ["medium","Which river flows through Rome?","Tiber","Po","Arno","undata"],
-  ["medium","Which major river is most closely associated with Egypt?","Nile","Niger","Zambezi","undata"],
-  ["medium","The Mekong flows through which region?","Southeast Asia","Central America","Eastern Europe","undata"],
-  ["medium","Into which sea does the Rhine eventually flow?","North Sea","Mediterranean Sea","Caspian Sea","undata"],
-  ["medium","Into which body of water does the Volga flow?","Caspian Sea","Black Sea","Aral Sea","undata"],
-  ["medium","Which is the longest river entirely within China?","Yangtze","Mekong","Yellow River","undata"],
-  ["medium","The Mississippi River empties into which gulf?","Gulf of Mexico","Gulf of California","Gulf of Alaska","undata"],
-  ["medium","Lake Victoria is on which continent?","Africa","Asia","North America","undata"],
-  ["medium","Lake Baikal is located in which country?","Russia","Canada","Mongolia","undata"],
-  ["medium","Lake Titicaca lies on the border of Peru and which country?","Bolivia","Chile","Ecuador","undata"],
-  ["medium","Which salt lake lies at the lowest exposed land elevation?","Dead Sea","Great Salt Lake","Aral Sea","undata"],
-  ["medium","Which Great Lake has the largest surface area?","Lake Superior","Lake Michigan","Lake Erie","undata"],
-  ["medium","Aconcagua is the highest mountain in which range?","Andes","Rockies","Alps","undata"],
-  ["medium","Denali is located in which US state?","Alaska","Colorado","Washington","undata"],
-  ["medium","Mount Elbrus is part of which mountain range?","Caucasus","Carpathians","Pyrenees","undata"],
-  ["medium","Mount Fuji is on which Japanese island?","Honshu","Hokkaido","Kyushu","undata"],
-  ["medium","The Matterhorn is part of which mountain range?","Alps","Apennines","Balkans","undata"],
-  ["medium","The Strait of Gibraltar connects the Atlantic Ocean to which sea?","Mediterranean Sea","Black Sea","Baltic Sea","undata"],
-  ["medium","Which strait divides the European and Asian sides of Istanbul?","Bosporus","Dardanelles","Kerch Strait","undata"],
-  ["medium","The Bering Strait separates Russia from which US state?","Alaska","Hawaii","California","undata"],
-  ["medium","The English Channel separates Great Britain from which country?","France","Belgium","Norway","undata"],
-  ["medium","The Panama Canal links the Atlantic Ocean with which ocean?","Pacific Ocean","Indian Ocean","Arctic Ocean","undata"],
-  ["medium","Which South American country is landlocked?","Bolivia","Uruguay","Ecuador","undata"],
-  ["medium","Which large Asian country lies between Russia and China and has no coastline?","Mongolia","Vietnam","Pakistan","undata"],
-  ["medium","Which Himalayan country is landlocked between India and China?","Nepal","Bangladesh","Myanmar","undata"],
-  ["medium","Which central European country is landlocked?","Austria","Portugal","Netherlands","undata"],
-  ["medium","Which tree appears on the national flag of Lebanon?","Cedar","Olive","Palm","undata"],
-  ["medium","What symbol appears at the centre of Japan's national flag?","Red disc","White star","Blue cross","undata"],
-  ["medium","Which words appear on Brazil's national flag?","Ordem e Progresso","Liberté Égalité","Plus Ultra","undata"],
-  ["medium","Which country's national flag is square rather than rectangular?","Switzerland","Belgium","Austria","undata"],
-  ["medium","Which country has the world's only non-quadrilateral national flag?","Nepal","Bhutan","Sri Lanka","undata"],
-  ["medium","UTC is historically based on mean solar time at which location?","Greenwich","Paris","Geneva","ordnance_survey"],
-  ["medium","The International Date Line runs mainly through which ocean?","Pacific Ocean","Atlantic Ocean","Indian Ocean","ordnance_survey"],
-  ["medium","Which named line of latitude lies north of the Equator?","Tropic of Cancer","Tropic of Capricorn","Antarctic Circle","ordnance_survey"],
-  ["medium","Which polar circle lies in the Southern Hemisphere?","Antarctic Circle","Arctic Circle","Tropic of Capricorn","ordnance_survey"],
-  ["medium","What is the capital of Kazakhstan?","Astana","Almaty","Tashkent","undata"],
-  ["medium","What is the capital of Nigeria?","Abuja","Lagos","Kano","undata"],
-
-  ["hard","Which country is entirely surrounded by South Africa?","Lesotho","Eswatini","Botswana","undata"],
-  ["hard","Which country is one of only two doubly landlocked states?","Uzbekistan","Afghanistan","Kyrgyzstan","undata"],
-  ["hard","What is the world's largest desert by total area?","Antarctica","Sahara","Arabian Desert","undata"],
-  ["hard","Which country has the world's longest coastline?","Canada","Russia","Indonesia","undata"],
-  ["hard","Which is the world's deepest freshwater lake?","Lake Baikal","Lake Tanganyika","Caspian Sea","undata"],
-  ["hard","Angel Falls, the world's highest uninterrupted waterfall, is in which country?","Venezuela","Guyana","Brazil","undata"],
-  ["hard","The lowest exposed land point is found beside which body of water?","Dead Sea","Caspian Sea","Lake Assal","undata"],
-  ["hard","Which major river crosses the Equator twice?","Congo","Amazon","Nile","undata"],
-  ["hard","Which national capital lies very close to the Equator in the Andes?","Quito","Lima","Bogotá","undata"],
-  ["hard","What is the world's largest island that is not a continent?","Greenland","New Guinea","Borneo","undata"],
-  ["hard","Which sea has no land coastline and is bounded by ocean currents?","Sargasso Sea","Coral Sea","Arabian Sea","noaa_facts"],
-  ["hard","Point Nemo, the oceanic pole of inaccessibility, lies in which ocean?","South Pacific Ocean","North Atlantic Ocean","Indian Ocean","noaa_facts"],
-  ["hard","Which African lake is the world's second deepest?","Lake Tanganyika","Lake Malawi","Lake Victoria","undata"],
-  ["hard","Salar de Uyuni, the world's largest salt flat, is in which country?","Bolivia","Chile","Argentina","undata"],
-  ["hard","The Drakensberg mountain range lies mainly in South Africa and which country?","Lesotho","Namibia","Zimbabwe","undata"],
-  ["hard","The Pamir Mountains are centred mainly in which country?","Tajikistan","Armenia","Turkmenistan","undata"],
-  ["hard","The Sunda Strait separates Java from which island?","Sumatra","Borneo","Sulawesi","undata"],
-  ["hard","The Strait of Malacca lies between the Malay Peninsula and which island?","Sumatra","Java","Borneo","undata"],
-  ["hard","The Atacama Desert lies mainly in which country?","Chile","Peru","Argentina","undata"],
-  ["hard","The Okavango forms a large inland delta in which country?","Botswana","Angola","Zambia","undata"]
+  [
+    "geography-001",
+    "easy",
+    "What is the capital of Canada?",
+    "Ottawa",
+    "Toronto",
+    "Vancouver",
+    "undata"
+  ],
+  [
+    "geography-002",
+    "easy",
+    "What is the capital of Australia?",
+    "Canberra",
+    "Sydney",
+    "Melbourne",
+    "undata"
+  ],
+  [
+    "geography-003",
+    "easy",
+    "What is the capital of New Zealand?",
+    "Wellington",
+    "Auckland",
+    "Christchurch",
+    "undata"
+  ],
+  [
+    "geography-004",
+    "easy",
+    "What is the capital of Japan?",
+    "Tokyo",
+    "Osaka",
+    "Kyoto",
+    "undata"
+  ],
+  [
+    "geography-005",
+    "easy",
+    "What is the capital of Brazil?",
+    "Brasília",
+    "Rio de Janeiro",
+    "São Paulo",
+    "undata"
+  ],
+  [
+    "geography-006",
+    "easy",
+    "What is the capital of Egypt?",
+    "Cairo",
+    "Alexandria",
+    "Giza",
+    "undata"
+  ],
+  [
+    "geography-007",
+    "easy",
+    "What is the capital of Kenya?",
+    "Nairobi",
+    "Mombasa",
+    "Kampala",
+    "undata"
+  ],
+  [
+    "geography-008",
+    "easy",
+    "What is the capital of India?",
+    "New Delhi",
+    "Mumbai",
+    "Kolkata",
+    "undata"
+  ],
+  [
+    "geography-009",
+    "easy",
+    "What is the capital of Argentina?",
+    "Buenos Aires",
+    "Córdoba",
+    "Rosario",
+    "undata"
+  ],
+  [
+    "geography-010",
+    "easy",
+    "What is the capital of Norway?",
+    "Oslo",
+    "Bergen",
+    "Stockholm",
+    "undata"
+  ],
+  [
+    "geography-011",
+    "easy",
+    "What is the capital of Spain?",
+    "Madrid",
+    "Barcelona",
+    "Seville",
+    "undata"
+  ],
+  [
+    "geography-012",
+    "easy",
+    "What is the capital of Italy?",
+    "Rome",
+    "Milan",
+    "Naples",
+    "undata"
+  ],
+  [
+    "geography-013",
+    "easy",
+    "What is the capital of Germany?",
+    "Berlin",
+    "Munich",
+    "Frankfurt",
+    "undata"
+  ],
+  [
+    "geography-014",
+    "easy",
+    "What is the capital of Greece?",
+    "Athens",
+    "Thessaloniki",
+    "Patras",
+    "undata"
+  ],
+  [
+    "geography-015",
+    "easy",
+    "What is the capital of Thailand?",
+    "Bangkok",
+    "Phuket",
+    "Chiang Mai",
+    "undata"
+  ],
+  [
+    "geography-016",
+    "easy",
+    "What is the capital of South Korea?",
+    "Seoul",
+    "Busan",
+    "Incheon",
+    "undata"
+  ],
+  [
+    "geography-017",
+    "easy",
+    "What is the capital of Mexico?",
+    "Mexico City",
+    "Guadalajara",
+    "Monterrey",
+    "undata"
+  ],
+  [
+    "geography-018",
+    "easy",
+    "What is the capital of Morocco?",
+    "Rabat",
+    "Casablanca",
+    "Marrakesh",
+    "undata"
+  ],
+  [
+    "geography-019",
+    "easy",
+    "What is the capital of Turkey?",
+    "Ankara",
+    "Istanbul",
+    "Izmir",
+    "undata"
+  ],
+  [
+    "geography-020",
+    "easy",
+    "What is the federal city and capital of Switzerland?",
+    "Bern",
+    "Zurich",
+    "Geneva",
+    "undata"
+  ],
+  [
+    "geography-021",
+    "easy",
+    "Which ocean covers the greatest area of Earth's surface?",
+    "Pacific Ocean",
+    "Atlantic Ocean",
+    "Indian Ocean",
+    "noaa_facts"
+  ],
+  [
+    "geography-022",
+    "easy",
+    "Which continent contains the greatest number of sovereign states?",
+    "Africa",
+    "Europe",
+    "South America",
+    "un_states"
+  ],
+  [
+    "geography-023",
+    "easy",
+    "What is the world's smallest sovereign state by area?",
+    "Vatican City",
+    "Monaco",
+    "San Marino",
+    "undata"
+  ],
+  [
+    "geography-024",
+    "easy",
+    "Which country is the largest by land area?",
+    "Russia",
+    "Canada",
+    "China",
+    "undata"
+  ],
+  [
+    "geography-025",
+    "easy",
+    "Which desert covers much of northern Africa?",
+    "Sahara",
+    "Gobi",
+    "Kalahari",
+    "undata"
+  ],
+  [
+    "geography-026",
+    "easy",
+    "On which continent is the Amazon River?",
+    "South America",
+    "Africa",
+    "Asia",
+    "undata"
+  ],
+  [
+    "geography-027",
+    "easy",
+    "Mount Everest belongs to which mountain range?",
+    "Himalayas",
+    "Andes",
+    "Alps",
+    "undata"
+  ],
+  [
+    "geography-028",
+    "easy",
+    "Mount Kilimanjaro is in which country?",
+    "Tanzania",
+    "Kenya",
+    "Ethiopia",
+    "undata"
+  ],
+  [
+    "geography-029",
+    "easy",
+    "Into which sea does the Nile flow?",
+    "Mediterranean Sea",
+    "Red Sea",
+    "Black Sea",
+    "undata"
+  ],
+  [
+    "geography-030",
+    "easy",
+    "Into which sea does the Danube flow?",
+    "Black Sea",
+    "Baltic Sea",
+    "Adriatic Sea",
+    "undata"
+  ],
+  [
+    "geography-031",
+    "easy",
+    "Which country has a maple leaf on its national flag?",
+    "Canada",
+    "Denmark",
+    "Austria",
+    "undata"
+  ],
+  [
+    "geography-032",
+    "easy",
+    "Which US state consists entirely of islands?",
+    "Hawaii",
+    "Florida",
+    "Alaska",
+    "undata"
+  ],
+  [
+    "geography-033",
+    "easy",
+    "Which imaginary line divides Earth into Northern and Southern Hemispheres?",
+    "Equator",
+    "Prime Meridian",
+    "Tropic of Cancer",
+    "ordnance_survey"
+  ],
+  [
+    "geography-034",
+    "easy",
+    "Through which London district does the Prime Meridian pass?",
+    "Greenwich",
+    "Camden",
+    "Westminster",
+    "ordnance_survey"
+  ],
+  [
+    "geography-035",
+    "easy",
+    "Which ocean surrounds the North Pole?",
+    "Arctic Ocean",
+    "Southern Ocean",
+    "Indian Ocean",
+    "noaa_facts"
+  ],
+  [
+    "geography-036",
+    "easy",
+    "Which continent surrounds the South Pole?",
+    "Antarctica",
+    "South America",
+    "Australia",
+    "undata"
+  ],
+  [
+    "geography-037",
+    "easy",
+    "How many constituent countries make up the United Kingdom?",
+    "Four",
+    "Three",
+    "Five",
+    "undata"
+  ],
+  [
+    "geography-038",
+    "easy",
+    "The Great Barrier Reef lies off the coast of which country?",
+    "Australia",
+    "Indonesia",
+    "South Africa",
+    "unesco"
+  ],
+  [
+    "geography-039",
+    "easy",
+    "The Gobi Desert lies mainly in Mongolia and which other country?",
+    "China",
+    "India",
+    "Kazakhstan",
+    "undata"
+  ],
+  [
+    "geography-040",
+    "easy",
+    "The Andes run along which continent?",
+    "South America",
+    "North America",
+    "Europe",
+    "undata"
+  ],
+  [
+    "geography-041",
+    "medium",
+    "Which European capital stands on the River Vltava?",
+    "Prague",
+    "Vienna",
+    "Warsaw",
+    "undata"
+  ],
+  [
+    "geography-042",
+    "medium",
+    "Which river flows through Paris?",
+    "Seine",
+    "Rhine",
+    "Loire",
+    "undata"
+  ],
+  [
+    "geography-043",
+    "medium",
+    "Which river flows through central London?",
+    "Thames",
+    "Severn",
+    "Mersey",
+    "ordnance_survey"
+  ],
+  [
+    "geography-044",
+    "medium",
+    "Which river flows through Rome?",
+    "Tiber",
+    "Po",
+    "Arno",
+    "undata"
+  ],
+  [
+    "geography-045",
+    "medium",
+    "Which major river is most closely associated with Egypt?",
+    "Nile",
+    "Niger",
+    "Zambezi",
+    "undata"
+  ],
+  [
+    "geography-046",
+    "medium",
+    "The Mekong flows through which region?",
+    "Southeast Asia",
+    "Central America",
+    "Eastern Europe",
+    "undata"
+  ],
+  [
+    "geography-047",
+    "medium",
+    "Into which sea does the Rhine eventually flow?",
+    "North Sea",
+    "Mediterranean Sea",
+    "Caspian Sea",
+    "undata"
+  ],
+  [
+    "geography-048",
+    "medium",
+    "Into which body of water does the Volga flow?",
+    "Caspian Sea",
+    "Black Sea",
+    "Aral Sea",
+    "undata"
+  ],
+  [
+    "geography-049",
+    "medium",
+    "Which is the longest river entirely within China?",
+    "Yangtze",
+    "Mekong",
+    "Yellow River",
+    "undata"
+  ],
+  [
+    "geography-050",
+    "medium",
+    "The Mississippi River empties into which gulf?",
+    "Gulf of Mexico",
+    "Gulf of California",
+    "Gulf of Alaska",
+    "undata"
+  ],
+  [
+    "geography-051",
+    "medium",
+    "Lake Victoria is on which continent?",
+    "Africa",
+    "Asia",
+    "North America",
+    "undata"
+  ],
+  [
+    "geography-052",
+    "medium",
+    "Lake Baikal is located in which country?",
+    "Russia",
+    "Canada",
+    "Mongolia",
+    "undata"
+  ],
+  [
+    "geography-053",
+    "medium",
+    "Lake Titicaca lies on the border of Peru and which country?",
+    "Bolivia",
+    "Chile",
+    "Ecuador",
+    "undata"
+  ],
+  [
+    "geography-054",
+    "medium",
+    "Which salt lake lies at the lowest exposed land elevation?",
+    "Dead Sea",
+    "Great Salt Lake",
+    "Aral Sea",
+    "undata"
+  ],
+  [
+    "geography-055",
+    "medium",
+    "Which Great Lake has the largest surface area?",
+    "Lake Superior",
+    "Lake Michigan",
+    "Lake Erie",
+    "undata"
+  ],
+  [
+    "geography-056",
+    "medium",
+    "Aconcagua is the highest mountain in which range?",
+    "Andes",
+    "Rockies",
+    "Alps",
+    "undata"
+  ],
+  [
+    "geography-057",
+    "medium",
+    "Denali is located in which US state?",
+    "Alaska",
+    "Colorado",
+    "Washington",
+    "undata"
+  ],
+  [
+    "geography-058",
+    "medium",
+    "Mount Elbrus is part of which mountain range?",
+    "Caucasus",
+    "Carpathians",
+    "Pyrenees",
+    "undata"
+  ],
+  [
+    "geography-059",
+    "medium",
+    "Mount Fuji is on which Japanese island?",
+    "Honshu",
+    "Hokkaido",
+    "Kyushu",
+    "undata"
+  ],
+  [
+    "geography-060",
+    "medium",
+    "The Matterhorn is part of which mountain range?",
+    "Alps",
+    "Apennines",
+    "Balkans",
+    "undata"
+  ],
+  [
+    "geography-061",
+    "medium",
+    "The Strait of Gibraltar connects the Atlantic Ocean to which sea?",
+    "Mediterranean Sea",
+    "Black Sea",
+    "Baltic Sea",
+    "undata"
+  ],
+  [
+    "geography-062",
+    "medium",
+    "Which strait divides the European and Asian sides of Istanbul?",
+    "Bosporus",
+    "Dardanelles",
+    "Kerch Strait",
+    "undata"
+  ],
+  [
+    "geography-063",
+    "medium",
+    "The Bering Strait separates Russia from which US state?",
+    "Alaska",
+    "Hawaii",
+    "California",
+    "undata"
+  ],
+  [
+    "geography-064",
+    "medium",
+    "The English Channel separates Great Britain from which country?",
+    "France",
+    "Belgium",
+    "Norway",
+    "undata"
+  ],
+  [
+    "geography-065",
+    "medium",
+    "The Panama Canal links the Atlantic Ocean with which ocean?",
+    "Pacific Ocean",
+    "Indian Ocean",
+    "Arctic Ocean",
+    "undata"
+  ],
+  [
+    "geography-066",
+    "medium",
+    "Which South American country is landlocked?",
+    "Bolivia",
+    "Uruguay",
+    "Ecuador",
+    "undata"
+  ],
+  [
+    "geography-067",
+    "medium",
+    "Which large Asian country lies between Russia and China and has no coastline?",
+    "Mongolia",
+    "Vietnam",
+    "Pakistan",
+    "undata"
+  ],
+  [
+    "geography-068",
+    "medium",
+    "Which Himalayan country is landlocked between India and China?",
+    "Nepal",
+    "Bangladesh",
+    "Myanmar",
+    "undata"
+  ],
+  [
+    "geography-069",
+    "medium",
+    "Which central European country is landlocked?",
+    "Austria",
+    "Portugal",
+    "Netherlands",
+    "undata"
+  ],
+  [
+    "geography-070",
+    "medium",
+    "Which tree appears on the national flag of Lebanon?",
+    "Cedar",
+    "Olive",
+    "Palm",
+    "undata"
+  ],
+  [
+    "geography-071",
+    "medium",
+    "What symbol appears at the centre of Japan's national flag?",
+    "Red disc",
+    "White star",
+    "Blue cross",
+    "undata"
+  ],
+  [
+    "geography-072",
+    "medium",
+    "Which words appear on Brazil's national flag?",
+    "Ordem e Progresso",
+    "Liberté Égalité",
+    "Plus Ultra",
+    "undata"
+  ],
+  [
+    "geography-073",
+    "medium",
+    "Which country's national flag is square rather than rectangular?",
+    "Switzerland",
+    "Belgium",
+    "Austria",
+    "undata"
+  ],
+  [
+    "geography-074",
+    "medium",
+    "Which country has the world's only non-quadrilateral national flag?",
+    "Nepal",
+    "Bhutan",
+    "Sri Lanka",
+    "undata"
+  ],
+  [
+    "geography-075",
+    "medium",
+    "UTC is historically based on mean solar time at which location?",
+    "Greenwich",
+    "Paris",
+    "Geneva",
+    "ordnance_survey"
+  ],
+  [
+    "geography-076",
+    "medium",
+    "The International Date Line runs mainly through which ocean?",
+    "Pacific Ocean",
+    "Atlantic Ocean",
+    "Indian Ocean",
+    "ordnance_survey"
+  ],
+  [
+    "geography-077",
+    "medium",
+    "Which named line of latitude lies north of the Equator?",
+    "Tropic of Cancer",
+    "Tropic of Capricorn",
+    "Antarctic Circle",
+    "ordnance_survey"
+  ],
+  [
+    "geography-078",
+    "medium",
+    "Which polar circle lies in the Southern Hemisphere?",
+    "Antarctic Circle",
+    "Arctic Circle",
+    "Tropic of Capricorn",
+    "ordnance_survey"
+  ],
+  [
+    "geography-079",
+    "medium",
+    "What is the capital of Kazakhstan?",
+    "Astana",
+    "Almaty",
+    "Tashkent",
+    "undata"
+  ],
+  [
+    "geography-080",
+    "medium",
+    "What is the capital of Nigeria?",
+    "Abuja",
+    "Lagos",
+    "Kano",
+    "undata"
+  ],
+  [
+    "geography-081",
+    "hard",
+    "Which country is entirely surrounded by South Africa?",
+    "Lesotho",
+    "Eswatini",
+    "Botswana",
+    "undata"
+  ],
+  [
+    "geography-082",
+    "hard",
+    "Which country is one of only two doubly landlocked states?",
+    "Uzbekistan",
+    "Afghanistan",
+    "Kyrgyzstan",
+    "undata"
+  ],
+  [
+    "geography-083",
+    "hard",
+    "What is the world's largest desert by total area?",
+    "Antarctica",
+    "Sahara",
+    "Arabian Desert",
+    "undata"
+  ],
+  [
+    "geography-084",
+    "hard",
+    "Which country has the world's longest coastline?",
+    "Canada",
+    "Russia",
+    "Indonesia",
+    "undata"
+  ],
+  [
+    "geography-085",
+    "hard",
+    "Which is the world's deepest freshwater lake?",
+    "Lake Baikal",
+    "Lake Tanganyika",
+    "Caspian Sea",
+    "undata"
+  ],
+  [
+    "geography-086",
+    "hard",
+    "Angel Falls, the world's highest uninterrupted waterfall, is in which country?",
+    "Venezuela",
+    "Guyana",
+    "Brazil",
+    "undata"
+  ],
+  [
+    "geography-087",
+    "hard",
+    "The lowest exposed land point is found beside which body of water?",
+    "Dead Sea",
+    "Caspian Sea",
+    "Lake Assal",
+    "undata"
+  ],
+  [
+    "geography-088",
+    "hard",
+    "Which major river crosses the Equator twice?",
+    "Congo",
+    "Amazon",
+    "Nile",
+    "undata"
+  ],
+  [
+    "geography-089",
+    "hard",
+    "Which national capital lies very close to the Equator in the Andes?",
+    "Quito",
+    "Lima",
+    "Bogotá",
+    "undata"
+  ],
+  [
+    "geography-090",
+    "hard",
+    "What is the world's largest island that is not a continent?",
+    "Greenland",
+    "New Guinea",
+    "Borneo",
+    "undata"
+  ],
+  [
+    "geography-091",
+    "hard",
+    "Which sea has no land coastline and is bounded by ocean currents?",
+    "Sargasso Sea",
+    "Coral Sea",
+    "Arabian Sea",
+    "noaa_facts"
+  ],
+  [
+    "geography-092",
+    "hard",
+    "Point Nemo, the oceanic pole of inaccessibility, lies in which ocean?",
+    "South Pacific Ocean",
+    "North Atlantic Ocean",
+    "Indian Ocean",
+    "noaa_facts"
+  ],
+  [
+    "geography-093",
+    "hard",
+    "Which African lake is the world's second deepest?",
+    "Lake Tanganyika",
+    "Lake Malawi",
+    "Lake Victoria",
+    "undata"
+  ],
+  [
+    "geography-094",
+    "hard",
+    "Salar de Uyuni, the world's largest salt flat, is in which country?",
+    "Bolivia",
+    "Chile",
+    "Argentina",
+    "undata"
+  ],
+  [
+    "geography-095",
+    "hard",
+    "The Drakensberg mountain range lies mainly in South Africa and which country?",
+    "Lesotho",
+    "Namibia",
+    "Zimbabwe",
+    "undata"
+  ],
+  [
+    "geography-096",
+    "hard",
+    "The Pamir Mountains are centred mainly in which country?",
+    "Tajikistan",
+    "Armenia",
+    "Turkmenistan",
+    "undata"
+  ],
+  [
+    "geography-097",
+    "hard",
+    "The Sunda Strait separates Java from which island?",
+    "Sumatra",
+    "Borneo",
+    "Sulawesi",
+    "undata"
+  ],
+  [
+    "geography-098",
+    "hard",
+    "The Strait of Malacca lies between the Malay Peninsula and which island?",
+    "Sumatra",
+    "Java",
+    "Borneo",
+    "undata"
+  ],
+  [
+    "geography-099",
+    "hard",
+    "The Atacama Desert lies mainly in which country?",
+    "Chile",
+    "Peru",
+    "Argentina",
+    "undata"
+  ],
+  [
+    "geography-100",
+    "hard",
+    "The Okavango forms a large inland delta in which country?",
+    "Botswana",
+    "Angola",
+    "Zambia",
+    "undata"
+  ]
 ]

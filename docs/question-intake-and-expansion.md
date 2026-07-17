@@ -1,7 +1,9 @@
 # Trivia Rush Question Intake and Expansion Policy
 
 **Applies from:** Phase 5  
-**Current bank:** 700 questions, 100 in each of seven categories
+**Current bank:** 700 questions across seven active categories  
+**Approved Phase 5 taxonomy:** ten categories, with three additions staged as
+planned until each has a complete reviewed bank
 
 ## 1. Objective
 
@@ -44,6 +46,7 @@ Each source JSON category record uses:
 
 ```json
 [
+  "stable-question-key",
   "difficulty",
   "Independently written question text?",
   "Correct answer",
@@ -53,15 +56,19 @@ Each source JSON category record uses:
 ]
 ```
 
-The registry in `data/questions.json` maps `source_key` to a source name and
-HTTPS URL. The build script derives the stable question key, validates the
-record and balances correct-answer positions in generated SQL.
+The registry in `data/questions.json` is also the category manifest and maps
+`source_key` to a source name and HTTPS URL. Question keys are written once and
+never derived from their current category or array position. This allows a
+taxonomy cleanup to move a question without breaking historical references or
+progression backfill. The build script validates the key, record, manifest,
+difficulty targets and correct-answer position balance.
 
 ## 4. Intake workflow
 
 1. **Capture a fact idea.** Record only a short topic note and candidate URL.
 2. **Choose the controlled category.** Science, History, Geography,
-   Entertainment, Sport, Technology or Gaming.
+   Entertainment, Sport, Technology, Gaming, Food & Drink, Nature & Animals,
+   or Art & Literature.
 3. **Find an authoritative source.** Prefer official institutions, primary
    documentation, museums, libraries, governing bodies and original records.
 4. **Check stability.** Reject or date-bound facts likely to change.
@@ -171,31 +178,40 @@ Do not add two questions that merely reverse the same relationship, for
 example asking both “Who created X?” and “What did Y create?” in the same
 bank unless they test materially different knowledge.
 
-## 10. Initial Phase 5 expansion recommendation
+## 10. Initial Phase 5 taxonomy and expansion
 
-Use the Brightful collection and other indexes to identify gaps, then create an
-initial independently sourced batch of 350 new questions:
+Freeze these stable database IDs before progression backfill:
 
-| Category | New questions | Target total |
-| --- | ---: | ---: |
-| Science | 50 | 150 |
-| History | 50 | 150 |
-| Geography | 50 | 150 |
-| Entertainment | 50 | 150 |
-| Sport | 50 | 150 |
-| Technology | 50 | 150 |
-| Gaming | 50 | 150 |
-| **Total** | **350** | **1,050** |
+| ID | Label | Phase 5 target |
+| --- | --- | ---: |
+| `science` | Science | 100 |
+| `history` | History | 100 |
+| `geography` | Geography | 100 |
+| `entertainment` | Entertainment | 100 |
+| `sport` | Sport | 100 |
+| `technology` | Technology | 100 |
+| `gaming` | Gaming | 100 |
+| `food_drink` | Food & Drink | 100 |
+| `nature_animals` | Nature & Animals | 100 |
+| `art_literature` | Art & Literature | 100 |
+| **Total** |  | **1,000** |
 
-Per-category expansion distribution:
+First reclassify existing questions whose subject clearly belongs in one of the
+three new categories. Preserve every moved question's stable key. Then write
+enough independently sourced questions to restore every category to exactly
+100. The number of new questions will be approximately 300; the exact count
+depends on the reviewed reclassification.
 
-- 20 Easy;
-- 20 Medium;
-- 10 Hard.
+Per-category distribution remains:
 
-This is small enough for meaningful review and large enough to reduce immediate
-repetition. Subsequent batches should move each category toward 300–500 active
-questions, informed by real play and report data.
+- 40 Easy;
+- 40 Medium;
+- 20 Hard.
+
+The three new manifest entries remain `planned` and must not be inserted as
+active database categories until all ten files pass compiler, source and
+duplicate review. Subsequent batches should move each category toward 300–500
+active questions, informed by real play and report data.
 
 ## 11. Content audit requirements
 

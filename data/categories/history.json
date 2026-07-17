@@ -1,105 +1,902 @@
 [
-  ["easy","The ancient city of Rome was built beside which river?","Tiber","Seine","Rhine","british_museum"],
-  ["easy","Who was the first woman to fly solo across the Atlantic Ocean?","Amelia Earhart","Bessie Coleman","Valentina Tereshkova","loc_history"],
-  ["easy","Which civilisation built Machu Picchu?","Inca","Maya","Aztec","unesco"],
-  ["easy","In which year was Magna Carta first sealed?","1215","1066","1492","uk_archives"],
-  ["easy","The ancient city-state of Sparta belonged to which civilisation?","Greek","Roman","Phoenician","british_museum"],
-  ["easy","The Rosetta Stone helped scholars decipher which writing system?","Egyptian hieroglyphs","Linear B","Mayan glyphs","british_museum"],
-  ["easy","Which ship carried the Pilgrims to North America in 1620?","Mayflower","Endeavour","Beagle","loc_history"],
-  ["easy","In which modern country did the Renaissance begin?","Italy","France","Spain","unesco"],
-  ["easy","Which empire was ruled from Constantinople during much of the Middle Ages?","Byzantine Empire","Mughal Empire","Aztec Empire","british_museum"],
-  ["easy","Who developed the first successful smallpox vaccine?","Edward Jenner","Louis Pasteur","Alexander Fleming","nobel"],
-  ["easy","Which ancient civilisation built the pyramids at Giza?","Egyptian","Greek","Persian","british_museum"],
-  ["easy","Who was the first President of the United States?","George Washington","Thomas Jefferson","John Adams","loc_history"],
-  ["easy","In which year did the Berlin Wall fall?","1989","1979","1999","uk_archives"],
-  ["easy","Which war formally ended with the Treaty of Versailles?","First World War","Second World War","Crimean War","uk_archives"],
-  ["easy","Who was known as the Maid of Orléans?","Joan of Arc","Marie Antoinette","Eleanor of Aquitaine","british_museum"],
-  ["easy","In which year did the Great Fire of London begin?","1666","1605","1714","uk_archives"],
-  ["easy","Which event in 1066 brought Norman rule to England?","Norman Conquest","Wars of the Roses","Glorious Revolution","uk_archives"],
-  ["easy","In which year did Christopher Columbus first reach the Caribbean?","1492","1415","1517","loc_history"],
-  ["easy","In which year did the French Revolution begin?","1789","1776","1815","uk_archives"],
-  ["easy","Who was the Roman god of war?","Mars","Jupiter","Neptune","british_museum"],
-  ["easy","In which century did the Black Death reach Europe?","14th century","11th century","17th century","uk_archives"],
-  ["easy","Who is associated with introducing movable-type printing to Europe?","Johannes Gutenberg","Galileo Galilei","James Watt","loc_history"],
-  ["easy","In which year did RMS Titanic sink?","1912","1905","1921","uk_archives"],
-  ["easy","Which Apollo mission first landed humans on the Moon?","Apollo 11","Apollo 8","Apollo 13","nasa_solar"],
-  ["easy","Who discovered Tutankhamun's tomb in 1922?","Howard Carter","Heinrich Schliemann","Flinders Petrie","british_museum"],
-  ["easy","Where were the ancient Olympic Games held?","Greece","Egypt","Persia","olympics"],
-  ["easy","Who is generally regarded as the first Roman emperor?","Augustus","Julius Caesar","Nero","british_museum"],
-  ["easy","In which year was the US Declaration of Independence adopted?","1776","1789","1812","loc_history"],
-  ["easy","In which country did the Industrial Revolution begin?","Great Britain","United States","Germany","uk_archives"],
-  ["easy","Cleopatra VII ruled which ancient kingdom?","Egypt","Macedon","Babylon","british_museum"],
-  ["easy","Samurai warriors are associated with which country?","Japan","China","Korea","british_museum"],
-  ["easy","What was the capital of the Aztec Empire?","Tenochtitlan","Cusco","Chichén Itzá","british_museum"],
-  ["easy","Hammurabi was a king of which ancient city?","Babylon","Athens","Carthage","british_museum"],
-  ["easy","The Vikings originated mainly from which European region?","Scandinavia","Iberia","The Balkans","british_museum"],
-  ["easy","In which country is Stonehenge located?","England","Ireland","France","unesco"],
-  ["easy","Who became the first emperor of a unified China?","Qin Shi Huang","Kublai Khan","Sun Yat-sen","british_museum"],
-  ["easy","Marco Polo's travels famously took him from Europe to which continent?","Asia","Africa","South America","loc_history"],
-  ["easy","Which profession is Florence Nightingale famous for reforming?","Nursing","Architecture","Law","uk_archives"],
-  ["easy","The suffragette movement campaigned primarily for what?","Votes for women","Abolition of monarchy","Free university education","uk_archives"],
-  ["easy","Which British admiral won the Battle of Trafalgar?","Horatio Nelson","Francis Drake","John Jellicoe","uk_archives"],
-
-  ["medium","Which battle in 1066 was won by William the Conqueror?","Battle of Hastings","Battle of Agincourt","Battle of Bosworth","uk_archives"],
-  ["medium","At which location was Magna Carta sealed?","Runnymede","Canterbury","York","uk_archives"],
-  ["medium","Which king ordered the Domesday survey?","William I","Henry II","Edward I","uk_archives"],
-  ["medium","The Hundred Years' War was fought mainly between England and which country?","France","Spain","Denmark","uk_archives"],
-  ["medium","Which two houses fought the Wars of the Roses?","Lancaster and York","Stuart and Tudor","Wessex and Mercia","uk_archives"],
-  ["medium","Which monarch broke with Rome and established royal supremacy over the Church of England?","Henry VIII","Richard III","George III","uk_archives"],
-  ["medium","Which queen ruled England during the defeat of the Spanish Armada?","Elizabeth I","Mary I","Anne","uk_archives"],
-  ["medium","In which year was the Gunpowder Plot uncovered?","1605","1588","1649","uk_archives"],
-  ["medium","The Acts of Union in 1707 created which kingdom?","Kingdom of Great Britain","United Kingdom of Great Britain and Ireland","Commonwealth of England","uk_archives"],
-  ["medium","Which 1746 battle ended the main Jacobite rising?","Culloden","Bannockburn","Flodden","uk_archives"],
-  ["medium","The storming of which fortress became a symbol of the French Revolution?","Bastille","Louvre","Versailles","uk_archives"],
-  ["medium","At which battle was Napoleon finally defeated in 1815?","Waterloo","Austerlitz","Trafalgar","uk_archives"],
-  ["medium","Which diplomatic meeting redrew much of Europe after the Napoleonic Wars?","Congress of Vienna","Congress of Berlin","Yalta Conference","uk_archives"],
-  ["medium","In which year did the American Civil War begin?","1861","1848","1876","loc_history"],
-  ["medium","Which US president issued the Emancipation Proclamation?","Abraham Lincoln","Ulysses S. Grant","Andrew Jackson","loc_history"],
-  ["medium","From which country did the United States purchase Louisiana in 1803?","France","Spain","Britain","loc_history"],
-  ["medium","Which 1868 restoration transformed Japan's government and economy?","Meiji Restoration","Taika Reform","Genpei Restoration","loc_history"],
-  ["medium","The nineteenth-century Opium Wars involved China and which European power?","Britain","Italy","Sweden","uk_archives"],
-  ["medium","In which year did the Suez Canal open?","1869","1815","1914","unesco"],
-  ["medium","Which statesman is closely associated with German unification in 1871?","Otto von Bismarck","Klemens von Metternich","Giuseppe Garibaldi","uk_archives"],
-  ["medium","Whose assassination in Sarajevo triggered the July Crisis of 1914?","Archduke Franz Ferdinand","Kaiser Wilhelm II","Tsar Nicholas II","uk_archives"],
-  ["medium","Which faction seized power during Russia's October Revolution?","Bolsheviks","Mensheviks","Decembrists","uk_archives"],
-  ["medium","Which treaty ended Russia's participation in the First World War?","Treaty of Brest-Litovsk","Treaty of Tordesillas","Treaty of Utrecht","uk_archives"],
-  ["medium","Which international organisation was created after the First World War?","League of Nations","United Nations","Council of Europe","uk_archives"],
-  ["medium","The D-Day landings took place in which region of France?","Normandy","Brittany","Provence","uk_archives"],
-  ["medium","At which British site were many Enigma messages deciphered?","Bletchley Park","Greenwich","Sandhurst","uk_archives"],
-  ["medium","What was the codename for the US-led atomic bomb programme?","Manhattan Project","Apollo Project","Trinity Alliance","loc_history"],
-  ["medium","In which year was the United Nations founded?","1945","1919","1957","un_states"],
-  ["medium","In which year did India gain independence from British rule?","1947","1939","1956","uk_archives"],
-  ["medium","In which year was NATO founded?","1949","1945","1961","uk_archives"],
-  ["medium","Which country launched Sputnik 1?","Soviet Union","United States","France","loc_history"],
-  ["medium","In which year did the Cuban Missile Crisis occur?","1962","1956","1968","loc_history"],
-  ["medium","Who was the first person to walk on the Moon?","Neil Armstrong","Yuri Gagarin","Buzz Aldrin","nasa_solar"],
-  ["medium","The fall of which city in 1975 marked the end of the Vietnam War?","Saigon","Hanoi","Da Nang","loc_history"],
-  ["medium","The Chernobyl nuclear disaster occurred in which Soviet republic?","Ukrainian SSR","Belorussian SSR","Georgian SSR","uk_archives"],
-  ["medium","Who became South Africa's first Black president in 1994?","Nelson Mandela","Desmond Tutu","F. W. de Klerk","nobel"],
-  ["medium","Which treaty created the European Union?","Maastricht Treaty","Treaty of Versailles","Treaty of Rome in 1957 alone","uk_archives"],
-  ["medium","In which year was the Soviet Union formally dissolved?","1991","1985","1995","loc_history"],
-  ["medium","Which country resumed sovereignty over Hong Kong in 1997?","China","Portugal","Japan","uk_archives"],
-  ["medium","In which year did euro banknotes and coins enter general circulation?","2002","1992","2007","uk_archives"],
-
-  ["hard","Linear B was used to write an early form of which language?","Greek","Latin","Egyptian","british_museum"],
-  ["hard","The Punic Wars were fought between Rome and which rival power?","Carthage","Sparta","Persia","british_museum"],
-  ["hard","Which Roman emperor issued the Edict of Milan with Licinius?","Constantine I","Trajan","Hadrian","british_museum"],
-  ["hard","The Corpus Juris Civilis was compiled under which Byzantine emperor?","Justinian I","Basil II","Alexios I","british_museum"],
-  ["hard","Which English king sealed Magna Carta in 1215?","King John","Henry III","Edward II","uk_archives"],
-  ["hard","Which bacterium causes plague, including the Black Death?","Yersinia pestis","Vibrio cholerae","Bacillus anthracis","smithsonian_science"],
-  ["hard","Which settlement ended the Thirty Years' War in 1648?","Peace of Westphalia","Treaty of Utrecht","Peace of Augsburg","uk_archives"],
-  ["hard","Which revolution removed James II from the English throne?","Glorious Revolution","Peasants' Revolt","Peterloo Rising","uk_archives"],
-  ["hard","In which year did the Seven Years' War begin?","1756","1740","1775","uk_archives"],
-  ["hard","Which formerly enslaved leader became central to the Haitian Revolution?","Toussaint Louverture","Simón Bolívar","José de San Martín","loc_history"],
-  ["hard","Which Austrian statesman dominated the Congress of Vienna?","Klemens von Metternich","Otto von Bismarck","Charles de Talleyrand","uk_archives"],
-  ["hard","The Charge of the Light Brigade occurred during which battle?","Battle of Balaclava","Battle of Inkerman","Battle of Waterloo","uk_archives"],
-  ["hard","Which 1884–85 meeting formalised rules for European colonisation in Africa?","Berlin Conference","Vienna Congress","Algeciras Conference","uk_archives"],
-  ["hard","The Boxer Rebellion took place primarily in which country?","China","Japan","India","loc_history"],
-  ["hard","Which treaty ended the Russo-Japanese War?","Treaty of Portsmouth","Treaty of Shimonoseki","Treaty of Nanking","loc_history"],
-  ["hard","The Zimmermann Telegram proposed an alliance between Germany and which country?","Mexico","Brazil","Argentina","loc_history"],
-  ["hard","In which year was the Weimar Constitution adopted?","1919","1914","1923","uk_archives"],
-  ["hard","Which Chinese Communist leader headed the Long March?","Mao Zedong","Sun Yat-sen","Yuan Shikai","loc_history"],
-  ["hard","Which 1939 pact was signed by Nazi Germany and the Soviet Union?","Molotov–Ribbentrop Pact","Kellogg–Briand Pact","Locarno Pact","uk_archives"],
-  ["hard","What was the main purpose of the Marshall Plan?","European economic recovery","Creation of NATO forces","Partition of Germany","loc_history"]
+  [
+    "history-001",
+    "easy",
+    "The ancient city of Rome was built beside which river?",
+    "Tiber",
+    "Seine",
+    "Rhine",
+    "british_museum"
+  ],
+  [
+    "history-002",
+    "easy",
+    "Who was the first woman to fly solo across the Atlantic Ocean?",
+    "Amelia Earhart",
+    "Bessie Coleman",
+    "Valentina Tereshkova",
+    "loc_history"
+  ],
+  [
+    "history-003",
+    "easy",
+    "Which civilisation built Machu Picchu?",
+    "Inca",
+    "Maya",
+    "Aztec",
+    "unesco"
+  ],
+  [
+    "history-004",
+    "easy",
+    "In which year was Magna Carta first sealed?",
+    "1215",
+    "1066",
+    "1492",
+    "uk_archives"
+  ],
+  [
+    "history-005",
+    "easy",
+    "The ancient city-state of Sparta belonged to which civilisation?",
+    "Greek",
+    "Roman",
+    "Phoenician",
+    "british_museum"
+  ],
+  [
+    "history-006",
+    "easy",
+    "The Rosetta Stone helped scholars decipher which writing system?",
+    "Egyptian hieroglyphs",
+    "Linear B",
+    "Mayan glyphs",
+    "british_museum"
+  ],
+  [
+    "history-007",
+    "easy",
+    "Which ship carried the Pilgrims to North America in 1620?",
+    "Mayflower",
+    "Endeavour",
+    "Beagle",
+    "loc_history"
+  ],
+  [
+    "history-008",
+    "easy",
+    "In which modern country did the Renaissance begin?",
+    "Italy",
+    "France",
+    "Spain",
+    "unesco"
+  ],
+  [
+    "history-009",
+    "easy",
+    "Which empire was ruled from Constantinople during much of the Middle Ages?",
+    "Byzantine Empire",
+    "Mughal Empire",
+    "Aztec Empire",
+    "british_museum"
+  ],
+  [
+    "history-010",
+    "easy",
+    "Who developed the first successful smallpox vaccine?",
+    "Edward Jenner",
+    "Louis Pasteur",
+    "Alexander Fleming",
+    "nobel"
+  ],
+  [
+    "history-011",
+    "easy",
+    "Which ancient civilisation built the pyramids at Giza?",
+    "Egyptian",
+    "Greek",
+    "Persian",
+    "british_museum"
+  ],
+  [
+    "history-012",
+    "easy",
+    "Who was the first President of the United States?",
+    "George Washington",
+    "Thomas Jefferson",
+    "John Adams",
+    "loc_history"
+  ],
+  [
+    "history-013",
+    "easy",
+    "In which year did the Berlin Wall fall?",
+    "1989",
+    "1979",
+    "1999",
+    "uk_archives"
+  ],
+  [
+    "history-014",
+    "easy",
+    "Which war formally ended with the Treaty of Versailles?",
+    "First World War",
+    "Second World War",
+    "Crimean War",
+    "uk_archives"
+  ],
+  [
+    "history-015",
+    "easy",
+    "Who was known as the Maid of Orléans?",
+    "Joan of Arc",
+    "Marie Antoinette",
+    "Eleanor of Aquitaine",
+    "british_museum"
+  ],
+  [
+    "history-016",
+    "easy",
+    "In which year did the Great Fire of London begin?",
+    "1666",
+    "1605",
+    "1714",
+    "uk_archives"
+  ],
+  [
+    "history-017",
+    "easy",
+    "Which event in 1066 brought Norman rule to England?",
+    "Norman Conquest",
+    "Wars of the Roses",
+    "Glorious Revolution",
+    "uk_archives"
+  ],
+  [
+    "history-018",
+    "easy",
+    "In which year did Christopher Columbus first reach the Caribbean?",
+    "1492",
+    "1415",
+    "1517",
+    "loc_history"
+  ],
+  [
+    "history-019",
+    "easy",
+    "In which year did the French Revolution begin?",
+    "1789",
+    "1776",
+    "1815",
+    "uk_archives"
+  ],
+  [
+    "history-020",
+    "easy",
+    "Who was the Roman god of war?",
+    "Mars",
+    "Jupiter",
+    "Neptune",
+    "british_museum"
+  ],
+  [
+    "history-021",
+    "easy",
+    "In which century did the Black Death reach Europe?",
+    "14th century",
+    "11th century",
+    "17th century",
+    "uk_archives"
+  ],
+  [
+    "history-022",
+    "easy",
+    "Who is associated with introducing movable-type printing to Europe?",
+    "Johannes Gutenberg",
+    "Galileo Galilei",
+    "James Watt",
+    "loc_history"
+  ],
+  [
+    "history-023",
+    "easy",
+    "In which year did RMS Titanic sink?",
+    "1912",
+    "1905",
+    "1921",
+    "uk_archives"
+  ],
+  [
+    "history-024",
+    "easy",
+    "Which Apollo mission first landed humans on the Moon?",
+    "Apollo 11",
+    "Apollo 8",
+    "Apollo 13",
+    "nasa_solar"
+  ],
+  [
+    "history-025",
+    "easy",
+    "Who discovered Tutankhamun's tomb in 1922?",
+    "Howard Carter",
+    "Heinrich Schliemann",
+    "Flinders Petrie",
+    "british_museum"
+  ],
+  [
+    "history-026",
+    "easy",
+    "Where were the ancient Olympic Games held?",
+    "Greece",
+    "Egypt",
+    "Persia",
+    "olympics"
+  ],
+  [
+    "history-027",
+    "easy",
+    "Who is generally regarded as the first Roman emperor?",
+    "Augustus",
+    "Julius Caesar",
+    "Nero",
+    "british_museum"
+  ],
+  [
+    "history-028",
+    "easy",
+    "In which year was the US Declaration of Independence adopted?",
+    "1776",
+    "1789",
+    "1812",
+    "loc_history"
+  ],
+  [
+    "history-029",
+    "easy",
+    "In which country did the Industrial Revolution begin?",
+    "Great Britain",
+    "United States",
+    "Germany",
+    "uk_archives"
+  ],
+  [
+    "history-030",
+    "easy",
+    "Cleopatra VII ruled which ancient kingdom?",
+    "Egypt",
+    "Macedon",
+    "Babylon",
+    "british_museum"
+  ],
+  [
+    "history-031",
+    "easy",
+    "Samurai warriors are associated with which country?",
+    "Japan",
+    "China",
+    "Korea",
+    "british_museum"
+  ],
+  [
+    "history-032",
+    "easy",
+    "What was the capital of the Aztec Empire?",
+    "Tenochtitlan",
+    "Cusco",
+    "Chichén Itzá",
+    "british_museum"
+  ],
+  [
+    "history-033",
+    "easy",
+    "Hammurabi was a king of which ancient city?",
+    "Babylon",
+    "Athens",
+    "Carthage",
+    "british_museum"
+  ],
+  [
+    "history-034",
+    "easy",
+    "The Vikings originated mainly from which European region?",
+    "Scandinavia",
+    "Iberia",
+    "The Balkans",
+    "british_museum"
+  ],
+  [
+    "history-035",
+    "easy",
+    "In which country is Stonehenge located?",
+    "England",
+    "Ireland",
+    "France",
+    "unesco"
+  ],
+  [
+    "history-036",
+    "easy",
+    "Who became the first emperor of a unified China?",
+    "Qin Shi Huang",
+    "Kublai Khan",
+    "Sun Yat-sen",
+    "british_museum"
+  ],
+  [
+    "history-037",
+    "easy",
+    "Marco Polo's travels famously took him from Europe to which continent?",
+    "Asia",
+    "Africa",
+    "South America",
+    "loc_history"
+  ],
+  [
+    "history-038",
+    "easy",
+    "Which profession is Florence Nightingale famous for reforming?",
+    "Nursing",
+    "Architecture",
+    "Law",
+    "uk_archives"
+  ],
+  [
+    "history-039",
+    "easy",
+    "The suffragette movement campaigned primarily for what?",
+    "Votes for women",
+    "Abolition of monarchy",
+    "Free university education",
+    "uk_archives"
+  ],
+  [
+    "history-040",
+    "easy",
+    "Which British admiral won the Battle of Trafalgar?",
+    "Horatio Nelson",
+    "Francis Drake",
+    "John Jellicoe",
+    "uk_archives"
+  ],
+  [
+    "history-041",
+    "medium",
+    "Which battle in 1066 was won by William the Conqueror?",
+    "Battle of Hastings",
+    "Battle of Agincourt",
+    "Battle of Bosworth",
+    "uk_archives"
+  ],
+  [
+    "history-042",
+    "medium",
+    "At which location was Magna Carta sealed?",
+    "Runnymede",
+    "Canterbury",
+    "York",
+    "uk_archives"
+  ],
+  [
+    "history-043",
+    "medium",
+    "Which king ordered the Domesday survey?",
+    "William I",
+    "Henry II",
+    "Edward I",
+    "uk_archives"
+  ],
+  [
+    "history-044",
+    "medium",
+    "The Hundred Years' War was fought mainly between England and which country?",
+    "France",
+    "Spain",
+    "Denmark",
+    "uk_archives"
+  ],
+  [
+    "history-045",
+    "medium",
+    "Which two houses fought the Wars of the Roses?",
+    "Lancaster and York",
+    "Stuart and Tudor",
+    "Wessex and Mercia",
+    "uk_archives"
+  ],
+  [
+    "history-046",
+    "medium",
+    "Which monarch broke with Rome and established royal supremacy over the Church of England?",
+    "Henry VIII",
+    "Richard III",
+    "George III",
+    "uk_archives"
+  ],
+  [
+    "history-047",
+    "medium",
+    "Which queen ruled England during the defeat of the Spanish Armada?",
+    "Elizabeth I",
+    "Mary I",
+    "Anne",
+    "uk_archives"
+  ],
+  [
+    "history-048",
+    "medium",
+    "In which year was the Gunpowder Plot uncovered?",
+    "1605",
+    "1588",
+    "1649",
+    "uk_archives"
+  ],
+  [
+    "history-049",
+    "medium",
+    "The Acts of Union in 1707 created which kingdom?",
+    "Kingdom of Great Britain",
+    "United Kingdom of Great Britain and Ireland",
+    "Commonwealth of England",
+    "uk_archives"
+  ],
+  [
+    "history-050",
+    "medium",
+    "Which 1746 battle ended the main Jacobite rising?",
+    "Culloden",
+    "Bannockburn",
+    "Flodden",
+    "uk_archives"
+  ],
+  [
+    "history-051",
+    "medium",
+    "The storming of which fortress became a symbol of the French Revolution?",
+    "Bastille",
+    "Louvre",
+    "Versailles",
+    "uk_archives"
+  ],
+  [
+    "history-052",
+    "medium",
+    "At which battle was Napoleon finally defeated in 1815?",
+    "Waterloo",
+    "Austerlitz",
+    "Trafalgar",
+    "uk_archives"
+  ],
+  [
+    "history-053",
+    "medium",
+    "Which diplomatic meeting redrew much of Europe after the Napoleonic Wars?",
+    "Congress of Vienna",
+    "Congress of Berlin",
+    "Yalta Conference",
+    "uk_archives"
+  ],
+  [
+    "history-054",
+    "medium",
+    "In which year did the American Civil War begin?",
+    "1861",
+    "1848",
+    "1876",
+    "loc_history"
+  ],
+  [
+    "history-055",
+    "medium",
+    "Which US president issued the Emancipation Proclamation?",
+    "Abraham Lincoln",
+    "Ulysses S. Grant",
+    "Andrew Jackson",
+    "loc_history"
+  ],
+  [
+    "history-056",
+    "medium",
+    "From which country did the United States purchase Louisiana in 1803?",
+    "France",
+    "Spain",
+    "Britain",
+    "loc_history"
+  ],
+  [
+    "history-057",
+    "medium",
+    "Which 1868 restoration transformed Japan's government and economy?",
+    "Meiji Restoration",
+    "Taika Reform",
+    "Genpei Restoration",
+    "loc_history"
+  ],
+  [
+    "history-058",
+    "medium",
+    "The nineteenth-century Opium Wars involved China and which European power?",
+    "Britain",
+    "Italy",
+    "Sweden",
+    "uk_archives"
+  ],
+  [
+    "history-059",
+    "medium",
+    "In which year did the Suez Canal open?",
+    "1869",
+    "1815",
+    "1914",
+    "unesco"
+  ],
+  [
+    "history-060",
+    "medium",
+    "Which statesman is closely associated with German unification in 1871?",
+    "Otto von Bismarck",
+    "Klemens von Metternich",
+    "Giuseppe Garibaldi",
+    "uk_archives"
+  ],
+  [
+    "history-061",
+    "medium",
+    "Whose assassination in Sarajevo triggered the July Crisis of 1914?",
+    "Archduke Franz Ferdinand",
+    "Kaiser Wilhelm II",
+    "Tsar Nicholas II",
+    "uk_archives"
+  ],
+  [
+    "history-062",
+    "medium",
+    "Which faction seized power during Russia's October Revolution?",
+    "Bolsheviks",
+    "Mensheviks",
+    "Decembrists",
+    "uk_archives"
+  ],
+  [
+    "history-063",
+    "medium",
+    "Which treaty ended Russia's participation in the First World War?",
+    "Treaty of Brest-Litovsk",
+    "Treaty of Tordesillas",
+    "Treaty of Utrecht",
+    "uk_archives"
+  ],
+  [
+    "history-064",
+    "medium",
+    "Which international organisation was created after the First World War?",
+    "League of Nations",
+    "United Nations",
+    "Council of Europe",
+    "uk_archives"
+  ],
+  [
+    "history-065",
+    "medium",
+    "The D-Day landings took place in which region of France?",
+    "Normandy",
+    "Brittany",
+    "Provence",
+    "uk_archives"
+  ],
+  [
+    "history-066",
+    "medium",
+    "At which British site were many Enigma messages deciphered?",
+    "Bletchley Park",
+    "Greenwich",
+    "Sandhurst",
+    "uk_archives"
+  ],
+  [
+    "history-067",
+    "medium",
+    "What was the codename for the US-led atomic bomb programme?",
+    "Manhattan Project",
+    "Apollo Project",
+    "Trinity Alliance",
+    "loc_history"
+  ],
+  [
+    "history-068",
+    "medium",
+    "In which year was the United Nations founded?",
+    "1945",
+    "1919",
+    "1957",
+    "un_states"
+  ],
+  [
+    "history-069",
+    "medium",
+    "In which year did India gain independence from British rule?",
+    "1947",
+    "1939",
+    "1956",
+    "uk_archives"
+  ],
+  [
+    "history-070",
+    "medium",
+    "In which year was NATO founded?",
+    "1949",
+    "1945",
+    "1961",
+    "uk_archives"
+  ],
+  [
+    "history-071",
+    "medium",
+    "Which country launched Sputnik 1?",
+    "Soviet Union",
+    "United States",
+    "France",
+    "loc_history"
+  ],
+  [
+    "history-072",
+    "medium",
+    "In which year did the Cuban Missile Crisis occur?",
+    "1962",
+    "1956",
+    "1968",
+    "loc_history"
+  ],
+  [
+    "history-073",
+    "medium",
+    "Who was the first person to walk on the Moon?",
+    "Neil Armstrong",
+    "Yuri Gagarin",
+    "Buzz Aldrin",
+    "nasa_solar"
+  ],
+  [
+    "history-074",
+    "medium",
+    "The fall of which city in 1975 marked the end of the Vietnam War?",
+    "Saigon",
+    "Hanoi",
+    "Da Nang",
+    "loc_history"
+  ],
+  [
+    "history-075",
+    "medium",
+    "The Chernobyl nuclear disaster occurred in which Soviet republic?",
+    "Ukrainian SSR",
+    "Belorussian SSR",
+    "Georgian SSR",
+    "uk_archives"
+  ],
+  [
+    "history-076",
+    "medium",
+    "Who became South Africa's first Black president in 1994?",
+    "Nelson Mandela",
+    "Desmond Tutu",
+    "F. W. de Klerk",
+    "nobel"
+  ],
+  [
+    "history-077",
+    "medium",
+    "Which treaty created the European Union?",
+    "Maastricht Treaty",
+    "Treaty of Versailles",
+    "Treaty of Rome in 1957 alone",
+    "uk_archives"
+  ],
+  [
+    "history-078",
+    "medium",
+    "In which year was the Soviet Union formally dissolved?",
+    "1991",
+    "1985",
+    "1995",
+    "loc_history"
+  ],
+  [
+    "history-079",
+    "medium",
+    "Which country resumed sovereignty over Hong Kong in 1997?",
+    "China",
+    "Portugal",
+    "Japan",
+    "uk_archives"
+  ],
+  [
+    "history-080",
+    "medium",
+    "In which year did euro banknotes and coins enter general circulation?",
+    "2002",
+    "1992",
+    "2007",
+    "uk_archives"
+  ],
+  [
+    "history-081",
+    "hard",
+    "Linear B was used to write an early form of which language?",
+    "Greek",
+    "Latin",
+    "Egyptian",
+    "british_museum"
+  ],
+  [
+    "history-082",
+    "hard",
+    "The Punic Wars were fought between Rome and which rival power?",
+    "Carthage",
+    "Sparta",
+    "Persia",
+    "british_museum"
+  ],
+  [
+    "history-083",
+    "hard",
+    "Which Roman emperor issued the Edict of Milan with Licinius?",
+    "Constantine I",
+    "Trajan",
+    "Hadrian",
+    "british_museum"
+  ],
+  [
+    "history-084",
+    "hard",
+    "The Corpus Juris Civilis was compiled under which Byzantine emperor?",
+    "Justinian I",
+    "Basil II",
+    "Alexios I",
+    "british_museum"
+  ],
+  [
+    "history-085",
+    "hard",
+    "Which English king sealed Magna Carta in 1215?",
+    "King John",
+    "Henry III",
+    "Edward II",
+    "uk_archives"
+  ],
+  [
+    "history-086",
+    "hard",
+    "Which bacterium causes plague, including the Black Death?",
+    "Yersinia pestis",
+    "Vibrio cholerae",
+    "Bacillus anthracis",
+    "smithsonian_science"
+  ],
+  [
+    "history-087",
+    "hard",
+    "Which settlement ended the Thirty Years' War in 1648?",
+    "Peace of Westphalia",
+    "Treaty of Utrecht",
+    "Peace of Augsburg",
+    "uk_archives"
+  ],
+  [
+    "history-088",
+    "hard",
+    "Which revolution removed James II from the English throne?",
+    "Glorious Revolution",
+    "Peasants' Revolt",
+    "Peterloo Rising",
+    "uk_archives"
+  ],
+  [
+    "history-089",
+    "hard",
+    "In which year did the Seven Years' War begin?",
+    "1756",
+    "1740",
+    "1775",
+    "uk_archives"
+  ],
+  [
+    "history-090",
+    "hard",
+    "Which formerly enslaved leader became central to the Haitian Revolution?",
+    "Toussaint Louverture",
+    "Simón Bolívar",
+    "José de San Martín",
+    "loc_history"
+  ],
+  [
+    "history-091",
+    "hard",
+    "Which Austrian statesman dominated the Congress of Vienna?",
+    "Klemens von Metternich",
+    "Otto von Bismarck",
+    "Charles de Talleyrand",
+    "uk_archives"
+  ],
+  [
+    "history-092",
+    "hard",
+    "The Charge of the Light Brigade occurred during which battle?",
+    "Battle of Balaclava",
+    "Battle of Inkerman",
+    "Battle of Waterloo",
+    "uk_archives"
+  ],
+  [
+    "history-093",
+    "hard",
+    "Which 1884–85 meeting formalised rules for European colonisation in Africa?",
+    "Berlin Conference",
+    "Vienna Congress",
+    "Algeciras Conference",
+    "uk_archives"
+  ],
+  [
+    "history-094",
+    "hard",
+    "The Boxer Rebellion took place primarily in which country?",
+    "China",
+    "Japan",
+    "India",
+    "loc_history"
+  ],
+  [
+    "history-095",
+    "hard",
+    "Which treaty ended the Russo-Japanese War?",
+    "Treaty of Portsmouth",
+    "Treaty of Shimonoseki",
+    "Treaty of Nanking",
+    "loc_history"
+  ],
+  [
+    "history-096",
+    "hard",
+    "The Zimmermann Telegram proposed an alliance between Germany and which country?",
+    "Mexico",
+    "Brazil",
+    "Argentina",
+    "loc_history"
+  ],
+  [
+    "history-097",
+    "hard",
+    "In which year was the Weimar Constitution adopted?",
+    "1919",
+    "1914",
+    "1923",
+    "uk_archives"
+  ],
+  [
+    "history-098",
+    "hard",
+    "Which Chinese Communist leader headed the Long March?",
+    "Mao Zedong",
+    "Sun Yat-sen",
+    "Yuan Shikai",
+    "loc_history"
+  ],
+  [
+    "history-099",
+    "hard",
+    "Which 1939 pact was signed by Nazi Germany and the Soviet Union?",
+    "Molotov–Ribbentrop Pact",
+    "Kellogg–Briand Pact",
+    "Locarno Pact",
+    "uk_archives"
+  ],
+  [
+    "history-100",
+    "hard",
+    "What was the main purpose of the Marshall Plan?",
+    "European economic recovery",
+    "Creation of NATO forces",
+    "Partition of Germany",
+    "loc_history"
+  ]
 ]
-

@@ -1,104 +1,902 @@
 [
-  ["easy","Which company publishes the main Super Mario games?","Nintendo","Sega","Sony","nintendo"],
-  ["easy","Which blue character is Sega's famous mascot?","Sonic the Hedgehog","Mega Man","Crash Bandicoot","strong_museum"],
-  ["easy","Who is the armoured protagonist of the main Halo games?","Master Chief","Marcus Fenix","Doom Slayer","xbox"],
-  ["easy","Who is the usual player-controlled hero in The Legend of Zelda?","Link","Zelda","Ganon","nintendo"],
-  ["easy","Which yellow Pokémon is the franchise's best-known mascot?","Pikachu","Charizard","Meowth","nintendo"],
-  ["easy","Which game is famous for building with cubic blocks?","Minecraft","Tetris Effect","Portal","xbox"],
-  ["easy","Which green Minecraft enemy explodes near the player?","Creeper","Skeleton","Enderman","xbox"],
-  ["easy","Fortnite is strongly associated with which multiplayer genre?","Battle royale","Turn-based strategy","Kart racing","strong_museum"],
-  ["easy","Which company makes PlayStation consoles?","Sony","Microsoft","Nintendo","playstation"],
-  ["easy","Which company makes Xbox consoles?","Microsoft","Sony","Sega","xbox"],
-  ["easy","Which company makes the Nintendo Switch?","Nintendo","Valve","Atari","nintendo"],
-  ["easy","Which company operates the Steam PC game store?","Valve","Electronic Arts","Ubisoft","strong_museum"],
-  ["easy","Which arcade character eats dots while avoiding ghosts?","Pac-Man","Q*bert","Frogger","strong_museum"],
-  ["easy","Which puzzle game uses falling tetrominoes?","Tetris","Minesweeper","Lemmings","strong_museum"],
-  ["easy","Which series lets players control simulated people and households?","The Sims","Civilization","Gran Turismo","strong_museum"],
-  ["easy","Which game series features racing with Mario and his friends?","Mario Kart","F-Zero","Forza Motorsport","nintendo"],
-  ["easy","Which Nintendo series centres on life in a village of animal neighbours?","Animal Crossing","Star Fox","Fire Emblem","nintendo"],
-  ["easy","Who is the archaeologist hero of Tomb Raider?","Lara Croft","Aloy","Jill Valentine","strong_museum"],
-  ["easy","Who is the central warrior in the Greek-era God of War games?","Kratos","Atreus","Ares","playstation"],
-  ["easy","Who is the treasure-hunting hero of Uncharted?","Nathan Drake","Joel Miller","Cole MacGrath","playstation"],
-  ["easy","Which two characters are central to the first The Last of Us game?","Joel and Ellie","Nathan and Elena","Kratos and Atreus","playstation"],
-  ["easy","Skyrim belongs to which role-playing series?","The Elder Scrolls","Dragon Age","Diablo","strong_museum"],
-  ["easy","Which company develops the main Grand Theft Auto games?","Rockstar Games","Valve","Capcom","strong_museum"],
-  ["easy","Red Dead Redemption is mainly set in what kind of historical setting?","American frontier","Ancient Rome","Feudal Japan","strong_museum"],
-  ["easy","Which puzzle game gives the player a device that creates linked portals?","Portal","Half-Life","BioShock","strong_museum"],
-  ["easy","Who is the scientist protagonist of Half-Life?","Gordon Freeman","Isaac Clarke","Sam Fisher","strong_museum"],
-  ["easy","Which game series stars the Doom Slayer fighting demons?","Doom","Quake Champions","Wolfenstein","strong_museum"],
-  ["easy","Which fighter is known for the Hadouken in Street Fighter?","Ryu","Scorpion","Jin Kazama","strong_museum"],
-  ["easy","Which fighting series is famous for finishing moves called Fatalities?","Mortal Kombat","Tekken","Virtua Fighter","strong_museum"],
-  ["easy","Which studio originally created Minecraft?","Mojang","Rare","Bungie","xbox"],
-  ["easy","Which company created League of Legends?","Riot Games","Valve","Blizzard Entertainment","strong_museum"],
-  ["easy","Which company develops Dota 2?","Valve","Riot Games","Epic Games","strong_museum"],
-  ["easy","Which company created Overwatch?","Blizzard Entertainment","BioWare","Bethesda Game Studios","strong_museum"],
-  ["easy","What is the fantasy world of World of Warcraft called?","Azeroth","Tamriel","Sanctuary","strong_museum"],
-  ["easy","Which company publishes the main Final Fantasy series?","Square Enix","Capcom","Konami","strong_museum"],
-  ["easy","Which series features outbreaks caused by biological experiments and viruses?","Resident Evil","Gran Turismo","Ace Attorney","strong_museum"],
-  ["easy","Which series is set around a foggy town famous for psychological horror?","Silent Hill","Animal Crossing","Mass Effect","strong_museum"],
-  ["easy","Call of Duty is primarily associated with which genre?","First-person shooter","Puzzle platformer","Life simulation","strong_museum"],
-  ["easy","Which series lets players guide a civilisation across historical eras?","Civilization","Forza Horizon","Street Fighter","strong_museum"],
-  ["easy","Which hedgehog character collects golden rings?","Sonic","Shadow only","Knuckles","strong_museum"],
-
-  ["medium","Mario first appeared under the name Jumpman in which arcade game?","Donkey Kong","Mario Bros.","Popeye","nintendo"],
-  ["medium","Which princess gives The Legend of Zelda series its name?","Zelda","Peach","Daisy","nintendo"],
-  ["medium","How many golden pieces form the complete Triforce?","Three","Four","Five","nintendo"],
-  ["medium","Who is the armoured bounty hunter in Metroid?","Samus Aran","Fox McCloud","Captain Falcon","nintendo"],
-  ["medium","Which Nintendo character can inhale enemies and copy their powers?","Kirby","Yoshi","Toad","nintendo"],
-  ["medium","Who leads the Star Fox team?","Fox McCloud","Falco Lombardi","Wolf O'Donnell","nintendo"],
-  ["medium","What is the first main region explored in Pokémon Red and Blue?","Kanto","Johto","Hoenn","nintendo"],
-  ["medium","Which Pokémon type was introduced alongside Dark in the second generation?","Steel","Fairy","Dragon","nintendo"],
-  ["medium","Which Nintendo series is a crossover platform fighting game?","Super Smash Bros.","Mario Party","Advance Wars","nintendo"],
-  ["medium","In Splatoon, what substance do players fire to cover territory?","Ink","Water","Paintballs","nintendo"],
-  ["medium","In which country was the original PlayStation first released?","Japan","United States","United Kingdom","playstation"],
-  ["medium","Which PlayStation console was the first in the series to play DVDs?","PlayStation 2","Original PlayStation","PlayStation 4","playstation"],
-  ["medium","What name did Sony use for its long-running vibration-equipped controller line?","DualShock","WaveBird","Duke","playstation"],
-  ["medium","In which year did the original Xbox launch?","2001","1996","2006","xbox"],
-  ["medium","Which Halo game launched alongside the original Xbox?","Halo: Combat Evolved","Halo 2","Halo 3","xbox"],
-  ["medium","What was Sega's final home console?","Dreamcast","Saturn","Genesis","strong_museum"],
-  ["medium","Which Nintendo handheld launched with Tetris in many regions?","Game Boy","Nintendo DS","Game Gear","nintendo"],
-  ["medium","Which Atari console popularised interchangeable game cartridges?","Atari 2600","Atari Jaguar","Atari Lynx","strong_museum"],
-  ["medium","In which year did Valve launch Steam?","2003","1998","2008","strong_museum"],
-  ["medium","Which company develops Unreal Engine?","Epic Games","Unity Technologies","id Software","strong_museum"],
-  ["medium","Which studio created Dark Souls?","FromSoftware","Team Ninja","PlatinumGames","strong_museum"],
-  ["medium","What is the main setting of Elden Ring called?","The Lands Between","Lordran","Boletaria","strong_museum"],
-  ["medium","In which Gothic city is Bloodborne set?","Yharnam","Rapture","Dunwall","playstation"],
-  ["medium","Who is the main monster hunter in The Witcher games?","Geralt of Rivia","Commander Shepard","Hawke","strong_museum"],
-  ["medium","Who commands the Normandy in the Mass Effect trilogy?","Commander Shepard","Captain Price","Solid Snake","strong_museum"],
-  ["medium","Which studio created the Dragon Age series?","BioWare","Larian Studios","Obsidian Entertainment","strong_museum"],
-  ["medium","Which fictional company built many underground shelters in Fallout?","Vault-Tec","Aperture Science","Umbrella Corporation","strong_museum"],
-  ["medium","What is the underwater city in the first BioShock called?","Rapture","Columbia","Midgar","strong_museum"],
-  ["medium","What is the name of Master Chief's AI companion?","Cortana","EDI","SHODAN","xbox"],
-  ["medium","Which weapon in Gears of War combines a rifle with a chainsaw?","Lancer","Buster Sword","Gravity Gun","xbox"],
-  ["medium","Age of Empires belongs mainly to which genre?","Real-time strategy","Rhythm game","Survival horror","strong_museum"],
-  ["medium","How many playable species are in the original StarCraft?","Three","Four","Two","strong_museum"],
-  ["medium","Which two factions headline the earliest Warcraft strategy game?","Orcs and humans","Terrans and Zerg","Alliance and Covenant","strong_museum"],
-  ["medium","Which designer's name appears in the full title of the Civilization series?","Sid Meier","Will Wright","Peter Molyneux","strong_museum"],
-  ["medium","In XCOM, players primarily defend Earth from what?","Alien invasion","Zombie plague","Robot sports league","strong_museum"],
-  ["medium","Total War combines turn-based strategy with what?","Real-time battles","Rhythm sections","First-person shooting","strong_museum"],
-  ["medium","Which studio originally created The Sims?","Maxis","Bullfrog","Westwood","strong_museum"],
-  ["medium","Which genre best describes SimCity?","City-building simulation","Fighting game","Dungeon crawler","strong_museum"],
-  ["medium","Who designed the original RollerCoaster Tycoon?","Chris Sawyer","John Carmack","Hideo Kojima","strong_museum"],
-  ["medium","Who created Stardew Valley largely as a solo developer?","Eric Barone","Toby Fox","Markus Persson","strong_museum"],
-
-  ["hard","Who designed Atari's Pong arcade game?","Allan Alcorn","Nolan Bushnell alone","Ralph Baer","strong_museum"],
-  ["hard","Spacewar! was originally developed for which computer?","PDP-1","Apple II","Commodore 64","strong_museum"],
-  ["hard","What is widely recognised as the first commercial arcade video game?","Computer Space","Pong","Space Invaders","strong_museum"],
-  ["hard","Which system is widely recognised as the first commercial home video game console?","Magnavox Odyssey","Atari 2600","Fairchild Channel F","strong_museum"],
-  ["hard","What was the Japanese name of the Nintendo Entertainment System?","Famicom","Super Famicom","Color TV-Game","nintendo"],
-  ["hard","Which Nintendo designer co-created Mario and The Legend of Zelda?","Shigeru Miyamoto","Gunpei Yokoi","Satoru Iwata","nintendo"],
-  ["hard","The term Metroidvania combines Metroid with which series?","Castlevania","Contra","Mega Man","strong_museum"],
-  ["hard","Which sequence begins the classic Konami Code?","Up, Up, Down, Down","Left, Right, Left, Right","A, B, Start, Select","strong_museum"],
-  ["hard","Which studio created the original Doom?","id Software","Valve","Raven Software","strong_museum"],
-  ["hard","Which studio created the original Quake?","id Software","Epic MegaGames","3D Realms","strong_museum"],
-  ["hard","Which engine was used by the original Half-Life?","GoldSrc","Source 2","Unreal Engine","strong_museum"],
-  ["hard","Counter-Strike began as a mod for which game?","Half-Life","Quake III Arena","Unreal Tournament","strong_museum"],
-  ["hard","The original Defense of the Ancients was a custom map for which game?","Warcraft III","StarCraft II","Age of Empires II","strong_museum"],
-  ["hard","What is the main five-versus-five map in League of Legends?","Summoner's Rift","Howling Abyss","Twisted Treeline","strong_museum"],
-  ["hard","On which Nintendo system did the first Final Fantasy release?","Famicom/NES","Super Famicom/SNES","Nintendo 64","nintendo"],
-  ["hard","Who created the Dragon Quest series?","Yuji Horii","Hironobu Sakaguchi","Shinji Mikami","strong_museum"],
-  ["hard","Who created the Metal Gear series?","Hideo Kojima","Hideki Kamiya","Tomonobu Itagaki","strong_museum"],
-  ["hard","Who directed the original Resident Evil?","Shinji Mikami","Keiji Inafune","Suda51","strong_museum"],
-  ["hard","In which programming language was the original Java Edition of Minecraft written?","Java","C++","C#","xbox"],
-  ["hard","Who created Tetris?","Alexey Pajitnov","Toru Iwatani","Henk Rogers","strong_museum"]
+  [
+    "gaming-001",
+    "easy",
+    "Which company publishes the main Super Mario games?",
+    "Nintendo",
+    "Sega",
+    "Sony",
+    "nintendo"
+  ],
+  [
+    "gaming-002",
+    "easy",
+    "Which blue character is Sega's famous mascot?",
+    "Sonic the Hedgehog",
+    "Mega Man",
+    "Crash Bandicoot",
+    "strong_museum"
+  ],
+  [
+    "gaming-003",
+    "easy",
+    "Who is the armoured protagonist of the main Halo games?",
+    "Master Chief",
+    "Marcus Fenix",
+    "Doom Slayer",
+    "xbox"
+  ],
+  [
+    "gaming-004",
+    "easy",
+    "Who is the usual player-controlled hero in The Legend of Zelda?",
+    "Link",
+    "Zelda",
+    "Ganon",
+    "nintendo"
+  ],
+  [
+    "gaming-005",
+    "easy",
+    "Which yellow Pokémon is the franchise's best-known mascot?",
+    "Pikachu",
+    "Charizard",
+    "Meowth",
+    "nintendo"
+  ],
+  [
+    "gaming-006",
+    "easy",
+    "Which game is famous for building with cubic blocks?",
+    "Minecraft",
+    "Tetris Effect",
+    "Portal",
+    "xbox"
+  ],
+  [
+    "gaming-007",
+    "easy",
+    "Which green Minecraft enemy explodes near the player?",
+    "Creeper",
+    "Skeleton",
+    "Enderman",
+    "xbox"
+  ],
+  [
+    "gaming-008",
+    "easy",
+    "Fortnite is strongly associated with which multiplayer genre?",
+    "Battle royale",
+    "Turn-based strategy",
+    "Kart racing",
+    "strong_museum"
+  ],
+  [
+    "gaming-009",
+    "easy",
+    "Which company makes PlayStation consoles?",
+    "Sony",
+    "Microsoft",
+    "Nintendo",
+    "playstation"
+  ],
+  [
+    "gaming-010",
+    "easy",
+    "Which company makes Xbox consoles?",
+    "Microsoft",
+    "Sony",
+    "Sega",
+    "xbox"
+  ],
+  [
+    "gaming-011",
+    "easy",
+    "Which company makes the Nintendo Switch?",
+    "Nintendo",
+    "Valve",
+    "Atari",
+    "nintendo"
+  ],
+  [
+    "gaming-012",
+    "easy",
+    "Which company operates the Steam PC game store?",
+    "Valve",
+    "Electronic Arts",
+    "Ubisoft",
+    "strong_museum"
+  ],
+  [
+    "gaming-013",
+    "easy",
+    "Which arcade character eats dots while avoiding ghosts?",
+    "Pac-Man",
+    "Q*bert",
+    "Frogger",
+    "strong_museum"
+  ],
+  [
+    "gaming-014",
+    "easy",
+    "Which puzzle game uses falling tetrominoes?",
+    "Tetris",
+    "Minesweeper",
+    "Lemmings",
+    "strong_museum"
+  ],
+  [
+    "gaming-015",
+    "easy",
+    "Which series lets players control simulated people and households?",
+    "The Sims",
+    "Civilization",
+    "Gran Turismo",
+    "strong_museum"
+  ],
+  [
+    "gaming-016",
+    "easy",
+    "Which game series features racing with Mario and his friends?",
+    "Mario Kart",
+    "F-Zero",
+    "Forza Motorsport",
+    "nintendo"
+  ],
+  [
+    "gaming-017",
+    "easy",
+    "Which Nintendo series centres on life in a village of animal neighbours?",
+    "Animal Crossing",
+    "Star Fox",
+    "Fire Emblem",
+    "nintendo"
+  ],
+  [
+    "gaming-018",
+    "easy",
+    "Who is the archaeologist hero of Tomb Raider?",
+    "Lara Croft",
+    "Aloy",
+    "Jill Valentine",
+    "strong_museum"
+  ],
+  [
+    "gaming-019",
+    "easy",
+    "Who is the central warrior in the Greek-era God of War games?",
+    "Kratos",
+    "Atreus",
+    "Ares",
+    "playstation"
+  ],
+  [
+    "gaming-020",
+    "easy",
+    "Who is the treasure-hunting hero of Uncharted?",
+    "Nathan Drake",
+    "Joel Miller",
+    "Cole MacGrath",
+    "playstation"
+  ],
+  [
+    "gaming-021",
+    "easy",
+    "Which two characters are central to the first The Last of Us game?",
+    "Joel and Ellie",
+    "Nathan and Elena",
+    "Kratos and Atreus",
+    "playstation"
+  ],
+  [
+    "gaming-022",
+    "easy",
+    "Skyrim belongs to which role-playing series?",
+    "The Elder Scrolls",
+    "Dragon Age",
+    "Diablo",
+    "strong_museum"
+  ],
+  [
+    "gaming-023",
+    "easy",
+    "Which company develops the main Grand Theft Auto games?",
+    "Rockstar Games",
+    "Valve",
+    "Capcom",
+    "strong_museum"
+  ],
+  [
+    "gaming-024",
+    "easy",
+    "Red Dead Redemption is mainly set in what kind of historical setting?",
+    "American frontier",
+    "Ancient Rome",
+    "Feudal Japan",
+    "strong_museum"
+  ],
+  [
+    "gaming-025",
+    "easy",
+    "Which puzzle game gives the player a device that creates linked portals?",
+    "Portal",
+    "Half-Life",
+    "BioShock",
+    "strong_museum"
+  ],
+  [
+    "gaming-026",
+    "easy",
+    "Who is the scientist protagonist of Half-Life?",
+    "Gordon Freeman",
+    "Isaac Clarke",
+    "Sam Fisher",
+    "strong_museum"
+  ],
+  [
+    "gaming-027",
+    "easy",
+    "Which game series stars the Doom Slayer fighting demons?",
+    "Doom",
+    "Quake Champions",
+    "Wolfenstein",
+    "strong_museum"
+  ],
+  [
+    "gaming-028",
+    "easy",
+    "Which fighter is known for the Hadouken in Street Fighter?",
+    "Ryu",
+    "Scorpion",
+    "Jin Kazama",
+    "strong_museum"
+  ],
+  [
+    "gaming-029",
+    "easy",
+    "Which fighting series is famous for finishing moves called Fatalities?",
+    "Mortal Kombat",
+    "Tekken",
+    "Virtua Fighter",
+    "strong_museum"
+  ],
+  [
+    "gaming-030",
+    "easy",
+    "Which studio originally created Minecraft?",
+    "Mojang",
+    "Rare",
+    "Bungie",
+    "xbox"
+  ],
+  [
+    "gaming-031",
+    "easy",
+    "Which company created League of Legends?",
+    "Riot Games",
+    "Valve",
+    "Blizzard Entertainment",
+    "strong_museum"
+  ],
+  [
+    "gaming-032",
+    "easy",
+    "Which company develops Dota 2?",
+    "Valve",
+    "Riot Games",
+    "Epic Games",
+    "strong_museum"
+  ],
+  [
+    "gaming-033",
+    "easy",
+    "Which company created Overwatch?",
+    "Blizzard Entertainment",
+    "BioWare",
+    "Bethesda Game Studios",
+    "strong_museum"
+  ],
+  [
+    "gaming-034",
+    "easy",
+    "What is the fantasy world of World of Warcraft called?",
+    "Azeroth",
+    "Tamriel",
+    "Sanctuary",
+    "strong_museum"
+  ],
+  [
+    "gaming-035",
+    "easy",
+    "Which company publishes the main Final Fantasy series?",
+    "Square Enix",
+    "Capcom",
+    "Konami",
+    "strong_museum"
+  ],
+  [
+    "gaming-036",
+    "easy",
+    "Which series features outbreaks caused by biological experiments and viruses?",
+    "Resident Evil",
+    "Gran Turismo",
+    "Ace Attorney",
+    "strong_museum"
+  ],
+  [
+    "gaming-037",
+    "easy",
+    "Which series is set around a foggy town famous for psychological horror?",
+    "Silent Hill",
+    "Animal Crossing",
+    "Mass Effect",
+    "strong_museum"
+  ],
+  [
+    "gaming-038",
+    "easy",
+    "Call of Duty is primarily associated with which genre?",
+    "First-person shooter",
+    "Puzzle platformer",
+    "Life simulation",
+    "strong_museum"
+  ],
+  [
+    "gaming-039",
+    "easy",
+    "Which series lets players guide a civilisation across historical eras?",
+    "Civilization",
+    "Forza Horizon",
+    "Street Fighter",
+    "strong_museum"
+  ],
+  [
+    "gaming-040",
+    "easy",
+    "Which hedgehog character collects golden rings?",
+    "Sonic",
+    "Shadow only",
+    "Knuckles",
+    "strong_museum"
+  ],
+  [
+    "gaming-041",
+    "medium",
+    "Mario first appeared under the name Jumpman in which arcade game?",
+    "Donkey Kong",
+    "Mario Bros.",
+    "Popeye",
+    "nintendo"
+  ],
+  [
+    "gaming-042",
+    "medium",
+    "Which princess gives The Legend of Zelda series its name?",
+    "Zelda",
+    "Peach",
+    "Daisy",
+    "nintendo"
+  ],
+  [
+    "gaming-043",
+    "medium",
+    "How many golden pieces form the complete Triforce?",
+    "Three",
+    "Four",
+    "Five",
+    "nintendo"
+  ],
+  [
+    "gaming-044",
+    "medium",
+    "Who is the armoured bounty hunter in Metroid?",
+    "Samus Aran",
+    "Fox McCloud",
+    "Captain Falcon",
+    "nintendo"
+  ],
+  [
+    "gaming-045",
+    "medium",
+    "Which Nintendo character can inhale enemies and copy their powers?",
+    "Kirby",
+    "Yoshi",
+    "Toad",
+    "nintendo"
+  ],
+  [
+    "gaming-046",
+    "medium",
+    "Who leads the Star Fox team?",
+    "Fox McCloud",
+    "Falco Lombardi",
+    "Wolf O'Donnell",
+    "nintendo"
+  ],
+  [
+    "gaming-047",
+    "medium",
+    "What is the first main region explored in Pokémon Red and Blue?",
+    "Kanto",
+    "Johto",
+    "Hoenn",
+    "nintendo"
+  ],
+  [
+    "gaming-048",
+    "medium",
+    "Which Pokémon type was introduced alongside Dark in the second generation?",
+    "Steel",
+    "Fairy",
+    "Dragon",
+    "nintendo"
+  ],
+  [
+    "gaming-049",
+    "medium",
+    "Which Nintendo series is a crossover platform fighting game?",
+    "Super Smash Bros.",
+    "Mario Party",
+    "Advance Wars",
+    "nintendo"
+  ],
+  [
+    "gaming-050",
+    "medium",
+    "In Splatoon, what substance do players fire to cover territory?",
+    "Ink",
+    "Water",
+    "Paintballs",
+    "nintendo"
+  ],
+  [
+    "gaming-051",
+    "medium",
+    "In which country was the original PlayStation first released?",
+    "Japan",
+    "United States",
+    "United Kingdom",
+    "playstation"
+  ],
+  [
+    "gaming-052",
+    "medium",
+    "Which PlayStation console was the first in the series to play DVDs?",
+    "PlayStation 2",
+    "Original PlayStation",
+    "PlayStation 4",
+    "playstation"
+  ],
+  [
+    "gaming-053",
+    "medium",
+    "What name did Sony use for its long-running vibration-equipped controller line?",
+    "DualShock",
+    "WaveBird",
+    "Duke",
+    "playstation"
+  ],
+  [
+    "gaming-054",
+    "medium",
+    "In which year did the original Xbox launch?",
+    "2001",
+    "1996",
+    "2006",
+    "xbox"
+  ],
+  [
+    "gaming-055",
+    "medium",
+    "Which Halo game launched alongside the original Xbox?",
+    "Halo: Combat Evolved",
+    "Halo 2",
+    "Halo 3",
+    "xbox"
+  ],
+  [
+    "gaming-056",
+    "medium",
+    "What was Sega's final home console?",
+    "Dreamcast",
+    "Saturn",
+    "Genesis",
+    "strong_museum"
+  ],
+  [
+    "gaming-057",
+    "medium",
+    "Which Nintendo handheld launched with Tetris in many regions?",
+    "Game Boy",
+    "Nintendo DS",
+    "Game Gear",
+    "nintendo"
+  ],
+  [
+    "gaming-058",
+    "medium",
+    "Which Atari console popularised interchangeable game cartridges?",
+    "Atari 2600",
+    "Atari Jaguar",
+    "Atari Lynx",
+    "strong_museum"
+  ],
+  [
+    "gaming-059",
+    "medium",
+    "In which year did Valve launch Steam?",
+    "2003",
+    "1998",
+    "2008",
+    "strong_museum"
+  ],
+  [
+    "gaming-060",
+    "medium",
+    "Which company develops Unreal Engine?",
+    "Epic Games",
+    "Unity Technologies",
+    "id Software",
+    "strong_museum"
+  ],
+  [
+    "gaming-061",
+    "medium",
+    "Which studio created Dark Souls?",
+    "FromSoftware",
+    "Team Ninja",
+    "PlatinumGames",
+    "strong_museum"
+  ],
+  [
+    "gaming-062",
+    "medium",
+    "What is the main setting of Elden Ring called?",
+    "The Lands Between",
+    "Lordran",
+    "Boletaria",
+    "strong_museum"
+  ],
+  [
+    "gaming-063",
+    "medium",
+    "In which Gothic city is Bloodborne set?",
+    "Yharnam",
+    "Rapture",
+    "Dunwall",
+    "playstation"
+  ],
+  [
+    "gaming-064",
+    "medium",
+    "Who is the main monster hunter in The Witcher games?",
+    "Geralt of Rivia",
+    "Commander Shepard",
+    "Hawke",
+    "strong_museum"
+  ],
+  [
+    "gaming-065",
+    "medium",
+    "Who commands the Normandy in the Mass Effect trilogy?",
+    "Commander Shepard",
+    "Captain Price",
+    "Solid Snake",
+    "strong_museum"
+  ],
+  [
+    "gaming-066",
+    "medium",
+    "Which studio created the Dragon Age series?",
+    "BioWare",
+    "Larian Studios",
+    "Obsidian Entertainment",
+    "strong_museum"
+  ],
+  [
+    "gaming-067",
+    "medium",
+    "Which fictional company built many underground shelters in Fallout?",
+    "Vault-Tec",
+    "Aperture Science",
+    "Umbrella Corporation",
+    "strong_museum"
+  ],
+  [
+    "gaming-068",
+    "medium",
+    "What is the underwater city in the first BioShock called?",
+    "Rapture",
+    "Columbia",
+    "Midgar",
+    "strong_museum"
+  ],
+  [
+    "gaming-069",
+    "medium",
+    "What is the name of Master Chief's AI companion?",
+    "Cortana",
+    "EDI",
+    "SHODAN",
+    "xbox"
+  ],
+  [
+    "gaming-070",
+    "medium",
+    "Which weapon in Gears of War combines a rifle with a chainsaw?",
+    "Lancer",
+    "Buster Sword",
+    "Gravity Gun",
+    "xbox"
+  ],
+  [
+    "gaming-071",
+    "medium",
+    "Age of Empires belongs mainly to which genre?",
+    "Real-time strategy",
+    "Rhythm game",
+    "Survival horror",
+    "strong_museum"
+  ],
+  [
+    "gaming-072",
+    "medium",
+    "How many playable species are in the original StarCraft?",
+    "Three",
+    "Four",
+    "Two",
+    "strong_museum"
+  ],
+  [
+    "gaming-073",
+    "medium",
+    "Which two factions headline the earliest Warcraft strategy game?",
+    "Orcs and humans",
+    "Terrans and Zerg",
+    "Alliance and Covenant",
+    "strong_museum"
+  ],
+  [
+    "gaming-074",
+    "medium",
+    "Which designer's name appears in the full title of the Civilization series?",
+    "Sid Meier",
+    "Will Wright",
+    "Peter Molyneux",
+    "strong_museum"
+  ],
+  [
+    "gaming-075",
+    "medium",
+    "In XCOM, players primarily defend Earth from what?",
+    "Alien invasion",
+    "Zombie plague",
+    "Robot sports league",
+    "strong_museum"
+  ],
+  [
+    "gaming-076",
+    "medium",
+    "Total War combines turn-based strategy with what?",
+    "Real-time battles",
+    "Rhythm sections",
+    "First-person shooting",
+    "strong_museum"
+  ],
+  [
+    "gaming-077",
+    "medium",
+    "Which studio originally created The Sims?",
+    "Maxis",
+    "Bullfrog",
+    "Westwood",
+    "strong_museum"
+  ],
+  [
+    "gaming-078",
+    "medium",
+    "Which genre best describes SimCity?",
+    "City-building simulation",
+    "Fighting game",
+    "Dungeon crawler",
+    "strong_museum"
+  ],
+  [
+    "gaming-079",
+    "medium",
+    "Who designed the original RollerCoaster Tycoon?",
+    "Chris Sawyer",
+    "John Carmack",
+    "Hideo Kojima",
+    "strong_museum"
+  ],
+  [
+    "gaming-080",
+    "medium",
+    "Who created Stardew Valley largely as a solo developer?",
+    "Eric Barone",
+    "Toby Fox",
+    "Markus Persson",
+    "strong_museum"
+  ],
+  [
+    "gaming-081",
+    "hard",
+    "Who designed Atari's Pong arcade game?",
+    "Allan Alcorn",
+    "Nolan Bushnell alone",
+    "Ralph Baer",
+    "strong_museum"
+  ],
+  [
+    "gaming-082",
+    "hard",
+    "Spacewar! was originally developed for which computer?",
+    "PDP-1",
+    "Apple II",
+    "Commodore 64",
+    "strong_museum"
+  ],
+  [
+    "gaming-083",
+    "hard",
+    "What is widely recognised as the first commercial arcade video game?",
+    "Computer Space",
+    "Pong",
+    "Space Invaders",
+    "strong_museum"
+  ],
+  [
+    "gaming-084",
+    "hard",
+    "Which system is widely recognised as the first commercial home video game console?",
+    "Magnavox Odyssey",
+    "Atari 2600",
+    "Fairchild Channel F",
+    "strong_museum"
+  ],
+  [
+    "gaming-085",
+    "hard",
+    "What was the Japanese name of the Nintendo Entertainment System?",
+    "Famicom",
+    "Super Famicom",
+    "Color TV-Game",
+    "nintendo"
+  ],
+  [
+    "gaming-086",
+    "hard",
+    "Which Nintendo designer co-created Mario and The Legend of Zelda?",
+    "Shigeru Miyamoto",
+    "Gunpei Yokoi",
+    "Satoru Iwata",
+    "nintendo"
+  ],
+  [
+    "gaming-087",
+    "hard",
+    "The term Metroidvania combines Metroid with which series?",
+    "Castlevania",
+    "Contra",
+    "Mega Man",
+    "strong_museum"
+  ],
+  [
+    "gaming-088",
+    "hard",
+    "Which sequence begins the classic Konami Code?",
+    "Up, Up, Down, Down",
+    "Left, Right, Left, Right",
+    "A, B, Start, Select",
+    "strong_museum"
+  ],
+  [
+    "gaming-089",
+    "hard",
+    "Which studio created the original Doom?",
+    "id Software",
+    "Valve",
+    "Raven Software",
+    "strong_museum"
+  ],
+  [
+    "gaming-090",
+    "hard",
+    "Which studio created the original Quake?",
+    "id Software",
+    "Epic MegaGames",
+    "3D Realms",
+    "strong_museum"
+  ],
+  [
+    "gaming-091",
+    "hard",
+    "Which engine was used by the original Half-Life?",
+    "GoldSrc",
+    "Source 2",
+    "Unreal Engine",
+    "strong_museum"
+  ],
+  [
+    "gaming-092",
+    "hard",
+    "Counter-Strike began as a mod for which game?",
+    "Half-Life",
+    "Quake III Arena",
+    "Unreal Tournament",
+    "strong_museum"
+  ],
+  [
+    "gaming-093",
+    "hard",
+    "The original Defense of the Ancients was a custom map for which game?",
+    "Warcraft III",
+    "StarCraft II",
+    "Age of Empires II",
+    "strong_museum"
+  ],
+  [
+    "gaming-094",
+    "hard",
+    "What is the main five-versus-five map in League of Legends?",
+    "Summoner's Rift",
+    "Howling Abyss",
+    "Twisted Treeline",
+    "strong_museum"
+  ],
+  [
+    "gaming-095",
+    "hard",
+    "On which Nintendo system did the first Final Fantasy release?",
+    "Famicom/NES",
+    "Super Famicom/SNES",
+    "Nintendo 64",
+    "nintendo"
+  ],
+  [
+    "gaming-096",
+    "hard",
+    "Who created the Dragon Quest series?",
+    "Yuji Horii",
+    "Hironobu Sakaguchi",
+    "Shinji Mikami",
+    "strong_museum"
+  ],
+  [
+    "gaming-097",
+    "hard",
+    "Who created the Metal Gear series?",
+    "Hideo Kojima",
+    "Hideki Kamiya",
+    "Tomonobu Itagaki",
+    "strong_museum"
+  ],
+  [
+    "gaming-098",
+    "hard",
+    "Who directed the original Resident Evil?",
+    "Shinji Mikami",
+    "Keiji Inafune",
+    "Suda51",
+    "strong_museum"
+  ],
+  [
+    "gaming-099",
+    "hard",
+    "In which programming language was the original Java Edition of Minecraft written?",
+    "Java",
+    "C++",
+    "C#",
+    "xbox"
+  ],
+  [
+    "gaming-100",
+    "hard",
+    "Who created Tetris?",
+    "Alexey Pajitnov",
+    "Toru Iwatani",
+    "Henk Rogers",
+    "strong_museum"
+  ]
 ]
