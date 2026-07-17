@@ -7,10 +7,9 @@ on:
   push:
     branches:
       - phase-5-foundation
-      - feature/social-tabs-redesign
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   test:
@@ -26,9 +25,6 @@ jobs:
         with:
           node-version: 22
           cache: npm
-
-      - name: Apply social redesign integration
-        run: node scripts/apply-social-tabs-redesign.mjs
 
       - name: Install test dependencies
         run: npm ci
@@ -56,15 +52,3 @@ jobs:
 
       - name: Verify frontend
         run: npm run test:frontend
-
-      - name: Commit generated integration changes
-        if: github.event_name == 'push'
-        run: |
-          if git diff --quiet; then
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html package.json social-redesign.js
-          git commit -m "Wire the social tabs redesign"
-          git push
