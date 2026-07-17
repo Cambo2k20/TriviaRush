@@ -84,17 +84,15 @@ select
 from public.global_xp_awards
 where source_kind = 'solo';
 
+-- Informational only: this includes historical runs completed before the solo
+-- integration was deployed. Those are handled by the later backfill migration.
 select
   count(*)::integer as completed_solo_runs_without_xp
 from public.game_runs run
 where run.status = 'completed'
   and run.completed_session_id is not null
-  and run.updated_at >= (
-    select pg_get_triggerdef(trigger_row.oid)::text is not null
-      from pg_trigger trigger_row
-      join pg_class table_row on table_row.oid = trigger_row.tgrelid
-      where table_row.relname = 'game_runs'
-        and trigger_row.tgname =
-          'award_solo_global_xp_after_completion_trigger'
-      limit 1
-  )::integer::text::timestamptz;
+  and not exists (
+    select 1
+    from public.global_xp_awards award
+    where award.game_session_id = run.completed_session_id
+  );
