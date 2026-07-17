@@ -195,12 +195,23 @@ body.shared-mode-navigation-ready #startScreen > .home-quick-actions {
     display: none !important;
   }
 
-  body.shared-mode-navigation-ready #startScreen .mobile-category-control {
-    position: relative;
-    width: 100%;
-    margin: 24px 0 14px;
+  body.shared-mode-navigation-ready
+  #startScreen.home-redesign-ready
+  .mobile-category-control {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 24px 0 14px !important;
     display: grid !important;
     gap: 8px;
+  
+    overflow: visible !important;
+    clip: auto !important;
+    clip-path: none !important;
+    white-space: normal !important;
+  
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 
   body.shared-mode-navigation-ready #startScreen .mobile-category-control label {
