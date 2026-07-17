@@ -96,7 +96,7 @@ await db.query(
     "  id, player_id, game_mode, category, questions_answered, correct_answers,",
     "  incorrect_answers, score, best_streak, average_response_ms, duration_seconds",
     ") values",
-    "  ($1, $3, 'rush_60', 'mixed', 10, 8, 2, 540, 6, 1800, 60),",
+    "  ($1, $3, 'duel_60', 'mixed', 10, 8, 2, 540, 6, 1800, 60),",
     "  ($2, $3, 'rush_60', 'science', 1, 1, 0, 180, 1, 1200, 60)"
   ].join("\n"),
   [SESSION_ONE, SESSION_TWO, PLAYER_ID]
@@ -106,7 +106,7 @@ await db.query("select set_config('request.jwt.claim.sub', $1, false)", [PLAYER_
 const firstAward = await db.query(
   [
     "select trivia_private.record_global_xp_award(",
-    "  $1, $2, 'solo', null, 200, 258, 540, 600, null, null,",
+    "  $1, $2, 'live_duel', null, 200, 258, 540, 600, 'win', 'score',",
     "  '{\"test\":\"capped-example\"}'::jsonb",
     ") as payload"
   ].join("\n"),
@@ -120,7 +120,7 @@ assert(firstAward.rows[0].payload.level_up === true, "Crossing thresholds must r
 const replayAward = await db.query(
   [
     "select trivia_private.record_global_xp_award(",
-    "  $1, $2, 'solo', null, 200, 258, 540, 600, null, null, '{}'::jsonb",
+    "  $1, $2, 'live_duel', null, 200, 258, 540, 600, 'win', 'score', '{}'::jsonb",
     ") as payload"
   ].join("\n"),
   [PLAYER_ID, SESSION_ONE]
