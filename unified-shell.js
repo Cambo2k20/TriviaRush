@@ -1,6 +1,8 @@
 (() => {
   "use strict";
 
+  // Presentation only: existing screen IDs and active classes remain the
+  // authoritative navigation state owned by app.js.
   const PAGE_SCREENS = new Set([
     "startScreen",
     "socialScreen",
