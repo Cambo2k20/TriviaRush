@@ -3,9 +3,6 @@ import { readFileSync, writeFileSync } from "node:fs";
 const indexPath = "index.html";
 let html = readFileSync(indexPath, "utf8");
 
-html = html.replace('\n  <link rel="stylesheet" href="mobile-mode-menu.css?v=1">', "");
-html = html.replace('\n  <script src="mobile-mode-menu.js?v=1"></script>', "");
-
 if (html.includes('href="home-redesign.css?v=3"')) {
   html = html.replace('href="home-redesign.css?v=3"', 'href="home-redesign.css?v=4"');
 }
