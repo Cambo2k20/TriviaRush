@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trivia Rush social visual fixture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=8">
+  <link rel="stylesheet" href="../home-redesign.css?v=3">
+  <link rel="stylesheet" href="../social-redesign.css?v=1">
+</head>
+<body class="home-redesign-active">
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Trivia Rush home"><span class="brand-bolt" aria-hidden="true">?</span><span>TRIVIA <strong>RUSH</strong></span></a>
+      <div class="header-actions">
+        <button id="notificationButton" class="icon-button notification-button" type="button"><span aria-hidden="true">🔔</span><span class="notification-badge">1</span></button>
+        <button id="duelButton" class="duel-button" type="button"><span aria-hidden="true">♙</span><span id="duelButtonText">Play friends</span></button>
+        <button id="leaderboardButton" class="leaderboard-button" type="button"><span aria-hidden="true">🏆</span><span>Leaderboard</span></button>
+        <button class="account-button" type="button"><span aria-hidden="true">♙</span><span>Cambo</span></button>
+        <button class="icon-button" type="button"><span aria-hidden="true">🔊</span></button>
+      </div>
+    </header>
+
+    <section id="startScreen" class="screen"></section>
+    <section id="socialScreen" class="screen social-screen active" aria-labelledby="socialTitle">
+      <div class="social-shell">
+        <header class="social-header">
+          <div><div class="eyebrow">1 VS 1</div><h1 id="socialTitle">Friends &amp; duels</h1><p>Old page description.</p></div>
+          <button id="closeSocialButton" class="secondary-button compact-button" type="button">Back</button>
+        </header>
+        <section id="duelAccountGate" hidden><button id="openAccountForDuelButton" type="button">Sign in</button></section>
+        <div id="socialContent">
+          <p id="socialStatus" class="social-status"></p>
+          <div class="social-grid">
+            <section class="social-card">
+              <h2>Create a duel</h2>
+              <label for="duelFormatSelect">How to play</label>
+              <select id="duelFormatSelect"><option value="live">Live — play together</option><option value="turn_based">Turn-based</option></select>
+              <label for="duelCategorySelect">Category</label><select id="duelCategorySelect"><option value="mixed">All categories</option></select>
+              <label for="duelDurationSelect">Game length</label><select id="duelDurationSelect"><option value="60">60 seconds</option></select>
+              <label id="duelInviteAccountLabel" for="duelInviteAccount">Optional account number</label><input id="duelInviteAccount" placeholder="Leave blank for an open room">
+              <p id="duelFormatNote" class="card-note">Live rooms start when both players arrive.</p>
+              <button id="createDuelButton" class="primary-button" type="button">Create duel</button>
+            </section>
+
+            <section class="social-card">
+              <h2>Join a room</h2><input id="duelRoomCode" maxlength="8"><button id="joinDuelButton" class="primary-button" type="button">Join duel</button>
+              <div id="duelInvitations" class="social-list">
+                <div class="social-row"><div class="social-row-copy"><strong>Sam</strong><small>60s · Mixed · #1006</small></div><div class="row-actions"><button type="button">Accept</button></div></div>
+              </div>
+            </section>
+
+            <section class="social-card history-card">
+              <h2>Turn-based challenges</h2>
+              <div id="turnChallenges" class="social-list">
+                <div class="social-row"><div class="social-row-copy"><strong>Jaketh</strong><small>Your turn · #1003</small></div><div class="row-actions"><button type="button">Play</button><button type="button">Decline</button></div></div>
+                <div class="social-row"><div class="social-row-copy"><strong>CamboTest</strong><small>Opponent is playing · #1004</small></div><div class="row-actions"><button type="button">View</button></div></div>
+              </div>
+              <div id="turnChallengeActivity" class="social-list"></div>
+            </section>
+
+            <section class="social-card">
+              <h2>Friends</h2><input id="friendAccountNumber"><button id="addFriendButton" type="button">Add</button>
+              <div id="friendRequests" class="social-list"><div class="social-row"><div class="social-row-copy"><strong>Morgan</strong><small>Account #1005</small></div><div class="row-actions"><button type="button">Accept</button><button type="button">Decline</button></div></div></div>
+              <div id="friendsList" class="social-list">
+                <div class="social-row"><div class="social-row-copy"><strong>CamboTest</strong><small>Account #1004</small></div><div class="row-actions"><button type="button">Live</button><button type="button">Take turns</button><button type="button">Remove</button></div></div>
+                <div class="social-row"><div class="social-row-copy"><strong>Jaketh</strong><small>Account #1003</small></div><div class="row-actions"><button type="button">Live</button><button type="button">Take turns</button><button type="button">Remove</button></div></div>
+                <div class="social-row"><div class="social-row-copy"><strong>Sam</strong><small>Account #1006</small></div><div class="row-actions"><button type="button">Live</button><button type="button">Take turns</button><button type="button">Remove</button></div></div>
+                <div class="social-row"><div class="social-row-copy"><strong>Alex</strong><small>Account #1007</small></div><div class="row-actions"><button type="button">Live</button><button type="button">Take turns</button><button type="button">Remove</button></div></div>
+              </div>
+            </section>
+
+            <section class="social-card history-card"><h2>Match history</h2><input id="historyOpponentFilter"><div id="duelHistory" class="social-list"></div></section>
+            <section class="social-card history-card"><h2>Duel leaderboard</h2><p class="card-note"></p><div class="compact-filter"><button class="active" data-duel-leaderboard-format="all">All</button><button data-duel-leaderboard-format="live">Live</button><button data-duel-leaderboard-format="turn_based">Turn-based</button></div><div id="duelLeaderboard" class="social-list"><div class="social-row"><div class="social-row-copy"><strong>#1 Cambo</strong><small>7W 1D 4L · 58% wins</small></div></div></div></section>
+            <section id="notificationCard" class="social-card history-card"><div class="card-title-row"><h2>Notifications</h2><button id="markNotificationsReadButton">Mark all read</button></div><div id="notificationList"></div><div class="notification-settings"><label><input id="challengeNotificationsToggle" type="checkbox" checked> Challenges</label><label><input id="friendNotificationsToggle" type="checkbox" checked> Friends</label><label><input id="emailNotificationsToggle" type="checkbox"> Email</label><button id="pushNotificationsButton">Enable phone push</button></div><p id="notificationStatus"></p></section>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="leaderboardScreen" class="screen"><div class="leaderboard-card"></div></section>
+    <button id="resultsLeaderboardButton" type="button" hidden></button>
+    <footer><span>Original browser trivia project · Built with HTML, CSS and JavaScript</span><button type="button">How to play</button></footer>
+  </main>
+
+  <script>
+    const visualData = {
+      get_social_dashboard: {
+        friends: [
+          { player_id: "1", display_name: "CamboTest", account_number: 1004, is_online: true },
+          { player_id: "2", display_name: "Jaketh", account_number: 1003 },
+          { player_id: "3", display_name: "Sam", account_number: 1006, is_online: true },
+          { player_id: "4", display_name: "Alex", account_number: 1007 }
+        ],
+        incoming: [{ friendship_id: "r1", display_name: "Morgan", account_number: 1005 }], outgoing: []
+      },
+      get_duel_invitations: [{ host_display_name: "Sam", host_account_number: 1006, room_code: "AB12CD34" }],
+      get_turn_challenges: { active: [
+        { match_id: "m1", opponent_display_name: "Jaketh", opponent_account_number: 1003, status: "guest_turn", self_round_status: "pending", can_start: true, can_decline: true },
+        { match_id: "m2", opponent_display_name: "CamboTest", opponent_account_number: 1004, status: "guest_turn", self_round_status: "completed", can_start: false }
+      ], recent_closed: [] },
+      get_duel_match_history_v2: [
+        { outcome: "win", opponent_display_name: "CamboTest", player_score: 734, opponent_score: 0, match_format: "live", completed_at: "2026-07-17T10:00:00Z" },
+        { outcome: "loss", opponent_display_name: "Jaketh", player_score: 769, opponent_score: 1229, match_format: "turn_based", completed_at: "2026-07-16T10:00:00Z" },
+        { outcome: "win", opponent_display_name: "Sam", player_score: 682, opponent_score: 0, match_format: "live", completed_at: "2026-07-14T10:00:00Z" },
+        { outcome: "cancelled", opponent_display_name: "Jaketh", match_format: "turn_based", completed_at: "2026-07-13T10:00:00Z" },
+        { outcome: "win", opponent_display_name: "CamboTest", player_score: 540, opponent_score: 320, match_format: "live", completed_at: "2026-07-12T10:00:00Z" },
+        { outcome: "loss", opponent_display_name: "Morgan", player_score: 210, opponent_score: 400, match_format: "live", completed_at: "2026-07-11T10:00:00Z" },
+        { outcome: "draw", opponent_display_name: "Sam", player_score: 500, opponent_score: 500, match_format: "turn_based", completed_at: "2026-07-10T10:00:00Z" }
+      ],
+      get_duel_leaderboard_v2: [], get_notifications: [], get_notification_preferences: {}
+    };
+    window.supabase = { createClient: () => ({ rpc: async (name) => ({ data: visualData[name] || null, error: null }) }) };
+  </script>
+  <script src="../social-rpc-bridge.js?v=1"></script>
+  <script>
+    const visualClient = window.supabase.createClient("fixture", "fixture");
+    Promise.all(Object.keys(visualData).map((name) => visualClient.rpc(name, name === "get_duel_match_history_v2" ? { p_match_format: "all" } : {})));
+  </script>
+  <script src="../social-redesign.js?v=1"></script>
+</body>
+</html>

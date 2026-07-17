@@ -53,7 +53,7 @@ const assert = (name, condition) => {
   if (!condition) process.exitCode = 1;
 };
 
-assert("redesign stylesheet linked", html.includes('href="home-redesign.css?v=3"'));
+assert("redesign stylesheet linked", html.includes('href="home-redesign.css?v=4"'));
 assert("redesign runtime linked", html.includes('src="home-redesign.js?v=1"'));
 assert("mockup hero markup present", Boolean(window.document.querySelector(".home-hero-v2")));
 assert("category browser present", Boolean(window.document.querySelector(".home-category-browser")));

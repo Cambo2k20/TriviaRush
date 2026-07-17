@@ -9,7 +9,7 @@ on:
       - phase-5-foundation
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   test:
@@ -17,14 +17,19 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - name: Check out repository
+      - name: Check out repository branch
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
+
+      - name: Apply social assets to the current production page
+        run: node scripts/sync-social-branch-with-main.mjs
 
       - name: Install test dependencies
         run: npm ci
@@ -52,3 +57,25 @@ jobs:
 
       - name: Verify frontend
         run: npm run test:frontend
+
+      - name: Capture social redesign screenshots
+        run: node scripts/capture-social-redesign.mjs
+
+      - name: Upload social redesign screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: social-redesign-screenshots
+          path: artifacts/social-redesign/*.png
+          if-no-files-found: error
+
+      - name: Commit generated production page
+        if: github.event_name == 'pull_request'
+        run: |
+          if git diff --quiet; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Wire the social tabs into the current production page"
+          git push
