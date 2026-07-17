@@ -385,7 +385,7 @@ current quiz platforms continue to expand through multiple play formats. The
 useful lesson is the combination of topic identity, competition and visible
 long-term progress—not copying another product's branding or exact rules.
 
-## 8. Recommended Phase 5 theme: Category Mastery
+## 8. Phase 5 theme: Category Mastery
 
 Phase 5 should be positioned as **Category Mastery and Player Identity**.
 
