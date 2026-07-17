@@ -474,11 +474,18 @@
     window.addEventListener("trivia-rush:social-rpc", scheduleRender);
 
     const activeObserver = new MutationObserver(() => {
-      if (refs.socialScreen.classList.contains("active")) {
-        refs.socialScreen.classList.add("social-page-active");
+      const isActive = refs.socialScreen.classList.contains("active");
+      const hasActiveClass = refs.socialScreen.classList.contains("social-page-active");
+
+      // This observer watches the class attribute. Only write back when the
+      // derived class actually needs to change, otherwise the observer can
+      // continuously trigger itself when the social screen opens.
+      if (isActive !== hasActiveClass) {
+        refs.socialScreen.classList.toggle("social-page-active", isActive);
+      }
+
+      if (isActive) {
         setActiveTab(readTabFromUrl() || viewState.activeTab || "play", false);
-      } else {
-        refs.socialScreen.classList.remove("social-page-active");
       }
     });
     activeObserver.observe(refs.socialScreen, { attributes: true, attributeFilter: ["class"] });
