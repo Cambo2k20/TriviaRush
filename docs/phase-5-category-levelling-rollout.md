@@ -1,12 +1,12 @@
-# Phase 5 Category Levelling Backend Rollout
+# Phase 5 Category Levelling Rollout
 
-**Code status:** additive backend checkpoint  
-**Production status:** not deployed until the SQL steps below are completed
+**Code status:** backend and player-facing mastery UI included  
+**Production status:** not active until the SQL steps below are completed
 
 ## Outcome
 
 This checkpoint adds independent, server-owned levels for every active trivia
-category.
+category and exposes them through the existing account and result screens.
 
 - Correct Easy answers award 10 category XP.
 - Correct Medium answers award 15 category XP.
@@ -17,6 +17,8 @@ category.
 - Category levels use the approved cumulative curve through level 50.
 - Existing authoritative solo and duel answers are backfilled exactly.
 - Browser clients receive read-only RPCs and cannot write XP or levels.
+- Account shows every category's level, XP progress, accuracy and activity.
+- Solo and Online results show exact per-category XP and level-ups.
 
 Global XP remains separate. Global progression can reward speed, streaks, score
 efficiency and multiplayer outcomes; category levelling measures subject
@@ -24,9 +26,17 @@ mastery only.
 
 ## Files
 
+### Database
+
 - `supabase/sql/phase-5-category-levelling.sql`
 - `supabase/sql/phase-5-category-levelling-verification.sql`
 - `scripts/category-progression-smoke-test.mjs`
+
+### Frontend
+
+- `category-progression-ui.js`
+- `category-progression-ui.css`
+- `category-progression-ui-smoke-test.mjs`
 
 ## Database objects
 
@@ -59,6 +69,33 @@ award it twice.
 The solo summary is owner-only. The duel summary is participant-only and returns
 only the caller's progression.
 
+## Player-facing behaviour
+
+### Account
+
+The Account dialog contains a **Category Mastery** panel. Each category card
+shows:
+
+- current category level;
+- server-calculated progress to the next level;
+- questions answered;
+- trusted accuracy;
+- XP remaining to the next level.
+
+### Results
+
+After a Solo, live duel or turn-based game completes, the result screen shows:
+
+- total category XP earned;
+- one row per category credited;
+- exact XP gained in each category;
+- correct/answered counts;
+- current progress toward the next level;
+- a highlighted level-up state when a threshold was crossed.
+
+Mixed games display multiple category rows. The browser never derives XP or
+levels locally; it renders the authoritative RPC response.
+
 ## Exact production order
 
 ### 1. Confirm prerequisites
@@ -73,7 +110,12 @@ The following checkpoints must already be deployed:
 
 Take a Supabase database backup before continuing.
 
-### 2. Run the category levelling migration
+### 2. Merge and publish the frontend
+
+Merge the pull request and allow GitHub Pages to publish the updated static
+assets. The UI will remain safely empty until the database migration is active.
+
+### 3. Run the category levelling migration
 
 In **Supabase → SQL Editor → New query**, run the complete contents of:
 
@@ -85,7 +127,7 @@ The migration is additive and transactional. It creates the progression
 objects, installs completion triggers and backfills existing authoritative
 answers before committing.
 
-### 3. Run read-only verification
+### 4. Run read-only verification
 
 In a fresh SQL Editor query, run:
 
@@ -105,17 +147,18 @@ Confirm:
 - authenticated users can execute the three safe read RPCs;
 - authenticated users cannot execute the private award writer.
 
-### 4. Production acceptance
+### 5. Production acceptance
 
-1. Complete one Easy solo answer correctly and confirm +10 category XP.
-2. Complete one Medium solo answer correctly and confirm +15 category XP.
-3. Complete one Hard solo answer correctly and confirm +25 category XP.
-4. Submit an incorrect answer and confirm activity rises but XP does not.
-5. Complete a Mixed game and confirm multiple real category tracks advance.
-6. Complete a live duel and verify both players receive only their own answer XP.
-7. Complete a turn-based challenge and verify it is classified as turn-based.
-8. Retry the result/summary calls and confirm XP does not increase again.
-9. Upgrade an anonymous account and confirm the same profile retains progress.
+1. Open Account and confirm ten Category Mastery cards appear.
+2. Complete one Easy solo answer correctly and confirm +10 category XP.
+3. Complete one Medium solo answer correctly and confirm +15 category XP.
+4. Complete one Hard solo answer correctly and confirm +25 category XP.
+5. Submit an incorrect answer and confirm activity rises but XP does not.
+6. Complete a Mixed game and confirm multiple category rows appear on Results.
+7. Complete a live duel and verify each player receives only their own answer XP.
+8. Complete a turn-based challenge and verify it is classified as turn-based.
+9. Retry the result/summary calls and confirm XP does not increase again.
+10. Upgrade an anonymous account and confirm the same profile retains progress.
 
 Example read check while authenticated:
 
@@ -123,18 +166,11 @@ Example read check while authenticated:
 select public.get_my_category_progression();
 ```
 
-## Frontend dependency
+## Security and calculation boundary
 
-This checkpoint deliberately establishes the trusted backend first. The next
-frontend checkpoint should:
-
-- add a compact Mastery entry point;
-- show category cards with level, XP bar and accuracy;
-- show exact category XP rows on solo and duel result screens;
-- render Mixed games as multiple category rows;
-- use only the RPC thresholds and percentages returned by the server.
-
-The browser must not duplicate the XP table or level formula.
+The browser must not duplicate the XP table or level formula. It may format
+server values and display progress bars, but all award amounts, aggregate totals,
+levels and percentages remain authoritative database outputs.
 
 ## Rollback
 
