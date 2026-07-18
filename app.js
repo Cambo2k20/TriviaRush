@@ -3,7 +3,13 @@
 
   const QUESTION_DELAY_MS = 850;
   const TIMER_CIRCUMFERENCE = 2 * Math.PI * 52;
-  const SUPABASE_URL = "https://kgdnuzasbeavpqharbpf.supabase.co";
+  function isDiscordActivity() {
+    return window.location.hostname.endsWith(".discordsays.com");
+  }
+  
+  const SUPABASE_URL = isDiscordActivity()
+    ? `${window.location.origin}/supabase-api`
+    : "https://kgdnuzasbeavpqharbpf.supabase.co";
   const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_R-AJK-addd0bcjUtfzAOqQ_88GYxN_O";
   const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
