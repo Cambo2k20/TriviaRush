@@ -89,7 +89,22 @@ jobs:
         run: node mobile-home-hotfix-smoke-test.mjs
 
       - name: Verify mode navigation
-        run: node mode-navigation-smoke-test.mjs
+        id: mode_navigation
+        shell: bash
+        run: |
+          mkdir -p artifacts/mode-navigation
+          set +e
+          node mode-navigation-smoke-test.mjs 2>&1 | tee artifacts/mode-navigation/results.txt
+          status=${PIPESTATUS[0]}
+          exit "$status"
+
+      - name: Upload mode navigation diagnostics
+        if: failure() && steps.mode_navigation.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: mode-navigation-diagnostics
+          path: artifacts/mode-navigation/results.txt
+          if-no-files-found: error
 
       - name: Capture social redesign screenshots
         run: node scripts/capture-social-redesign.mjs
