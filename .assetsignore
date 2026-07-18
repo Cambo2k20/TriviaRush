@@ -1,0 +1,6 @@
+.git/
+package.json
+package-lock.json
+scripts/
+*.mjs
+README.md
