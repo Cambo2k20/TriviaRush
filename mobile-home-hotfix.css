@@ -42,4 +42,27 @@
   }
 }
 
-/* This file is intentionally loaded last so it wins only on narrow Home views. */
+/* Replace the legacy yellow orb/lightning treatment with the supplied
+   stopwatch/question-mark mark while retaining the existing header markup. */
+.brand-bolt {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  overflow: visible;
+  border-radius: 0;
+  color: transparent !important;
+  background: url("icons/trivia-rush-header-logo.svg") center / contain no-repeat !important;
+  box-shadow: none;
+  font-size: 0 !important;
+  line-height: 0;
+}
+
+@media (max-width: 700px) {
+  body.trivia-shell-ready .brand-bolt,
+  body.shared-mode-navigation-ready .topbar > .brand .brand-bolt {
+    background-image: url("icons/trivia-rush-header-logo.svg") !important;
+    font-size: 0 !important;
+  }
+}
+
+/* This file also carries the final shared-header brand override. */
