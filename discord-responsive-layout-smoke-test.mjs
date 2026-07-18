@@ -39,6 +39,11 @@ assert("very short landscape removes the optional voice toggle", /max-height:\s*
 assert("mobile removes the nested category scrollbar", /max-width:\s*759px[\s\S]*?\.home-category-grid\s*\{[^}]*overflow:\s*visible/s.test(styles));
 assert("game answer grid uses two columns", /\.answer-grid\s*\{[^}]*repeat\(2,/s.test(styles));
 assert("narrow answer grid uses one column", /max-width:\s*620px[\s\S]*?\.answer-grid\s*\{[^}]*grid-template-columns:\s*1fr/s.test(styles));
+assert("post-match summary has a dedicated overview", html.includes('class="result-overview"'));
+assert("post-match card uses the wider dashboard width", /#resultsScreen \.result-card\s*\{[^}]*width:\s*min\(1080px,/s.test(styles));
+assert("post-match progression uses two dashboard columns", /#resultsScreen \.result-card\s*\{[^}]*grid-template-columns:\s*repeat\(2,/s.test(styles));
+assert("post-match actions remain a full-width row", /#resultsScreen \.result-actions\s*\{[^}]*grid-column:\s*1 \/ -1/s.test(styles));
+assert("mobile post-match removes the nested scrollbar", /max-width:\s*759px[\s\S]*?#resultsScreen \.result-card\s*\{[^}]*max-height:\s*none;[^}]*overflow:\s*visible/s.test(styles));
 
 const dom = new JSDOM(html, {
   url: "https://triviarush.discordsays.com/?frame_id=test&instance_id=test&platform=desktop",

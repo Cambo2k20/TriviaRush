@@ -239,7 +239,124 @@ body.trivia-shell-ready #duelGameScreen .question-card {
   gap: clamp(8px, 1.4vw, 14px);
 }
 
-.result-card {
+body.trivia-shell-ready #resultsScreen.active {
+  min-height: 0;
+  height: 100%;
+  padding: clamp(12px, 2dvh, 22px) var(--activity-inline-pad);
+  align-items: center;
+  overflow: hidden;
+}
+
+body.trivia-shell-ready #resultsScreen .result-card {
+  width: min(1080px, 100%);
+  max-height: 100%;
+  padding: clamp(22px, 3vw, 36px);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 1.8dvh, 18px);
+  overflow-y: auto;
+  text-align: left;
+}
+
+#resultsScreen .result-intro {
+  min-width: 0;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    "badge title"
+    "badge copy";
+  align-items: center;
+  column-gap: 20px;
+}
+
+#resultsScreen .result-badge {
+  grid-area: badge;
+}
+
+#resultsScreen .result-intro h1 {
+  grid-area: title;
+  min-width: 0;
+  margin: 0;
+  font-size: clamp(2.4rem, 4vw, 3.8rem);
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+#resultsScreen .result-intro p {
+  grid-area: copy;
+  max-width: 68ch;
+  margin: 7px 0 0;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+#resultsScreen .result-overview {
+  min-width: 0;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.3fr);
+  gap: 14px;
+}
+
+#resultsScreen .final-score {
+  min-width: 0;
+  min-height: 140px;
+  padding: 18px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+}
+
+#resultsScreen .final-score strong {
+  font-size: clamp(3.2rem, 6vw, 4.2rem);
+}
+
+#resultsScreen .result-grid {
+  min-width: 0;
+  margin: 0;
+  align-items: stretch;
+}
+
+#resultsScreen .result-grid > div {
+  min-width: 0;
+  padding: 14px 8px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+}
+
+#resultsScreen .progression-result-panel,
+#resultsScreen .category-result-panel {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  align-self: stretch;
+}
+
+#resultsScreen .result-card:not(:has(.category-result-panel:not([hidden]))) .progression-result-panel:not([hidden]),
+#resultsScreen .result-card:not(:has(.progression-result-panel:not([hidden]))) .category-result-panel:not([hidden]) {
+  grid-column: 1 / -1;
+}
+
+#resultsScreen .retry-save-button:not([hidden]) {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+
+#resultsScreen .result-actions {
+  min-width: 0;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 1.2fr) repeat(2, minmax(0, 1fr));
+  margin: 0;
+}
+
+#resultsScreen .result-actions > button {
+  min-height: 50px;
+  justify-content: center;
+}
+
+body.trivia-shell-ready #duelResultsScreen .result-card {
   max-height: calc(100dvh - var(--activity-header-height) - 24px);
   overflow-y: auto;
 }
@@ -403,6 +520,30 @@ body.trivia-shell-ready #duelGameScreen .question-card {
   .question-card h2 {
     margin-block: 10px;
   }
+
+  #resultsScreen .result-card {
+    padding: 14px 18px;
+    gap: 10px 14px;
+  }
+
+  #resultsScreen .result-intro p {
+    display: none;
+  }
+
+  #resultsScreen .result-intro h1 {
+    font-size: 2.2rem;
+  }
+
+  #resultsScreen .final-score {
+    min-height: 104px;
+    padding: 10px;
+  }
+
+  #resultsScreen .result-grid > div,
+  #resultsScreen .progression-result-panel,
+  #resultsScreen .category-result-panel {
+    padding: 10px;
+  }
 }
 
 @media (min-width: 760px) and (max-height: 520px) {
@@ -553,6 +694,54 @@ html[data-discord-layout="pip"] body.trivia-shell-ready #duelGameScreen .questio
   body.trivia-shell-ready #gameScreen .question-card,
   body.trivia-shell-ready #duelGameScreen .question-card {
     overflow: visible;
+  }
+
+  body.trivia-shell-ready #resultsScreen.active {
+    height: auto;
+    padding: 18px calc(12px + var(--safe-right)) calc(24px + var(--safe-bottom)) calc(12px + var(--safe-left));
+    overflow: visible;
+  }
+
+  body.trivia-shell-ready #resultsScreen .result-card {
+    width: 100%;
+    max-height: none;
+    padding: 20px;
+    grid-template-columns: minmax(0, 1fr);
+    overflow: visible;
+  }
+
+  #resultsScreen .result-intro {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "badge"
+      "title"
+      "copy";
+    justify-items: center;
+    row-gap: 10px;
+    text-align: center;
+  }
+
+  #resultsScreen .result-intro p {
+    margin-top: 0;
+  }
+
+  #resultsScreen .result-overview {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #resultsScreen .result-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #resultsScreen .progression-result-panel,
+  #resultsScreen .category-result-panel,
+  #resultsScreen .retry-save-button:not([hidden]),
+  #resultsScreen .result-actions {
+    grid-column: 1;
+  }
+
+  #resultsScreen .result-actions {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .mobile-footer-navigation,

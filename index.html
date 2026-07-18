@@ -222,21 +222,25 @@
 
     <section id="resultsScreen" class="screen centered-screen" aria-labelledby="resultTitle">
       <div class="result-card">
-        <div id="resultBadge" class="result-badge">TIME!</div>
-        <h1 id="resultTitle">Great run!</h1>
-        <p id="resultMessage">You kept the pressure on until the final second.</p>
+        <header class="result-intro">
+          <div id="resultBadge" class="result-badge">TIME!</div>
+          <h1 id="resultTitle">Great run!</h1>
+          <p id="resultMessage">You kept the pressure on until the final second.</p>
+        </header>
 
-        <div class="final-score">
-          <span>Final score</span>
-          <strong id="finalScore">0</strong>
-          <small id="newHighScore" hidden>NEW HIGH SCORE</small>
-        </div>
+        <div class="result-overview">
+          <div class="final-score">
+            <span>Final score</span>
+            <strong id="finalScore">0</strong>
+            <small id="newHighScore" hidden>NEW HIGH SCORE</small>
+          </div>
 
-        <div class="result-grid">
-          <div><span>Correct</span><strong id="correctTotal">0</strong></div>
-          <div><span>Answered</span><strong id="answeredTotal">0</strong></div>
-          <div><span>Accuracy</span><strong id="accuracyTotal">0%</strong></div>
-          <div><span>Best streak</span><strong id="bestStreakTotal">0</strong></div>
+          <div class="result-grid">
+            <div><span>Correct</span><strong id="correctTotal">0</strong></div>
+            <div><span>Answered</span><strong id="answeredTotal">0</strong></div>
+            <div><span>Accuracy</span><strong id="accuracyTotal">0%</strong></div>
+            <div><span>Best streak</span><strong id="bestStreakTotal">0</strong></div>
+          </div>
         </div>
 
         <button
@@ -249,9 +253,9 @@
         </button>
 
         <div class="result-actions">
-          <button id="playAgainButton" class="primary-button" type="button">Play again</button>
+          <button id="playAgainButton" class="primary-button" type="button">Play another round</button>
           <button id="resultsLeaderboardButton" class="secondary-button" type="button">View leaderboard</button>
-          <button id="homeButton" class="secondary-button" type="button">Change category</button>
+          <button id="homeButton" class="secondary-button" type="button">Choose category</button>
         </div>
       </div>
     </section>
