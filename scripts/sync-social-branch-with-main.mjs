@@ -7,6 +7,15 @@ if (html.includes('href="home-redesign.css?v=3"')) {
   html = html.replace('href="home-redesign.css?v=3"', 'href="home-redesign.css?v=4"');
 }
 
+if (!/href="category-progression-ui\.css\?v=\d+"/.test(html)) {
+  const progressionStyle = html.match(/  <link rel="stylesheet" href="progression-ui\.css\?v=\d+">/);
+  if (!progressionStyle) throw new Error("Progression stylesheet marker not found.");
+  html = html.replace(
+    progressionStyle[0],
+    `${progressionStyle[0]}\n  <link rel="stylesheet" href="category-progression-ui.css?v=1">`
+  );
+}
+
 const styleMarker = '  <link rel="stylesheet" href="home-redesign.css?v=4">';
 if (!/href="social-redesign\.css\?v=\d+"/.test(html)) {
   if (!html.includes(styleMarker)) throw new Error("Home stylesheet marker not found.");
@@ -55,10 +64,19 @@ if (!/src="social-rpc-bridge\.js\?v=\d+"/.test(html)) {
   html = html.replace(supabaseMarker, `${supabaseMarker}\n  <script src="social-rpc-bridge.js?v=1"></script>`);
 }
 
-const appMarker = '  <script src="app.js?v=18"></script>';
+if (!/src="category-progression-ui\.js\?v=\d+"/.test(html)) {
+  const progressionRuntime = html.match(/  <script src="progression-ui\.js\?v=\d+"><\/script>/);
+  if (!progressionRuntime) throw new Error("Progression runtime marker not found.");
+  html = html.replace(
+    progressionRuntime[0],
+    `${progressionRuntime[0]}\n  <script src="category-progression-ui.js?v=1"></script>`
+  );
+}
+
 if (!/src="social-redesign\.js\?v=\d+"/.test(html)) {
-  if (!html.includes(appMarker)) throw new Error("Application script marker not found.");
-  html = html.replace(appMarker, `${appMarker}\n  <script src="social-redesign.js?v=1"></script>`);
+  const appMarker = html.match(/  <script src="app\.js\?v=\d+"><\/script>/);
+  if (!appMarker) throw new Error("Application script marker not found.");
+  html = html.replace(appMarker[0], `${appMarker[0]}\n  <script src="social-redesign.js?v=1"></script>`);
 }
 
 if (!/src="unified-shell\.js\?v=\d+"/.test(html)) {
