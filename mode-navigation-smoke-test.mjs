@@ -101,7 +101,7 @@ const checks = [
   ["mode switching is locked while a game is active", gameLockedModeSwitch],
   ["mobile utility controls use the existing buttons", ["notificationButton", "leaderboardButton", "accountButton", "soundToggle"].every((id) => document.querySelector(`#${id}`)?.classList.contains("mobile-utility-button"))],
   ["desktop navigation includes a selected mode treatment", styles.includes(".mode-nav-button.is-selected") && styles.includes("#duelButton.is-selected")],
-  ["mobile header keeps the logo above game modes", styles.includes(".topbar > .brand") && styles.includes("display: inline-flex !important") && styles.includes("justify-self: center")],
+  ["mobile header keeps the enlarged brand on one line above game modes", styles.includes(".topbar > .brand") && styles.includes("display: inline-flex !important") && styles.includes("white-space: nowrap") && styles.includes("font-size: 1.4rem") && styles.includes("flex: 0 0 48px")],
   ["mobile utilities form a fixed safe-area footer", styles.includes("position: fixed !important") && styles.includes("env(safe-area-inset-bottom)") && styles.includes("data-mobile-label")],
   ["legacy Home quick actions are removed from the menu hierarchy", styles.includes("#startScreen > .home-quick-actions") && styles.includes("display: none !important")],
   ["production loads shared navigation assets after the unified shell", unifiedCssIndex >= 0 && modeCssIndex >= 0 && unifiedJsIndex >= 0 && modeJsIndex >= 0 && unifiedCssIndex < modeCssIndex && unifiedJsIndex < modeJsIndex]
