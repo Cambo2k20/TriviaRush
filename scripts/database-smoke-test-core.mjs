@@ -6,6 +6,12 @@ const ROOT = resolve(import.meta.dirname, "..");
 const db = new PGlite();
 const PLAYER_ID = "11111111-1111-4111-8111-111111111111";
 const PLAYER_TWO_ID = "44444444-4444-4444-8444-444444444444";
+const NEW_CATEGORY_IDS = [
+  "game_of_thrones",
+  "mythology",
+  "harry_potter",
+  "marvel_cinematic_universe"
+];
 
 function assert(condition, message) {
   if (!condition) {
@@ -242,8 +248,8 @@ const phaseFiveCategoryResult = await db.query(
   "select * from public.get_question_categories() order by sort_order"
 );
 assert(
-  phaseFiveCategoryResult.rows.length === 10,
-  "Phase 5 category RPC must return ten categories."
+  phaseFiveCategoryResult.rows.length === 14,
+  "Category RPC must return all 14 categories."
 );
 assert(
   phaseFiveCategoryResult.rows.every((row) => Number(row.question_count) === 100),
@@ -254,6 +260,11 @@ assert(
     (row) => row.icon_key && /^#[0-9A-F]{6}$/.test(row.color)
   ),
   "Every category must expose safe card metadata."
+);
+assert(
+  NEW_CATEGORY_IDS
+    .every((categoryId) => phaseFiveCategoryResult.rows.some((row) => row.category_id === categoryId)),
+  "The four preserved live categories must be present in the generated seed."
 );
 
 const friendRequestResult = await db.query(
@@ -268,6 +279,67 @@ await db.query(
   "select public.respond_friend_request($1, true)",
   [friendRequestResult.rows[0].friendship_id]
 );
+
+for (const categoryId of NEW_CATEGORY_IDS) {
+  await db.query("select set_config('request.jwt.claim.sub', $1, false)", [PLAYER_ID]);
+
+  const soloCoverage = await db.query(
+    "select public.start_solo_game('rush_60', $1) as payload",
+    [categoryId]
+  );
+  const soloRun = soloCoverage.rows[0].payload;
+  const soloQuestion = await db.query(
+    "select category_id from public.trivia_questions where id = $1",
+    [soloRun.question.question_id]
+  );
+  assert(
+    soloQuestion.rows[0].category_id === categoryId,
+    `Solo ${categoryId} must draw from its own bank.`
+  );
+  await db.query("update public.game_runs set status = 'cancelled' where id = $1", [soloRun.run_id]);
+
+  const liveCoverage = await db.query(
+    "select public.create_duel($1, 30, null) as payload",
+    [categoryId]
+  );
+  const liveMatch = liveCoverage.rows[0].payload;
+  const liveQuestions = await db.query(
+    [
+      "select count(distinct questions.category_id)::integer as categories",
+      "from public.duel_match_questions assigned",
+      "join public.trivia_questions questions on questions.id = assigned.question_id",
+      "where assigned.match_id = $1 and questions.category_id = $2"
+    ].join("\n"),
+    [liveMatch.match_id, categoryId]
+  );
+  assert(liveQuestions.rows[0].categories === 1, `Live duel ${categoryId} must use its own bank.`);
+  await db.query("select public.cancel_duel($1)", [liveMatch.match_id]);
+
+  const turnCoverage = await db.query(
+    "select public.create_turn_challenge($1, 30, 2) as payload",
+    [categoryId]
+  );
+  const turnMatch = turnCoverage.rows[0].payload;
+  const turnQuestions = await db.query(
+    [
+      "select count(distinct questions.category_id)::integer as categories",
+      "from public.duel_match_questions assigned",
+      "join public.trivia_questions questions on questions.id = assigned.question_id",
+      "where assigned.match_id = $1 and questions.category_id = $2"
+    ].join("\n"),
+    [turnMatch.match_id, categoryId]
+  );
+  assert(turnQuestions.rows[0].categories === 1, `Turn challenge ${categoryId} must use its own bank.`);
+  await db.query("select public.cancel_turn_challenge($1)", [turnMatch.match_id]);
+
+}
+
+const mixedCoverage = await db.query(
+  "select public.start_solo_game('rush_60', 'mixed') as payload"
+);
+const mixedRun = mixedCoverage.rows[0].payload;
+assert(mixedRun.question, "Mixed solo mode must issue a question from the 14-category bank.");
+await db.query("update public.game_runs set status = 'cancelled' where id = $1", [mixedRun.run_id]);
 
 await db.query("select set_config('request.jwt.claim.sub', $1, false)", [PLAYER_ID]);
 const duelCreateResult = await db.query(
@@ -621,7 +693,7 @@ console.log(
   JSON.stringify(
     {
       categories: phaseFiveCategoryResult.rows.length,
-      questions: 1000,
+      questions: 1400,
       first_points: answer.points_awarded,
       pass_counted_incorrect: true,
       session_id: finished.session_id,

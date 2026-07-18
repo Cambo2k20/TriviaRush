@@ -1,5 +1,18 @@
 {
   "verified_at": "2026-07-17",
+  "default_target": {"easy":40,"medium":40,"hard":20},
+  "legacy_key_ranges": {
+    "got_": {"category":"game_of_thrones","min":1,"max":100},
+    "myth_": {"category":"mythology","min":1,"max":100},
+    "hp_": {"category":"harry_potter","min":1,"max":100},
+    "mcu_": {"category":"marvel_cinematic_universe","min":1,"max":100}
+  },
+  "frozen_key_hashes": {
+    "game_of_thrones": "14f06ba579243b59b708ad1e1efd6e5c",
+    "mythology": "29e50dbc2f8ada5fbd3272c751ad9045",
+    "harry_potter": "6b268f678b35e80e19a9c7eed7e850f5",
+    "marvel_cinematic_universe": "8841bbbbc431fde2eb409d36ccf40b3a"
+  },
   "sources": {
     "nasa_solar": {"name": "NASA Solar System Exploration", "url": "https://science.nasa.gov/solar-system/"},
     "rsc_periodic": {"name": "Royal Society of Chemistry Periodic Table", "url": "https://www.rsc.org/periodic-table"},
@@ -8,6 +21,7 @@
     "usgs": {"name": "U.S. Geological Survey", "url": "https://www.usgs.gov/"},
     "smithsonian_science": {"name": "Smithsonian Science Education Center", "url": "https://ssec.si.edu/"},
     "british_museum": {"name": "British Museum Collection", "url": "https://www.britishmuseum.org/collection"},
+    "british_museum_hadrian": {"name": "British Museum - Hadrian", "url": "https://www.britishmuseum.org/collection/term/BIOG140687"},
     "uk_archives": {"name": "The National Archives", "url": "https://www.nationalarchives.gov.uk/education/"},
     "unesco": {"name": "UNESCO World Heritage Centre", "url": "https://whc.unesco.org/"},
     "loc_history": {"name": "Library of Congress", "url": "https://www.loc.gov/collections/"},
@@ -51,7 +65,15 @@
     "met_collection": {"name": "The Metropolitan Museum of Art Collection", "url": "https://www.metmuseum.org/art/collection"},
     "national_gallery": {"name": "The National Gallery Collection", "url": "https://www.nationalgallery.org.uk/paintings"},
     "tate_art": {"name": "Tate Art and Artists", "url": "https://www.tate.org.uk/art"},
-    "moma_collection": {"name": "The Museum of Modern Art Collection", "url": "https://www.moma.org/collection/"}
+    "moma_collection": {"name": "The Museum of Modern Art Collection", "url": "https://www.moma.org/collection/"},
+    "got_legacy_wiki": {"name": "Game of Thrones Wiki (legacy review source)", "url": "https://gameofthrones.fandom.com"},
+    "grrm_westeros": {"name": "George R. R. Martin - Westeros overview", "url": "https://georgerrmartin.com/grrm_merch/game-of-thrones-westeros-mousepad/"},
+    "world_history_mythology": {"name": "World History Encyclopedia", "url": "https://www.worldhistory.org"},
+    "wizarding_world": {"name": "Wizarding World", "url": "https://www.wizardingworld.com"},
+    "bloomsbury_philosophers_stone": {"name": "Bloomsbury - Harry Potter and the Philosopher's Stone", "url": "https://www.bloomsbury.com/uk/harry-potter-and-the-philosophers-stone-9781408855652/"},
+    "marvel_mcu": {"name": "Marvel", "url": "https://www.marvel.com"},
+    "marvel_mcu_first_film": {"name": "Marvel - MCU 10 Year Anniversary Watch Guide", "url": "https://www.marvel.com/articles/movies/the-essential-marvel-cinematic-universe-watch-guide"},
+    "marvel_endgame_mjolnir": {"name": "Marvel - Captain America wields Mjolnir", "url": "https://www.marvel.com/watch/trailers-and-extras/captain-america-steve-rogers-wields-mjolnir-avengers-endgame-official-clip"}
   },
   "categories": [
     {"id":"science","label":"Science","sort_order":10,"icon_key":"flask","color":"#41E28C","status":"active","target":{"easy":40,"medium":40,"hard":20}},
@@ -63,6 +85,10 @@
     {"id":"gaming","label":"Gaming","sort_order":70,"icon_key":"gamepad","color":"#B66CFF","status":"active","target":{"easy":40,"medium":40,"hard":20}},
     {"id":"food_drink","label":"Food & Drink","sort_order":80,"icon_key":"utensils","color":"#FFB347","status":"active","target":{"easy":40,"medium":40,"hard":20}},
     {"id":"nature_animals","label":"Nature & Animals","sort_order":90,"icon_key":"paw","color":"#62D26F","status":"active","target":{"easy":40,"medium":40,"hard":20}},
-    {"id":"art_literature","label":"Art & Literature","sort_order":100,"icon_key":"palette_book","color":"#F47CD4","status":"active","target":{"easy":40,"medium":40,"hard":20}}
+    {"id":"art_literature","label":"Art & Literature","sort_order":100,"icon_key":"palette_book","color":"#F47CD4","status":"active","target":{"easy":40,"medium":40,"hard":20}},
+    {"id":"game_of_thrones","label":"Game of Thrones","sort_order":110,"icon_key":"dragon","color":"#9B1C1C","status":"active","target":{"easy":35,"medium":45,"hard":20}},
+    {"id":"mythology","label":"Mythology","sort_order":120,"icon_key":"thunderbolt","color":"#C9A227","status":"active","target":{"easy":35,"medium":45,"hard":20}},
+    {"id":"harry_potter","label":"Harry Potter","sort_order":130,"icon_key":"wand","color":"#4B2E83","status":"active","target":{"easy":35,"medium":45,"hard":20}},
+    {"id":"marvel_cinematic_universe","label":"Marvel Cinematic Universe","sort_order":140,"icon_key":"shield","color":"#ED1D24","status":"active","target":{"easy":35,"medium":45,"hard":20}}
   ]
 }

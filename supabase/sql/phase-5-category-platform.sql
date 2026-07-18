@@ -1,6 +1,6 @@
 -- Trivia Rush Phase 5 category platform
--- Adds display metadata and stages three new categories without exposing an
--- incomplete bank. The generated question seed activates them transactionally.
+-- Adds display metadata for the complete manifest. The generated question seed
+-- activates categories transactionally only after their banks are present.
 
 begin;
 
@@ -38,7 +38,11 @@ values
   ('gaming', 'Gaming', 70, 'gamepad', '#B66CFF', true),
   ('food_drink', 'Food & Drink', 80, 'utensils', '#FFB347', false),
   ('nature_animals', 'Nature & Animals', 90, 'paw', '#62D26F', false),
-  ('art_literature', 'Art & Literature', 100, 'palette_book', '#F47CD4', false)
+  ('art_literature', 'Art & Literature', 100, 'palette_book', '#F47CD4', false),
+  ('game_of_thrones', 'Game of Thrones', 110, 'dragon', '#9B1C1C', true),
+  ('mythology', 'Mythology', 120, 'thunderbolt', '#C9A227', true),
+  ('harry_potter', 'Harry Potter', 130, 'wand', '#4B2E83', true),
+  ('marvel_cinematic_universe', 'Marvel Cinematic Universe', 140, 'shield', '#ED1D24', true)
 on conflict (id) do update
 set
   label = excluded.label,

@@ -2,6 +2,10 @@
 
 This folder contains the database deployment history and its production checks. Moving these files from the repository root did not run them against Supabase.
 
+The replayable current-state baseline now lives in `../migrations/`, while the
+sanitized local content/reference seed lives in `../seed.sql`. See
+`docs/local-supabase-development.md` before linking or pushing migrations.
+
 ## Historical Phase 4 baseline
 
 1. `phase-4a-question-platform.sql`

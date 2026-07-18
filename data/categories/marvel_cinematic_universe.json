@@ -1,0 +1,902 @@
+[
+  [
+    "mcu_001",
+    "easy",
+    "Which film kicked off the Marvel Cinematic Universe?",
+    "Iron Man",
+    "The Incredible Hulk",
+    "Thor",
+    "marvel_mcu_first_film"
+  ],
+  [
+    "mcu_002",
+    "easy",
+    "What is Steve Rogers' superhero alias?",
+    "Captain America",
+    "Winter Soldier",
+    "Falcon",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_003",
+    "easy",
+    "What is Thor's home realm in the MCU?",
+    "Asgard",
+    "Jotunheim",
+    "Midgard",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_004",
+    "easy",
+    "What color is the Hulk?",
+    "Green",
+    "Red",
+    "Blue",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_005",
+    "easy",
+    "Who plays Tony Stark in the MCU?",
+    "Robert Downey Jr.",
+    "Chris Evans",
+    "Chris Hemsworth",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_006",
+    "easy",
+    "Who plays Steve Rogers in the MCU?",
+    "Chris Evans",
+    "Chris Hemsworth",
+    "Chris Pratt",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_007",
+    "easy",
+    "Who plays Thor in the MCU?",
+    "Chris Hemsworth",
+    "Chris Evans",
+    "Chris Pratt",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_008",
+    "easy",
+    "What is the name of the team of superheroes formed in the 2012 film?",
+    "The Avengers",
+    "The Guardians",
+    "The Defenders",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_009",
+    "easy",
+    "What is the name of Tony Stark's AI assistant introduced in the first Iron Man film?",
+    "JARVIS",
+    "Ultron",
+    "FRIDAY",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_010",
+    "easy",
+    "What powerful gems does Thanos seek to collect?",
+    "The Infinity Stones",
+    "The Power Crystals",
+    "The Soul Stones",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_011",
+    "easy",
+    "How many Infinity Stones are there in total?",
+    "Six",
+    "Five",
+    "Seven",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_012",
+    "easy",
+    "Who proves able to wield Mjolnir during the final battle in Avengers: Endgame?",
+    "Steve Rogers",
+    "Clint Barton",
+    "Bruce Banner",
+    "marvel_endgame_mjolnir"
+  ],
+  [
+    "mcu_013",
+    "easy",
+    "What is the name of the fictional African nation home to Black Panther?",
+    "Wakanda",
+    "Sakaar",
+    "Sokovia",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_014",
+    "easy",
+    "Who is Black Panther's alter ego?",
+    "T'Challa",
+    "Killmonger",
+    "N'Jobu",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_015",
+    "easy",
+    "What is Spider-Man's real name in the MCU?",
+    "Peter Parker",
+    "Miles Morales",
+    "Harry Osborn",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_016",
+    "easy",
+    "What company does Tony Stark run?",
+    "Stark Industries",
+    "Pym Technologies",
+    "Oscorp",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_017",
+    "easy",
+    "What organization does Nick Fury lead?",
+    "S.H.I.E.L.D.",
+    "A.I.M.",
+    "Hydra",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_018",
+    "easy",
+    "What is the name of Bruce Banner's alter ego?",
+    "The Hulk",
+    "The Thing",
+    "Abomination",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_019",
+    "easy",
+    "What is Natasha Romanoff's superhero alias?",
+    "Black Widow",
+    "Scarlet Witch",
+    "Mockingbird",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_020",
+    "easy",
+    "What is Clint Barton's superhero alias?",
+    "Hawkeye",
+    "War Machine",
+    "Falcon",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_021",
+    "easy",
+    "Who is the main villain in the first Avengers film?",
+    "Loki",
+    "Ultron",
+    "Thanos",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_022",
+    "easy",
+    "What is the name of Thor's mischievous adopted brother in the MCU?",
+    "Loki",
+    "Heimdall",
+    "Balder",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_023",
+    "easy",
+    "What is the name of the talking raccoon in Guardians of the Galaxy?",
+    "Rocket",
+    "Groot",
+    "Drax",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_024",
+    "easy",
+    "What is the name of the tree-like humanoid in Guardians of the Galaxy known for saying only three words?",
+    "Groot",
+    "Rocket",
+    "Drax",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_025",
+    "easy",
+    "What is Peter Quill's alias in Guardians of the Galaxy?",
+    "Star-Lord",
+    "Nova",
+    "Gamora",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_026",
+    "easy",
+    "Who is the primary villain of Avengers: Infinity War and Endgame?",
+    "Thanos",
+    "Ultron",
+    "Loki",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_027",
+    "easy",
+    "What object does Thanos use to wipe out half of all life in the universe?",
+    "The Infinity Gauntlet",
+    "The Time Stone",
+    "The Tesseract",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_028",
+    "easy",
+    "What is the shrinking-based alias of Scott Lang?",
+    "Ant-Man",
+    "Spider-Man",
+    "Falcon",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_029",
+    "easy",
+    "What is Wanda Maximoff's superhero alias?",
+    "Scarlet Witch",
+    "Valkyrie",
+    "Black Widow",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_030",
+    "easy",
+    "What is Stephen Strange's superhero alias?",
+    "Doctor Strange",
+    "Mister Fantastic",
+    "Vision",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_031",
+    "easy",
+    "What object does Doctor Strange wear that manipulates time?",
+    "The Eye of Agamotto",
+    "The Infinity Gauntlet",
+    "The Time Stone loose",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_032",
+    "easy",
+    "What is the name of Captain America's iconic weapon?",
+    "A shield",
+    "A sword",
+    "A hammer",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_033",
+    "easy",
+    "What fictional metal is Captain America's shield made of?",
+    "Vibranium",
+    "Adamantium",
+    "Titanium",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_034",
+    "easy",
+    "What fictional metal is also used in Black Panther's suit?",
+    "Vibranium",
+    "Adamantium",
+    "Uru",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_035",
+    "easy",
+    "What organization does Captain America discover has infiltrated S.H.I.E.L.D. in his second film?",
+    "Hydra",
+    "A.I.M.",
+    "The Ten Rings",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_036",
+    "medium",
+    "What is the name of the first Avenger, whose research legacy inspires the modern Super Soldier program?",
+    "Steve Rogers",
+    "Bucky Barnes",
+    "Sam Wilson",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_037",
+    "medium",
+    "What is the name of Steve Rogers' childhood best friend, later known as the Winter Soldier?",
+    "Bucky Barnes",
+    "Sam Wilson",
+    "Peggy Carter",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_038",
+    "medium",
+    "What organization turns Bucky Barnes into the Winter Soldier?",
+    "Hydra",
+    "A.I.M.",
+    "The Ten Rings",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_039",
+    "medium",
+    "Who takes up the mantle of Captain America at the end of Avengers: Endgame?",
+    "Sam Wilson",
+    "Bucky Barnes",
+    "Sharon Carter",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_040",
+    "medium",
+    "What is Sam Wilson's superhero alias before becoming Captain America?",
+    "Falcon",
+    "War Machine",
+    "Vision",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_041",
+    "medium",
+    "What is the name of James Rhodes' superhero alias?",
+    "War Machine",
+    "Iron Patriot",
+    "Falcon",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_042",
+    "medium",
+    "What villain does Tony Stark accidentally create that turns against humanity in Age of Ultron?",
+    "Ultron",
+    "Abomination",
+    "Vision",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_043",
+    "medium",
+    "What android is created using the Mind Stone at the end of Age of Ultron?",
+    "Vision",
+    "JARVIS",
+    "Ultron",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_044",
+    "medium",
+    "What Infinity Stone was originally housed inside Loki's scepter?",
+    "The Mind Stone",
+    "The Space Stone",
+    "The Reality Stone",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_045",
+    "medium",
+    "What Infinity Stone is hidden within the Tesseract?",
+    "The Space Stone",
+    "The Soul Stone",
+    "The Power Stone",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_046",
+    "medium",
+    "What is the true identity of the strange substance called the Aether, found in Thor: The Dark World?",
+    "The Reality Stone",
+    "The Power Stone",
+    "The Mind Stone",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_047",
+    "medium",
+    "Who does Thanos sacrifice on Vormir to obtain the Soul Stone?",
+    "Gamora",
+    "Nebula",
+    "Mantis",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_048",
+    "medium",
+    "What is unique about the planet belonging to Ego, the Guardians' adoptive father figure?",
+    "It is made from Ego himself",
+    "It orbits two suns",
+    "It is entirely underwater",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_049",
+    "medium",
+    "Who is the Kree-Skrull war heroine who appears in her own 2019 film?",
+    "Captain Marvel",
+    "Nebula",
+    "Gamora",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_050",
+    "medium",
+    "What is Carol Danvers' superhero alias?",
+    "Captain Marvel",
+    "Ms. Marvel",
+    "Photon",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_051",
+    "medium",
+    "What is the name of the gladiator planet ruled by the Grandmaster, seen in Thor: Ragnarok?",
+    "Sakaar",
+    "Vormir",
+    "Xandar",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_052",
+    "medium",
+    "What planet must Thanos travel to in order to obtain the Soul Stone?",
+    "Vormir",
+    "Xandar",
+    "Sakaar",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_053",
+    "medium",
+    "Who guards the Soul Stone on Vormir?",
+    "Red Skull",
+    "The Grandmaster",
+    "The Collector",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_054",
+    "medium",
+    "What happens to Thor's hammer Mjolnir in Thor: Ragnarok?",
+    "It is destroyed by Hela",
+    "It is stolen",
+    "It is lost in space",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_055",
+    "medium",
+    "What new weapon does Thor wield after losing Mjolnir?",
+    "Stormbreaker",
+    "The Bifrost Sword",
+    "Gungnir",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_056",
+    "medium",
+    "Who is Thor's older sister, revealed as Goddess of Death in Thor: Ragnarok?",
+    "Hela",
+    "Valkyrie",
+    "Sif",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_057",
+    "medium",
+    "What is the name of the Asgardian warrior woman who becomes King of New Asgard?",
+    "Valkyrie",
+    "Hela",
+    "Sif",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_058",
+    "medium",
+    "What criminal organization does Tony Stark battle in the first Iron Man film?",
+    "The Ten Rings",
+    "A.I.M.",
+    "Hydra",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_059",
+    "medium",
+    "Who is the terrorist figurehead revealed to be a hired actor in Iron Man 3?",
+    "The Mandarin",
+    "Justin Hammer",
+    "Aldrich Killian",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_060",
+    "medium",
+    "What company does Justin Hammer run, a rival to Stark Industries?",
+    "Hammer Industries",
+    "Oscorp",
+    "Roxxon",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_061",
+    "medium",
+    "What is the name of the alien invasion that occurs in New York City in the first Avengers film?",
+    "The Battle of New York",
+    "The Battle of Earth",
+    "The Battle of Sokovia",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_062",
+    "medium",
+    "What race of aliens invades New York in the first Avengers film, entering through Loki's portal?",
+    "The Chitauri",
+    "Skrulls",
+    "Kree",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_063",
+    "medium",
+    "What fictional Eastern European country is significantly damaged in Avengers: Age of Ultron?",
+    "Sokovia",
+    "Wakanda",
+    "Latveria",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_064",
+    "medium",
+    "Which twins are revealed to have been experimented on by Hydra in Age of Ultron?",
+    "Wanda and Pietro Maximoff",
+    "Natasha and Yelena",
+    "Wanda and Vision",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_065",
+    "medium",
+    "What is the name of Wanda Maximoff's twin brother, who dies in Age of Ultron?",
+    "Pietro Maximoff",
+    "Vision",
+    "Ultron",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_066",
+    "medium",
+    "What is the name of the accords that split the Avengers into two opposing sides in Captain America: Civil War?",
+    "The Sokovia Accords",
+    "The Wakanda Accords",
+    "The Avengers Accords",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_067",
+    "medium",
+    "Who leads the pro-government-oversight faction against Captain America in Civil War?",
+    "Iron Man",
+    "Hawkeye",
+    "Thor",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_068",
+    "medium",
+    "Who is revealed to have killed Tony Stark's parents while brainwashed, sparking the Civil War conflict?",
+    "Bucky Barnes",
+    "Red Skull",
+    "Loki",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_069",
+    "medium",
+    "What is the name of the King of Wakanda who is killed in a bombing in Civil War?",
+    "T'Chaka",
+    "T'Challa",
+    "N'Jobu",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_070",
+    "medium",
+    "Who challenges T'Challa for the throne of Wakanda in the Black Panther film?",
+    "Killmonger",
+    "Klaue",
+    "N'Jobu",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_071",
+    "medium",
+    "What rare flower gives Black Panther his enhanced abilities?",
+    "The Heart-Shaped Herb",
+    "The Vibranium Flower",
+    "The Wakandan Root",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_072",
+    "medium",
+    "What is the name of Peter Parker's aunt who raises him in the MCU films?",
+    "Aunt May",
+    "Aunt Anna",
+    "Aunt Susan",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_073",
+    "medium",
+    "What high school does Peter Parker attend in the MCU films?",
+    "Midtown School of Science and Technology",
+    "Queens Academy",
+    "Empire State High",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_074",
+    "medium",
+    "Who mentors Peter Parker and recruits him for the Avengers in Captain America: Civil War?",
+    "Tony Stark",
+    "Happy Hogan",
+    "Nick Fury",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_075",
+    "medium",
+    "What is the alias of the salvage crew leader turned villain who fights Spider-Man in Homecoming?",
+    "Vulture",
+    "The Lizard",
+    "Green Goblin",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_076",
+    "medium",
+    "Who is Doctor Strange's mentor, the sorceress who trains him?",
+    "The Ancient One",
+    "Mordo",
+    "Wong",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_077",
+    "medium",
+    "What technology does Ant-Man use to shrink and grow in size?",
+    "The Pym Particles",
+    "The Quantum Field",
+    "The Reduction Serum",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_078",
+    "medium",
+    "Who invented the technology that allows Ant-Man to shrink and grow?",
+    "Hank Pym",
+    "Tony Stark",
+    "Bruce Banner",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_079",
+    "medium",
+    "What subatomic realm do Ant-Man and the Wasp travel to in their second film?",
+    "The Quantum Realm",
+    "The Negative Zone",
+    "The Microverse",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_080",
+    "medium",
+    "What mechanic do the Avengers use in Endgame to retrieve the Infinity Stones from the past?",
+    "The Quantum Realm",
+    "The Time Stone alone",
+    "A wormhole",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_081",
+    "hard",
+    "What is the name of Thanos's home planet, destroyed by overpopulation and resource depletion?",
+    "Titan",
+    "Sakaar",
+    "Xandar",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_082",
+    "hard",
+    "What group of heroes joins the Avengers on Titan to fight Thanos in Infinity War?",
+    "The Guardians of the Galaxy",
+    "The Defenders",
+    "The Inhumans",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_083",
+    "hard",
+    "Who ultimately uses the Infinity Stones to defeat Thanos and his army in Endgame?",
+    "Tony Stark",
+    "Captain America",
+    "Thor",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_084",
+    "hard",
+    "What happens to Tony Stark immediately after he uses the Infinity Stones against Thanos in Endgame?",
+    "He dies from the stones' power",
+    "He is teleported away",
+    "He falls into a coma",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_085",
+    "hard",
+    "Who is revealed to be Nick Fury's Skrull ally disguised as him for much of the MCU, revealed in Spider-Man: Far From Home?",
+    "Talos",
+    "Yon-Rogg",
+    "Ronan",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_086",
+    "hard",
+    "What alien race is Talos a member of, capable of shapeshifting?",
+    "Skrull",
+    "Kree",
+    "Chitauri",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_087",
+    "hard",
+    "What is the name of the extremist Kree military leader who mentors and manipulates Carol Danvers?",
+    "Yon-Rogg",
+    "Korath",
+    "Ronan the Accuser",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_088",
+    "hard",
+    "What villain seeks to destroy Xandar to avenge his people, first encountered in Guardians of the Galaxy?",
+    "Ronan the Accuser",
+    "Ego",
+    "Thanos",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_089",
+    "hard",
+    "What is the name of Gamora and Nebula's adoptive father, who raised them as assassins?",
+    "Thanos",
+    "Ego",
+    "The Collector",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_090",
+    "hard",
+    "What Infinity Stone does the Collector keep in his collection, seen at the start of Infinity War?",
+    "The Reality Stone",
+    "The Power Stone",
+    "The Time Stone",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_091",
+    "hard",
+    "What golden-skinned, genetically perfect alien race do the Guardians encounter, ruled by Ayesha?",
+    "Sovereign",
+    "Kree",
+    "Xandarians",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_092",
+    "hard",
+    "Who is revealed to be Peter Quill's biological father in Guardians of the Galaxy Vol. 2?",
+    "Ego",
+    "The Collector",
+    "Yondu",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_093",
+    "hard",
+    "Who is the blue-skinned Ravager captain who raised Peter Quill after abducting him from Earth?",
+    "Yondu",
+    "Nebula",
+    "Kraglin",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_094",
+    "hard",
+    "What loyal S.H.I.E.L.D. agent dies at Loki's hand in the first Avengers film, motivating the team to unite?",
+    "Phil Coulson",
+    "Maria Hill",
+    "Nick Fury",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_095",
+    "hard",
+    "What ancient order of sorcerers does Doctor Strange join, based at the Sanctum Sanctorum?",
+    "The Masters of the Mystic Arts",
+    "The Midnight Sons",
+    "The Illuminati",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_096",
+    "hard",
+    "What is the true source of Wanda Maximoff's reality-altering power that creates the Hex over Westview in WandaVision?",
+    "Her own untrained chaos magic",
+    "A fragment of the Mind Stone",
+    "The Darkhold",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_097",
+    "hard",
+    "What ancient, dangerous spellbook does Wanda Maximoff seek and ultimately destroy at the end of Doctor Strange in the Multiverse of Madness?",
+    "The Darkhold",
+    "The Book of Vishanti",
+    "The Necronomicon",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_098",
+    "hard",
+    "What title does Wanda Maximoff take on after being corrupted by dark magic in Multiverse of Madness?",
+    "The Scarlet Witch",
+    "The Sorceress Supreme",
+    "The Chaos Queen",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_099",
+    "hard",
+    "What organization polices the multiverse and captures Loki after his escape with the Tesseract in Endgame?",
+    "The Time Variance Authority",
+    "The Illuminati",
+    "S.W.O.R.D.",
+    "marvel_mcu"
+  ],
+  [
+    "mcu_100",
+    "hard",
+    "Who is revealed to secretly control the Time Variance Authority, first appearing at the end of Loki season one?",
+    "Kang the Conqueror, as He Who Remains",
+    "Immortus",
+    "Doctor Doom",
+    "marvel_mcu"
+  ]
+]

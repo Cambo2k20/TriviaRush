@@ -1651,7 +1651,7 @@
 
   function populateCategories() {
     const options = [
-      { id: "mixed", label: "All categories" },
+      { id: "mixed", label: "All categories", iconKey: "brain", color: "#FFD335" },
       ...state.categories
     ];
 
@@ -1660,6 +1660,8 @@
       const option = document.createElement("option");
       option.value = category.id;
       option.textContent = category.label;
+      option.dataset.iconKey = category.iconKey || "brain";
+      option.dataset.color = category.color || "#7C83FF";
       elements.categorySelect.appendChild(option);
     });
 

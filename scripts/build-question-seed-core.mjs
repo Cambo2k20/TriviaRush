@@ -4,6 +4,7 @@ import { basename, resolve } from "node:path";
 const ROOT = resolve(import.meta.dirname, "..");
 const INPUT = resolve(ROOT, "data", "questions.json");
 const OUTPUT = resolve(ROOT, "phase-5-question-seed.sql");
+const VERIFICATION_OUTPUT = resolve(ROOT, "phase-5-category-verification.sql");
 const WRITE_OUTPUT = process.argv.includes("--write");
 const ALLOWED_STATUSES = new Set(["active", "planned"]);
 const ALLOWED_DIFFICULTIES = new Set(["easy", "medium", "hard"]);
@@ -65,6 +66,14 @@ function validateBankAndCategories() {
   assert(bank && typeof bank === "object", "questions.json must contain an object.");
   assert(bank.sources && typeof bank.sources === "object", "A source registry is required.");
   assert(Array.isArray(bank.categories), "A category manifest array is required.");
+  assert(
+    bank.default_target && typeof bank.default_target === "object",
+    "A default difficulty target is required."
+  );
+  assert(
+    bank.legacy_key_ranges && typeof bank.legacy_key_ranges === "object",
+    "Explicit legacy key ranges are required."
+  );
   assert(
     typeof bank.verified_at === "string" && /^\d{4}-\d{2}-\d{2}$/.test(bank.verified_at),
     "verified_at must use YYYY-MM-DD."
@@ -146,6 +155,24 @@ function normalise(value) {
   return String(value).trim().toLowerCase().replace(/\s+/g, " ");
 }
 
+function isAllowedQuestionKey(key, category) {
+  if (/^[a-z0-9_]+-\d{3,}$/.test(key)) {
+    return true;
+  }
+
+  for (const [prefix, range] of Object.entries(bank.legacy_key_ranges)) {
+    if (!key.startsWith(prefix) || range.category !== category) {
+      continue;
+    }
+
+    const suffix = key.slice(prefix.length);
+    const value = /^\d{3}$/.test(suffix) ? Number.parseInt(suffix, 10) : NaN;
+    return Number.isInteger(value) && value >= range.min && value <= range.max;
+  }
+
+  return false;
+}
+
 function assert(condition, message) {
   if (!condition) {
     throw new Error(message);
@@ -210,8 +237,8 @@ const prepared = questions.map((question, globalIndex) => {
   }
 
   assert(
-    /^[a-z0-9_]+-\d{3,}$/.test(question.key),
-    question.key + ": stable keys must end in a numeric suffix of at least three digits."
+    isAllowedQuestionKey(question.key, question.category),
+    question.key + ": use the canonical hyphen key convention or an explicit legacy range."
   );
   assert(
     activeCategoryIds.has(question.category),
@@ -312,6 +339,30 @@ const categoryExpectationRows = activeCategories.map((category) => {
   const expected = Object.values(category.target).reduce((sum, count) => sum + count, 0);
   return "      (" + sqlString(category.id) + ", " + expected + ")";
 });
+const categoryManifestRows = categories.map((category) =>
+  "  (" + [
+    sqlString(category.id),
+    sqlString(category.label),
+    category.sort_order,
+    sqlString(category.icon_key),
+    sqlString(category.color),
+    category.status === "active" ? "true" : "false"
+  ].join(", ") + ")"
+);
+const verificationExpectationRows = activeCategories.map((category) => {
+  const total = Object.values(category.target).reduce((sum, count) => sum + count, 0);
+  return "    (" + [
+    sqlString(category.id),
+    sqlString(category.label),
+    category.sort_order,
+    sqlString(category.icon_key),
+    sqlString(category.color),
+    category.target.easy,
+    category.target.medium,
+    category.target.hard,
+    total
+  ].join(", ") + ")";
+});
 const activeCategoryIdList = activeCategories
   .map((category) => sqlString(category.id))
   .join(", ");
@@ -324,23 +375,28 @@ const sql = [
   "",
   "do $$",
   "begin",
-  "  if to_regclass('public.trivia_questions') is null then",
+  "  if to_regclass('public.question_categories') is null then",
   "    raise exception 'Run phase-4a-question-platform.sql before this seed.';",
   "  end if;",
   "",
-  "  if exists (",
-  "    select 1",
-  "    from (values",
-  categoryExpectationRows.join(",\n"),
-  "    ) as expected(category_id, expected_count)",
-  "    left join public.question_categories qc",
-  "      on qc.id = expected.category_id",
-  "    where qc.id is null",
-  "  ) then",
-  "    raise exception 'Run phase-5-category-platform.sql before this seed.';",
+  "  if to_regclass('public.trivia_questions') is null then",
+  "    raise exception 'Run phase-4a-question-platform.sql before this seed.';",
   "  end if;",
   "end;",
   "$$;",
+  "",
+  "insert into public.question_categories (",
+  "  id, label, sort_order, icon_key, color, is_active",
+  ")",
+  "values",
+  categoryManifestRows.join(",\n"),
+  "on conflict (id) do update",
+  "set",
+  "  label = excluded.label,",
+  "  sort_order = excluded.sort_order,",
+  "  icon_key = excluded.icon_key,",
+  "  color = excluded.color,",
+  "  is_active = excluded.is_active;",
   "",
   "insert into public.trivia_questions (",
   "  question_key,",
@@ -422,8 +478,96 @@ const sql = [
   ""
 ].join("\n");
 
+const verificationSql = [
+  "-- Trivia Rush manifest-derived category and question verification",
+  "-- Generated by scripts/build-question-seed.mjs. Do not edit this SQL by hand.",
+  "-- Every query is read-only.",
+  "",
+  "with expected(category_id, label, sort_order, icon_key, color, easy, medium, hard, total) as (",
+  "  values",
+  verificationExpectationRows.join(",\n"),
+  "), actual as (",
+  "  select",
+  "    qc.id as category_id,",
+  "    qc.label,",
+  "    qc.sort_order,",
+  "    qc.icon_key,",
+  "    qc.color,",
+  "    count(q.id) filter (where q.is_active and q.difficulty = 'easy')::integer as easy,",
+  "    count(q.id) filter (where q.is_active and q.difficulty = 'medium')::integer as medium,",
+  "    count(q.id) filter (where q.is_active and q.difficulty = 'hard')::integer as hard,",
+  "    count(q.id) filter (where q.is_active)::integer as total",
+  "  from public.question_categories qc",
+  "  left join public.trivia_questions q on q.category_id = qc.id",
+  "  where qc.is_active",
+  "  group by qc.id, qc.label, qc.sort_order, qc.icon_key, qc.color",
+  ")",
+  "select",
+  "  expected.* ,",
+  "  actual.easy as actual_easy,",
+  "  actual.medium as actual_medium,",
+  "  actual.hard as actual_hard,",
+  "  actual.total as actual_total,",
+  "  actual.category_id is not null",
+  "    and actual.label = expected.label",
+  "    and actual.sort_order = expected.sort_order",
+  "    and actual.icon_key = expected.icon_key",
+  "    and actual.color = expected.color",
+  "    and actual.easy = expected.easy",
+  "    and actual.medium = expected.medium",
+  "    and actual.hard = expected.hard",
+  "    and actual.total = expected.total as matches_manifest",
+  "from expected",
+  "left join actual using (category_id)",
+  "order by expected.sort_order;",
+  "",
+  "select",
+  "  count(*) filter (where is_active) = " + activeCategories.length + " as active_category_count_matches,",
+  "  (select count(*) from public.trivia_questions where is_active) = " + expectedTotal + " as active_question_count_matches",
+  "from public.question_categories;",
+  "",
+  "select correct_index, count(*) as questions",
+  "from public.trivia_questions",
+  "where is_active",
+  "group by correct_index",
+  "order by correct_index;",
+  "",
+  "select",
+  "  count(*) filter (where char_length(btrim(question_text)) not between 10 and 240) as invalid_question_text,",
+  "  count(*) filter (where not trivia_private.question_answers_are_valid(answers)) as invalid_answers,",
+  "  count(*) filter (where correct_index not between 0 and 2) as invalid_indexes,",
+  "  count(*) filter (where source_url !~ '^https://') as invalid_source_urls,",
+  "  count(*) filter (where verified_at is null) as missing_verified_at",
+  "from public.trivia_questions",
+  "where is_active;",
+  "",
+  "select count(*) as duplicate_normalised_questions",
+  "from (",
+  "  select lower(regexp_replace(btrim(question_text), '\\s+', ' ', 'g'))",
+  "  from public.trivia_questions",
+  "  where is_active",
+  "  group by lower(regexp_replace(btrim(question_text), '\\s+', ' ', 'g'))",
+  "  having count(*) > 1",
+  ") duplicates;",
+  "",
+  "select count(*) = 400 as frozen_legacy_key_count_matches",
+  "from public.trivia_questions",
+  "where question_key ~ '^(got|myth|hp|mcu)_[0-9]{3}$';",
+  "",
+  "select * from public.get_question_categories();",
+  "",
+  "select grantee, table_name, privilege_type",
+  "from information_schema.role_table_grants",
+  "where table_schema = 'public'",
+  "  and table_name in ('question_categories', 'trivia_questions')",
+  "  and grantee in ('anon', 'authenticated')",
+  "order by table_name, grantee, privilege_type;",
+  ""
+].join("\n");
+
 if (WRITE_OUTPUT) {
   writeFileSync(OUTPUT, sql, "utf8");
+  writeFileSync(VERIFICATION_OUTPUT, verificationSql, "utf8");
 }
 
 console.log(
@@ -436,7 +580,8 @@ console.log(
         .map((category) => category.id),
       correct_positions: positionCounts,
       wrote_output: WRITE_OUTPUT,
-      output: basename(OUTPUT)
+      output: basename(OUTPUT),
+      verification_output: basename(VERIFICATION_OUTPUT)
     },
     null,
     2
