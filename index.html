@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="styles.css?v=8">
   <link rel="stylesheet" href="progression-ui.css?v=1">
   <link rel="stylesheet" href="category-progression-ui.css?v=1">
-  <link rel="stylesheet" href="home-redesign.css?v=4">
+  <link rel="stylesheet" href="home-redesign.css?v=5">
   <link rel="stylesheet" href="social-redesign.css?v=2">
   <link rel="stylesheet" href="unified-shell.css?v=1">
   <link rel="stylesheet" href="mobile-shell-polish.css?v=1">
@@ -98,9 +98,9 @@
 
     <section id="startScreen" class="screen active home-screen-v2" aria-labelledby="startTitle">
       <div class="home-hero-v2">
-        <div class="eyebrow">60 SECONDS. ONE HIGH SCORE.</div>
-        <h1 id="startTitle">How many<br>can<br><span>you answer?</span></h1>
-        <p class="home-hero-copy">Choose a category and put your knowledge to the test. Race the clock, build your streak and earn global XP.</p>
+        <div class="eyebrow">SOLO <span aria-hidden="true">&middot;</span> 60 SECONDS</div>
+        <h1 id="startTitle">How many can you<br><span>get right?</span></h1>
+        <p class="home-hero-copy">Choose a category, race the clock,<br>and build your streak.</p>
 
         <div class="home-selection-row">
           <div class="home-selected-category">Selected:<strong id="selectedCategoryLabel">All categories</strong></div>
@@ -111,7 +111,7 @@
         </div>
 
         <button id="startButton" class="primary-button home-start-button" type="button" disabled>
-          <span>Start the challenge</span>
+          <span>Start 60-second round</span>
           <span aria-hidden="true">›</span>
         </button>
 
@@ -131,20 +131,14 @@
             <strong>LV <span id="homeGlobalLevel">1</span></strong>
           </div>
         </div>
-
-        <div class="controls-hint home-controls-hint">
-          <span><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> answer</span>
-          <span><kbd>P</kbd> pass</span>
-          <span><kbd>V</kbd> voice</span>
-        </div>
       </div>
 
       <aside class="home-category-browser" aria-labelledby="homeCategoryTitle">
-        <header class="home-category-heading">
-          <span class="home-category-mark" aria-hidden="true">?</span>
-          <div>
-            <h2 id="homeCategoryTitle">Choose a category</h2>
-            <p>Pick one to begin</p>
+        <header class="home-category-heading" aria-live="polite">
+          <span id="homeCategoryMark" class="home-category-mark" aria-hidden="true">?</span>
+          <div class="home-category-heading-copy">
+            <h2 id="homeCategoryTitle">All categories</h2>
+            <p id="homeCategoryLevel">Global level 1</p>
           </div>
         </header>
 
@@ -907,11 +901,11 @@
   <script src="vendor/supabase.js"></script>
   <script src="social-rpc-bridge.js?v=2"></script>
   <script src="progression-ui.js?v=1"></script>
-  <script src="category-progression-ui.js?v=1"></script>
+  <script src="category-progression-ui.js?v=2"></script>
   <script src="vendor/discord-embedded-app-sdk.js"></script>
   <script src="app.js?v=25"></script>
   <script src="social-redesign.js?v=2"></script>
-  <script src="home-redesign.js?v=1"></script>
+  <script src="home-redesign.js?v=2"></script>
   <script src="unified-shell.js?v=1"></script>
   <script src="mode-navigation.js?v=1"></script>
 </body>
