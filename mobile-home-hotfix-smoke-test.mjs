@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 
 const styles = readFileSync("./mobile-home-hotfix.css", "utf8");
 const index = readFileSync("./index.html", "utf8");
-const headerLogo = readFileSync("./icons/trivia-rush-header-logo.svg", "utf8");
+const headerLogo = readFileSync("./icons/trivia-rush-header-logo.png", "utf8");
 
 const checks = [
   [
@@ -32,7 +32,7 @@ const checks = [
   [
     "shared header uses the supplied Trivia Rush logo asset",
     styles.includes('.brand-bolt') &&
-      styles.includes('url("icons/trivia-rush-header-logo.svg")') &&
+      styles.includes('url("icons/trivia-rush-header-logo.png")') &&
       styles.includes("font-size: 0 !important") &&
       headerLogo.includes('viewBox="0 0 128 128"') &&
       headerLogo.includes("data:image/png;base64,")
