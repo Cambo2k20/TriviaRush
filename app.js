@@ -55,7 +55,6 @@
       }
 
       const { error } = await supabaseClient.auth.verifyOtp({
-        email: result.email,
         token_hash: result.token_hash,
         type: "magiclink"
       });
