@@ -28,7 +28,7 @@ jobs:
           node-version: 22
           cache: npm
 
-      - name: Apply social assets to the current production page
+      - name: Apply generated assets to the current production page
         run: node scripts/sync-social-branch-with-main.mjs
 
       - name: Install test dependencies
@@ -58,11 +58,38 @@ jobs:
       - name: Verify category progression
         run: npm run test:category-progression
 
+      - name: Verify core frontend flow
+        run: node smoke-test.mjs
+
+      - name: Verify global progression UI
+        run: node progression-ui-smoke-test.mjs
+
       - name: Verify category mastery UI
         run: node category-progression-ui-smoke-test.mjs
 
-      - name: Verify frontend
-        run: npm run test:frontend
+      - name: Verify Home redesign
+        run: node home-redesign-smoke-test.mjs
+
+      - name: Verify social redesign
+        run: node social-redesign-smoke-test.mjs
+
+      - name: Verify social account guard
+        run: node social-account-guard-smoke-test.mjs
+
+      - name: Verify social page integration
+        run: node social-page-integration-smoke-test.mjs
+
+      - name: Verify unified shell
+        run: node unified-shell-smoke-test.mjs
+
+      - name: Verify mobile shell polish
+        run: node mobile-shell-polish-smoke-test.mjs
+
+      - name: Verify mobile Home hotfix
+        run: node mobile-home-hotfix-smoke-test.mjs
+
+      - name: Verify mode navigation
+        run: node mode-navigation-smoke-test.mjs
 
       - name: Capture social redesign screenshots
         run: node scripts/capture-social-redesign.mjs
