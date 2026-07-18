@@ -159,8 +159,14 @@ function assert(name, condition) {
   }
 }
 
+const progressionScriptIndex = html.indexOf("progression-ui.js?v=1");
+const appScriptIndex = html.search(/app\.js\?v=\d+/);
+
 assert("progression stylesheet linked", html.includes("progression-ui.css?v=1"));
-assert("progression script loaded before app", html.indexOf("progression-ui.js?v=1") < html.indexOf("app.js?v=18"));
+assert(
+  "progression script loaded before app",
+  progressionScriptIndex >= 0 && appScriptIndex >= 0 && progressionScriptIndex < appScriptIndex
+);
 assert("global progression RPC called", rpcCalls.some((call) => call.name === "get_my_global_progression"));
 assert("header progression chip is visible", window.document.querySelector("#globalProgressionChip")?.hidden === false);
 assert("header shows server level", window.document.querySelector("#globalProgressionChipLevel")?.textContent === "4");
