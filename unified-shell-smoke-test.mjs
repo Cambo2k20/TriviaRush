@@ -122,7 +122,7 @@ assert(
 assert(
   "production page loads unified shell runtime last",
   index.includes('src="unified-shell.js?v=1"') &&
-    index.indexOf('home-redesign.js?v=1') < index.indexOf('unified-shell.js?v=1')
+    index.indexOf('home-redesign.js?v=2') < index.indexOf('unified-shell.js?v=1')
 );
 
 console.log(results.join("\n"));

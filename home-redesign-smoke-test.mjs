@@ -53,19 +53,36 @@ const assert = (name, condition) => {
   if (!condition) process.exitCode = 1;
 };
 
-assert("redesign stylesheet linked", html.includes('href="home-redesign.css?v=4"'));
-assert("redesign runtime linked", html.includes('src="home-redesign.js?v=1"'));
+assert("redesign stylesheet linked", html.includes('href="home-redesign.css?v=5"'));
+assert("redesign runtime linked", html.includes('src="home-redesign.js?v=2"'));
 assert("mockup hero markup present", Boolean(window.document.querySelector(".home-hero-v2")));
+assert("desktop hero uses the Solo 60-second framing", window.document.querySelector(".home-hero-v2 .eyebrow")?.textContent.replace(/\s+/g, " ").trim() === "SOLO · 60 SECONDS");
+assert("desktop hero uses the two-line challenge title", window.document.querySelector("#startTitle")?.innerHTML === "How many can you<br><span>get right?</span>");
+assert("primary action names the round length", window.document.querySelector("#startButton span")?.textContent === "Start 60-second round");
+assert("keyboard control hints are removed from the hero", !window.document.querySelector(".home-controls-hint"));
 assert("category browser present", Boolean(window.document.querySelector(".home-category-browser")));
 assert("fallback select preserves authoritative category input", Boolean(categorySelect));
 assert("category cards generated from select options", window.document.querySelectorAll(".home-category-card").length === 4);
 assert("home screen activates redesign body state", window.document.body.classList.contains("home-redesign-active"));
 assert("server progression level is mirrored", window.document.querySelector("#homeGlobalLevel")?.textContent === "7");
+assert("All categories uses the global level in the centred heading", window.document.querySelector("#homeCategoryTitle")?.textContent === "All categories" && window.document.querySelector("#homeCategoryLevel")?.textContent === "Global level 7");
+
+window.dispatchEvent(new window.CustomEvent("trivia-rush:category-progression", {
+  detail: {
+    categories: [
+      { id: "science", level: 4 },
+      { id: "history", level: 2 }
+    ]
+  }
+}));
 
 window.document.querySelector('[data-category-id="science"]').click();
 assert("card selection updates authoritative select", categorySelect.value === "science");
 assert("selected category copy updates", window.document.querySelector("#selectedCategoryLabel")?.textContent === "Science");
 assert("selected card exposes pressed state", window.document.querySelector('[data-category-id="science"]')?.getAttribute("aria-pressed") === "true");
+assert("selected category replaces the category heading", window.document.querySelector("#homeCategoryTitle")?.textContent === "Science");
+assert("selected category shows its trusted category level", window.document.querySelector("#homeCategoryLevel")?.textContent === "Category level 4");
+assert("selected category icon replaces the placeholder mark", Boolean(window.document.querySelector("#homeCategoryMark svg")));
 
 window.document.querySelector("#homeHostToggle").click();
 await new Promise((resolve) => setTimeout(resolve, 0));
@@ -76,6 +93,7 @@ window.document.querySelector("#homeFriendsShortcut").click();
 assert("friends shortcut uses existing navigation control", friendsOpened === 1);
 assert("responsive rules included", styles.includes("@media (max-width: 640px)"));
 assert("dynamic desktop alignment used", styles.includes("align-items: center") && styles.includes("100dvh"));
+assert("desktop category heading centres its icon and selection copy inline", styles.includes("flex-direction: row") && styles.includes("text-align: center") && styles.includes("justify-items: center"));
 assert("fixed category translation removed", !styles.includes("translateY(35px)"));
 assert("footer height reserved", styles.includes("--home-footer-height") && styles.includes("--home-main-height"));
 assert("short viewport compaction included", styles.includes("max-height: 760px") && styles.includes("7.5dvh"));
