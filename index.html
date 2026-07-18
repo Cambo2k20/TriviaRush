@@ -861,7 +861,24 @@
       aria-live="polite"
     ></p>
   </dialog>
-
+  <dialog id="playerNameDialog" class="account-dialog">
+    <div class="account-heading">
+      <span class="account-icon" aria-hidden="true">🏷️</span>
+      <div>
+        <h2>Choose your name</h2>
+        <p>Pick a public leaderboard name (3–24 characters).</p>
+      </div>
+    </div>
+    <div class="account-field">
+      <label for="playerNameInput">Leaderboard name</label>
+      <input id="playerNameInput" type="text" minlength="3" maxlength="24" autocomplete="off">
+    </div>
+    <p id="playerNameError" class="account-status error" hidden></p>
+    <div class="account-actions">
+      <button id="playerNameConfirmButton" class="primary-button" type="button">Confirm</button>
+      <button id="playerNameCancelButton" class="text-button" type="button">Cancel</button>
+    </div>
+  </dialog>
   <dialog id="howToDialog">
     <button
       id="closeDialogButton"
@@ -889,7 +906,7 @@
   <script src="vendor/supabase.js"></script>
   <script src="social-rpc-bridge.js?v=2"></script>
   <script src="progression-ui.js?v=1"></script>
-  <script src="app.js?v=19"></script>
+  <script src="app.js?v=20"></script>
   <script src="social-redesign.js?v=2"></script>
   <script src="home-redesign.js?v=1"></script>
   <script src="unified-shell.js?v=1"></script>
