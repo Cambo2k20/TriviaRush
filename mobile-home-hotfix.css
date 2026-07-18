@@ -49,12 +49,20 @@
   height: 46px;
   flex: 0 0 46px;
   overflow: visible;
-  border-radius: 0;
+  border-radius: 0 !important;
   color: transparent !important;
   background: url("icons/trivia-rush-header-logo.png") center / contain no-repeat !important;
-  box-shadow: none;
+  box-shadow: none !important;
   font-size: 0 !important;
   line-height: 0;
+}
+
+body.home-redesign-active .brand-bolt,
+body.trivia-shell-ready .brand-bolt,
+body.shared-mode-navigation-ready .topbar > .brand .brand-bolt {
+  border-radius: 0 !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
 }
 
 @media (max-width: 700px) {
