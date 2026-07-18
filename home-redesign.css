@@ -89,7 +89,7 @@ body.home-redesign-active .header-actions > button:hover {
 #startScreen.home-screen-v2 {
   min-height: calc(100dvh - 90px);
   padding: clamp(24px, 5dvh, 54px) 0 clamp(20px, 3dvh, 32px);
-  grid-template-columns: minmax(0, 0.94fr) minmax(540px, 1.06fr);
+  grid-template-columns: minmax(280px, 0.85fr) minmax(360px, 1.15fr);
   grid-template-rows: minmax(0, 1fr) auto;
   column-gap: clamp(32px, 4.7vw, 72px);
   row-gap: clamp(24px, 4dvh, 42px);
@@ -109,14 +109,15 @@ body.home-redesign-active .header-actions > button:hover {
 }
 
 .home-hero-v2 h1 {
-  max-width: 680px;
+  max-width: 12ch;
   margin: 0;
   font-family: "Baloo 2", sans-serif;
   font-size: 4.4rem;
   font-weight: 800;
   line-height: 0.9;
   letter-spacing: 0;
-  white-space: nowrap;
+  white-space: normal;
+  text-wrap: balance;
   text-shadow: 0 9px 32px rgba(0, 0, 0, 0.34);
 }
 
@@ -221,11 +222,13 @@ body.home-redesign-active .header-actions > button:hover {
 .home-stats-v2 {
   max-width: 650px;
   margin-top: 28px;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;
+  align-items: stretch;
 }
 
 .home-stat-v2 {
+  min-width: 0;
+  flex: 1 1 0;
   min-height: 68px;
   padding: 0 34px;
   display: grid;
@@ -499,7 +502,7 @@ body.home-redesign-active .header-actions > button:hover {
   }
 
   #startScreen.home-screen-v2 {
-    grid-template-columns: minmax(0, 0.9fr) minmax(480px, 1.1fr);
+    grid-template-columns: minmax(260px, 0.82fr) minmax(360px, 1.18fr);
     gap: 34px;
   }
 

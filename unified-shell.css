@@ -15,11 +15,16 @@
 }
 
 html {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
   min-height: 100%;
   background: #020b20;
 }
 
 body.trivia-shell-ready {
+  width: 100%;
+  min-width: 0;
   min-height: 100dvh;
   background:
     radial-gradient(circle at 15% 44%, rgba(0, 153, 199, 0.2), transparent 34rem),
@@ -34,6 +39,7 @@ body.trivia-shell-ready .background-orb {
 
 body.trivia-shell-ready .app-shell {
   width: 100%;
+  min-width: 0;
   max-width: none;
   min-height: 100dvh;
   margin: 0;
