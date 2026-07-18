@@ -133,7 +133,7 @@ body.shared-mode-navigation-ready #startScreen > .home-quick-actions {
     align-items: center;
     gap: 8px;
     color: #f6f7ff;
-    font-size: 1rem;
+    font-size: 1.2rem;
     letter-spacing: 0.07em;
     text-decoration: none;
   }
