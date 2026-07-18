@@ -25,6 +25,49 @@
       channelId: discordSdk.channelId,
       instanceId: discordSdk.instanceId
     });
+
+    await signInWithDiscord();
+  }
+
+  async function signInWithDiscord() {
+    try {
+      const { code } = await discordSdk.commands.authorize({
+        client_id: "1527828246291550268",
+        response_type: "code",
+        state: "",
+        prompt: "none",
+        scope: ["identify"]
+      });
+
+      const response = await fetch(`${SUPABASE_URL}/functions/v1/discord-auth`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: SUPABASE_PUBLISHABLE_KEY
+        },
+        body: JSON.stringify({ code })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.token_hash) {
+        throw new Error(result.error || `Server responded ${response.status}`);
+      }
+
+      const { error } = await supabaseClient.auth.verifyOtp({
+        email: result.email,
+        token_hash: result.token_hash,
+        type: "magiclink"
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      console.log("Signed in with Discord account");
+    } catch (error) {
+      console.error("Discord sign-in failed:", error);
+    }
   }
     const SUPABASE_URL = isDiscordActivity()
       ? `${window.location.origin}/supabase-api`
