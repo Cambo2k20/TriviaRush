@@ -1,6 +1,8 @@
 (() => {
   "use strict";
 
+  const CATEGORY_PROGRESSION_EVENT = "trivia-rush:category-progression";
+
   const state = {
     client: null,
     categories: [],
@@ -212,6 +214,7 @@
     state.categories = data.categories.map(normaliseCategory);
     state.categoryMap = new Map(state.categories.map((category) => [category.id, category]));
     renderAccountProgression(state.categories, safeInteger(data.total_xp));
+    publishCategoryProgression(state.categories);
     return state.categories;
   }
 
@@ -250,6 +253,22 @@
       correctAnswers: safeInteger(payload.correct_answers),
       accuracyPercent: clamp(Number(payload.accuracy_percent) || 0, 0, 100)
     };
+  }
+
+  function publishCategoryProgression(categories) {
+    const detail = {
+      categories: categories.map((category) => ({
+        id: category.id,
+        label: category.label,
+        iconKey: category.iconKey,
+        color: category.color,
+        level: category.level,
+        nextLevel: category.nextLevel,
+        xpToNext: category.xpToNext
+      }))
+    };
+
+    window.dispatchEvent(new CustomEvent(CATEGORY_PROGRESSION_EVENT, { detail }));
   }
 
   function renderAccountProgression(categories, totalXp) {

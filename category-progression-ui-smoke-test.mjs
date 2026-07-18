@@ -57,6 +57,11 @@ const dom = new JSDOM(html, {
   pretendToBeVisual: true
 });
 const { window } = dom;
+const progressionEvents = [];
+
+window.addEventListener("trivia-rush:category-progression", (event) => {
+  progressionEvents.push(event.detail);
+});
 
 window.supabase = {
   createClient: () => ({
@@ -173,7 +178,7 @@ function assert(name, condition) {
   if (!condition) process.exitCode = 1;
 }
 
-const categoryScriptIndex = html.indexOf("category-progression-ui.js?v=1");
+const categoryScriptIndex = html.indexOf("category-progression-ui.js?v=2");
 const appScriptIndex = html.search(/app\.js\?v=\d+/);
 
 assert("category mastery stylesheet linked", html.includes("category-progression-ui.css?v=1"));
@@ -182,6 +187,7 @@ assert(
   categoryScriptIndex >= 0 && appScriptIndex >= 0 && categoryScriptIndex < appScriptIndex
 );
 assert("category progression RPC called", rpcCalls.some((call) => call.name === "get_my_category_progression"));
+assert("normalized category progression is published for the home screen", progressionEvents[0]?.categories?.find((category) => category.id === "science")?.level === 2);
 assert("account mastery panel is visible", window.document.querySelector("#accountCategoryMasteryPanel")?.hidden === false);
 assert("account renders each server category", window.document.querySelectorAll("#accountCategoryMasteryGrid .category-mastery-card").length === 2);
 assert("Science server level is shown", window.document.querySelector('[data-category-id="science"] .category-mastery-level')?.textContent === "LV 2");
@@ -200,6 +206,7 @@ await client.rpc("finish_solo_game", {
 await new Promise((resolve) => window.setTimeout(resolve, 80));
 
 assert("solo category summary follows authoritative finish", rpcCalls.some((call) => call.name === "get_solo_category_xp_summary"));
+assert("home progression event refreshes after authoritative solo completion", progressionEvents.length >= 2);
 assert("solo result shows exact total category XP", window.document.querySelector("#soloCategoryProgressionResult [data-category-result-total]")?.textContent === "+35 XP");
 assert("Mixed solo result renders multiple category rows", window.document.querySelectorAll("#soloCategoryProgressionResult .category-result-row").length === 2);
 assert("solo result highlights the trusted level-up", window.document.querySelector("#soloCategoryProgressionResult .category-result-row.level-up .category-result-level")?.textContent === "LV 1 → 2");

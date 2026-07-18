@@ -1,6 +1,8 @@
 (() => {
   "use strict";
 
+  const CATEGORY_PROGRESSION_EVENT = "trivia-rush:category-progression";
+
   const CATEGORY_PRESENTATION = {
     mixed: { accent: "#FFD335", icon: "brain", label: "All categories" },
     science: { accent: "#35D9D1", icon: "flask" },
@@ -30,6 +32,7 @@
   };
 
   const elements = {};
+  const categoryProgression = new Map();
   let optionObserver = null;
   let screenObserver = null;
   let hostObserver = null;
@@ -40,6 +43,10 @@
     elements.categorySelect = document.querySelector("#categorySelect");
     elements.categoryGrid = document.querySelector("#categoryCardGrid");
     elements.selectedCategory = document.querySelector("#selectedCategoryLabel");
+    elements.categoryBrowser = document.querySelector(".home-category-browser");
+    elements.categoryHeadingTitle = document.querySelector("#homeCategoryTitle");
+    elements.categoryHeadingLevel = document.querySelector("#homeCategoryLevel");
+    elements.categoryHeadingMark = document.querySelector("#homeCategoryMark");
     elements.homeHostToggle = document.querySelector("#homeHostToggle");
     elements.hostToggle = document.querySelector("#hostToggle");
     elements.homeGlobalLevel = document.querySelector("#homeGlobalLevel");
@@ -51,6 +58,7 @@
 
     bindShortcuts();
     bindCategorySelect();
+    bindCategoryProgression();
     bindHostToggle();
     observeActiveScreen();
     observeProgressionLevel();
@@ -117,12 +125,65 @@
       elements.selectedCategory.textContent = selectedLabel;
     }
 
+    syncCategoryHeading(selectedId, selectedLabel);
+
     elements.categoryGrid
       .querySelectorAll("[data-category-id]")
       .forEach((button) => {
         const active = button.dataset.categoryId === selectedId;
         button.setAttribute("aria-pressed", String(active));
       });
+  }
+
+  function bindCategoryProgression() {
+    window.addEventListener(CATEGORY_PROGRESSION_EVENT, (event) => {
+      const categories = Array.isArray(event.detail?.categories)
+        ? event.detail.categories
+        : [];
+
+      categoryProgression.clear();
+      categories.forEach((category) => {
+        const id = String(category?.id || "");
+        const level = Number.parseInt(category?.level, 10);
+        if (id && Number.isFinite(level)) {
+          categoryProgression.set(id, { level: Math.max(1, level) });
+        }
+      });
+
+      syncSelectedCategory();
+    });
+  }
+
+  function syncCategoryHeading(selectedId, selectedLabel) {
+    const presentation = CATEGORY_PRESENTATION[selectedId] || {
+      accent: "#7C83FF",
+      icon: "brain"
+    };
+
+    if (elements.categoryHeadingTitle) {
+      elements.categoryHeadingTitle.textContent = selectedLabel;
+    }
+
+    if (elements.categoryHeadingMark) {
+      elements.categoryHeadingMark.innerHTML = ICONS[presentation.icon] || ICONS.brain;
+    }
+
+    elements.categoryBrowser?.style.setProperty("--selected-category-accent", presentation.accent);
+
+    if (!elements.categoryHeadingLevel) {
+      return;
+    }
+
+    if (selectedId === "mixed") {
+      const level = elements.homeGlobalLevel?.textContent?.trim() || "1";
+      elements.categoryHeadingLevel.textContent = `Global level ${level}`;
+      return;
+    }
+
+    const progression = categoryProgression.get(selectedId);
+    elements.categoryHeadingLevel.textContent = progression
+      ? `Category level ${progression.level}`
+      : "Category level loading";
   }
 
   function bindHostToggle() {
@@ -189,6 +250,7 @@
         if (elements.homeGlobalLevel) {
           elements.homeGlobalLevel.textContent = elements.progressionLevel.textContent || "1";
         }
+        syncSelectedCategory();
       };
 
       levelObserver = new MutationObserver(sync);
