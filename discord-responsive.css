@@ -96,7 +96,7 @@ body[data-active-screen="leaderboardScreen"] {
   overflow-y: auto;
 }
 
-body.trivia-shell-ready #startScreen.home-screen-v2 {
+body.trivia-shell-ready #startScreen.home-screen-v2.active {
   min-width: 0;
   min-height: 0;
   height: 100%;
@@ -251,7 +251,7 @@ body.trivia-shell-ready #duelGameScreen .question-card {
 }
 
 @media (min-width: 1280px) and (min-height: 760px) {
-  body.trivia-shell-ready #startScreen.home-screen-v2 {
+  body.trivia-shell-ready #startScreen.home-screen-v2.active {
     grid-template-columns: minmax(380px, 0.9fr) minmax(520px, 1.1fr);
   }
 }
@@ -523,7 +523,7 @@ html[data-discord-layout="pip"] body.trivia-shell-ready #duelGameScreen .questio
     padding-inline: calc(12px + var(--safe-left)) calc(12px + var(--safe-right));
   }
 
-  body.trivia-shell-ready #startScreen.home-screen-v2 {
+  body.trivia-shell-ready #startScreen.home-screen-v2.active {
     height: auto;
     min-height: 0;
     padding: 18px calc(12px + var(--safe-right)) calc(24px + var(--safe-bottom)) calc(12px + var(--safe-left));

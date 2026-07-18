@@ -21,6 +21,9 @@ assert("responsive stylesheet exists and is linked", styles.length > 0 && respon
 assert("responsive stylesheet loads after mode navigation", responsiveIndex > modeIndex);
 assert("responsive stylesheet is the final CSS layer", responsiveIndex === cssLinks.length - 1);
 assert("Discord layout runtime is loaded", html.includes('src="discord-layout.js?v=1"'));
+assert("desktop Home layout only displays while active", /#startScreen\.home-screen-v2\.active\s*\{[^}]*display:\s*grid/s.test(styles));
+assert("mobile Home layout only displays while active", /max-width:\s*759px[\s\S]*?#startScreen\.home-screen-v2\.active\s*\{[^}]*display:\s*flex/s.test(styles));
+assert("inactive Home screen is never forced visible", !/#startScreen\.home-screen-v2(?!\.active)[^{]*\{[^}]*display:/s.test(styles));
 assert("hero title can wrap", /\.home-hero-v2 h1\s*\{[^}]*white-space:\s*normal/s.test(homeStyles));
 assert("rigid 540px home column minimum is removed", !homeStyles.includes("minmax(540px"));
 assert("compact width breakpoint exists", styles.includes("max-width: 1279px"));
