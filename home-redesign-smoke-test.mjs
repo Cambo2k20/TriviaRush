@@ -16,14 +16,20 @@ window.HTMLElement.prototype.scrollIntoView = () => {};
 
 const categorySelect = window.document.querySelector("#categorySelect");
 [
-  ["mixed", "All categories"],
-  ["science", "Science"],
-  ["history", "History"],
-  ["technology", "Technology"]
-].forEach(([value, label]) => {
+  ["mixed", "All categories", "brain", "#FFD335"],
+  ["science", "Science", "flask", "#41E28C"],
+  ["history", "History", "landmark", "#FFD54A"],
+  ["technology", "Technology", "cpu", "#7C83FF"],
+  ["game_of_thrones", "Game of Thrones", "dragon", "#9B1C1C"],
+  ["mythology", "Mythology", "thunderbolt", "#C9A227"],
+  ["harry_potter", "Harry Potter", "wand", "#4B2E83"],
+  ["marvel_cinematic_universe", "Marvel Cinematic Universe", "shield", "#ED1D24"]
+].forEach(([value, label, iconKey, color]) => {
   const option = window.document.createElement("option");
   option.value = value;
   option.textContent = label;
+  option.dataset.iconKey = iconKey;
+  option.dataset.color = color;
   categorySelect.appendChild(option);
 });
 
@@ -62,7 +68,7 @@ assert("primary action names the round length", window.document.querySelector("#
 assert("keyboard control hints are removed from the hero", !window.document.querySelector(".home-controls-hint"));
 assert("category browser present", Boolean(window.document.querySelector(".home-category-browser")));
 assert("fallback select preserves authoritative category input", Boolean(categorySelect));
-assert("category cards generated from select options", window.document.querySelectorAll(".home-category-card").length === 4);
+assert("category cards generated from select options", window.document.querySelectorAll(".home-category-card").length === 8);
 assert("home screen activates redesign body state", window.document.body.classList.contains("home-redesign-active"));
 assert("server progression level is mirrored", window.document.querySelector("#homeGlobalLevel")?.textContent === "7");
 assert("All categories uses the global level in the centred heading", window.document.querySelector("#homeCategoryTitle")?.textContent === "All categories" && window.document.querySelector("#homeCategoryLevel")?.textContent === "Global level 7");
@@ -71,7 +77,8 @@ window.dispatchEvent(new window.CustomEvent("trivia-rush:category-progression", 
   detail: {
     categories: [
       { id: "science", level: 4 },
-      { id: "history", level: 2 }
+      { id: "history", level: 2 },
+      { id: "marvel_cinematic_universe", level: 3 }
     ]
   }
 }));
@@ -83,6 +90,11 @@ assert("selected card exposes pressed state", window.document.querySelector('[da
 assert("selected category replaces the category heading", window.document.querySelector("#homeCategoryTitle")?.textContent === "Science");
 assert("selected category shows its trusted category level", window.document.querySelector("#homeCategoryLevel")?.textContent === "Category level 4");
 assert("selected category icon replaces the placeholder mark", Boolean(window.document.querySelector("#homeCategoryMark svg")));
+
+window.document.querySelector('[data-category-id="marvel_cinematic_universe"]').click();
+assert("new category uses RPC label", window.document.querySelector("#homeCategoryTitle")?.textContent === "Marvel Cinematic Universe");
+assert("new category uses RPC color", window.document.querySelector(".home-category-browser")?.style.getPropertyValue("--selected-category-accent") === "#ED1D24");
+assert("new category uses its shield implementation", window.document.querySelector("#homeCategoryMark svg path")?.getAttribute("d")?.startsWith("M24 5"));
 
 window.document.querySelector("#homeHostToggle").click();
 await new Promise((resolve) => setTimeout(resolve, 0));

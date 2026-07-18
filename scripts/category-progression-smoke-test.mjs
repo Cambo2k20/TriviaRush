@@ -4,6 +4,9 @@ import { PGlite } from "@electric-sql/pglite";
 
 const ROOT = resolve(import.meta.dirname, "..");
 const db = new PGlite();
+const manifest = JSON.parse(
+  readFileSync(resolve(ROOT, "data", "questions.json"), "utf8")
+);
 
 const PLAYER_ID = "11111111-1111-4111-8111-111111111111";
 const OPPONENT_ID = "22222222-2222-4222-8222-222222222222";
@@ -113,10 +116,14 @@ await db.query(
   [PLAYER_ID, OPPONENT_ID]
 );
 
+for (const category of manifest.categories) {
+  await db.query(
+    "insert into public.question_categories (id, label, sort_order, icon_key, color) values ($1, $2, $3, $4, $5)",
+    [category.id, category.label, category.sort_order, category.icon_key, category.color]
+  );
+}
+
 await db.exec([
-  "insert into public.question_categories (id, label, sort_order, icon_key, color) values",
-  "  ('science', 'Science', 10, 'flask', '#41E28C'),",
-  "  ('history', 'History', 20, 'landmark', '#FFD54A');",
   "insert into public.trivia_questions (id, category_id, difficulty) values",
   "  (1, 'science', 'easy'),",
   "  (2, 'science', 'medium'),",
@@ -263,6 +270,18 @@ await db.query("select set_config('request.jwt.claim.sub', $1, false)", [PLAYER_
 
 const myProgress = await db.query(
   "select public.get_my_category_progression() as payload"
+);
+assert(
+  myProgress.rows[0].payload.categories.length === 14,
+  "Progression RPC must return all 14 manifest categories."
+);
+assert(
+  ["game_of_thrones", "mythology", "harry_potter", "marvel_cinematic_universe"].every(
+    (categoryId) => myProgress.rows[0].payload.categories.some(
+      (category) => category.category_id === categoryId && category.level === 1
+    )
+  ),
+  "New categories must appear in progression before their first answer."
 );
 const science = myProgress.rows[0].payload.categories.find(
   (category) => category.category_id === "science"

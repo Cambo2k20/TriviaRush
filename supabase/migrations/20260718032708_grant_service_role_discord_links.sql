@@ -1,0 +1,2 @@
+-- Remote history marker. The resulting grants are included in the later
+-- 20260718172854 remote schema baseline used for clean local resets.

@@ -1,2 +1,6 @@
+[db.seed]
+enabled = true
+sql_paths = ["./seed.sql"]
+
 [functions.dispatch-notifications]
 verify_jwt = false

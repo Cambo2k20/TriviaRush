@@ -1,0 +1,902 @@
+[
+  [
+    "got_001",
+    "easy",
+    "On which continent is most of Game of Thrones primarily set?",
+    "Westeros",
+    "Essos",
+    "Sothoryos",
+    "grrm_westeros"
+  ],
+  [
+    "got_002",
+    "easy",
+    "Which author wrote the A Song of Ice and Fire novels that Game of Thrones is based on?",
+    "George R.R. Martin",
+    "Brandon Sanderson",
+    "J.R.R. Tolkien",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_003",
+    "easy",
+    "Which house's words are Winter Is Coming?",
+    "Stark",
+    "Baratheon",
+    "Lannister",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_004",
+    "easy",
+    "What are House Lannister's words?",
+    "Hear Me Roar",
+    "Fire and Blood",
+    "Ours is the Fury",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_005",
+    "easy",
+    "What are House Targaryen's words?",
+    "Fire and Blood",
+    "Hear Me Roar",
+    "Winter Is Coming",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_006",
+    "easy",
+    "Who plays Jon Snow in the HBO series?",
+    "Kit Harington",
+    "Alfie Allen",
+    "Richard Madden",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_007",
+    "easy",
+    "Who plays Daenerys Targaryen in the HBO series?",
+    "Emilia Clarke",
+    "Sophie Turner",
+    "Maisie Williams",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_008",
+    "easy",
+    "Who plays Tyrion Lannister in the HBO series?",
+    "Peter Dinklage",
+    "Iain Glen",
+    "Nikolaj Coster-Waldau",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_009",
+    "easy",
+    "What is the name of the giant ice wall in the North built to keep out threats?",
+    "The Wall",
+    "The Rampart",
+    "The Barrier",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_010",
+    "easy",
+    "Which order of sworn brothers guards the Wall?",
+    "The Night's Watch",
+    "The City Watch",
+    "The King's Guard",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_011",
+    "easy",
+    "What colors are House Stark's banners?",
+    "Grey and white",
+    "Red and gold",
+    "Black and gold",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_012",
+    "easy",
+    "What is the ancestral seat of House Lannister?",
+    "Casterly Rock",
+    "Winterfell",
+    "King's Landing",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_013",
+    "easy",
+    "What is the capital city of the Seven Kingdoms?",
+    "King's Landing",
+    "Braavos",
+    "Winterfell",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_014",
+    "easy",
+    "What creatures does Daenerys Targaryen hatch from stone eggs?",
+    "Dragons",
+    "Griffins",
+    "Direwolves",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_015",
+    "easy",
+    "What is the name of the throne forged from swords in King's Landing?",
+    "The Iron Throne",
+    "The Sword Throne",
+    "The Steel Chair",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_016",
+    "easy",
+    "How many seasons does Game of Thrones have in total?",
+    "8",
+    "6",
+    "10",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_017",
+    "easy",
+    "Which television network originally aired Game of Thrones?",
+    "HBO",
+    "Netflix",
+    "Showtime",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_018",
+    "easy",
+    "What is the ancestral seat of House Stark?",
+    "Winterfell",
+    "Dragonstone",
+    "Storm's End",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_019",
+    "easy",
+    "What animal appears on House Stark's sigil?",
+    "Direwolf",
+    "Stag",
+    "Lion",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_020",
+    "easy",
+    "What animal appears on House Lannister's sigil?",
+    "Lion",
+    "Wolf",
+    "Kraken",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_021",
+    "easy",
+    "What animal appears on House Baratheon's sigil?",
+    "Stag",
+    "Kraken",
+    "Rose",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_022",
+    "easy",
+    "What animal appears on House Greyjoy's sigil?",
+    "Kraken",
+    "Sun",
+    "Trout",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_023",
+    "easy",
+    "What flower appears on House Tyrell's sigil?",
+    "Rose",
+    "Falcon",
+    "Sun",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_024",
+    "easy",
+    "What symbol appears on House Martell's sigil?",
+    "A sun pierced by a spear",
+    "Wolf",
+    "Falcon",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_025",
+    "easy",
+    "What nickname is Tyrion Lannister often called due to his height?",
+    "The Imp",
+    "The Spider",
+    "The Kingslayer",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_026",
+    "easy",
+    "What nickname is given to Jaime Lannister after he kills the Mad King?",
+    "The Kingslayer",
+    "The Imp",
+    "The Hound",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_027",
+    "easy",
+    "What is the name of Jon Snow's direwolf?",
+    "Ghost",
+    "Nymeria",
+    "Grey Wind",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_028",
+    "easy",
+    "What is the name of Arya Stark's direwolf?",
+    "Nymeria",
+    "Lady",
+    "Ghost",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_029",
+    "easy",
+    "What is the name of Sansa Stark's direwolf?",
+    "Lady",
+    "Summer",
+    "Shaggydog",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_030",
+    "easy",
+    "Which Stark sibling is the eldest son introduced in Season 1?",
+    "Robb Stark",
+    "Jon Snow",
+    "Bran Stark",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_031",
+    "easy",
+    "What profession does Arya Stark train for while in Braavos?",
+    "A Faceless assassin",
+    "A healer",
+    "A blacksmith",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_032",
+    "easy",
+    "Which city is home to the mysterious Faceless Men?",
+    "Braavos",
+    "Meereen",
+    "Pentos",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_033",
+    "easy",
+    "Which advisor is known as the Master of Whisperers?",
+    "Varys",
+    "Pycelle",
+    "Littlefinger",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_034",
+    "easy",
+    "What nickname is given to Petyr Baelish?",
+    "Littlefinger",
+    "Renly",
+    "The Spider",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_035",
+    "easy",
+    "What title does Cersei Lannister hold at the end of Season 7?",
+    "Queen of the Seven Kingdoms",
+    "Warden of the North",
+    "Hand of the King",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_036",
+    "medium",
+    "What activity leads to King Robert Baratheon's fatal injury?",
+    "Boar hunting",
+    "Jousting",
+    "A sword duel",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_037",
+    "medium",
+    "Who is revealed to be Jon Snow's true mother?",
+    "Lyanna Stark",
+    "Catelyn Stark",
+    "Ashara Dayne",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_038",
+    "medium",
+    "Who is revealed to be Jon Snow's true father?",
+    "Rhaegar Targaryen",
+    "Robert Baratheon",
+    "Eddard Stark",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_039",
+    "medium",
+    "What is the name of the massacre where House Stark and House Tully forces are slaughtered at a wedding feast?",
+    "The Red Wedding",
+    "The Purple Wedding",
+    "The Blood Wedding",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_040",
+    "medium",
+    "Which Lannister patriarch is credited with orchestrating the Red Wedding?",
+    "Tywin Lannister",
+    "Jaime Lannister",
+    "Kevan Lannister",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_041",
+    "medium",
+    "Who is later revealed to have poisoned King Joffrey at his own wedding?",
+    "Olenna Tyrell",
+    "Tyrion Lannister",
+    "Sansa Stark",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_042",
+    "medium",
+    "What is the poison used to kill King Joffrey called?",
+    "The Strangler",
+    "Widow's Blood",
+    "Nightshade",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_043",
+    "medium",
+    "Who is wrongly put on trial for King Joffrey's murder?",
+    "Tyrion Lannister",
+    "Bronn",
+    "Sansa Stark",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_044",
+    "medium",
+    "What weapon does Arya Stark use to kill the Night King?",
+    "A Valyrian steel dagger",
+    "Needle",
+    "Longclaw",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_045",
+    "medium",
+    "What is the name of the slim sword Jon Snow gives Arya Stark?",
+    "Needle",
+    "Widow's Wail",
+    "Longclaw",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_046",
+    "medium",
+    "What is the name of Jon Snow's Valyrian steel longsword?",
+    "Longclaw",
+    "Oathkeeper",
+    "Ice",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_047",
+    "medium",
+    "What is the name of the ancestral Stark greatsword later melted down?",
+    "Ice",
+    "Heartsbane",
+    "Longclaw",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_048",
+    "medium",
+    "Who orders the Stark ancestral sword melted down and reforged?",
+    "Tywin Lannister",
+    "Stannis Baratheon",
+    "Robert Baratheon",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_049",
+    "medium",
+    "What are the two swords reforged from the Stark ancestral blade called?",
+    "Oathkeeper and Widow's Wail",
+    "Dawn and Nightfall",
+    "Longclaw and Needle",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_050",
+    "medium",
+    "Who becomes Hand of the King after Jon Arryn's death?",
+    "Eddard Stark",
+    "Tyrion Lannister",
+    "Varys",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_051",
+    "medium",
+    "What ultimately happens to Eddard Stark at the end of Season 1?",
+    "He is executed",
+    "He escapes to the Wall",
+    "He is exiled",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_052",
+    "medium",
+    "Who gives the order for Eddard Stark's execution?",
+    "Joffrey Baratheon",
+    "Robert Baratheon",
+    "Cersei Lannister",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_053",
+    "medium",
+    "Which battle features wildfire used to destroy an attacking fleet at King's Landing?",
+    "The Battle of Blackwater Bay",
+    "The Battle of the Bastards",
+    "The Long Night",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_054",
+    "medium",
+    "Who commands the defense of King's Landing during the Battle of Blackwater Bay?",
+    "Tyrion Lannister",
+    "Cersei Lannister",
+    "Jaime Lannister",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_055",
+    "medium",
+    "What is the name of the battle between Jon Snow's forces and House Bolton?",
+    "The Battle of the Bastards",
+    "The Battle of Blackwater Bay",
+    "The Long Night",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_056",
+    "medium",
+    "Which Stark sibling secretly arranges reinforcements that save Jon Snow in battle?",
+    "Sansa Stark",
+    "Bran Stark",
+    "Arya Stark",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_057",
+    "medium",
+    "Who secretly brings the Knights of the Vale to save Jon Snow in battle?",
+    "Petyr Baelish",
+    "Brienne of Tarth",
+    "Robin Arryn",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_058",
+    "medium",
+    "Who kills Ramsay Bolton by feeding him to his own hounds?",
+    "Sansa Stark",
+    "Jon Snow",
+    "Theon Greyjoy",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_059",
+    "medium",
+    "What happens to Theon Greyjoy after he betrays the Starks and seizes Winterfell?",
+    "He is captured and tortured by Ramsay Bolton",
+    "He is executed by Robb Stark",
+    "He becomes King in the North",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_060",
+    "medium",
+    "What new name does Ramsay Bolton give Theon Greyjoy after torturing him?",
+    "Reek",
+    "Grey Worm",
+    "Hodor",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_061",
+    "medium",
+    "Who is crowned King in the North by Northern lords in Season 1?",
+    "Robb Stark",
+    "Jon Snow",
+    "Eddard Stark",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_062",
+    "medium",
+    "Who is later crowned King in the North again in Season 6?",
+    "Jon Snow",
+    "Bran Stark",
+    "Sansa Stark",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_063",
+    "medium",
+    "Who ultimately becomes ruler of the Six Kingdoms at the very end of the series?",
+    "Bran Stark",
+    "Jon Snow",
+    "Sansa Stark",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_064",
+    "medium",
+    "What title does Sansa Stark hold at the very end of the series?",
+    "Queen in the North",
+    "Lady of Winterfell",
+    "Queen of the Seven Kingdoms",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_065",
+    "medium",
+    "Who ultimately kills Daenerys Targaryen at the end of the series?",
+    "Jon Snow",
+    "Tyrion Lannister",
+    "Grey Worm",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_066",
+    "medium",
+    "Which city does Daenerys Targaryen burn down near the end of the series?",
+    "King's Landing",
+    "Astapor",
+    "Meereen",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_067",
+    "medium",
+    "What is the name of Daenerys Targaryen's largest dragon?",
+    "Drogon",
+    "Rhaegal",
+    "Viserion",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_068",
+    "medium",
+    "What are the names of Daenerys Targaryen's three dragons?",
+    "Drogon, Rhaegal, and Viserion",
+    "Ice, Fire, and Storm",
+    "Ghost, Nymeria, and Summer",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_069",
+    "medium",
+    "Which of Daenerys's dragons is killed and later reanimated by the Night King?",
+    "Viserion",
+    "Rhaegal",
+    "Drogon",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_070",
+    "medium",
+    "Who kills the Night King, causing the reanimated dragon Viserion to collapse lifeless?",
+    "Arya Stark",
+    "Bran Stark",
+    "Jon Snow",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_071",
+    "medium",
+    "What is the name of the leader of the army of the dead?",
+    "The Night King",
+    "The White King",
+    "The Great Other",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_072",
+    "medium",
+    "What is the title of the Game of Thrones episode depicting the battle against the army of the dead at Winterfell?",
+    "The Long Night",
+    "The Iron Throne",
+    "The Battle of the Bastards",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_073",
+    "medium",
+    "Who is Daenerys Targaryen's first husband?",
+    "Khal Drogo",
+    "Jon Snow",
+    "Hizdahr zo Loraq",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_074",
+    "medium",
+    "What is the name of the nomadic warrior people led by Khal Drogo?",
+    "The Dothraki",
+    "The Unsullied",
+    "The Free Folk",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_075",
+    "medium",
+    "What is the name of the elite army of eunuch soldiers Daenerys acquires?",
+    "The Unsullied",
+    "The Dothraki",
+    "The Golden Company",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_076",
+    "medium",
+    "Who commands the Unsullied army on Daenerys Targaryen's behalf?",
+    "Grey Worm",
+    "Jorah Mormont",
+    "Daario Naharis",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_077",
+    "medium",
+    "What term describes the wildling people who live beyond the Wall?",
+    "The Free Folk",
+    "The Night's Watch",
+    "The Others",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_078",
+    "medium",
+    "Who is the wildling leader who tries to breach the Wall in Season 4?",
+    "Mance Rayder",
+    "Tormund Giantsbane",
+    "Ygritte",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_079",
+    "medium",
+    "Who becomes Lord Commander of the Night's Watch after Jeor Mormont?",
+    "Jon Snow",
+    "Alliser Thorne",
+    "Samwell Tarly",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_080",
+    "medium",
+    "Who assassinates Jon Snow at Castle Black in Season 5?",
+    "His own sworn brothers of the Night's Watch",
+    "Wildlings",
+    "Ramsay Bolton's men",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_081",
+    "hard",
+    "In which city does Daenerys Targaryen free the slaves and rule for a period before sailing to Westeros?",
+    "Meereen",
+    "Braavos",
+    "Astapor",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_082",
+    "hard",
+    "What is the name of the continent across the Narrow Sea from Westeros?",
+    "Essos",
+    "Sothoryos",
+    "Ulthos",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_083",
+    "hard",
+    "Who is the sharp-witted head of House Tyrell and grandmother of Margaery Tyrell?",
+    "Olenna Tyrell",
+    "Lady Alerie",
+    "Margaery Tyrell",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_084",
+    "hard",
+    "What nickname reflects Olenna Tyrell's reputation for cutting wit?",
+    "The Queen of Thorns",
+    "The Spider",
+    "The Mad Queen",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_085",
+    "hard",
+    "Who does Margaery Tyrell marry after King Joffrey's death?",
+    "Tommen Baratheon",
+    "Jon Snow",
+    "Robb Stark",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_086",
+    "hard",
+    "Who becomes King of the Seven Kingdoms after Joffrey Baratheon's death?",
+    "Tommen Baratheon",
+    "Stannis Baratheon",
+    "Renly Baratheon",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_087",
+    "hard",
+    "How does King Tommen Baratheon die?",
+    "He takes his own life after the Sept of Baelor explosion",
+    "He is poisoned",
+    "He is killed in battle",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_088",
+    "hard",
+    "Which building does Cersei Lannister destroy with wildfire, killing many of her enemies at once?",
+    "The Great Sept of Baelor",
+    "The Wall",
+    "The Red Keep",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_089",
+    "hard",
+    "Who is Stannis Baratheon's religious advisor who worships the Lord of Light?",
+    "Melisandre",
+    "The High Sparrow",
+    "Thoros of Myr",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_090",
+    "hard",
+    "What is the name of the fire god religion that Melisandre follows?",
+    "The Lord of Light",
+    "The Faith of the Seven",
+    "The Old Gods",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_091",
+    "hard",
+    "Which of Stannis Baratheon's family members does he sacrifice using blood magic?",
+    "His daughter Shireen",
+    "His wife Selyse",
+    "His brother Renly",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_092",
+    "hard",
+    "What is the name of Stannis Baratheon's daughter, who has greyscale?",
+    "Shireen Baratheon",
+    "Selyse Baratheon",
+    "Myrcella Baratheon",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_093",
+    "hard",
+    "Who arranges the killing of Renly Baratheon using a shadow assassin?",
+    "Melisandre",
+    "Stannis Baratheon directly",
+    "Brienne of Tarth",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_094",
+    "hard",
+    "Who swears an oath to protect Renly Baratheon and later Catelyn and Sansa Stark?",
+    "Brienne of Tarth",
+    "Jaime Lannister",
+    "Sandor Clegane",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_095",
+    "hard",
+    "What is the name of the Valyrian steel sword Jaime Lannister gifts to Brienne of Tarth?",
+    "Oathkeeper",
+    "Widow's Wail",
+    "Longclaw",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_096",
+    "hard",
+    "Who is known throughout the series by the nickname The Hound?",
+    "Sandor Clegane",
+    "Bronn",
+    "Gregor Clegane",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_097",
+    "hard",
+    "Who is known throughout the series by the nickname The Mountain?",
+    "Gregor Clegane",
+    "Robert Strong",
+    "Sandor Clegane",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_098",
+    "hard",
+    "Who fatally poisons Gregor Clegane during a trial by combat, despite dying himself in the process?",
+    "Oberyn Martell",
+    "Tyrion Lannister",
+    "Ellaria Sand",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_099",
+    "hard",
+    "What is the name of the trial in which Oberyn Martell fights Gregor Clegane on Tyrion Lannister's behalf?",
+    "Tyrion's trial by combat",
+    "The Battle of the Bastards",
+    "The Purple Wedding",
+    "got_legacy_wiki"
+  ],
+  [
+    "got_100",
+    "hard",
+    "How do Cersei and Jaime Lannister ultimately die at the fall of King's Landing?",
+    "They are crushed together in the collapsing Red Keep",
+    "They are executed by Daenerys Targaryen",
+    "They take poison together",
+    "got_legacy_wiki"
+  ]
+]

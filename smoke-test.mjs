@@ -24,7 +24,11 @@ const categories = [
   ["gaming", "Gaming", "gamepad", "#B66CFF"],
   ["food_drink", "Food & Drink", "utensils", "#FFB347"],
   ["nature_animals", "Nature & Animals", "paw", "#62D26F"],
-  ["art_literature", "Art & Literature", "palette_book", "#F47CD4"]
+  ["art_literature", "Art & Literature", "palette_book", "#F47CD4"],
+  ["game_of_thrones", "Game of Thrones", "dragon", "#9B1C1C"],
+  ["mythology", "Mythology", "thunderbolt", "#C9A227"],
+  ["harry_potter", "Harry Potter", "wand", "#4B2E83"],
+  ["marvel_cinematic_universe", "Marvel Cinematic Universe", "shield", "#ED1D24"]
 ].map(([category_id, label, icon_key, color], index) => ({
   category_id,
   label,
@@ -182,7 +186,11 @@ for (const cat of [
   "gaming",
   "food_drink",
   "nature_animals",
-  "art_literature"
+  "art_literature",
+  "game_of_thrones",
+  "mythology",
+  "harry_potter",
+  "marvel_cinematic_universe"
 ]) {
   assert(`filters include ${cat}`, ids.includes(cat));
 }
@@ -221,7 +229,16 @@ assert(
     options.includes("gaming") &&
     options.includes("food_drink") &&
     options.includes("nature_animals") &&
-    options.includes("art_literature")
+    options.includes("art_literature") &&
+    options.includes("game_of_thrones") &&
+    options.includes("mythology") &&
+    options.includes("harry_potter") &&
+    options.includes("marvel_cinematic_universe")
+);
+const mcuOption = window.document.querySelector('#categorySelect option[value="marvel_cinematic_universe"]');
+assert(
+  "category options preserve RPC icon and color metadata",
+  mcuOption?.dataset.iconKey === "shield" && mcuOption?.dataset.color === "#ED1D24"
 );
 assert("question bank RPC called", rpcCalls.some((c) => c.name === "get_question_categories"));
 assert("start enabled after complete bank loads", window.document.querySelector("#startButton")?.disabled === false);

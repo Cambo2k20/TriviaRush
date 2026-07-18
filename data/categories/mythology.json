@@ -1,0 +1,902 @@
+[
+  [
+    "myth_001",
+    "easy",
+    "Who is the king of the Greek gods?",
+    "Zeus",
+    "Poseidon",
+    "Hades",
+    "world_history_mythology"
+  ],
+  [
+    "myth_002",
+    "easy",
+    "Who is the Greek god of the sea?",
+    "Poseidon",
+    "Ares",
+    "Zeus",
+    "world_history_mythology"
+  ],
+  [
+    "myth_003",
+    "easy",
+    "Who is the Greek god of the underworld?",
+    "Hades",
+    "Zeus",
+    "Apollo",
+    "world_history_mythology"
+  ],
+  [
+    "myth_004",
+    "easy",
+    "Who is the Greek goddess of wisdom?",
+    "Athena",
+    "Aphrodite",
+    "Hera",
+    "world_history_mythology"
+  ],
+  [
+    "myth_005",
+    "easy",
+    "Who is the Greek god of war?",
+    "Ares",
+    "Apollo",
+    "Hermes",
+    "world_history_mythology"
+  ],
+  [
+    "myth_006",
+    "easy",
+    "Who is the Greek goddess of love and beauty?",
+    "Aphrodite",
+    "Artemis",
+    "Demeter",
+    "world_history_mythology"
+  ],
+  [
+    "myth_007",
+    "easy",
+    "Who is the Greek god of the sun, music, and prophecy?",
+    "Apollo",
+    "Hermes",
+    "Hephaestus",
+    "world_history_mythology"
+  ],
+  [
+    "myth_008",
+    "easy",
+    "Who is the Greek goddess of the hunt and the moon?",
+    "Artemis",
+    "Hestia",
+    "Hera",
+    "world_history_mythology"
+  ],
+  [
+    "myth_009",
+    "easy",
+    "Who is the Roman king of the gods, equivalent to Zeus?",
+    "Jupiter",
+    "Neptune",
+    "Mars",
+    "world_history_mythology"
+  ],
+  [
+    "myth_010",
+    "easy",
+    "Who is the Roman god of war, equivalent to Ares?",
+    "Mars",
+    "Mercury",
+    "Vulcan",
+    "world_history_mythology"
+  ],
+  [
+    "myth_011",
+    "easy",
+    "Who is the Roman god of the sea, equivalent to Poseidon?",
+    "Neptune",
+    "Vulcan",
+    "Pluto",
+    "world_history_mythology"
+  ],
+  [
+    "myth_012",
+    "easy",
+    "Who is the Roman goddess of love, equivalent to Aphrodite?",
+    "Venus",
+    "Juno",
+    "Diana",
+    "world_history_mythology"
+  ],
+  [
+    "myth_013",
+    "easy",
+    "Who is the king of the Norse gods?",
+    "Odin",
+    "Loki",
+    "Thor",
+    "world_history_mythology"
+  ],
+  [
+    "myth_014",
+    "easy",
+    "Who is the Norse god of thunder?",
+    "Thor",
+    "Baldr",
+    "Odin",
+    "world_history_mythology"
+  ],
+  [
+    "myth_015",
+    "easy",
+    "Who is the Norse trickster god?",
+    "Loki",
+    "Heimdall",
+    "Tyr",
+    "world_history_mythology"
+  ],
+  [
+    "myth_016",
+    "easy",
+    "What is the name of the Norse hall where warriors who die in battle go?",
+    "Valhalla",
+    "Asgard",
+    "Helheim",
+    "world_history_mythology"
+  ],
+  [
+    "myth_017",
+    "easy",
+    "What is the name of the Norse realm of the gods?",
+    "Asgard",
+    "Midgard",
+    "Jotunheim",
+    "world_history_mythology"
+  ],
+  [
+    "myth_018",
+    "easy",
+    "What is the name of Thor's hammer?",
+    "Mjolnir",
+    "Gungnir",
+    "Stormbreaker",
+    "world_history_mythology"
+  ],
+  [
+    "myth_019",
+    "easy",
+    "Who is the Egyptian god of the sun?",
+    "Ra",
+    "Osiris",
+    "Anubis",
+    "world_history_mythology"
+  ],
+  [
+    "myth_020",
+    "easy",
+    "Who is the Egyptian god associated with mummification and the afterlife?",
+    "Anubis",
+    "Horus",
+    "Thoth",
+    "world_history_mythology"
+  ],
+  [
+    "myth_021",
+    "easy",
+    "Who is the Egyptian goddess of magic and motherhood?",
+    "Isis",
+    "Nephthys",
+    "Bastet",
+    "world_history_mythology"
+  ],
+  [
+    "myth_022",
+    "easy",
+    "What creature is the Egyptian god Anubis often depicted with the head of?",
+    "Jackal",
+    "Ibis",
+    "Falcon",
+    "world_history_mythology"
+  ],
+  [
+    "myth_023",
+    "easy",
+    "What creature is the Egyptian god Horus often depicted with the head of?",
+    "Falcon",
+    "Jackal",
+    "Crocodile",
+    "world_history_mythology"
+  ],
+  [
+    "myth_024",
+    "easy",
+    "What is the name of the Greek hero known for his twelve labors?",
+    "Heracles",
+    "Perseus",
+    "Achilles",
+    "world_history_mythology"
+  ],
+  [
+    "myth_025",
+    "easy",
+    "What is the name of the Greek hero of the Trojan War who was vulnerable only at his heel?",
+    "Achilles",
+    "Odysseus",
+    "Hector",
+    "world_history_mythology"
+  ],
+  [
+    "myth_026",
+    "easy",
+    "What is the name of the Greek hero who devised the Trojan Horse strategy?",
+    "Odysseus",
+    "Ajax",
+    "Achilles",
+    "world_history_mythology"
+  ],
+  [
+    "myth_027",
+    "easy",
+    "What creature has the body of a lion and the head of a human, found in Egyptian and Greek mythology?",
+    "Sphinx",
+    "Chimera",
+    "Minotaur",
+    "world_history_mythology"
+  ],
+  [
+    "myth_028",
+    "easy",
+    "What creature in Greek mythology has the body of a man and the head of a bull?",
+    "Minotaur",
+    "Satyr",
+    "Centaur",
+    "world_history_mythology"
+  ],
+  [
+    "myth_029",
+    "easy",
+    "What winged horse in Greek mythology was born from Medusa's blood?",
+    "Pegasus",
+    "Cerberus",
+    "Chiron",
+    "world_history_mythology"
+  ],
+  [
+    "myth_030",
+    "easy",
+    "What is the name of the three-headed dog that guards the entrance to the Greek underworld?",
+    "Cerberus",
+    "Hydra",
+    "Chimera",
+    "world_history_mythology"
+  ],
+  [
+    "myth_031",
+    "easy",
+    "Who is the Greek Titan punished by being forced to hold up the sky?",
+    "Atlas",
+    "Cronus",
+    "Prometheus",
+    "world_history_mythology"
+  ],
+  [
+    "myth_032",
+    "easy",
+    "Who is the Greek Titan who stole fire from the gods to give to humanity?",
+    "Prometheus",
+    "Epimetheus",
+    "Atlas",
+    "world_history_mythology"
+  ],
+  [
+    "myth_033",
+    "easy",
+    "What is the name of the container in Greek mythology that unleashed evils into the world when opened?",
+    "Pandora's Box",
+    "Zeus's Vault",
+    "Hera's Chest",
+    "world_history_mythology"
+  ],
+  [
+    "myth_034",
+    "easy",
+    "In Egyptian mythology, who is the god of the underworld and judge of the dead?",
+    "Osiris",
+    "Ra",
+    "Set",
+    "world_history_mythology"
+  ],
+  [
+    "myth_035",
+    "easy",
+    "Who is the Norse god associated with wisdom who sacrificed an eye for knowledge?",
+    "Odin",
+    "Thor",
+    "Baldr",
+    "world_history_mythology"
+  ],
+  [
+    "myth_036",
+    "medium",
+    "Who is the Greek goddess of the harvest and agriculture?",
+    "Demeter",
+    "Hestia",
+    "Hera",
+    "world_history_mythology"
+  ],
+  [
+    "myth_037",
+    "medium",
+    "Who is the Greek goddess of the hearth and home?",
+    "Hestia",
+    "Demeter",
+    "Hera",
+    "world_history_mythology"
+  ],
+  [
+    "myth_038",
+    "medium",
+    "Who is Zeus's wife and the Greek goddess of marriage?",
+    "Hera",
+    "Athena",
+    "Demeter",
+    "world_history_mythology"
+  ],
+  [
+    "myth_039",
+    "medium",
+    "Who is the Greek messenger god, known for his winged sandals?",
+    "Hermes",
+    "Apollo",
+    "Dionysus",
+    "world_history_mythology"
+  ],
+  [
+    "myth_040",
+    "medium",
+    "Who is the Greek god of wine and festivity?",
+    "Dionysus",
+    "Pan",
+    "Hermes",
+    "world_history_mythology"
+  ],
+  [
+    "myth_041",
+    "medium",
+    "Who is the Greek god of the forge and blacksmiths?",
+    "Hephaestus",
+    "Ares",
+    "Poseidon",
+    "world_history_mythology"
+  ],
+  [
+    "myth_042",
+    "medium",
+    "What ability does Medusa have that turns people to stone?",
+    "Her gaze",
+    "Her voice",
+    "Her touch",
+    "world_history_mythology"
+  ],
+  [
+    "myth_043",
+    "medium",
+    "Who is the Greek hero who beheaded Medusa?",
+    "Perseus",
+    "Jason",
+    "Theseus",
+    "world_history_mythology"
+  ],
+  [
+    "myth_044",
+    "medium",
+    "Who is the Greek hero who led the Argonauts in search of the Golden Fleece?",
+    "Jason",
+    "Perseus",
+    "Theseus",
+    "world_history_mythology"
+  ],
+  [
+    "myth_045",
+    "medium",
+    "Who is the Greek hero who slew the Minotaur in the labyrinth?",
+    "Theseus",
+    "Perseus",
+    "Heracles",
+    "world_history_mythology"
+  ],
+  [
+    "myth_046",
+    "medium",
+    "Who provided Theseus with a ball of thread to escape the labyrinth?",
+    "Ariadne",
+    "Helen",
+    "Medea",
+    "world_history_mythology"
+  ],
+  [
+    "myth_047",
+    "medium",
+    "What multi-headed serpent did Heracles slay as one of his twelve labors?",
+    "The Hydra",
+    "Cerberus",
+    "The Chimera",
+    "world_history_mythology"
+  ],
+  [
+    "myth_048",
+    "medium",
+    "In Norse mythology, what is the name of the giant wolf prophesied to kill Odin at Ragnarok?",
+    "Fenrir",
+    "Jormungandr",
+    "Sleipnir",
+    "world_history_mythology"
+  ],
+  [
+    "myth_049",
+    "medium",
+    "In Norse mythology, what is the name of the giant serpent that encircles the world?",
+    "Jormungandr",
+    "Nidhogg",
+    "Fenrir",
+    "world_history_mythology"
+  ],
+  [
+    "myth_050",
+    "medium",
+    "What is the name of Odin's eight-legged horse?",
+    "Sleipnir",
+    "Skinfaxi",
+    "Fenrir",
+    "world_history_mythology"
+  ],
+  [
+    "myth_051",
+    "medium",
+    "What is the name of the Norse apocalyptic event in which many gods are prophesied to die?",
+    "Ragnarok",
+    "Yggdrasil",
+    "Valhalla",
+    "world_history_mythology"
+  ],
+  [
+    "myth_052",
+    "medium",
+    "What is the name of the great tree that connects the nine worlds in Norse mythology?",
+    "Yggdrasil",
+    "Ragnarok",
+    "Bifrost",
+    "world_history_mythology"
+  ],
+  [
+    "myth_053",
+    "medium",
+    "What is the name of the rainbow bridge connecting Asgard to Midgard in Norse mythology?",
+    "Bifrost",
+    "Gjallarbru",
+    "Yggdrasil",
+    "world_history_mythology"
+  ],
+  [
+    "myth_054",
+    "medium",
+    "Who is the Norse goddess associated with love, beauty, and fertility?",
+    "Freyja",
+    "Frigg",
+    "Idun",
+    "world_history_mythology"
+  ],
+  [
+    "myth_055",
+    "medium",
+    "Who is Odin's wife, the Norse goddess associated with foresight and motherhood?",
+    "Frigg",
+    "Freyja",
+    "Sif",
+    "world_history_mythology"
+  ],
+  [
+    "myth_056",
+    "medium",
+    "Who is the Norse god who guards the Bifrost bridge?",
+    "Heimdall",
+    "Tyr",
+    "Baldr",
+    "world_history_mythology"
+  ],
+  [
+    "myth_057",
+    "medium",
+    "Which Norse god is known for sacrificing his hand to bind the wolf Fenrir?",
+    "Tyr",
+    "Heimdall",
+    "Baldr",
+    "world_history_mythology"
+  ],
+  [
+    "myth_058",
+    "medium",
+    "Who is the Egyptian sky goddess, often depicted arched over the earth?",
+    "Nut",
+    "Isis",
+    "Geb",
+    "world_history_mythology"
+  ],
+  [
+    "myth_059",
+    "medium",
+    "Who is the Egyptian god of chaos and storms, brother and rival of Osiris?",
+    "Set",
+    "Horus",
+    "Thoth",
+    "world_history_mythology"
+  ],
+  [
+    "myth_060",
+    "medium",
+    "Who is the Egyptian god of wisdom and writing, often depicted with the head of an ibis?",
+    "Thoth",
+    "Ra",
+    "Khnum",
+    "world_history_mythology"
+  ],
+  [
+    "myth_061",
+    "medium",
+    "Who is the Egyptian cat-headed goddess associated with protection and the home?",
+    "Bastet",
+    "Hathor",
+    "Sekhmet",
+    "world_history_mythology"
+  ],
+  [
+    "myth_062",
+    "medium",
+    "Who is the Egyptian goddess associated with love, music, and joy, often depicted with a cow's horns?",
+    "Hathor",
+    "Isis",
+    "Nephthys",
+    "world_history_mythology"
+  ],
+  [
+    "myth_063",
+    "medium",
+    "In Roman mythology, who are the twin brothers said to have founded Rome?",
+    "Romulus and Remus",
+    "Cain and Abel",
+    "Castor and Pollux",
+    "world_history_mythology"
+  ],
+  [
+    "myth_064",
+    "medium",
+    "What animal is said to have nursed the founders of Rome as infants?",
+    "A wolf",
+    "A bear",
+    "A deer",
+    "world_history_mythology"
+  ],
+  [
+    "myth_065",
+    "medium",
+    "Who is the Roman god of the underworld, equivalent to Hades?",
+    "Pluto",
+    "Vulcan",
+    "Neptune",
+    "world_history_mythology"
+  ],
+  [
+    "myth_066",
+    "medium",
+    "Who is the Roman messenger god, equivalent to Hermes?",
+    "Mercury",
+    "Apollo",
+    "Vulcan",
+    "world_history_mythology"
+  ],
+  [
+    "myth_067",
+    "medium",
+    "Who is the Roman goddess of wisdom, equivalent to Athena?",
+    "Minerva",
+    "Diana",
+    "Juno",
+    "world_history_mythology"
+  ],
+  [
+    "myth_068",
+    "medium",
+    "Who is the Roman goddess of the hunt, equivalent to Artemis?",
+    "Diana",
+    "Minerva",
+    "Ceres",
+    "world_history_mythology"
+  ],
+  [
+    "myth_069",
+    "medium",
+    "In Greek mythology, what event was sparked by the judgment of Paris and the abduction of Helen?",
+    "The Trojan War",
+    "The Gigantomachy",
+    "The Titanomachy",
+    "world_history_mythology"
+  ],
+  [
+    "myth_070",
+    "medium",
+    "What was the name of the wooden horse used by the Greeks to infiltrate Troy?",
+    "The Trojan Horse",
+    "The Siege Engine",
+    "The Wooden Beast",
+    "world_history_mythology"
+  ],
+  [
+    "myth_071",
+    "medium",
+    "Who is the Greek goddess of discord who caused the dispute leading to the Trojan War?",
+    "Eris",
+    "Hecate",
+    "Nemesis",
+    "world_history_mythology"
+  ],
+  [
+    "myth_072",
+    "medium",
+    "In Greek mythology, what object did Eris throw among the goddesses, sparking a beauty contest?",
+    "The Golden Apple",
+    "The Silver Chalice",
+    "The Golden Fleece",
+    "world_history_mythology"
+  ],
+  [
+    "myth_073",
+    "medium",
+    "Who is the sea nymph mother of the Greek hero Achilles?",
+    "Thetis",
+    "Circe",
+    "Calypso",
+    "world_history_mythology"
+  ],
+  [
+    "myth_074",
+    "medium",
+    "What underworld river in Greek mythology grants invulnerability, into which Achilles was dipped?",
+    "The Styx",
+    "The Acheron",
+    "The Lethe",
+    "world_history_mythology"
+  ],
+  [
+    "myth_075",
+    "medium",
+    "What is the name of the river of forgetfulness in the Greek underworld?",
+    "The Lethe",
+    "The Styx",
+    "The Phlegethon",
+    "world_history_mythology"
+  ],
+  [
+    "myth_076",
+    "medium",
+    "Who ferries souls across the river to the Greek underworld?",
+    "Charon",
+    "Hermes",
+    "Hades",
+    "world_history_mythology"
+  ],
+  [
+    "myth_077",
+    "medium",
+    "In Egyptian mythology, what is the ceremony where a person's heart is weighed against a feather to judge their worthiness?",
+    "The Weighing of the Heart",
+    "The Trial of Osiris",
+    "The Judgment of Ra",
+    "world_history_mythology"
+  ],
+  [
+    "myth_078",
+    "medium",
+    "In Egyptian mythology, whose feather is used to weigh the heart of the deceased?",
+    "Ma'at",
+    "Isis",
+    "Nephthys",
+    "world_history_mythology"
+  ],
+  [
+    "myth_079",
+    "medium",
+    "What Egyptian creature devours the hearts of those found unworthy in the afterlife judgment?",
+    "Ammit",
+    "Apep",
+    "Sobek",
+    "world_history_mythology"
+  ],
+  [
+    "myth_080",
+    "medium",
+    "What is the name of the great serpent of chaos that the Egyptian sun god Ra battles each night?",
+    "Apep",
+    "Sobek",
+    "Ammit",
+    "world_history_mythology"
+  ],
+  [
+    "myth_081",
+    "hard",
+    "In Greek mythology, who are the primordial deities representing the earth and sky, parents of the Titans?",
+    "Gaia and Uranus",
+    "Cronus and Rhea",
+    "Oceanus and Tethys",
+    "world_history_mythology"
+  ],
+  [
+    "myth_082",
+    "hard",
+    "Who is the Titan who overthrew his father Uranus and later became ruler of the Titans?",
+    "Cronus",
+    "Prometheus",
+    "Atlas",
+    "world_history_mythology"
+  ],
+  [
+    "myth_083",
+    "hard",
+    "Which Olympian god led the rebellion that overthrew Cronus and the Titans?",
+    "Zeus",
+    "Poseidon",
+    "Hades",
+    "world_history_mythology"
+  ],
+  [
+    "myth_084",
+    "hard",
+    "What is the name of the war between the Olympian gods and the Titans?",
+    "The Titanomachy",
+    "The Trojan War",
+    "The Gigantomachy",
+    "world_history_mythology"
+  ],
+  [
+    "myth_085",
+    "hard",
+    "In Norse mythology, what are the primordial realms of fire and ice from which the universe was created?",
+    "Muspelheim and Niflheim",
+    "Alfheim and Svartalfheim",
+    "Asgard and Vanaheim",
+    "world_history_mythology"
+  ],
+  [
+    "myth_086",
+    "hard",
+    "What is the name of the first being formed from the meeting of fire and ice in Norse creation myth?",
+    "Ymir",
+    "Odin",
+    "Buri",
+    "world_history_mythology"
+  ],
+  [
+    "myth_087",
+    "hard",
+    "From whose body did Odin and his brothers create the world in Norse mythology?",
+    "Ymir's",
+    "Buri's",
+    "Fenrir's",
+    "world_history_mythology"
+  ],
+  [
+    "myth_088",
+    "hard",
+    "Who are Odin's two brothers who helped him slay Ymir and create the world?",
+    "Vili and Ve",
+    "Thor and Baldr",
+    "Tyr and Heimdall",
+    "world_history_mythology"
+  ],
+  [
+    "myth_089",
+    "hard",
+    "In Egyptian mythology, who dismembers the god Osiris, scattering his body across Egypt?",
+    "Set",
+    "Horus",
+    "Anubis",
+    "world_history_mythology"
+  ],
+  [
+    "myth_090",
+    "hard",
+    "Who reassembles the body of Osiris and helps resurrect him using magic?",
+    "Isis",
+    "Hathor",
+    "Bastet",
+    "world_history_mythology"
+  ],
+  [
+    "myth_091",
+    "hard",
+    "Who is the son of Osiris and Isis who avenges his father by battling Set?",
+    "Horus",
+    "Thoth",
+    "Anubis",
+    "world_history_mythology"
+  ],
+  [
+    "myth_092",
+    "hard",
+    "In Greek mythology, what is the name of the underworld river of fire?",
+    "The Phlegethon",
+    "The Cocytus",
+    "The Styx",
+    "world_history_mythology"
+  ],
+  [
+    "myth_093",
+    "hard",
+    "Which Greek Titaness is associated with prophecy and is the mother of Apollo and Artemis?",
+    "Leto",
+    "Themis",
+    "Mnemosyne",
+    "world_history_mythology"
+  ],
+  [
+    "myth_094",
+    "hard",
+    "Who is the Greek Titaness associated with memory, mother of the nine Muses?",
+    "Mnemosyne",
+    "Themis",
+    "Rhea",
+    "world_history_mythology"
+  ],
+  [
+    "myth_095",
+    "hard",
+    "In Norse mythology, who is the blind god tricked into killing Baldr with a mistletoe dart?",
+    "Hodr",
+    "Vidar",
+    "Tyr",
+    "world_history_mythology"
+  ],
+  [
+    "myth_096",
+    "hard",
+    "Who tricks Hodr into killing Baldr in Norse mythology?",
+    "Loki",
+    "Fenrir",
+    "Heimdall",
+    "world_history_mythology"
+  ],
+  [
+    "myth_097",
+    "hard",
+    "What is the only substance in Norse mythology capable of harming Baldr, having been overlooked when all things swore not to harm him?",
+    "Mistletoe",
+    "Iron",
+    "Silver",
+    "world_history_mythology"
+  ],
+  [
+    "myth_098",
+    "hard",
+    "In Egyptian mythology, what is the name of the primordial waters from which creation began?",
+    "Nun",
+    "Ma'at",
+    "Duat",
+    "world_history_mythology"
+  ],
+  [
+    "myth_099",
+    "hard",
+    "Who is the self-created Egyptian creator god associated with the primordial waters, often identified with Ra?",
+    "Atum",
+    "Ptah",
+    "Khnum",
+    "world_history_mythology"
+  ],
+  [
+    "myth_100",
+    "hard",
+    "In Greek mythology, who are the personifications of Fate, depicted as three sisters who spin, measure, and cut the thread of life?",
+    "The Fates (Moirai)",
+    "The Furies",
+    "The Graces",
+    "world_history_mythology"
+  ]
+]

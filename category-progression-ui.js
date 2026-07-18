@@ -24,7 +24,11 @@
     gamepad: "◆",
     utensils: "◒",
     paw: "♣",
-    palette_book: "✦"
+    palette_book: "✦",
+    dragon: "♞",
+    thunderbolt: "ϟ",
+    wand: "✧",
+    shield: "⬟"
   });
 
   function initialise() {

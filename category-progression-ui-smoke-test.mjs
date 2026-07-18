@@ -47,7 +47,32 @@ let progressionPayload = {
       accuracy_percent: 50,
       solo_questions: 2,
       duel_questions: 0
-    }
+    },
+    ...[
+      ["game_of_thrones", "Game of Thrones", "dragon", "#9B1C1C"],
+      ["mythology", "Mythology", "thunderbolt", "#C9A227"],
+      ["harry_potter", "Harry Potter", "wand", "#4B2E83"],
+      ["marvel_cinematic_universe", "Marvel Cinematic Universe", "shield", "#ED1D24"]
+    ].map(([category_id, label, icon_key, color]) => ({
+      category_id,
+      label,
+      icon_key,
+      color,
+      xp: 0,
+      level: 1,
+      current_level_xp: 0,
+      next_level: 2,
+      next_level_xp: 100,
+      xp_into_level: 0,
+      xp_to_next_level: 100,
+      progress_percent: 0,
+      questions_answered: 0,
+      correct_answers: 0,
+      incorrect_answers: 0,
+      accuracy_percent: 0,
+      solo_questions: 0,
+      duel_questions: 0
+    }))
   ]
 };
 
@@ -189,7 +214,13 @@ assert(
 assert("category progression RPC called", rpcCalls.some((call) => call.name === "get_my_category_progression"));
 assert("normalized category progression is published for the home screen", progressionEvents[0]?.categories?.find((category) => category.id === "science")?.level === 2);
 assert("account mastery panel is visible", window.document.querySelector("#accountCategoryMasteryPanel")?.hidden === false);
-assert("account renders each server category", window.document.querySelectorAll("#accountCategoryMasteryGrid .category-mastery-card").length === 2);
+assert("account renders each server category", window.document.querySelectorAll("#accountCategoryMasteryGrid .category-mastery-card").length === 6);
+assert(
+  "new category icons are implemented",
+  ["game_of_thrones", "mythology", "harry_potter", "marvel_cinematic_universe"].every(
+    (id) => window.document.querySelector(`[data-category-id="${id}"] .category-mastery-icon`)?.textContent !== "?"
+  )
+);
 assert("Science server level is shown", window.document.querySelector('[data-category-id="science"] .category-mastery-level')?.textContent === "LV 2");
 assert("Science XP-to-next copy is shown", window.document.querySelector('[data-category-id="science"] .category-mastery-meta span:last-child')?.textContent === "185 XP to LV 3");
 assert("Science trusted accuracy is shown", window.document.querySelector('[data-category-id="science"] .category-mastery-meta span:first-child')?.textContent.includes("91.7% accuracy"));

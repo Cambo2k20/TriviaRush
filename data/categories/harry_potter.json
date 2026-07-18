@@ -1,0 +1,902 @@
+[
+  [
+    "hp_001",
+    "easy",
+    "What is the name of the wizarding school Harry Potter attends?",
+    "Hogwarts",
+    "Beauxbatons",
+    "Durmstrang",
+    "wizarding_world"
+  ],
+  [
+    "hp_002",
+    "easy",
+    "Which publisher released the first UK edition of Harry Potter and the Philosopher's Stone?",
+    "Bloomsbury",
+    "Scholastic",
+    "Penguin",
+    "bloomsbury_philosophers_stone"
+  ],
+  [
+    "hp_003",
+    "easy",
+    "What is the name of Harry Potter's best friend, known for his red hair and large family?",
+    "Ron Weasley",
+    "Neville Longbottom",
+    "Seamus Finnigan",
+    "wizarding_world"
+  ],
+  [
+    "hp_004",
+    "easy",
+    "What is the name of Harry Potter's other best friend, known as the cleverest witch of her age?",
+    "Hermione Granger",
+    "Luna Lovegood",
+    "Ginny Weasley",
+    "wizarding_world"
+  ],
+  [
+    "hp_005",
+    "easy",
+    "What house is Harry Potter sorted into?",
+    "Gryffindor",
+    "Slytherin",
+    "Ravenclaw",
+    "wizarding_world"
+  ],
+  [
+    "hp_006",
+    "easy",
+    "What house is famous for valuing ambition and cunning?",
+    "Slytherin",
+    "Ravenclaw",
+    "Hufflepuff",
+    "wizarding_world"
+  ],
+  [
+    "hp_007",
+    "easy",
+    "What house is famous for valuing intelligence and wit?",
+    "Ravenclaw",
+    "Gryffindor",
+    "Hufflepuff",
+    "wizarding_world"
+  ],
+  [
+    "hp_008",
+    "easy",
+    "What house is famous for valuing loyalty and hard work?",
+    "Hufflepuff",
+    "Gryffindor",
+    "Slytherin",
+    "wizarding_world"
+  ],
+  [
+    "hp_009",
+    "easy",
+    "What guards the entrance to the Gryffindor common room?",
+    "A talking portrait",
+    "A ghost",
+    "A house-elf",
+    "wizarding_world"
+  ],
+  [
+    "hp_010",
+    "easy",
+    "Who is the headmaster of Hogwarts for most of the series?",
+    "Albus Dumbledore",
+    "Severus Snape",
+    "Minerva McGonagall",
+    "wizarding_world"
+  ],
+  [
+    "hp_011",
+    "easy",
+    "Who is the Potions professor for much of the series?",
+    "Severus Snape",
+    "Horace Slughorn",
+    "Remus Lupin",
+    "wizarding_world"
+  ],
+  [
+    "hp_012",
+    "easy",
+    "Who is the main antagonist of the series?",
+    "Voldemort",
+    "Bellatrix Lestrange",
+    "Draco Malfoy",
+    "wizarding_world"
+  ],
+  [
+    "hp_013",
+    "easy",
+    "What is Voldemort's real birth name?",
+    "Tom Marvolo Riddle",
+    "Salazar Slytherin",
+    "Gellert Grindelwald",
+    "wizarding_world"
+  ],
+  [
+    "hp_014",
+    "easy",
+    "What magical mirror shows the viewer their deepest desire, encountered by Harry in his first year?",
+    "The Mirror of Erised",
+    "The Pensieve",
+    "The Marauder's Map",
+    "wizarding_world"
+  ],
+  [
+    "hp_015",
+    "easy",
+    "What is the name of Harry Potter's pet owl?",
+    "Hedwig",
+    "Pigwidgeon",
+    "Errol",
+    "wizarding_world"
+  ],
+  [
+    "hp_016",
+    "easy",
+    "What is the name of Ron Weasley's pet rat, later revealed to be an animagus?",
+    "Scabbers",
+    "Crookshanks",
+    "Trevor",
+    "wizarding_world"
+  ],
+  [
+    "hp_017",
+    "easy",
+    "What is the name of Hermione Granger's pet cat?",
+    "Crookshanks",
+    "Mrs. Norris",
+    "Scabbers",
+    "wizarding_world"
+  ],
+  [
+    "hp_018",
+    "easy",
+    "What sport is played on broomsticks at Hogwarts?",
+    "Quidditch",
+    "Gobstones",
+    "Wizard Chess",
+    "wizarding_world"
+  ],
+  [
+    "hp_019",
+    "easy",
+    "What position does Harry Potter play in Quidditch?",
+    "Seeker",
+    "Chaser",
+    "Keeper",
+    "wizarding_world"
+  ],
+  [
+    "hp_020",
+    "easy",
+    "What ball must the Seeker catch to end a Quidditch match?",
+    "The Golden Snitch",
+    "The Bludger",
+    "The Quaffle",
+    "wizarding_world"
+  ],
+  [
+    "hp_021",
+    "easy",
+    "What is the name of the platform at King's Cross Station used to catch the train to Hogwarts?",
+    "Platform 9 3/4",
+    "Platform 13",
+    "Platform 7",
+    "wizarding_world"
+  ],
+  [
+    "hp_022",
+    "easy",
+    "What is the name of the train that takes students to Hogwarts?",
+    "The Hogwarts Express",
+    "The Floo Network",
+    "The Knight Bus",
+    "wizarding_world"
+  ],
+  [
+    "hp_023",
+    "easy",
+    "What is the name of the giant three-headed dog guarding the Philosopher's Stone?",
+    "Fluffy",
+    "Norbert",
+    "Buckbeak",
+    "wizarding_world"
+  ],
+  [
+    "hp_024",
+    "easy",
+    "What is the name of Hagrid's dragon in the first book?",
+    "Norbert",
+    "Fluffy",
+    "Aragog",
+    "wizarding_world"
+  ],
+  [
+    "hp_025",
+    "easy",
+    "What creature is Hagrid's beloved pet spider, feared by many students?",
+    "Aragog",
+    "Fang",
+    "Buckbeak",
+    "wizarding_world"
+  ],
+  [
+    "hp_026",
+    "easy",
+    "What is the name of Hagrid's dog?",
+    "Fang",
+    "Norbert",
+    "Fluffy",
+    "wizarding_world"
+  ],
+  [
+    "hp_027",
+    "easy",
+    "What creature must Harry face in the first task of the Triwizard Tournament?",
+    "A dragon",
+    "A sphinx",
+    "A hippogriff",
+    "wizarding_world"
+  ],
+  [
+    "hp_028",
+    "easy",
+    "What is the name of the hippogriff cared for by Hagrid?",
+    "Buckbeak",
+    "Norbert",
+    "Fawkes",
+    "wizarding_world"
+  ],
+  [
+    "hp_029",
+    "easy",
+    "What is the name of Dumbledore's phoenix?",
+    "Fawkes",
+    "Hedwig",
+    "Buckbeak",
+    "wizarding_world"
+  ],
+  [
+    "hp_030",
+    "easy",
+    "What magical object allows the wearer to become invisible?",
+    "The Invisibility Cloak",
+    "The Pensieve",
+    "The Time-Turner",
+    "wizarding_world"
+  ],
+  [
+    "hp_031",
+    "easy",
+    "What is the name of the house-elf who serves the Malfoy family before being freed?",
+    "Dobby",
+    "Winky",
+    "Kreacher",
+    "wizarding_world"
+  ],
+  [
+    "hp_032",
+    "easy",
+    "What is Sirius Black's animagus form?",
+    "A dog",
+    "A stag",
+    "A rat",
+    "wizarding_world"
+  ],
+  [
+    "hp_033",
+    "easy",
+    "What relation is Sirius Black to Harry Potter?",
+    "His godfather",
+    "His uncle",
+    "His cousin",
+    "wizarding_world"
+  ],
+  [
+    "hp_034",
+    "easy",
+    "What is the name of the newspaper read throughout the wizarding world?",
+    "The Daily Prophet",
+    "Witch Weekly",
+    "The Quibbler",
+    "wizarding_world"
+  ],
+  [
+    "hp_035",
+    "easy",
+    "What is the largest denomination of wizarding currency?",
+    "Galleons",
+    "Knuts",
+    "Sickles",
+    "wizarding_world"
+  ],
+  [
+    "hp_036",
+    "medium",
+    "What is the name of the objects Harry, Ron, and Hermione seek to destroy in the final books, tied to Voldemort's soul?",
+    "Horcruxes",
+    "Portkeys",
+    "Hallows",
+    "wizarding_world"
+  ],
+  [
+    "hp_037",
+    "medium",
+    "How many Horcruxes did Voldemort intentionally create, not counting Harry?",
+    "Six",
+    "Five",
+    "Seven",
+    "wizarding_world"
+  ],
+  [
+    "hp_038",
+    "medium",
+    "What is the name of the three magical objects said to make the possessor master of death?",
+    "The Deathly Hallows",
+    "The Horcruxes",
+    "The Unforgivable Curses",
+    "wizarding_world"
+  ],
+  [
+    "hp_039",
+    "medium",
+    "What are the three Deathly Hallows?",
+    "The Elder Wand, the Resurrection Stone, and the Invisibility Cloak",
+    "The Time-Turner, the Pensieve, and the Mirror of Erised",
+    "The Sorting Hat, the Sword of Gryffindor, and the Marauder's Map",
+    "wizarding_world"
+  ],
+  [
+    "hp_040",
+    "medium",
+    "What is the core of Harry Potter's wand, shared with Voldemort's wand?",
+    "Phoenix feather",
+    "Dragon heartstring",
+    "Unicorn hair",
+    "wizarding_world"
+  ],
+  [
+    "hp_041",
+    "medium",
+    "Which creature's feather is the core of both Harry and Voldemort's wands?",
+    "Fawkes the phoenix",
+    "Buckbeak the hippogriff",
+    "Aragog the spider",
+    "wizarding_world"
+  ],
+  [
+    "hp_042",
+    "medium",
+    "Who is Harry Potter's godfather, who escapes from Azkaban prison?",
+    "Sirius Black",
+    "Remus Lupin",
+    "Alastor Moody",
+    "wizarding_world"
+  ],
+  [
+    "hp_043",
+    "medium",
+    "What is the name of the wizarding prison guarded by Dementors?",
+    "Azkaban",
+    "Nurmengard",
+    "The Ministry of Magic",
+    "wizarding_world"
+  ],
+  [
+    "hp_044",
+    "medium",
+    "What creatures guard Azkaban and drain happiness from those nearby?",
+    "Dementors",
+    "Inferi",
+    "Boggarts",
+    "wizarding_world"
+  ],
+  [
+    "hp_045",
+    "medium",
+    "What spell is used to repel Dementors?",
+    "Expecto Patronum",
+    "Riddikulus",
+    "Expelliarmus",
+    "wizarding_world"
+  ],
+  [
+    "hp_046",
+    "medium",
+    "What creature takes the shape of a person's worst fear, defeated with the Riddikulus spell?",
+    "A Boggart",
+    "A Basilisk",
+    "A Dementor",
+    "wizarding_world"
+  ],
+  [
+    "hp_047",
+    "medium",
+    "What giant serpent is unleashed from the Chamber of Secrets?",
+    "The Basilisk",
+    "The Acromantula",
+    "Nagini",
+    "wizarding_world"
+  ],
+  [
+    "hp_048",
+    "medium",
+    "What is the name of Voldemort's pet snake and final Horcrux?",
+    "Nagini",
+    "Aragog",
+    "The Basilisk",
+    "wizarding_world"
+  ],
+  [
+    "hp_049",
+    "medium",
+    "Who is revealed to be behind the opening of the Chamber of Secrets in the second book?",
+    "Tom Riddle, via his diary",
+    "Draco Malfoy",
+    "Lucius Malfoy",
+    "wizarding_world"
+  ],
+  [
+    "hp_050",
+    "medium",
+    "What object serves as a Horcrux and nearly possesses Ginny Weasley in the second book?",
+    "A diary",
+    "A locket",
+    "A diadem",
+    "wizarding_world"
+  ],
+  [
+    "hp_051",
+    "medium",
+    "What is the name of the Hogwarts founder associated with Gryffindor house?",
+    "Godric Gryffindor",
+    "Rowena Ravenclaw",
+    "Salazar Slytherin",
+    "wizarding_world"
+  ],
+  [
+    "hp_052",
+    "medium",
+    "What is the name of the Hogwarts founder associated with Slytherin house?",
+    "Salazar Slytherin",
+    "Helga Hufflepuff",
+    "Godric Gryffindor",
+    "wizarding_world"
+  ],
+  [
+    "hp_053",
+    "medium",
+    "What magical object is used to sort first-year students into houses?",
+    "The Sorting Hat",
+    "The Mirror of Erised",
+    "The Goblet of Fire",
+    "wizarding_world"
+  ],
+  [
+    "hp_054",
+    "medium",
+    "What magical competition brings together three wizarding schools in the fourth book?",
+    "The Triwizard Tournament",
+    "The Duelling Club",
+    "The Quidditch World Cup",
+    "wizarding_world"
+  ],
+  [
+    "hp_055",
+    "medium",
+    "What magical object selects champions for the Triwizard Tournament?",
+    "The Goblet of Fire",
+    "The Sorting Hat",
+    "The Mirror of Erised",
+    "wizarding_world"
+  ],
+  [
+    "hp_056",
+    "medium",
+    "What is the name of Harry Potter's father?",
+    "James Potter",
+    "Sirius Black",
+    "Remus Lupin",
+    "wizarding_world"
+  ],
+  [
+    "hp_057",
+    "medium",
+    "What is the name of Harry Potter's mother?",
+    "Lily Potter",
+    "Petunia Dursley",
+    "Narcissa Malfoy",
+    "wizarding_world"
+  ],
+  [
+    "hp_058",
+    "medium",
+    "Who is Harry Potter's aunt that he lives with before Hogwarts?",
+    "Petunia Dursley",
+    "Narcissa Malfoy",
+    "Lily Potter",
+    "wizarding_world"
+  ],
+  [
+    "hp_059",
+    "medium",
+    "What is the name of the Dursleys' son, Harry Potter's cousin?",
+    "Dudley Dursley",
+    "Vernon Dursley",
+    "Marge Dursley",
+    "wizarding_world"
+  ],
+  [
+    "hp_060",
+    "medium",
+    "What is the address of the Dursley family home where Harry grows up?",
+    "4 Privet Drive",
+    "The Burrow",
+    "12 Grimmauld Place",
+    "wizarding_world"
+  ],
+  [
+    "hp_061",
+    "medium",
+    "What is the name of the Weasley family home?",
+    "The Burrow",
+    "Shell Cottage",
+    "Grimmauld Place",
+    "wizarding_world"
+  ],
+  [
+    "hp_062",
+    "medium",
+    "What is the name of Sirius Black's family home, later used as Order of the Phoenix headquarters?",
+    "Grimmauld Place",
+    "The Burrow",
+    "Malfoy Manor",
+    "wizarding_world"
+  ],
+  [
+    "hp_063",
+    "medium",
+    "What is the name of the secret society formed to fight Voldemort, led by Dumbledore?",
+    "The Order of the Phoenix",
+    "Dumbledore's Army",
+    "The Death Eaters",
+    "wizarding_world"
+  ],
+  [
+    "hp_064",
+    "medium",
+    "What is the name of the student defense group formed by Harry Potter in the fifth book?",
+    "Dumbledore's Army",
+    "The Slug Club",
+    "The Order of the Phoenix",
+    "wizarding_world"
+  ],
+  [
+    "hp_065",
+    "medium",
+    "What are Voldemort's followers, marked with a Dark Mark, called?",
+    "Death Eaters",
+    "Inferi",
+    "Dementors",
+    "wizarding_world"
+  ],
+  [
+    "hp_066",
+    "medium",
+    "What curse causes instant death and is one of the three Unforgivable Curses?",
+    "Avada Kedavra",
+    "Crucio",
+    "Imperio",
+    "wizarding_world"
+  ],
+  [
+    "hp_067",
+    "medium",
+    "What Unforgivable Curse causes intense pain?",
+    "Crucio",
+    "Imperio",
+    "Avada Kedavra",
+    "wizarding_world"
+  ],
+  [
+    "hp_068",
+    "medium",
+    "What Unforgivable Curse allows the caster to control another person's actions?",
+    "Imperio",
+    "Crucio",
+    "Avada Kedavra",
+    "wizarding_world"
+  ],
+  [
+    "hp_069",
+    "medium",
+    "What spell disarms an opponent, knocking their wand from their hand?",
+    "Expelliarmus",
+    "Stupefy",
+    "Petrificus Totalus",
+    "wizarding_world"
+  ],
+  [
+    "hp_070",
+    "medium",
+    "What spell is commonly used to render an opponent unconscious?",
+    "Stupefy",
+    "Wingardium Leviosa",
+    "Expelliarmus",
+    "wizarding_world"
+  ],
+  [
+    "hp_071",
+    "medium",
+    "What levitation spell is famously mispronounced by Ron Weasley in the first book?",
+    "Wingardium Leviosa",
+    "Lumos",
+    "Alohomora",
+    "wizarding_world"
+  ],
+  [
+    "hp_072",
+    "medium",
+    "What spell is used to unlock doors?",
+    "Alohomora",
+    "Nox",
+    "Lumos",
+    "wizarding_world"
+  ],
+  [
+    "hp_073",
+    "medium",
+    "What spell produces light from the tip of a wand?",
+    "Lumos",
+    "Incendio",
+    "Nox",
+    "wizarding_world"
+  ],
+  [
+    "hp_074",
+    "medium",
+    "What magical device allows a witch or wizard to travel back in time?",
+    "A Time-Turner",
+    "A Pensieve",
+    "A Portkey",
+    "wizarding_world"
+  ],
+  [
+    "hp_075",
+    "medium",
+    "What magical device transports people instantly when they touch it at a set time?",
+    "A Portkey",
+    "Floo Powder",
+    "A Time-Turner",
+    "wizarding_world"
+  ],
+  [
+    "hp_076",
+    "medium",
+    "What substance allows wizards to travel by fireplace?",
+    "Floo Powder",
+    "Time-Turner sand",
+    "Portkey dust",
+    "wizarding_world"
+  ],
+  [
+    "hp_077",
+    "medium",
+    "What is the name of the magical bank run by goblins in Diagon Alley?",
+    "Gringotts",
+    "Flourish and Blotts",
+    "Ollivanders",
+    "wizarding_world"
+  ],
+  [
+    "hp_078",
+    "medium",
+    "What is the name of the shop where most Hogwarts students buy their wands?",
+    "Ollivanders",
+    "Gringotts",
+    "Madam Malkin's",
+    "wizarding_world"
+  ],
+  [
+    "hp_079",
+    "medium",
+    "What is the name of the magical shopping street in London where wizards buy school supplies?",
+    "Diagon Alley",
+    "Knockturn Alley",
+    "Privet Drive",
+    "wizarding_world"
+  ],
+  [
+    "hp_080",
+    "medium",
+    "What is the name of the darker, less reputable alley near Diagon Alley?",
+    "Knockturn Alley",
+    "Privet Drive",
+    "Spinner's End",
+    "wizarding_world"
+  ],
+  [
+    "hp_081",
+    "hard",
+    "What is the form of Snape's Patronus, revealing his long-hidden love for Lily Potter?",
+    "A doe",
+    "A phoenix",
+    "A stag",
+    "wizarding_world"
+  ],
+  [
+    "hp_082",
+    "hard",
+    "What is James Potter's Patronus and animagus form?",
+    "A stag",
+    "A wolf",
+    "A dog",
+    "wizarding_world"
+  ],
+  [
+    "hp_083",
+    "hard",
+    "What is the name of the map that shows everyone's location within Hogwarts, made by Harry's father and friends?",
+    "The Marauder's Map",
+    "The Sorting Hat",
+    "The Goblet of Fire",
+    "wizarding_world"
+  ],
+  [
+    "hp_084",
+    "hard",
+    "On the Marauder's Map, alongside Moony, Wormtail, and Padfoot, what is James Potter's nickname?",
+    "Prongs",
+    "Snuffles",
+    "Scabbers",
+    "wizarding_world"
+  ],
+  [
+    "hp_085",
+    "hard",
+    "Who is revealed to be the animagus known as Wormtail, and betrayer of the Potters?",
+    "Peter Pettigrew",
+    "Remus Lupin",
+    "Sirius Black",
+    "wizarding_world"
+  ],
+  [
+    "hp_086",
+    "hard",
+    "What magical affliction does Remus Lupin suffer from?",
+    "Lycanthropy, meaning he is a werewolf",
+    "A curse from Voldemort",
+    "Vampirism",
+    "wizarding_world"
+  ],
+  [
+    "hp_087",
+    "hard",
+    "What potion does Snape brew to help Lupin manage his condition safely?",
+    "The Wolfsbane Potion",
+    "Polyjuice Potion",
+    "Felix Felicis",
+    "wizarding_world"
+  ],
+  [
+    "hp_088",
+    "hard",
+    "What potion allows the drinker to temporarily transform into another person?",
+    "Polyjuice Potion",
+    "Wolfsbane Potion",
+    "Veritaserum",
+    "wizarding_world"
+  ],
+  [
+    "hp_089",
+    "hard",
+    "What potion, also called liquid luck, grants the drinker good fortune for a period of time?",
+    "Felix Felicis",
+    "Amortentia",
+    "Draught of Living Death",
+    "wizarding_world"
+  ],
+  [
+    "hp_090",
+    "hard",
+    "What potion is a powerful truth serum used in the wizarding world?",
+    "Veritaserum",
+    "Polyjuice Potion",
+    "Amortentia",
+    "wizarding_world"
+  ],
+  [
+    "hp_091",
+    "hard",
+    "What is the name of the powerful love potion described as the most dangerous potion in the world?",
+    "Amortentia",
+    "Felix Felicis",
+    "Veritaserum",
+    "wizarding_world"
+  ],
+  [
+    "hp_092",
+    "hard",
+    "What object does Dumbledore leave to Ron Weasley in his will, which later helps defeat Death Eaters?",
+    "The Deluminator",
+    "The Marauder's Map",
+    "The Snitch",
+    "wizarding_world"
+  ],
+  [
+    "hp_093",
+    "hard",
+    "What object does Dumbledore leave to Hermione Granger in his will?",
+    "A book of children's tales, The Tales of Beedle the Bard",
+    "The Sorting Hat",
+    "The Elder Wand",
+    "wizarding_world"
+  ],
+  [
+    "hp_094",
+    "hard",
+    "What is hidden inside the Golden Snitch that Dumbledore leaves to Harry in his will?",
+    "The Resurrection Stone",
+    "The Elder Wand",
+    "The Invisibility Cloak",
+    "wizarding_world"
+  ],
+  [
+    "hp_095",
+    "hard",
+    "Who ultimately becomes the true master of the Elder Wand at the end of the series?",
+    "Harry Potter",
+    "Draco Malfoy",
+    "Voldemort",
+    "wizarding_world"
+  ],
+  [
+    "hp_096",
+    "hard",
+    "In the wizarding tale of the Three Brothers, which brother first owned the Elder Wand?",
+    "Antioch Peverell",
+    "Cadmus Peverell",
+    "Ignotus Peverell",
+    "wizarding_world"
+  ],
+  [
+    "hp_097",
+    "hard",
+    "In the tale of the Three Brothers, which brother owned the Resurrection Stone?",
+    "Cadmus Peverell",
+    "Ignotus Peverell",
+    "Antioch Peverell",
+    "wizarding_world"
+  ],
+  [
+    "hp_098",
+    "hard",
+    "In the tale of the Three Brothers, which brother owned the Invisibility Cloak and is an ancestor of Harry Potter?",
+    "Ignotus Peverell",
+    "Antioch Peverell",
+    "Cadmus Peverell",
+    "wizarding_world"
+  ],
+  [
+    "hp_099",
+    "hard",
+    "What is the name of the magical school in France that competes in the Triwizard Tournament?",
+    "Beauxbatons",
+    "Ilvermorny",
+    "Durmstrang",
+    "wizarding_world"
+  ],
+  [
+    "hp_100",
+    "hard",
+    "What is the name of the magical school associated with Viktor Krum in the Triwizard Tournament?",
+    "Durmstrang",
+    "Ilvermorny",
+    "Beauxbatons",
+    "wizarding_world"
+  ]
+]

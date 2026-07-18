@@ -1,15 +1,15 @@
 # Trivia Rush Question Intake and Expansion Policy
 
 **Applies from:** Phase 5  
-**Current bank:** 700 questions across seven active categories  
-**Approved Phase 5 taxonomy:** ten categories, with three additions staged as
-planned until each has a complete reviewed bank
+**Current bank:** 1,400 questions across 14 active categories
+**Approved taxonomy:** ten general categories and four category-specific banks
+under repository and source review
 
 ## 1. Objective
 
 Progression will increase focused repeat play. Trivia Rush therefore needs a
 larger, well-maintained question bank without sacrificing accuracy, source
-quality, answer privacy or the existing 40/40/20 difficulty discipline.
+quality, answer privacy or the manifest-defined difficulty contract.
 
 The next content milestone should be a reviewed expansion, not a bulk scrape.
 
@@ -90,6 +90,15 @@ Preferred order:
 3. Original publisher, developer, studio, league or creator page.
 4. High-quality reference work when primary material is unsuitable.
 
+For franchise content, acceptable primary sources include the official
+publisher's book catalogue, the creator's official companion material, the
+studio or network's series and episode guides, and the franchise owner's
+official character or film pages. A reputable secondary reference may be used
+when primary material is unavailable, but the URL must identify the supporting
+article or entry rather than only the site's homepage. Fan wikis are legacy
+review leads, not approved final sources when an official or editorially
+controlled source can support the fact.
+
 Avoid as the stored verification source:
 
 - scraped trivia lists;
@@ -163,9 +172,9 @@ Repairable candidate patterns:
 
 ## 9. Duplicate control
 
-The build already rejects normalised duplicate question text. Expansion also
-needs topic-level review because differently worded questions can test the same
-fact.
+The build rejects normalised duplicate question text and audits answer/question
+inverse pairs. Expansion also needs topic-level review because differently
+worded questions can test the same fact.
 
 For each candidate, compare:
 
@@ -178,7 +187,7 @@ Do not add two questions that merely reverse the same relationship, for
 example asking both “Who created X?” and “What did Y create?” in the same
 bank unless they test materially different knowledge.
 
-## 10. Initial Phase 5 taxonomy and expansion
+## 10. Current taxonomy and expansion
 
 Freeze these stable database IDs before progression backfill:
 
@@ -194,23 +203,24 @@ Freeze these stable database IDs before progression backfill:
 | `food_drink` | Food & Drink | 100 |
 | `nature_animals` | Nature & Animals | 100 |
 | `art_literature` | Art & Literature | 100 |
-| **Total** |  | **1,000** |
+| `game_of_thrones` | Game of Thrones | 100 |
+| `mythology` | Mythology | 100 |
+| `harry_potter` | Harry Potter | 100 |
+| `marvel_cinematic_universe` | Marvel Cinematic Universe | 100 |
+| **Total** |  | **1,400** |
 
-First reclassify existing questions whose subject clearly belongs in one of the
-three new categories. Preserve every moved question's stable key. Then write
-enough independently sourced questions to restore every category to exactly
-100. The number of new questions will be approximately 300; the exact count
-depends on the reviewed reclassification.
+The original ten-category expansion preserved moved keys and restored every
+category to 100 questions. The four later live banks also contain 100 questions
+each. Their 400 deployed underscore keys are frozen while their taxonomy,
+sources and automated coverage are brought under this same contract.
 
-Per-category distribution remains:
+The manifest's default distribution is 40 Easy, 40 Medium and 20 Hard. A
+category-specific target is allowed only when recorded in the manifest and
+explained in the taxonomy contract. Verification derives both totals and
+difficulty counts from that manifest.
 
-- 40 Easy;
-- 40 Medium;
-- 20 Hard.
-
-The three new manifest entries remain `planned` and must not be inserted as
-active database categories until all ten files pass compiler, source and
-duplicate review. Subsequent batches should move each category toward 300–500
+All 14 manifest entries describe currently active production categories.
+Subsequent batches should move each category toward 300–500
 active questions, informed by real play and report data.
 
 ## 11. Content audit requirements
