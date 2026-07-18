@@ -3727,7 +3727,7 @@
     }
 
     await updateUnreadNotificationCount();
-    if ("serviceWorker" in navigator) {
+    if ("serviceWorker" in navigator && !isDiscordActivity()) {
       void navigator.serviceWorker.register("./sw.js").catch((error) => {
         console.warn("Service worker registration failed:", error);
       });
