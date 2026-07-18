@@ -51,7 +51,7 @@
   overflow: visible;
   border-radius: 0;
   color: transparent !important;
-  background: url("icons/trivia-rush-header-logo.svg") center / contain no-repeat !important;
+  background: url("icons/trivia-rush-header-logo.png") center / contain no-repeat !important;
   box-shadow: none;
   font-size: 0 !important;
   line-height: 0;
@@ -60,7 +60,7 @@
 @media (max-width: 700px) {
   body.trivia-shell-ready .brand-bolt,
   body.shared-mode-navigation-ready .topbar > .brand .brand-bolt {
-    background-image: url("icons/trivia-rush-header-logo.svg") !important;
+    background-image: url("icons/trivia-rush-header-logo.png") !important;
     font-size: 0 !important;
   }
 }
