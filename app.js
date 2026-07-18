@@ -18,6 +18,7 @@
     const clientId = "1527828246291550268";
     discordSdk = new DiscordSDK(clientId);
     await discordSdk.ready();
+    window.__discordSdk = discordSdk;
   
     console.log("Discord SDK ready", {
       guildId: discordSdk.guildId,
