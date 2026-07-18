@@ -91,6 +91,9 @@ jobs:
       - name: Verify mode navigation
         run: node mode-navigation-smoke-test.mjs
 
+      - name: Verify Cloudflare distribution
+        run: npm run test:cloudflare
+
       - name: Capture social redesign screenshots
         run: node scripts/capture-social-redesign.mjs
 
