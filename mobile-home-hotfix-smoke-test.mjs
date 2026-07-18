@@ -2,6 +2,8 @@ import { readFileSync } from "node:fs";
 
 const styles = readFileSync("./mobile-home-hotfix.css", "utf8");
 const index = readFileSync("./index.html", "utf8");
+const headerLogo = readFileSync("./icons/trivia-rush-header-logo.png");
+const pngSignature = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
 
 const checks = [
   [
@@ -27,6 +29,14 @@ const checks = [
     "Home quick actions cannot become an overlapping positioned layer",
     styles.includes(".home-quick-actions") &&
       styles.includes("inset: auto !important")
+  ],
+  [
+    "shared header uses the supplied Trivia Rush PNG logo asset",
+    styles.includes(".brand-bolt") &&
+      styles.includes('url("icons/trivia-rush-header-logo.png")') &&
+      styles.includes("font-size: 0 !important") &&
+      headerLogo.length > pngSignature.length &&
+      headerLogo.subarray(0, pngSignature.length).equals(pngSignature)
   ]
 ];
 
