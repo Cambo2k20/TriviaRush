@@ -127,14 +127,15 @@ body.shared-mode-navigation-ready #startScreen > .home-quick-actions {
   }
 
   body.shared-mode-navigation-ready .topbar > .brand {
-    min-height: 34px;
+    min-height: 48px;
     display: inline-flex !important;
     justify-self: center;
     align-items: center;
-    gap: 8px;
+    gap: 11px;
     color: #f6f7ff;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     letter-spacing: 0.07em;
+    white-space: nowrap;
     text-decoration: none;
   }
 
@@ -143,11 +144,13 @@ body.shared-mode-navigation-ready #startScreen > .home-quick-actions {
   }
 
   body.shared-mode-navigation-ready .topbar > .brand .brand-bolt {
-    width: 34px;
-    height: 34px;
+    width: 48px;
+    min-width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
     display: grid;
     place-items: center;
-    font-size: 0.95rem;
+    font-size: 1.2rem;
   }
 
   body.shared-mode-navigation-ready .mode-navigation {
