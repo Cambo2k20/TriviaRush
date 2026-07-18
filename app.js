@@ -6,15 +6,33 @@
   function isDiscordActivity() {
     return window.location.hostname.endsWith(".discordsays.com");
   }
+  let discordSdk = null;
+  let discordAuth = null;
   
-  const SUPABASE_URL = isDiscordActivity()
-    ? `${window.location.origin}/supabase-api`
-    : "https://kgdnuzasbeavpqharbpf.supabase.co";
-  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_R-AJK-addd0bcjUtfzAOqQ_88GYxN_O";
-  const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
+  async function initDiscordSdk() {
+    if (!isDiscordActivity()) {
+      return;
+    }
+  
+    const { DiscordSDK } = window.DiscordEmbeddedApp;
+    const clientId = "1527828246291550268";
+    discordSdk = new DiscordSDK(clientId);
+    await discordSdk.ready();
+  
+    console.log("Discord SDK ready", {
+      guildId: discordSdk.guildId,
+      channelId: discordSdk.channelId,
+      instanceId: discordSdk.instanceId
+    });
+  }
+    const SUPABASE_URL = isDiscordActivity()
+      ? `${window.location.origin}/supabase-api`
+      : "https://kgdnuzasbeavpqharbpf.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_R-AJK-addd0bcjUtfzAOqQ_88GYxN_O";
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
   const state = {
     categories: [],
     currentQuestion: null,
@@ -249,6 +267,7 @@
     closeDialogButton: document.querySelector("#closeDialogButton")
   };
   async function init() {
+    await initDiscordSdk();
     loadPreferences();
     updateStartStats();
     configureSpeechRecognition();
