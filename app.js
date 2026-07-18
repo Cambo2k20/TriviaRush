@@ -68,10 +68,14 @@
       console.error("Discord sign-in failed:", error);
     }
   }
+    const runtimeConfig = window.TRIVIA_RUSH_CONFIG;
+    if (!runtimeConfig?.supabaseUrl || !runtimeConfig?.supabasePublishableKey) {
+      throw new Error("Trivia Rush runtime configuration is missing");
+    }
     const SUPABASE_URL = isDiscordActivity()
       ? `${window.location.origin}/supabase-api`
-      : "https://kgdnuzasbeavpqharbpf.supabase.co";
-    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_R-AJK-addd0bcjUtfzAOqQ_88GYxN_O";
+      : runtimeConfig.supabaseUrl;
+    const SUPABASE_PUBLISHABLE_KEY = runtimeConfig.supabasePublishableKey;
     const supabaseClient = window.supabase.createClient(
       SUPABASE_URL,
       SUPABASE_PUBLISHABLE_KEY

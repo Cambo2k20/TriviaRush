@@ -4,6 +4,7 @@ import { JSDOM, VirtualConsole } from "jsdom";
 const html = readFileSync("./index.html", "utf8");
 const bridgeScript = readFileSync("./social-rpc-bridge.js", "utf8");
 const appScript = readFileSync("./app.js", "utf8");
+const runtimeConfigScript = readFileSync("./runtime-config.js", "utf8");
 const redesignScript = readFileSync("./social-redesign.js", "utf8");
 
 const runtimeErrors = [];
@@ -122,6 +123,7 @@ const client = {
 window.supabase = { createClient: () => client };
 
 window.eval(bridgeScript);
+window.eval(runtimeConfigScript);
 window.eval(appScript);
 window.eval(redesignScript);
 window.document.dispatchEvent(new window.Event("DOMContentLoaded"));

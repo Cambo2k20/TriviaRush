@@ -109,6 +109,7 @@ async function main() {
     "manifest.webmanifest",
     "sw.js",
     "app.js",
+    "runtime-config.js",
     "styles.css",
     "vendor/supabase.js",
     "vendor/discord-embedded-app-sdk.js",

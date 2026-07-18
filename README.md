@@ -1,15 +1,15 @@
 # Trivia Rush
 
-Trivia Rush is a browser-based trivia game with ten controlled question categories, solo rush games, live duels, turn-based challenges, leaderboards and opt-in notifications.
+Trivia Rush is a browser-based trivia game with 14 controlled question categories, solo rush games, live duels, turn-based challenges, leaderboards and opt-in notifications.
 
 ## Current state
 
-- 1,000 sourced questions: 100 per category, split 40 Easy / 40 Medium / 20 Hard.
+- 1,400 sourced questions: 100 per category, split 40 Easy / 40 Medium / 20 Hard.
 - Server-owned question order, clocks, answer validation, streaks and scoring.
 - Solo, live 1v1 and asynchronous turn-based play.
 - Permanent accounts, friend requests, private match history and filtered rankings.
 - Installable PWA with in-app notifications and optional Web Push.
-- Category mastery and progression are designed in `docs/phase-5-progression-design.md`; implementation is the next planned feature.
+- Global and category progression are implemented and covered across solo, live-duel and turn-based flows.
 
 ## Repository layout
 
@@ -21,6 +21,7 @@ Trivia Rush is a browser-based trivia game with ten controlled question categori
 | `scripts/` | Seed generation, validation and smoke tests |
 | `supabase/sql/` | Database migrations, verification scripts and rollback SQL |
 | `supabase/functions/` | Supabase Edge Functions |
+| `supabase/migrations/`, `supabase/seed.sql` | Ordered local schema baseline and sanitized content seed |
 | `docs/` | Architecture, rollout and product-design documentation |
 
 See `docs/repository-structure.md` for the organisation rules.
@@ -33,6 +34,10 @@ npm test
 ```
 
 `npm test` validates the question bank, executes the authoritative database flows with PGlite and runs the frontend smoke suite.
+
+For a Docker-backed local database and a frontend that is safely wired to it,
+follow `docs/local-supabase-development.md`. The local server injects local
+public credentials at runtime and cannot silently fall through to production.
 
 ## Database deployment
 
