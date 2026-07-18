@@ -76,6 +76,11 @@
   };
 
   const elements = {
+    playerNameDialog: document.querySelector("#playerNameDialog"),
+    playerNameInput: document.querySelector("#playerNameInput"),
+    playerNameError: document.querySelector("#playerNameError"),
+    playerNameConfirmButton: document.querySelector("#playerNameConfirmButton"),
+    playerNameCancelButton: document.querySelector("#playerNameCancelButton"),
     screens: [...document.querySelectorAll(".screen")],
     startScreen: document.querySelector("#startScreen"),
     countdownScreen: document.querySelector("#countdownScreen"),
@@ -458,7 +463,7 @@
     // insert logic, duplicate-name handling and localStorage write exist in
     // exactly one place.
     while (!state.profile) {
-      const displayName = requestPlayerName();
+      const displayName = await requestPlayerName();
 
       if (!displayName) {
         return false;
@@ -500,27 +505,48 @@
   }
 
   function requestPlayerName() {
-    const savedName = localStorage.getItem("triviaRushPlayerName");
-
-    const enteredName = window.prompt(
-      "Choose a public leaderboard name:",
-      savedName || ""
-    );
-
-    if (enteredName === null) {
-      return null;
+      return new Promise((resolve) => {
+        const savedName = localStorage.getItem("triviaRushPlayerName") || "";
+        elements.playerNameInput.value = savedName;
+        elements.playerNameError.hidden = true;
+        elements.playerNameError.textContent = "";
+  
+        const cleanup = () => {
+          elements.playerNameConfirmButton.removeEventListener("click", onConfirm);
+          elements.playerNameCancelButton.removeEventListener("click", onCancel);
+          elements.playerNameDialog.removeEventListener("cancel", onCancel);
+        };
+  
+        const onConfirm = () => {
+          const cleanedName = elements.playerNameInput.value.trim();
+          if (cleanedName.length < 3 || cleanedName.length > 24) {
+            elements.playerNameError.textContent = "Your player name must be between 3 and 24 characters.";
+            elements.playerNameError.hidden = false;
+            return;
+          }
+          localStorage.setItem("triviaRushPlayerName", cleanedName);
+          cleanup();
+          elements.playerNameDialog.close();
+          resolve(cleanedName);
+        };
+  
+        const onCancel = () => {
+          cleanup();
+          if (elements.playerNameDialog.open) {
+            elements.playerNameDialog.close();
+          }
+          resolve(null);
+        };
+  
+        elements.playerNameConfirmButton.addEventListener("click", onConfirm);
+        elements.playerNameCancelButton.addEventListener("click", onCancel);
+        elements.playerNameDialog.addEventListener("cancel", onCancel);
+  
+        if (!elements.playerNameDialog.open) {
+          elements.playerNameDialog.showModal();
+        }
+      });
     }
-
-    const cleanedName = enteredName.trim();
-
-    if (cleanedName.length < 3 || cleanedName.length > 24) {
-      alert("Your player name must be between 3 and 24 characters.");
-      return requestPlayerName();
-    }
-
-    localStorage.setItem("triviaRushPlayerName", cleanedName);
-    return cleanedName;
-  }
   function openAccountDialog(
     clearStatus = true
   ) {
