@@ -1,93 +1,71 @@
-# Phase 5 Category Taxonomy Audit
+# Trivia Rush category taxonomy contract
 
-**Status:** 14-category contract; four live-only banks under repository review
-**Invariant:** a moved question keeps its existing `question_key`
+**Reviewed:** 2026-07-18
+**Contract:** 14 active categories, 100 questions per category
+**Difficulty target:** 40 Easy, 40 Medium and 20 Hard per category
 
-## Category boundaries
+## Stable identifiers
 
-| Category | Includes | Excludes |
-| --- | --- | --- |
-| Science | Physics, chemistry, astronomy, human biology, cellular biology and Earth science | General animal facts, ecosystems and natural-history identification |
-| Nature & Animals | Zoology, botany, habitats, ecology, species traits and natural-history facts | Fictional animals and technical cellular biology |
-| Entertainment | Film, television, music, theatre and popular screen characters | Novels, poetry, authors and visual art |
-| Art & Literature | Painting, sculpture, architecture as art, novels, poetry, plays and authors | Film adaptations and music performance |
-| Food & Drink | Ingredients, cuisines, cooking methods, food science in culinary context and non-alcoholic or alcoholic drinks | Pure chemistry questions that merely mention an edible compound |
-| Game of Thrones (`game_of_thrones`) | Facts specific to the HBO series and its A Song of Ice and Fire setting, characters, houses, locations and events | General television craft, unrelated fantasy, and author facts that test literature rather than the franchise |
-| Mythology (`mythology`) | Named myths, deities, heroes, creatures and traditions from documented world cultures | Modern fictional universes, unsupported folklore claims and questions that flatten disputed traditions into a single universal account |
-| Harry Potter (`harry_potter`) | Facts specific to the seven core novels and their authorised screen adaptations, characters, places, objects and events | General author biography, unrelated Wizarding World franchises, and literary facts already tested by Art & Literature |
-| Marvel Cinematic Universe (`marvel_cinematic_universe`) | On-screen MCU films and series, their characters, events, locations and production facts | Marvel comics continuity, non-MCU adaptations and generic film questions that do not test MCU knowledge |
+Category and question identifiers are historical database keys. They are never
+renamed to make source files look more uniform. The 400 underscore-style keys
+in the four franchise banks are valid legacy IDs and are protected by frozen
+key hashes in `data/questions.json`.
 
-Ambiguous questions follow what they actually test and the authority used to
-verify them. For example, a question about the yellow brick road sourced to a
-film authority stays in Entertainment; a question asking who wrote a novel
-moves to Art & Literature.
+New question keys use `<category-id>-<three-digit-sequence>`. This convention
+applies only to new records; it does not migrate or invalidate existing keys.
 
-Franchise categories take precedence when the tested fact requires knowledge of
-that franchise's continuity. General creator, publisher, studio and adaptation
-questions remain in Art & Literature or Entertainment unless the franchise
-context is essential. The same tested fact must not appear in both a franchise
-bank and a general bank, including inverse question/answer pairs.
+## Controlled categories
 
-## Difficulty contract
+| ID | Label | Included scope | Key exclusions |
+| --- | --- | --- | --- |
+| `science` | Science | Physics, chemistry, biology, astronomy and earth science | Product engineering and computing belong in Technology |
+| `history` | History | Documented people, periods, events and civilisations | Fictional chronology and undated current affairs |
+| `geography` | Geography | Countries, capitals, landforms, maps and population geography | Travel recommendations and unstable rankings |
+| `entertainment` | Entertainment | Film, television, music, theatre and general popular culture | Dedicated Game of Thrones, Harry Potter and MCU facts |
+| `sport` | Sport | Rules, competitions, athletes and governing bodies | Video games and fictional sports |
+| `technology` | Technology | Computing, standards, devices, software and engineering history | General scientific principles without a technology focus |
+| `gaming` | Gaming | Video games, platforms, developers and gaming history | Tabletop-only facts and screen adaptations without a game focus |
+| `food_drink` | Food & Drink | Ingredients, dishes, techniques and culinary heritage | Health claims and unstable commercial rankings |
+| `nature_animals` | Nature & Animals | Species, habitats, ecology and plants | Human anatomy and laboratory science |
+| `art_literature` | Art & Literature | Visual art, artists, books, authors and literary forms | Screen-only adaptations and dedicated franchise lore |
+| `game_of_thrones` | Game of Thrones | HBO series characters, places, houses, events and production | Unadapted book-only lore unless the question names the books |
+| `mythology` | Mythology | Named mythic traditions, figures, stories and symbols | Claims presented as religious truth or modern franchise versions |
+| `harry_potter` | Harry Potter | The seven novels and their official screen adaptations | Fan theories and unrelated Wizarding World properties unless named |
+| `marvel_cinematic_universe` | Marvel Cinematic Universe | MCU films and series, characters, events and production | Comics-only continuity and non-MCU Marvel adaptations |
 
-The manifest is authoritative. Its `default_target` is 40 Easy, 40 Medium and
-20 Hard for new categories. The four preserved live banks explicitly retain
-their current 35 Easy, 45 Medium and 20 Hard targets during review. Changing a
-category target requires a reviewed manifest change; verification must never
-hard-code one distribution for every category.
+## Overlap rules
 
-## Stable key contract
+1. A dedicated category wins when the tested fact depends on its canon. An Iron
+   Man identity question belongs in MCU, not Entertainment.
+2. General categories retain facts about the medium or creator when the answer
+   does not require franchise lore. A question about an Academy Award ceremony
+   remains Entertainment even if a franchise film was nominated.
+3. Mythology retains historical mythic figures. MCU versions of Thor, Loki or
+   Asgard belong in MCU when the prompt names that continuity.
+4. Art & Literature retains author, genre and publication facts. Harry Potter
+   plot, character and adaptation facts belong in Harry Potter.
+5. Game of Thrones prompts must distinguish the television series from the
+   source novels whenever their facts differ.
 
-New keys use `<category_id>-<three-or-more-digit-number>`. The 400 deployed
-`got_001`-`got_100`, `myth_001`-`myth_100`, `hp_001`-`hp_100` and
-`mcu_001`-`mcu_100` keys are valid legacy IDs and must not be renamed or reused.
-Their bounded ranges are declared in `data/questions.json`; new questions in
-those categories use the canonical hyphen convention.
+## Review result
 
-## Existing-question moves
+The compiler and content audit cover all 1,400 records. They enforce stable
+keys, exact category and difficulty totals, unique choices, source-key
+resolution, normalised duplicate detection, semantic duplicate candidates,
+inverse-pair detection and dedicated-category overlap screening.
 
-The audit moves 30 of the 700 existing questions while preserving every key.
+The 2026-07-18 review preserved all live keys and repaired the actionable
+findings:
 
-### Entertainment → Art & Literature (29)
+- `got_001` was rewritten to remove competing "most" and "primarily"
+  qualifiers while retaining its answer and key.
+- `entertainment-108` no longer tests an MCU identity in Entertainment; the key
+  now tests a directly sourced Academy Awards fact.
+- one duplicate Harry Potter authorship fact and one Iron Man inverse pair were
+  removed in the preceding normalization change.
 
-- Easy: `entertainment-006`, `007`, `009`–`020` (14)
-- Medium: `entertainment-041`–`050` (10)
-- Hard: `entertainment-081`–`085` (5)
-
-### Science → Nature & Animals (1)
-
-- Easy: `science-039`
-
-No existing record is moved into Food & Drink. The table-salt question remains
-Science because it tests the chemical name of sodium chloride, not cuisine.
-
-## Replenishment calculation
-
-Every active category must ship with exactly 40 Easy, 40 Medium and 20 Hard
-questions. The final ten-category bank therefore contains 1,000 questions.
-
-| Destination | Existing after moves | New Easy | New Medium | New Hard | Final |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Science | 99 | 1 | 0 | 0 | 100 |
-| Entertainment | 71 | 14 | 10 | 5 | 100 |
-| Food & Drink | 0 | 40 | 40 | 20 | 100 |
-| Nature & Animals | 1 | 39 | 40 | 20 | 100 |
-| Art & Literature | 29 | 26 | 30 | 15 | 100 |
-| Other five categories | 500 | 0 | 0 | 0 | 500 |
-| **Total** | **700** | **120** | **120** | **60** | **1,000** |
-
-The exact addition is 300 independently written and sourced questions. New
-category manifest entries remain `planned` until the complete 1,000-question
-bank passes the compiler and database tests.
-
-## Activation gate
-
-The new categories must not be inserted into production until:
-
-1. all five affected category files meet their exact difficulty targets;
-2. every new question has an authoritative source key;
-3. normalised prompt, answer and stable-key audits pass;
-4. the generated SQL upserts all moved keys rather than inserting replacements;
-5. the category migration and 1,000-question seed run in one documented rollout;
-6. solo and duel tests prove the same server-authoritative behaviour across all
-   ten categories.
+Term-based ambiguity and sensitivity matches remain visible in the audit as
+screening information. They are not failures by themselves: words such as
+"first", "war", "god" and "battle" can be necessary, precise parts of history
+or mythology questions. Any semantic duplicate, inverse pair, broken frozen
+hash or unresolved overlap remains a blocking failure.

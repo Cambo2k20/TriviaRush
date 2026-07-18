@@ -31,6 +31,7 @@
     "ordnance_survey": {"name": "Ordnance Survey", "url": "https://www.ordnancesurvey.co.uk/mapzone/map-skills"},
     "bfi": {"name": "British Film Institute", "url": "https://www.bfi.org.uk/"},
     "oscars": {"name": "Academy of Motion Picture Arts and Sciences", "url": "https://www.oscars.org/oscars"},
+    "oscars_1998": {"name": "Academy Awards - 1998 ceremony", "url": "https://www.oscars.org/oscars/ceremonies/1998"},
     "loc_entertainment": {"name": "Library of Congress", "url": "https://www.loc.gov/"},
     "british_library": {"name": "British Library", "url": "https://www.bl.uk/"},
     "ifab": {"name": "The International Football Association Board", "url": "https://www.theifab.com/laws/latest/"},

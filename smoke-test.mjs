@@ -3,6 +3,7 @@ import { JSDOM } from "jsdom";
 
 const html = readFileSync("./index.html", "utf8");
 const appJs = readFileSync("./app.js", "utf8");
+const runtimeConfigJs = readFileSync("./runtime-config.js", "utf8");
 
 const dom = new JSDOM(html, {
   url: "https://example.github.io/trivia-rush/",
@@ -157,6 +158,7 @@ window.cancelAnimationFrame = () => {};
 window.scrollTo = () => {};
 
 // --- Run the real app ---
+window.eval(runtimeConfigJs);
 window.eval(appJs);
 
 await new Promise((resolve) => setTimeout(resolve, 50));

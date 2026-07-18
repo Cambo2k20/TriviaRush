@@ -24,6 +24,23 @@ The reset applies `supabase/migrations/` in order and then runs
 `supabase/seed.sql`. The seed contains only game-mode and level reference rows,
 the 14 category rows, and the 1,400-question bank.
 
+## Run the app against local Supabase
+
+After the stack is running and the reset has passed:
+
+```powershell
+npm.cmd run dev:local
+```
+
+Open `http://127.0.0.1:8788`. The server builds the same allowlisted static
+distribution used by Cloudflare, reads the local public API URL and key from
+`supabase status -o env`, and serves a local runtime configuration from memory.
+It does not write credentials into the working tree.
+
+Do not use a generic static server for database testing. The production build
+contains the production public runtime configuration, while `dev:local`
+deliberately replaces it with the running local stack's values.
+
 Regenerate question SQL and the local seed after editing the manifest or a
 category JSON file:
 
