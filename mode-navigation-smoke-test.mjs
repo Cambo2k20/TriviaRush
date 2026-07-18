@@ -83,6 +83,11 @@ show("gameScreen");
 await flush();
 const gameLockedModeSwitch = soloButton.disabled === true;
 
+const unifiedCssIndex = index.search(/unified-shell\.css\?v=\d+/);
+const modeCssIndex = index.search(/mode-navigation\.css\?v=\d+/);
+const unifiedJsIndex = index.search(/unified-shell\.js\?v=\d+/);
+const modeJsIndex = index.search(/mode-navigation\.js\?v=\d+/);
+
 const checks = [
   ["one shared mode navigation is added", Boolean(modeNavigation) && document.querySelectorAll("#modeNavigation").length === 1],
   ["the existing Online button is reused rather than duplicated", modeNavigation?.contains(onlineButton) && document.querySelectorAll("#duelButton").length === 1],
@@ -99,7 +104,7 @@ const checks = [
   ["mobile header keeps the logo above game modes", styles.includes(".topbar > .brand") && styles.includes("display: inline-flex !important") && styles.includes("justify-self: center")],
   ["mobile utilities form a fixed safe-area footer", styles.includes("position: fixed !important") && styles.includes("env(safe-area-inset-bottom)") && styles.includes("data-mobile-label")],
   ["legacy Home quick actions are removed from the menu hierarchy", styles.includes("#startScreen > .home-quick-actions") && styles.includes("display: none !important")],
-  ["production loads shared navigation assets after the unified shell", index.includes('href="mode-navigation.css?v=1"') && index.includes('src="mode-navigation.js?v=1"') && index.indexOf('unified-shell.css?v=1') < index.indexOf('mode-navigation.css?v=1') && index.indexOf('unified-shell.js?v=1') < index.indexOf('mode-navigation.js?v=1')]
+  ["production loads shared navigation assets after the unified shell", unifiedCssIndex >= 0 && modeCssIndex >= 0 && unifiedJsIndex >= 0 && modeJsIndex >= 0 && unifiedCssIndex < modeCssIndex && unifiedJsIndex < modeJsIndex]
 ];
 
 let failed = false;
