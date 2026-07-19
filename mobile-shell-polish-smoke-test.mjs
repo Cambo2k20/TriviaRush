@@ -36,10 +36,12 @@ const checks = [
       styles.includes("padding-top: 0")
   ],
   [
-    "mobile play actions compact into one deliberate column",
+    "mobile play actions use one spaced and padded card column",
     styles.includes(".social-play-actions") &&
       styles.includes("grid-template-columns: 1fr") &&
-      styles.includes("margin-bottom: 26px")
+      styles.includes("margin-bottom: 26px") &&
+      styles.includes("gap: 20px") &&
+      styles.includes("padding: 26px 20px")
   ],
   [
     "visual fixture is wired to shared and mobile shell assets",
