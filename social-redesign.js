@@ -138,14 +138,14 @@
     const host = document.createElement("section");
     host.className = "social-play-action social-host-action";
     host.innerHTML = `
-      <span class="social-action-icon social-action-icon-yellow" aria-hidden="true">♙+</span>
+      <span class="social-action-icon social-action-icon-teal" aria-hidden="true">♙+</span>
       <h2>Host a game</h2>
       <p>Create a room and invite a friend.</p>
     `;
     refs.openDuelConfigButton = document.createElement("button");
     refs.openDuelConfigButton.id = "openDuelConfigButton";
     refs.openDuelConfigButton.type = "button";
-    refs.openDuelConfigButton.className = "primary-button social-primary-action";
+    refs.openDuelConfigButton.className = "social-outline-action social-primary-action";
     refs.openDuelConfigButton.textContent = "Create room";
     host.appendChild(refs.openDuelConfigButton);
 
@@ -154,6 +154,7 @@
     join.innerHTML = `
       <span class="social-action-icon social-action-icon-teal" aria-hidden="true">↪</span>
       <h2>Join with code</h2>
+      <p>Enter a room code to join a friend's game.</p>
     `;
     if (refs.duelRoomCode) {
       refs.duelRoomCode.placeholder = "Enter room code";
@@ -187,7 +188,7 @@
     refs.activeChallengeView.setAttribute("aria-live", "polite");
     activeSection.append(activeHeading, refs.activeChallengeView);
 
-    panel.append(actions, activeSection);
+    panel.append(activeSection, actions);
 
     [refs.joinCard, refs.turnCard].forEach((card) => {
       if (card) refs.legacyDepot.appendChild(card);
@@ -746,8 +747,9 @@
 
     refs.activeChallengeView.replaceChildren();
     const visibleRows = viewState.challengesExpanded ? rows : rows.slice(0, 3);
+    refs.activeChallengeView.classList.toggle("is-empty", !visibleRows.length);
     if (!visibleRows.length) {
-      refs.activeChallengeView.appendChild(createEmptyState("No active challenges."));
+      refs.activeChallengeView.appendChild(createActiveChallengesEmptyState());
     } else {
       refs.activeChallengeView.append(...visibleRows);
     }
@@ -1040,6 +1042,27 @@
     const empty = document.createElement("p");
     empty.className = "social-empty social-redesign-empty";
     empty.textContent = message;
+    return empty;
+  }
+
+  function createActiveChallengesEmptyState() {
+    const empty = document.createElement("div");
+    empty.className = "social-active-empty";
+    empty.innerHTML = `
+      <span class="social-active-empty-icon" aria-hidden="true">⚔</span>
+      <h3>No active challenges</h3>
+      <p>Challenge a friend to start a head-to-head match.</p>
+    `;
+
+    const challengeButton = document.createElement("button");
+    challengeButton.type = "button";
+    challengeButton.className = "social-empty-challenge-action";
+    challengeButton.textContent = "Challenge a friend";
+    challengeButton.addEventListener("click", () => {
+      setActiveTab("friends", true);
+      window.setTimeout(() => refs.friendAccountNumber?.focus(), 0);
+    });
+    empty.appendChild(challengeButton);
     return empty;
   }
 
