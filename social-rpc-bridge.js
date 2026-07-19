@@ -17,6 +17,14 @@
   guardStylesheet.dataset.socialAuthGuard = "true";
   document.head.appendChild(guardStylesheet);
 
+  const notificationInboxScript = document.createElement("script");
+  notificationInboxScript.src = new URL(
+    "notification-inbox.js?v=1",
+    bridgeAssetUrl
+  ).href;
+  notificationInboxScript.dataset.notificationInbox = "true";
+  document.head.appendChild(notificationInboxScript);
+
   const watchedRpcNames = new Set([
     "get_social_dashboard",
     "get_duel_invitations",
