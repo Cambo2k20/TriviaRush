@@ -1,17 +1,55 @@
-body.shared-mode-navigation-ready .topbar {
+body.shared-mode-navigation-ready .topbar,
+body.trivia-shell-ready.shared-mode-navigation-ready .topbar {
+  min-height: 148px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    "brand utilities"
+    "mode mode";
+  align-items: center;
+  column-gap: 20px;
+  row-gap: 0;
+}
+
+body.shared-mode-navigation-ready .topbar > .brand {
+  grid-area: brand;
+  justify-self: start;
+}
+
+body.shared-mode-navigation-ready .mode-navigation-bar {
+  grid-area: mode;
+  width: 100%;
+  min-width: 0;
+  min-height: 68px;
+  padding: 8px 0 12px;
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: flex-start;
+  gap: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.055);
+  border-bottom: 1px solid rgba(126, 113, 255, 0.18);
+}
+
+body.shared-mode-navigation-ready .mode-navigation-label {
+  flex: 0 0 auto;
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
 }
 
 body.shared-mode-navigation-ready .mode-navigation {
+  width: min(100%, 390px);
   min-width: 0;
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 5px;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 14px;
+  border-radius: 16px;
   background: rgba(5, 13, 38, 0.7);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
@@ -20,21 +58,22 @@ body.shared-mode-navigation-ready .mode-nav-button,
 body.shared-mode-navigation-ready #modeNavigation #duelButton {
   --mode-accent: #ffd335;
   min-width: 0;
-  flex: 1 1 0;
-  min-height: 44px;
-  padding: 0 17px;
+  min-height: 54px;
+  padding: 0 24px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  flex: 1 1 0;
+  gap: 10px;
   color: #bfc7dc;
   border: 1px solid transparent;
-  border-radius: 10px;
+  border-radius: 11px;
   background: transparent;
   box-shadow: none;
   font-family: "Inter", sans-serif;
-  font-size: 0.88rem;
+  font-size: 1rem;
   font-weight: 800;
+  line-height: 1;
   letter-spacing: 0.02em;
   white-space: nowrap;
   cursor: pointer;
@@ -76,30 +115,139 @@ body.shared-mode-navigation-ready #modeNavigation #duelButton > span:first-child
   display: inline-grid;
   place-items: center;
   overflow: visible;
-  font-size: 1rem;
+  font-size: 1.12rem;
   line-height: 1;
 }
 
-body.shared-mode-navigation-ready .header-actions {
+body.shared-mode-navigation-ready .header-actions,
+body.trivia-shell-ready.shared-mode-navigation-ready .header-actions {
+  grid-area: utilities;
   min-width: 0;
-  margin-left: auto;
+  margin-left: 0;
+  display: flex;
+  align-items: center;
+  justify-self: end;
   justify-content: flex-end;
   flex-wrap: nowrap;
-  overflow: hidden;
+  gap: 8px;
+  overflow: visible;
+}
+
+body.shared-mode-navigation-ready .header-actions > button:not([hidden]),
+body.trivia-shell-ready.shared-mode-navigation-ready .header-actions > button:not([hidden]) {
+  width: auto;
+  min-width: 0;
+  min-height: 46px;
+  height: 46px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #eef1ff;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  font-family: "Inter", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+body.shared-mode-navigation-ready .header-actions > button[hidden] {
+  display: none !important;
+}
+
+body.shared-mode-navigation-ready.home-redesign-active .header-actions > button::before,
+body.trivia-shell-ready.shared-mode-navigation-ready .header-actions > button::before {
+  display: none !important;
+}
+
+body.shared-mode-navigation-ready .header-actions > button:hover:not(:disabled),
+body.shared-mode-navigation-ready .header-actions > button:focus-visible {
+  color: #ffffff;
+  border-color: rgba(62, 231, 219, 0.36);
+  background: rgba(255, 255, 255, 0.09);
+  transform: none;
+}
+
+body.shared-mode-navigation-ready .header-actions .header-action-label {
+  display: inline;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  white-space: nowrap;
+}
+
+body.shared-mode-navigation-ready .header-actions > .icon-button {
+  width: auto;
+}
+
+body.shared-mode-navigation-ready .header-actions .global-progression-chip {
+  min-height: 46px;
+  height: 46px;
+  padding: 0 14px;
+  gap: 8px;
+}
+
+body.shared-mode-navigation-ready .header-actions .global-progression-chip-level,
+body.shared-mode-navigation-ready .header-actions .global-progression-chip-xp {
+  line-height: 1;
+}
+
+body.shared-mode-navigation-ready #startScreen #homeGlobalLevel {
+  display: inline;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  text-transform: none;
 }
 
 body.shared-mode-navigation-ready #startScreen > .home-quick-actions {
   display: none !important;
 }
 
-@media (max-width: 900px) and (min-width: 701px) {
-  body.shared-mode-navigation-ready .topbar {
-    gap: 12px;
+@media (max-width: 1050px) and (min-width: 701px) {
+  body.shared-mode-navigation-ready .topbar,
+  body.trivia-shell-ready.shared-mode-navigation-ready .topbar {
+    column-gap: 12px;
+  }
+
+  body.shared-mode-navigation-ready .header-actions,
+  body.trivia-shell-ready.shared-mode-navigation-ready .header-actions {
+    gap: 5px;
+  }
+
+  body.shared-mode-navigation-ready .header-actions > button:not([hidden]),
+  body.trivia-shell-ready.shared-mode-navigation-ready .header-actions > button:not([hidden]),
+  body.shared-mode-navigation-ready .header-actions .global-progression-chip {
+    padding-inline: 10px;
+    font-size: 0.74rem;
+  }
+
+  body.shared-mode-navigation-ready .mode-navigation-bar {
+    gap: 16px;
+  }
+}
+
+@media (min-width: 701px) and (max-height: 620px) {
+  body.shared-mode-navigation-ready .topbar,
+  body.trivia-shell-ready.shared-mode-navigation-ready .topbar {
+    min-height: 112px;
+  }
+
+  body.shared-mode-navigation-ready .mode-navigation-bar {
+    min-height: 50px;
+    padding-block: 4px 6px;
   }
 
   body.shared-mode-navigation-ready .mode-nav-button,
   body.shared-mode-navigation-ready #modeNavigation #duelButton {
-    padding-inline: 13px;
+    min-height: 46px;
   }
 }
 
@@ -112,17 +260,22 @@ body.shared-mode-navigation-ready #startScreen > .home-quick-actions {
     padding-bottom: calc(82px + env(safe-area-inset-bottom));
   }
 
-  body.shared-mode-navigation-ready .topbar {
+  body.shared-mode-navigation-ready .topbar,
+  body.trivia-shell-ready.shared-mode-navigation-ready .topbar {
     position: sticky;
     top: 0;
     z-index: 60;
     width: 100%;
-    min-height: auto;
-    padding: 9px 14px 11px;
+    min-height: 132px;
+    padding: 8px 12px 10px;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    justify-items: center;
-    gap: 8px;
+    grid-template-areas:
+      "brand"
+      "mode";
+    justify-items: stretch;
+    align-items: center;
+    gap: 4px;
     border-bottom: 1px solid rgba(126, 113, 255, 0.22);
     background: linear-gradient(180deg, rgba(16, 27, 69, 0.98), rgba(10, 19, 51, 0.96));
   }
@@ -154,28 +307,46 @@ body.shared-mode-navigation-ready #startScreen > .home-quick-actions {
     font-size: 1.2rem;
   }
 
-  body.shared-mode-navigation-ready .mode-navigation {
-    width: min(100%, 520px);
+  body.shared-mode-navigation-ready .mode-navigation-bar {
+    width: min(100%, 560px);
+    min-height: 60px;
     margin: 0 auto;
+    padding: 4px 0 0;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 9px;
+    border-top: 0;
+    border-bottom: 0;
+  }
+
+  body.shared-mode-navigation-ready .mode-navigation-label {
+    font-size: 0.76rem;
+    letter-spacing: 0.025em;
+  }
+
+  body.shared-mode-navigation-ready .mode-navigation {
+    width: 100%;
+    margin: 0;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 7px;
+    gap: 6px;
     padding: 4px;
-    border-radius: 13px;
-    background: rgba(4, 12, 38, 0.62);
+    border-radius: 14px;
+    background: rgba(4, 12, 38, 0.68);
   }
 
   body.shared-mode-navigation-ready .mode-nav-button,
   body.shared-mode-navigation-ready #modeNavigation #duelButton {
     width: 100% !important;
     min-width: 0 !important;
-    height: 44px !important;
-    min-height: 44px !important;
+    height: 50px !important;
+    min-height: 50px !important;
     padding: 0 12px !important;
     display: inline-flex !important;
     flex: 1 1 0 !important;
-    gap: 7px;
-    border-radius: 9px;
-    font-size: 0.86rem !important;
+    gap: 8px;
+    border-radius: 10px;
+    font-size: 0.94rem !important;
     line-height: 1 !important;
   }
 
@@ -192,7 +363,7 @@ body.shared-mode-navigation-ready #startScreen > .home-quick-actions {
 
   body.shared-mode-navigation-ready #modeNavigation #duelButton > span:first-child,
   body.shared-mode-navigation-ready #modeNavigation .mode-nav-icon {
-    font-size: 0.98rem !important;
+    font-size: 1.04rem !important;
   }
 
   body.shared-mode-navigation-ready #startScreen .home-selection-row {
@@ -204,14 +375,15 @@ body.shared-mode-navigation-ready #startScreen > .home-quick-actions {
     display: none !important;
   }
 
-  body.shared-mode-navigation-ready .header-actions {
+  body.shared-mode-navigation-ready .header-actions,
+  body.trivia-shell-ready.shared-mode-navigation-ready .header-actions {
     position: fixed !important;
     z-index: 100;
     right: 0 !important;
     bottom: 0 !important;
     left: 0 !important;
     width: 100% !important;
-    min-height: calc(64px + env(safe-area-inset-bottom));
+    min-height: calc(68px + env(safe-area-inset-bottom));
     padding: 7px 8px calc(7px + env(safe-area-inset-bottom));
     display: flex !important;
     align-items: stretch !important;
@@ -222,6 +394,7 @@ body.shared-mode-navigation-ready #startScreen > .home-quick-actions {
     box-shadow: 0 -10px 28px rgba(15, 12, 48, 0.28);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+    overflow: visible;
   }
 
   body.shared-mode-navigation-ready .header-actions > * {
@@ -234,15 +407,15 @@ body.shared-mode-navigation-ready #startScreen > .home-quick-actions {
     width: auto !important;
     min-width: 0 !important;
     max-width: none !important;
-    height: 52px !important;
-    min-height: 52px !important;
+    height: 54px !important;
+    min-height: 54px !important;
     padding: 5px 4px !important;
     display: flex !important;
     flex: 1 1 0 !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 3px !important;
+    gap: 4px !important;
     color: #eef1ff !important;
     border: 0 !important;
     border-radius: 10px !important;
@@ -251,6 +424,22 @@ body.shared-mode-navigation-ready #startScreen > .home-quick-actions {
     transform: none !important;
     opacity: 1;
     font-size: 0 !important;
+  }
+
+  body.shared-mode-navigation-ready .header-actions > #notificationButton {
+    order: 1;
+  }
+
+  body.shared-mode-navigation-ready .header-actions > #leaderboardButton {
+    order: 2;
+  }
+
+  body.shared-mode-navigation-ready .header-actions > #accountButton {
+    order: 3;
+  }
+
+  body.shared-mode-navigation-ready .header-actions > #soundToggle {
+    order: 4;
   }
 
   body.shared-mode-navigation-ready .header-actions > .mobile-utility-button[hidden] {
@@ -275,7 +464,7 @@ body.shared-mode-navigation-ready #startScreen > .home-quick-actions {
     overflow: visible !important;
     visibility: visible !important;
     opacity: 1 !important;
-    font-size: 1.12rem !important;
+    font-size: 1.15rem !important;
     line-height: 1 !important;
   }
 
@@ -287,7 +476,7 @@ body.shared-mode-navigation-ready #startScreen > .home-quick-actions {
     content: attr(data-mobile-label);
     display: block;
     font-family: "Inter", sans-serif;
-    font-size: 0.62rem;
+    font-size: 0.64rem;
     font-weight: 700;
     line-height: 1;
     letter-spacing: 0.01em;
@@ -311,12 +500,31 @@ body.shared-mode-navigation-ready #startScreen > .home-quick-actions {
 }
 
 @media (max-width: 360px) {
+  body.shared-mode-navigation-ready .mode-navigation-bar {
+    gap: 7px;
+  }
+
+  body.shared-mode-navigation-ready .mode-navigation-label {
+    font-size: 0.7rem;
+  }
+
   body.shared-mode-navigation-ready .header-actions > .mobile-utility-button::after {
     font-size: 0.57rem;
   }
 
   body.shared-mode-navigation-ready .mode-nav-button,
   body.shared-mode-navigation-ready #modeNavigation #duelButton {
-    font-size: 0.81rem !important;
+    padding-inline: 8px !important;
+    font-size: 0.86rem !important;
   }
+}
+
+html[data-discord-layout="pip"] body.trivia-shell-ready.shared-mode-navigation-ready .topbar {
+  min-height: 48px;
+  display: flex;
+  justify-content: center;
+}
+
+html[data-discord-layout="pip"] body.shared-mode-navigation-ready .mode-navigation-bar {
+  display: none !important;
 }
