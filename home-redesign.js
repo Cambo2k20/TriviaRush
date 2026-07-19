@@ -37,6 +37,7 @@
   let screenObserver = null;
   let hostObserver = null;
   let levelObserver = null;
+  let mobileCategoryQuery = null;
 
   function initialise() {
     elements.startScreen = document.querySelector("#startScreen");
@@ -47,6 +48,9 @@
     elements.categoryHeadingTitle = document.querySelector("#homeCategoryTitle");
     elements.categoryHeadingLevel = document.querySelector("#homeCategoryLevel");
     elements.categoryHeadingMark = document.querySelector("#homeCategoryMark");
+    elements.mobileCategoryToggle = document.querySelector("#mobileCategoryToggle");
+    elements.mobileCategoryToggleIcon = document.querySelector("#mobileCategoryToggleIcon");
+    elements.mobileCategoryToggleLabel = document.querySelector("#mobileCategoryToggleLabel");
     elements.homeHostToggle = document.querySelector("#homeHostToggle");
     elements.hostToggle = document.querySelector("#hostToggle");
     elements.homeGlobalLevel = document.querySelector("#homeGlobalLevel");
@@ -59,6 +63,7 @@
     bindShortcuts();
     bindCategorySelect();
     bindCategoryProgression();
+    bindMobileCategoryToggle();
     bindHostToggle();
     observeActiveScreen();
     observeProgressionLevel();
@@ -84,7 +89,11 @@
       const presentation = presentationForOption(option);
       const button = document.createElement("button");
       const icon = document.createElement("span");
+      const copy = document.createElement("span");
       const label = document.createElement("strong");
+      const level = document.createElement("span");
+      const track = document.createElement("span");
+      const fill = document.createElement("span");
 
       button.type = "button";
       button.className = "home-category-card";
@@ -95,12 +104,21 @@
 
       icon.className = "home-category-icon";
       icon.innerHTML = ICONS[presentation.icon] || ICONS.brain;
+      copy.className = "home-category-card-copy";
       label.textContent = presentation.label || option.textContent.trim();
-      button.append(icon, label);
+      level.className = "home-category-card-level";
+      level.textContent = "Level loading";
+      track.className = "home-category-card-progress";
+      track.setAttribute("aria-hidden", "true");
+      fill.className = "home-category-card-progress-fill";
+      track.appendChild(fill);
+      copy.append(label, level, track);
+      button.append(icon, copy);
 
       button.addEventListener("click", () => {
         elements.categorySelect.value = option.value;
         elements.categorySelect.dispatchEvent(new Event("change", { bubbles: true }));
+        closeMobileCategoryBrowser();
       });
 
       fragment.appendChild(button);
@@ -108,6 +126,7 @@
 
     elements.categoryGrid.replaceChildren(fragment);
     elements.startScreen.classList.add("home-redesign-ready");
+    syncCategoryCardProgression();
     syncSelectedCategory();
   }
 
@@ -120,7 +139,12 @@
       elements.selectedCategory.textContent = selectedLabel;
     }
 
+    if (elements.mobileCategoryToggleLabel) {
+      elements.mobileCategoryToggleLabel.textContent = selectedLabel;
+    }
+
     syncCategoryHeading(selectedId, selectedLabel);
+    syncMobileCategoryToggle(selectedOption);
 
     elements.categoryGrid
       .querySelectorAll("[data-category-id]")
@@ -141,12 +165,81 @@
         const id = String(category?.id || "");
         const level = Number.parseInt(category?.level, 10);
         if (id && Number.isFinite(level)) {
-          categoryProgression.set(id, { level: Math.max(1, level) });
+          categoryProgression.set(id, {
+            level: Math.max(1, level),
+            progressPercent: Math.min(100, Math.max(0, Number(category?.progressPercent) || 0))
+          });
         }
       });
 
+      syncCategoryCardProgression();
       syncSelectedCategory();
     });
+  }
+
+  function syncCategoryCardProgression() {
+    elements.categoryGrid
+      ?.querySelectorAll("[data-category-id]")
+      .forEach((button) => {
+        const id = button.dataset.categoryId;
+        const progression = categoryProgression.get(id);
+        const isMixed = id === "mixed";
+        const level = isMixed
+          ? elements.homeGlobalLevel?.textContent?.trim() || "1"
+          : progression?.level || 1;
+        const progressPercent = isMixed ? 0 : progression?.progressPercent || 0;
+
+        const levelLabel = button.querySelector(".home-category-card-level");
+        const fill = button.querySelector(".home-category-card-progress-fill");
+        if (levelLabel) {
+          levelLabel.textContent = `${isMixed ? "Global" : "Category"} LV ${level}`;
+        }
+        if (fill) {
+          fill.style.width = `${progressPercent}%`;
+        }
+      });
+  }
+
+  function bindMobileCategoryToggle() {
+    if (!elements.mobileCategoryToggle || !elements.categoryBrowser) {
+      return;
+    }
+
+    mobileCategoryQuery = window.matchMedia?.("(max-width: 759px)") || { matches: false };
+    elements.mobileCategoryToggle.addEventListener("click", () => {
+      const open = !elements.categoryBrowser.classList.contains("mobile-category-browser-open");
+      setMobileCategoryBrowserOpen(open);
+    });
+
+    const resetForViewport = () => {
+      if (!mobileCategoryQuery.matches) {
+        setMobileCategoryBrowserOpen(false);
+      }
+    };
+    mobileCategoryQuery.addEventListener?.("change", resetForViewport);
+    mobileCategoryQuery.addListener?.(resetForViewport);
+    setMobileCategoryBrowserOpen(false);
+  }
+
+  function setMobileCategoryBrowserOpen(open) {
+    elements.categoryBrowser?.classList.toggle("mobile-category-browser-open", open);
+    elements.mobileCategoryToggle?.setAttribute("aria-expanded", String(open));
+  }
+
+  function closeMobileCategoryBrowser() {
+    if (mobileCategoryQuery?.matches) {
+      setMobileCategoryBrowserOpen(false);
+    }
+  }
+
+  function syncMobileCategoryToggle(selectedOption) {
+    if (!elements.mobileCategoryToggleIcon) {
+      return;
+    }
+
+    const presentation = presentationForOption(selectedOption);
+    elements.mobileCategoryToggleIcon.innerHTML = ICONS[presentation.icon] || ICONS.brain;
+    elements.mobileCategoryToggle?.style.setProperty("--category-accent", presentation.accent);
   }
 
   function syncCategoryHeading(selectedId, selectedLabel) {
@@ -244,6 +337,7 @@
         if (elements.homeGlobalLevel) {
           elements.homeGlobalLevel.textContent = elements.progressionLevel.textContent || "1";
         }
+        syncCategoryCardProgression();
         syncSelectedCategory();
       };
 

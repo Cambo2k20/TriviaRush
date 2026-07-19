@@ -203,7 +203,7 @@ function assert(name, condition) {
   if (!condition) process.exitCode = 1;
 }
 
-const categoryScriptIndex = html.indexOf("category-progression-ui.js?v=2");
+const categoryScriptIndex = html.indexOf("category-progression-ui.js?v=3");
 const appScriptIndex = html.search(/app\.js\?v=\d+/);
 
 assert("category mastery stylesheet linked", html.includes("category-progression-ui.css?v=1"));
@@ -213,6 +213,7 @@ assert(
 );
 assert("category progression RPC called", rpcCalls.some((call) => call.name === "get_my_category_progression"));
 assert("normalized category progression is published for the home screen", progressionEvents[0]?.categories?.find((category) => category.id === "science")?.level === 2);
+assert("normalized category progress percentage is published for mobile cards", progressionEvents[0]?.categories?.find((category) => category.id === "science")?.progressPercent === 7.5);
 assert("account mastery panel is visible", window.document.querySelector("#accountCategoryMasteryPanel")?.hidden === false);
 assert("account renders each server category", window.document.querySelectorAll("#accountCategoryMasteryGrid .category-mastery-card").length === 6);
 assert(

@@ -24,7 +24,7 @@ assert("responsive stylesheet is the final CSS layer", responsiveIndex === cssLi
 assert("Discord layout runtime is loaded", html.includes('src="discord-layout.js?v=1"'));
 assert("desktop Home layout only displays while active", /#startScreen\.home-screen-v2\.active\s*\{[^}]*display:\s*grid/s.test(styles));
 assert("mobile Home layout only displays while active", /max-width:\s*759px[\s\S]*?#startScreen\.home-screen-v2\.active\s*\{[^}]*display:\s*flex/s.test(styles));
-assert("inactive Home screen is never forced visible", !/#startScreen\.home-screen-v2(?!\.active)[^{]*\{[^}]*display:/s.test(styles));
+assert("inactive Home screen is never forced visible", !/#startScreen\.home-screen-v2(?!\.active)\s*\{[^}]*display:/s.test(styles));
 assert("hero title can wrap", /\.home-hero-v2 h1\s*\{[^}]*white-space:\s*normal/s.test(homeStyles));
 assert("rigid 540px home column minimum is removed", !homeStyles.includes("minmax(540px"));
 assert("compact width breakpoint exists", styles.includes("max-width: 1279px"));
@@ -38,6 +38,13 @@ assert("short focused layout hides the footer", /max-height:\s*620px[\s\S]*?foot
 assert("very short landscape compacts the header", /max-height:\s*440px[\s\S]*?\.topbar\s*\{[^}]*padding-block:\s*0/s.test(styles));
 assert("very short landscape removes the optional voice toggle", /max-height:\s*440px[\s\S]*?\.home-host-toggle\s*\{\s*display:\s*none/s.test(styles));
 assert("mobile removes the nested category scrollbar", /max-width:\s*759px[\s\S]*?\.home-category-grid\s*\{[^}]*overflow:\s*visible/s.test(styles));
+assert("mobile Home reorders stats before voice and start", /#startScreen \.home-stats-v2\s*\{[^}]*order:\s*4/s.test(styles) && /#startScreen \.home-selection-row\s*\{[^}]*order:\s*5/s.test(styles) && /#startScreen \.home-start-button\s*\{[^}]*order:\s*6/s.test(styles));
+assert("mobile Global Level value inherits the full stat size", /#startScreen #homeGlobalLevel\s*\{[^}]*display:\s*inline;[^}]*font:\s*inherit/s.test(styles));
+assert("mobile hero overrides the legacy block layout and uses the full width", /#startScreen\.home-screen-v2 \.home-hero-v2\s*\{[^}]*width:\s*100%;[^}]*display:\s*flex\s*!important/s.test(styles) && /#startScreen \.home-hero-v2 > h1\s*\{[^}]*max-width:\s*none/s.test(styles));
+assert("mobile hero description is centred under the title", /#startScreen \.home-hero-copy\s*\{[^}]*width:\s*100%;[^}]*text-align:\s*center/s.test(styles));
+assert("mobile category selector reveals a two-column card grid", html.includes('id="mobileCategoryToggle"') && /mobile-category-browser-open \.home-category-grid\s*\{[^}]*display:\s*grid/s.test(styles) && /#startScreen \.home-category-grid\s*\{[^}]*repeat\(2,/s.test(styles));
+assert("mobile category cards stack icon, level and progress vertically", /#startScreen \.home-category-card,[\s\S]*?flex-direction:\s*column/s.test(styles) && styles.includes(".home-category-card-progress-fill"));
+assert("mobile Home reserves clearance for the fixed utility footer", /#startScreen\.home-screen-v2\.active\s*\{[^}]*padding:[^;}]*104px/s.test(styles));
 assert("solo HUD is inside the question card", /<article class="question-card">\s*<div class="game-header">/s.test(html));
 assert("solo answers stack in one column", /#gameScreen \.answer-grid\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/s.test(styles));
 assert("solo actions use two equal columns", /#gameScreen \.game-actions\s*\{[^}]*repeat\(2,/s.test(styles));

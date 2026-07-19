@@ -287,6 +287,10 @@ body.home-redesign-active .header-actions > button:hover {
   text-align: center;
 }
 
+.mobile-category-toggle {
+  display: none;
+}
+
 .home-category-mark {
   width: 52px;
   height: 52px;
@@ -412,6 +416,17 @@ body.home-redesign-active .header-actions > button:hover {
 .home-category-card strong {
   font-size: 1rem;
   line-height: 1.25;
+}
+
+.home-category-card-copy {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.home-category-card-level,
+.home-category-card-progress {
+  display: none;
 }
 
 .home-category-fallback {
