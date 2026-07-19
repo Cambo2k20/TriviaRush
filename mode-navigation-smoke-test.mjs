@@ -12,13 +12,17 @@ const dom = new JSDOM(`<!doctype html><html><body>
       <div class="header-actions">
         <button id="notificationButton" type="button"><span>bell</span><span id="notificationBadge" class="notification-badge">2</span></button>
         <button id="duelButton" class="duel-button" type="button"><span>swords</span><span id="duelButtonText">Play friends</span></button>
-        <button id="leaderboardButton" type="button"><span>trophy</span><span>Leaderboard</span></button>
-        <button id="accountButton" type="button"><span>person</span><span>Account</span></button>
+        <button id="leaderboardButton" type="button"><span>trophy</span><span class="header-action-label">Leaderboard</span></button>
+        <button id="globalProgressionChip" class="global-progression-chip" type="button"><span class="global-progression-chip-level">LV <strong>6</strong></span><span class="global-progression-chip-xp">2,015 XP</span></button>
+        <button id="accountButton" type="button"><span>person</span><span class="header-action-label">Account</span></button>
         <button id="soundToggle" type="button"><span>sound</span></button>
         <button id="hostToggle" type="button"><span>host</span></button>
       </div>
     </header>
-    <section id="startScreen" class="screen active"><select id="categorySelect"></select></section>
+    <section id="startScreen" class="screen active">
+      <select id="categorySelect"></select>
+      <div class="home-stat-v2"><strong>LV <span id="homeGlobalLevel">6</span></strong></div>
+    </section>
     <section id="countdownScreen" class="screen"></section>
     <section id="gameScreen" class="screen"></section>
     <section id="resultsScreen" class="screen"><button id="homeButton">Home</button></section>
@@ -61,6 +65,9 @@ window.eval(runtime);
 document.dispatchEvent(new window.Event("DOMContentLoaded"));
 await flush();
 
+const topbar = document.querySelector(".topbar");
+const modeNavigationBar = document.querySelector("#modeNavigationBar");
+const modeNavigationLabel = document.querySelector("#modeNavigationLabel");
 const modeNavigation = document.querySelector("#modeNavigation");
 const soloButton = document.querySelector("#soloModeButton");
 const onlineButton = document.querySelector("#duelButton");
@@ -83,6 +90,9 @@ show("gameScreen");
 await flush();
 const gameLockedModeSwitch = soloButton.disabled === true;
 
+const mobileUtilities = [...document.querySelectorAll(".header-actions > .mobile-utility-button")];
+const mobileUtilityIds = mobileUtilities.map((button) => button.id);
+const mobileUtilityLabels = mobileUtilities.map((button) => button.dataset.mobileLabel);
 const unifiedCssIndex = index.search(/unified-shell\.css\?v=\d+/);
 const modeCssIndex = index.search(/mode-navigation\.css\?v=\d+/);
 const unifiedJsIndex = index.search(/unified-shell\.js\?v=\d+/);
@@ -90,6 +100,9 @@ const modeJsIndex = index.search(/mode-navigation\.js\?v=\d+/);
 
 const checks = [
   ["one shared mode navigation is added", Boolean(modeNavigation) && document.querySelectorAll("#modeNavigation").length === 1],
+  ["Select Mode row is placed inside the header between brand utilities and page content", modeNavigationBar?.parentElement === topbar && topbar?.lastElementChild === modeNavigationBar],
+  ["Select Mode is white-labelled and owns the navigation accessible name", modeNavigationLabel?.textContent === "Select Mode" && modeNavigation?.getAttribute("aria-labelledby") === "modeNavigationLabel"],
+  ["mode controls sit to the right of Select Mode", modeNavigationBar?.firstElementChild === modeNavigationLabel && modeNavigationLabel?.nextElementSibling === modeNavigation],
   ["the existing Online button is reused rather than duplicated", modeNavigation?.contains(onlineButton) && document.querySelectorAll("#duelButton").length === 1],
   ["Solo is selected on startup", soloSelectedAtStartup],
   ["the existing Play friends control is relabelled Online", document.querySelector("#duelButtonText")?.textContent === "Online"],
@@ -99,9 +112,15 @@ const checks = [
   ["Solo and Online category selectors remain separate", document.querySelector("#categorySelect") !== document.querySelector("#duelCategorySelect")],
   ["leaderboard does not replace the selected game mode", leaderboardPreservedMode],
   ["mode switching is locked while a game is active", gameLockedModeSwitch],
-  ["mobile utility controls use the existing buttons", ["notificationButton", "leaderboardButton", "accountButton", "soundToggle"].every((id) => document.querySelector(`#${id}`)?.classList.contains("mobile-utility-button"))],
-  ["desktop navigation includes a selected mode treatment", styles.includes(".mode-nav-button.is-selected") && styles.includes("#duelButton.is-selected")],
-  ["mobile header keeps the enlarged brand on one line above game modes", styles.includes(".topbar > .brand") && styles.includes("display: inline-flex !important") && styles.includes("white-space: nowrap") && styles.includes("font-size: 1.4rem") && styles.includes("flex: 0 0 48px")],
+  ["desktop notification and sound utilities receive visible labels", document.querySelector("#notificationButton .header-action-generated-label")?.textContent === "Notifications" && document.querySelector("#soundToggle .header-action-generated-label")?.textContent === "Sound"],
+  ["existing desktop utility labels are not duplicated", document.querySelectorAll("#leaderboardButton .header-action-label").length === 1 && document.querySelectorAll("#accountButton .header-action-label").length === 1],
+  ["mobile footer order is Notifications Rankings Account Sound", JSON.stringify(mobileUtilityIds) === JSON.stringify(["notificationButton", "leaderboardButton", "accountButton", "soundToggle"]) && JSON.stringify(mobileUtilityLabels) === JSON.stringify(["Notifications", "Rankings", "Account", "Sound"])],
+  ["header height and row positioning use a two-row desktop grid", /min-height:\s*148px/.test(styles) && /grid-template-areas:[\s\S]*?"brand utilities"[\s\S]*?"mode mode"/.test(styles)],
+  ["larger desktop mode controls use 54px height and 1rem labels", /\.mode-nav-button,[\s\S]*?min-height:\s*54px;[\s\S]*?font-size:\s*1rem;/.test(styles)],
+  ["mobile Select Mode and controls remain on one row", /max-width:\s*700px[\s\S]*?\.mode-navigation-bar\s*\{[\s\S]*?grid-template-columns:\s*auto minmax\(0, 1fr\)/.test(styles)],
+  ["mobile mode controls remain enlarged", /max-width:\s*700px[\s\S]*?height:\s*50px\s*!important;[\s\S]*?font-size:\s*0\.94rem\s*!important;/.test(styles)],
+  ["global level value inherits the full statistic font", /#startScreen #homeGlobalLevel\s*\{[^}]*font:\s*inherit;[^}]*line-height:\s*inherit/s.test(styles)],
+  ["desktop utilities share a 46px control height and consistent gap", /\.header-actions[\s\S]*?gap:\s*8px;/.test(styles) && /header-actions > button:not\(\[hidden\]\)[\s\S]*?height:\s*46px;/.test(styles)],
   ["mobile utilities form a fixed safe-area footer", styles.includes("position: fixed !important") && styles.includes("env(safe-area-inset-bottom)") && styles.includes("data-mobile-label")],
   ["legacy Home quick actions are removed from the menu hierarchy", styles.includes("#startScreen > .home-quick-actions") && styles.includes("display: none !important")],
   ["production loads shared navigation assets after the unified shell", unifiedCssIndex >= 0 && modeCssIndex >= 0 && unifiedJsIndex >= 0 && modeJsIndex >= 0 && unifiedCssIndex < modeCssIndex && unifiedJsIndex < modeJsIndex]

@@ -153,10 +153,21 @@
     if (label) label.textContent = "Online";
   }
 
-  function configureUtility(button, label) {
+  function ensureDesktopLabel(button, label) {
+    if (!button || button.querySelector(".header-action-label")) return;
+
+    const labelElement = document.createElement("span");
+    labelElement.className = "header-action-label header-action-generated-label";
+    labelElement.textContent = label;
+    button.appendChild(labelElement);
+  }
+
+  function configureUtility(button, mobileLabel, desktopLabel = mobileLabel) {
     if (!button) return;
     button.classList.add("mobile-utility-button");
-    button.dataset.mobileLabel = label;
+    button.dataset.mobileLabel = mobileLabel;
+    button.dataset.desktopLabel = desktopLabel;
+    ensureDesktopLabel(button, desktopLabel);
   }
 
   function placeUtilityDock() {
@@ -171,13 +182,36 @@
     }
   }
 
+  function createModeNavigationBar(navigation) {
+    const bar = document.createElement("div");
+    const label = document.createElement("span");
+
+    bar.id = "modeNavigationBar";
+    bar.className = "mode-navigation-bar";
+    label.id = "modeNavigationLabel";
+    label.className = "mode-navigation-label";
+    label.textContent = "Select Mode";
+
+    navigation.setAttribute("aria-labelledby", label.id);
+    navigation.removeAttribute("aria-label");
+    bar.append(label, navigation);
+    return bar;
+  }
+
   function initialise() {
     const topbar = document.querySelector(".topbar");
     const brand = topbar?.querySelector(".brand");
     const headerActions = topbar?.querySelector(".header-actions");
     const onlineButton = document.querySelector("#duelButton");
 
-    if (!topbar || !brand || !headerActions || !onlineButton || document.querySelector("#modeNavigation")) {
+    if (
+      !topbar ||
+      !brand ||
+      !headerActions ||
+      !onlineButton ||
+      document.querySelector("#modeNavigation") ||
+      document.querySelector("#modeNavigationBar")
+    ) {
       return;
     }
 
@@ -196,12 +230,11 @@
     const navigation = document.createElement("nav");
     navigation.id = "modeNavigation";
     navigation.className = "mode-navigation";
-    navigation.setAttribute("aria-label", "Game modes");
     navigation.append(state.soloButton, onlineButton);
-    topbar.insertBefore(navigation, headerActions);
+    topbar.appendChild(createModeNavigationBar(navigation));
 
-    configureUtility(document.querySelector("#notificationButton"), "Alerts");
-    configureUtility(document.querySelector("#leaderboardButton"), "Rankings");
+    configureUtility(document.querySelector("#notificationButton"), "Notifications");
+    configureUtility(document.querySelector("#leaderboardButton"), "Rankings", "Leaderboard");
     configureUtility(document.querySelector("#accountButton"), "Account");
     configureUtility(document.querySelector("#soundToggle"), "Sound");
     state.mobileQuery.addEventListener?.("change", placeUtilityDock);
