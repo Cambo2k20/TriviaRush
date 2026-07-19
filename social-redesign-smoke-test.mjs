@@ -210,6 +210,9 @@ const tabs = [...window.document.querySelectorAll('[role="tab"]')];
 assert("three accessible social tabs are created", tabs.length === 3 && tabs.every((tab) => tab.hasAttribute("aria-controls")));
 assert("Play is the default selected tab", window.document.querySelector('[data-social-tab="play"]')?.getAttribute("aria-selected") === "true");
 assert("Play view owns the existing join controls", Boolean(window.document.querySelector('#socialPanel-play #duelRoomCode')) && Boolean(window.document.querySelector('#socialPanel-play #joinDuelButton')));
+assert("Active challenges appear before the Host and Join cards", window.document.querySelector('#socialPanel-play')?.firstElementChild?.classList.contains("social-active-section") === true);
+assert("Host and Join share the Online cyan action theme", window.document.querySelector(".social-host-action .social-action-icon-teal") !== null && window.document.querySelector("#openDuelConfigButton")?.classList.contains("social-outline-action") === true);
+assert("Play with friends heading is centred at every width", styles.includes(".social-tabs-redesign .social-page-heading") && styles.includes("justify-self: center") && styles.includes("text-align: center"));
 
 window.document.querySelector("#openDuelConfigButton").click();
 assert("Create room opens the existing duel configuration in a dialog", window.document.querySelector("#duelConfigDialog")?.open === true && Boolean(window.document.querySelector("#duelConfigDialog #createDuelButton")));
@@ -222,6 +225,28 @@ const playChallenge = [...window.document.querySelectorAll("#activeChallengesLis
   .find((button) => button.textContent.trim() === "Play");
 playChallenge?.click();
 assert("Active challenge Play proxies the existing turn action", playClicks === 1);
+
+const emptyReceivedAt = Date.now() + 10_000;
+window.triviaRushSocialRpcCache.set("get_duel_invitations:empty-test", {
+  functionName: "get_duel_invitations",
+  parameters: {},
+  data: [],
+  receivedAt: emptyReceivedAt
+});
+window.triviaRushSocialRpcCache.set("get_turn_challenges:empty-test", {
+  functionName: "get_turn_challenges",
+  parameters: {},
+  data: { active: [], recent_closed: [] },
+  receivedAt: emptyReceivedAt
+});
+window.dispatchEvent(new window.CustomEvent("trivia-rush:social-rpc"));
+await new Promise((resolve) => window.setTimeout(resolve, 20));
+assert("Empty challenges use the intentional call-to-action panel", window.document.querySelector("#activeChallengesList.is-empty .social-empty-challenge-action")?.textContent === "Challenge a friend");
+window.document.querySelector(".social-empty-challenge-action")?.click();
+await new Promise((resolve) => window.setTimeout(resolve, 0));
+assert("Challenge a friend opens the Friends tab and focuses the account field", window.document.querySelector('[data-social-tab="friends"]')?.getAttribute("aria-selected") === "true" && window.document.activeElement === window.document.querySelector("#friendAccountNumber"));
+window.triviaRushSocialRpcCache.delete("get_duel_invitations:empty-test");
+window.triviaRushSocialRpcCache.delete("get_turn_challenges:empty-test");
 
 const playTab = window.document.querySelector('[data-social-tab="play"]');
 playTab.dispatchEvent(new window.KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true }));

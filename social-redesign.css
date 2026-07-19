@@ -35,17 +35,25 @@ body.social-redesign-ready .social-screen::before {
 
 .social-tabs-redesign .social-header {
   position: relative;
-  margin: 0 auto clamp(18px, 2.5dvh, 28px);
+  width: min(1160px, 100%);
+  margin: 0 auto clamp(14px, 2dvh, 22px);
   display: grid;
+  grid-template-columns: 1fr;
   place-items: center;
+  text-align: center;
+}
+
+.social-tabs-redesign .social-page-heading {
+  width: min(760px, calc(100% - 190px));
+  justify-self: center;
   text-align: center;
 }
 
 .social-page-heading h1 {
   margin: 0;
   font-family: "Baloo 2", sans-serif;
-  font-size: clamp(3rem, 5vw, 4.8rem);
-  line-height: 0.95;
+  font-size: clamp(2.8rem, 4.2vw, 4rem);
+  line-height: 1;
   letter-spacing: -0.035em;
   text-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
 }
@@ -70,46 +78,34 @@ body.social-redesign-ready .social-screen::before {
 
 .social-tabs {
   width: min(520px, 100%);
-  margin: 0 auto clamp(30px, 4dvh, 46px);
+  margin: 0 auto clamp(24px, 3dvh, 34px);
+  padding: 5px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+  gap: 5px;
+  border: 1px solid rgba(143, 99, 255, 0.38);
+  border-radius: 12px;
+  background: rgba(7, 14, 42, 0.5);
 }
 
 .social-tab {
-  position: relative;
-  min-height: 54px;
+  min-height: 44px;
   padding: 0 18px;
-  border: 0;
+  border: 1px solid transparent;
+  border-radius: 8px;
   color: #c5c9dc;
   cursor: pointer;
   font-size: 1.05rem;
   font-weight: 600;
   background: transparent;
-}
-
-.social-tab::after {
-  content: "";
-  position: absolute;
-  left: 12%;
-  right: 12%;
-  bottom: -1px;
-  height: 3px;
-  border-radius: 999px 999px 0 0;
-  opacity: 0;
-  transform: scaleX(0.5);
-  background: var(--social-teal);
-  transition: opacity 150ms ease, transform 150ms ease;
+  transition: border-color 150ms ease, color 150ms ease, background 150ms ease;
 }
 
 .social-tab:hover,
 .social-tab.active {
   color: var(--social-teal);
-}
-
-.social-tab.active::after {
-  opacity: 1;
-  transform: scaleX(1);
+  border-color: rgba(37, 231, 209, 0.62);
+  background: rgba(37, 231, 209, 0.1);
 }
 
 .social-tab:focus-visible {
@@ -143,23 +139,34 @@ body.social-redesign-ready .social-screen::before {
 }
 
 .social-play-actions {
-  width: min(920px, 100%);
-  margin: 0 auto clamp(38px, 5dvh, 58px);
+  width: min(1160px, 100%);
+  margin: clamp(28px, 3.5dvh, 40px) auto 0;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 2.5vw, 30px);
 }
 
 .social-play-action {
-  min-height: 218px;
-  padding: 16px clamp(34px, 5vw, 74px) 0;
+  min-height: 270px;
+  padding: clamp(24px, 3vw, 34px);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  border: 1px solid rgba(143, 99, 255, 0.42);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 50% 0, rgba(143, 99, 255, 0.09), transparent 15rem),
+    var(--social-panel);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.04), 0 18px 48px rgba(0, 0, 0, 0.12);
 }
 
-.social-play-action + .social-play-action {
-  border-left: 1px solid var(--social-line);
+.social-host-action {
+  border-color: rgba(37, 231, 209, 0.42);
+}
+
+.social-join-action {
+  border-color: rgba(37, 231, 209, 0.42);
 }
 
 .social-action-icon {
@@ -196,7 +203,8 @@ body.social-redesign-ready .social-screen::before {
 }
 
 .social-play-action p {
-  margin: 12px 0 22px;
+  min-height: 48px;
+  margin: 12px 0 20px;
   color: #c0c6da;
   line-height: 1.5;
 }
@@ -255,11 +263,79 @@ body.social-redesign-ready .social-screen::before {
   cursor: wait;
 }
 
+.social-host-action .social-primary-action {
+  margin-top: auto;
+}
+
 .social-active-section,
 .social-friends-layout,
 .social-tab-panel[data-social-panel="history"] {
   width: min(1160px, 100%);
   margin: 0 auto;
+}
+
+.social-active-section .social-section-heading {
+  margin-bottom: 8px;
+}
+
+.social-active-section .social-compact-list.is-empty {
+  min-height: 178px;
+  place-items: center;
+  border: 1px dashed rgba(37, 231, 209, 0.68);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(37, 231, 209, 0.07), transparent 28rem),
+    linear-gradient(110deg, rgba(10, 25, 58, 0.64), rgba(34, 16, 78, 0.62));
+}
+
+.social-active-empty {
+  padding: 24px;
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.social-active-empty-icon {
+  color: var(--social-teal);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.social-active-empty h3 {
+  margin: 8px 0 2px;
+  color: var(--social-teal);
+  font-family: "Baloo 2", sans-serif;
+  font-size: 1.2rem;
+  line-height: 1.1;
+}
+
+.social-active-empty p {
+  margin: 0;
+  color: rgba(37, 231, 209, 0.72);
+  line-height: 1.45;
+}
+
+.social-empty-challenge-action {
+  min-height: 42px;
+  margin-top: 14px;
+  padding: 0 20px;
+  border: 1px solid var(--social-teal);
+  border-radius: 9px;
+  color: var(--social-teal);
+  cursor: pointer;
+  font-weight: 800;
+  background: rgba(37, 231, 209, 0.035);
+  transition: color 150ms ease, background 150ms ease, transform 150ms ease;
+}
+
+.social-empty-challenge-action:hover {
+  color: #041819;
+  transform: translateY(-1px);
+  background: var(--social-teal);
+}
+
+.social-empty-challenge-action:focus-visible {
+  outline: 3px solid rgba(37, 231, 209, 0.35);
+  outline-offset: 3px;
 }
 
 .social-section-heading {
@@ -841,29 +917,28 @@ body.social-redesign-ready .social-screen::before {
   }
 
   .social-tabs-redesign .social-header {
-    padding-top: 44px;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    text-align: center;
+  }
+
+  .social-tabs-redesign .social-page-heading {
+    grid-row: 2;
   }
 
   .social-back-button {
-    top: 0;
-    left: 0;
-    right: auto;
+    grid-row: 1;
+    justify-self: start;
   }
 
   .social-play-actions {
     grid-template-columns: 1fr;
-    gap: 26px;
+    gap: 18px;
   }
 
   .social-play-action {
     min-height: 0;
-    padding: 0;
-  }
-
-  .social-play-action + .social-play-action {
-    padding-top: 26px;
-    border-top: 1px solid var(--social-line);
-    border-left: 0;
+    padding: 24px;
   }
 
   .social-play-action p {
@@ -1035,8 +1110,9 @@ body.social-redesign-ready .social-screen::before {
 
 @media (prefers-reduced-motion: reduce) {
   .social-tab-panel,
-  .social-tab::after,
+  .social-tab,
   .social-outline-action,
+  .social-empty-challenge-action,
   .social-row-button {
     animation: none;
     transition: none;

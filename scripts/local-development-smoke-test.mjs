@@ -24,10 +24,11 @@ const localSource = createRuntimeConfigSource(parsed);
 assert(localSource.includes('"environment":"local"'), "Injected config is not marked local");
 assert(!localSource.includes("kgdnuzasbeavpqharbpf"), "Local config leaked the production project ref");
 
-const [index, app, runtimeConfig, gitignore, packageJson] = await Promise.all([
+const [index, app, runtimeConfig, localSupabaseConfig, gitignore, packageJson] = await Promise.all([
   readFile(path.join(ROOT, "index.html"), "utf8"),
   readFile(path.join(ROOT, "app.js"), "utf8"),
   readFile(path.join(ROOT, "runtime-config.js"), "utf8"),
+  readFile(path.join(ROOT, "supabase", "config.toml"), "utf8"),
   readFile(path.join(ROOT, ".gitignore"), "utf8"),
   readFile(path.join(ROOT, "package.json"), "utf8").then(JSON.parse)
 ]);
@@ -37,6 +38,10 @@ assert(index.indexOf("runtime-config.js") < index.indexOf("app.js"), "Runtime co
 assert(app.includes("window.TRIVIA_RUSH_CONFIG"), "App does not consume runtime config");
 assert(!app.includes("https://kgdnuzasbeavpqharbpf.supabase.co"), "App still hardcodes production Supabase");
 assert(runtimeConfig.includes("kgdnuzasbeavpqharbpf.supabase.co"), "Production runtime config is incomplete");
+assert(
+  /\[auth\][\s\S]*enable_anonymous_sign_ins\s*=\s*true/.test(localSupabaseConfig),
+  "Local Supabase must allow the temporary player accounts used by Trivia Rush"
+);
 const localDom = new JSDOM("", { url: "http://127.0.0.1:9000", runScripts: "outside-only" });
 localDom.window.eval(runtimeConfig);
 assert(
