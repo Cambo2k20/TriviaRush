@@ -3,6 +3,23 @@
 
   const QUESTION_DELAY_MS = 850;
   const TIMER_CIRCUMFERENCE = 2 * Math.PI * 52;
+  const CATEGORY_EMOJI = Object.freeze({
+    brain: "🧠",
+    flask: "🧪",
+    landmark: "🏛️",
+    globe: "🌍",
+    trophy: "🏆",
+    film: "🎬",
+    palette_book: "🎨",
+    cpu: "💻",
+    gamepad: "🎮",
+    utensils: "🍽️",
+    paw: "🐾",
+    dragon: "🐉",
+    thunderbolt: "⚡",
+    wand: "🪄",
+    shield: "🛡️"
+  });
   function isDiscordActivity() {
     return window.location.hostname.endsWith(".discordsays.com");
   }
@@ -238,6 +255,7 @@
     streakValue: document.querySelector("#streakValue"),
     timerValue: document.querySelector("#timerValue"),
     timerProgress: document.querySelector("#timerProgress"),
+    categoryIcon: document.querySelector("#categoryIcon"),
     categoryBadge: document.querySelector("#categoryBadge"),
     questionNumber: document.querySelector("#questionNumber"),
     questionText: document.querySelector("#questionText"),
@@ -262,12 +280,22 @@
     leaderboardPeriodButtons: [
       ...document.querySelectorAll("[data-leaderboard-period]")
     ],
-    leaderboardCategoryFilters: document.querySelector(
-      "#leaderboardCategoryFilters"
+    leaderboardCategorySelect: document.querySelector(
+      "#leaderboardCategorySelect"
+    ),
+    leaderboardCategoryButton: document.querySelector(
+      "#leaderboardCategoryButton"
+    ),
+    leaderboardCategoryButtonText: document.querySelector(
+      "#leaderboardCategoryButtonText"
+    ),
+    leaderboardCategoryMenu: document.querySelector(
+      "#leaderboardCategoryMenu"
     ),
     retrySaveButton: document.querySelector("#retrySaveButton"),
     leaderboardFilterSummary: document.querySelector("#leaderboardFilterSummary"),
     currentPlayerRank: document.querySelector("#currentPlayerRank"),
+    leaderboardPodium: document.querySelector("#leaderboardPodium"),
     leaderboardStatus: document.querySelector("#leaderboardStatus"),
     leaderboardList: document.querySelector("#leaderboardList"),
     leaderboardRetryButton: document.querySelector("#leaderboardRetryButton"),
@@ -1684,7 +1712,7 @@
   // by the game selector. This keeps question delivery, stored sessions and
   // leaderboard filters on one taxonomy.
   function buildLeaderboardCategoryFilters() {
-    if (!elements.leaderboardCategoryFilters) {
+    if (!elements.leaderboardCategorySelect) {
       return;
     }
 
@@ -1706,46 +1734,164 @@
       state.leaderboardCategory = "overall";
     }
 
-    elements.leaderboardCategoryFilters
+    elements.leaderboardCategorySelect
       .replaceChildren();
+    elements.leaderboardCategoryMenu
+      ?.replaceChildren();
 
     categories.forEach((category) => {
-      const button =
-        document.createElement("button");
+      const option =
+        document.createElement("option");
 
-      button.type = "button";
-      button.className = "leaderboard-filter";
-      button.dataset.leaderboardCategory =
-        category.id;
-      button.setAttribute(
-        "aria-pressed",
-        "false"
-      );
-      button.textContent = category.label;
+      option.value = category.id;
+      option.textContent = category.label;
 
-      button.addEventListener(
-        "click",
-        () => {
-          setLeaderboardCategory(
-            category.id
-          );
-        }
-      );
+      elements.leaderboardCategorySelect
+        .appendChild(option);
 
-      elements.leaderboardCategoryFilters
-        .appendChild(button);
+      if (elements.leaderboardCategoryMenu) {
+        const menuOption =
+          document.createElement("button");
+        const optionLabel =
+          document.createElement("span");
+        const optionCheck =
+          document.createElement("span");
+
+        menuOption.type = "button";
+        menuOption.className =
+          "leaderboard-category-option";
+        menuOption.dataset.leaderboardCategory =
+          category.id;
+        menuOption.setAttribute("role", "option");
+
+        optionLabel.textContent = category.label;
+        optionCheck.className =
+          "leaderboard-category-option-check";
+        optionCheck.textContent = "✓";
+        optionCheck.setAttribute("aria-hidden", "true");
+
+        menuOption.append(optionLabel, optionCheck);
+        elements.leaderboardCategoryMenu
+          .appendChild(menuOption);
+      }
     });
+
+    elements.leaderboardCategorySelect.value =
+      state.leaderboardCategory;
+    updateLeaderboardCategoryControl();
   }
 
-  function getLeaderboardCategoryButtons() {
+
+  function getLeaderboardCategoryOptions() {
     return [
-      ...(
-        elements.leaderboardCategoryFilters
-          ?.querySelectorAll(
-            "[data-leaderboard-category]"
-          ) ?? []
-      )
+      ...elements.leaderboardCategoryMenu
+        ?.querySelectorAll(
+          "[data-leaderboard-category]"
+        ) || []
     ];
+  }
+
+
+  function updateLeaderboardCategoryControl() {
+    const selectedCategory =
+      state.leaderboardCategories.find(
+        (category) =>
+          category.id ===
+          state.leaderboardCategory
+      );
+
+    if (elements.leaderboardCategoryButtonText) {
+      elements.leaderboardCategoryButtonText.textContent =
+        selectedCategory?.label || "Overall";
+    }
+
+    getLeaderboardCategoryOptions()
+      .forEach((option) => {
+        const selected =
+          option.dataset.leaderboardCategory ===
+          state.leaderboardCategory;
+
+        option.classList.toggle("selected", selected);
+        option.setAttribute(
+          "aria-selected",
+          String(selected)
+        );
+      });
+  }
+
+
+  function closeLeaderboardCategoryMenu(
+    restoreFocus = false
+  ) {
+    if (
+      !elements.leaderboardCategoryButton ||
+      !elements.leaderboardCategoryMenu
+    ) {
+      return;
+    }
+
+    elements.leaderboardCategoryMenu.hidden = true;
+    elements.leaderboardCategoryButton.classList
+      .remove("open");
+    elements.leaderboardCategoryButton.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+    if (restoreFocus) {
+      elements.leaderboardCategoryButton.focus();
+    }
+  }
+
+
+  function openLeaderboardCategoryMenu(
+    focusTarget = "selected"
+  ) {
+    if (
+      !elements.leaderboardCategoryButton ||
+      !elements.leaderboardCategoryMenu
+    ) {
+      return;
+    }
+
+    elements.leaderboardCategoryMenu.hidden = false;
+    elements.leaderboardCategoryButton.classList
+      .add("open");
+    elements.leaderboardCategoryButton.setAttribute(
+      "aria-expanded",
+      "true"
+    );
+
+    const options = getLeaderboardCategoryOptions();
+    const selectedIndex = Math.max(
+      0,
+      options.findIndex(
+        (option) =>
+          option.dataset.leaderboardCategory ===
+          state.leaderboardCategory
+      )
+    );
+    const targetIndex =
+      focusTarget === "first"
+        ? 0
+        : focusTarget === "last"
+          ? options.length - 1
+          : selectedIndex;
+
+    options[targetIndex]?.focus();
+  }
+
+
+  function selectLeaderboardCategoryFromMenu(
+    category
+  ) {
+    if (elements.leaderboardCategorySelect) {
+      elements.leaderboardCategorySelect.value = category;
+    }
+
+    closeLeaderboardCategoryMenu(true);
+    setLeaderboardCategory(category);
+    updateLeaderboardCategoryControl();
   }
   function bindEvents() {
     elements.notificationButton?.addEventListener("click", openNotifications);
@@ -1839,6 +1985,156 @@
           }
         );
       });
+
+    elements.leaderboardCategorySelect
+      ?.addEventListener(
+        "change",
+        () => {
+          setLeaderboardCategory(
+            elements.leaderboardCategorySelect.value
+          );
+        }
+      );
+
+    elements.leaderboardCategoryButton
+      ?.addEventListener(
+        "click",
+        () => {
+          if (elements.leaderboardCategoryMenu?.hidden) {
+            openLeaderboardCategoryMenu();
+          } else {
+            closeLeaderboardCategoryMenu();
+          }
+        }
+      );
+
+    elements.leaderboardCategoryButton
+      ?.addEventListener(
+        "keydown",
+        (event) => {
+          if (
+            ![
+              "ArrowDown",
+              "ArrowUp",
+              "Home",
+              "End"
+            ].includes(event.key)
+          ) {
+            return;
+          }
+
+          event.preventDefault();
+          openLeaderboardCategoryMenu(
+            event.key === "Home"
+              ? "first"
+              : event.key === "End"
+                ? "last"
+                : "selected"
+          );
+        }
+      );
+
+    elements.leaderboardCategoryMenu
+      ?.addEventListener(
+        "click",
+        (event) => {
+          const option = event.target.closest(
+            "[data-leaderboard-category]"
+          );
+
+          if (!option) {
+            return;
+          }
+
+          selectLeaderboardCategoryFromMenu(
+            option.dataset.leaderboardCategory
+          );
+        }
+      );
+
+    elements.leaderboardCategoryMenu
+      ?.addEventListener(
+        "keydown",
+        (event) => {
+          const options =
+            getLeaderboardCategoryOptions();
+          const currentIndex =
+            options.indexOf(document.activeElement);
+
+          if (event.key === "Escape") {
+            event.preventDefault();
+            closeLeaderboardCategoryMenu(true);
+            return;
+          }
+
+          if (event.key === "Tab") {
+            closeLeaderboardCategoryMenu();
+            return;
+          }
+
+          if (
+            event.key === "Enter" ||
+            event.key === " "
+          ) {
+            const selectedOption =
+              options[currentIndex];
+
+            if (selectedOption) {
+              event.preventDefault();
+              selectLeaderboardCategoryFromMenu(
+                selectedOption.dataset
+                  .leaderboardCategory
+              );
+            }
+            return;
+          }
+
+          if (
+            ![
+              "ArrowDown",
+              "ArrowUp",
+              "Home",
+              "End"
+            ].includes(event.key) ||
+            options.length === 0
+          ) {
+            return;
+          }
+
+          event.preventDefault();
+          let nextIndex = currentIndex;
+
+          if (event.key === "Home") {
+            nextIndex = 0;
+          } else if (event.key === "End") {
+            nextIndex = options.length - 1;
+          } else if (event.key === "ArrowDown") {
+            nextIndex =
+              (Math.max(currentIndex, -1) + 1) %
+              options.length;
+          } else {
+            nextIndex =
+              (currentIndex - 1 + options.length) %
+              options.length;
+          }
+
+          options[nextIndex]?.focus();
+        }
+      );
+
+    document.addEventListener(
+      "click",
+      (event) => {
+        if (
+          !elements.leaderboardCategoryMenu?.hidden &&
+          !event.target.closest(
+            ".leaderboard-category-select-wrap"
+          )
+        ) {
+          closeLeaderboardCategoryMenu();
+        }
+      }
+    );
 
     elements.retrySaveButton
       ?.addEventListener(
@@ -2129,7 +2425,7 @@
     } else if (seconds <= 20) {
       elements.timerProgress.style.stroke = "var(--yellow)";
     } else {
-      elements.timerProgress.style.stroke = "var(--cyan)";
+      elements.timerProgress.style.stroke = "var(--green)";
     }
 
     if (state.remainingMs <= 0) {
@@ -2203,7 +2499,11 @@
 
   function renderQuestion() {
     const question = state.currentQuestion;
+    const category = state.categories.find((item) => item.id === question.categoryId);
     elements.categoryBadge.textContent = question.categoryLabel;
+    if (elements.categoryIcon) {
+      elements.categoryIcon.textContent = CATEGORY_EMOJI[category?.iconKey] || CATEGORY_EMOJI.brain;
+    }
     elements.questionNumber.textContent = String(state.questionIndex);
     elements.questionText.textContent = question.question;
     elements.answerGrid.innerHTML = "";
@@ -2213,7 +2513,7 @@
       button.className = "answer-button";
       button.type = "button";
       button.dataset.index = String(index);
-      button.innerHTML = `<span class="answer-key">${index + 1}</span><span>${escapeHtml(answer)}</span>`;
+      button.innerHTML = `<span class="answer-key">${String.fromCharCode(65 + index)}</span><span>${escapeHtml(answer)}</span>`;
       button.addEventListener("click", () => selectAnswer(index));
       elements.answerGrid.appendChild(button);
     });
@@ -2812,6 +3112,8 @@
 
 
   function closeLeaderboard() {
+    closeLeaderboardCategoryMenu();
+
     const returnScreen =
       state.leaderboardReturnScreen &&
       document.body.contains(
@@ -2903,23 +3205,12 @@
         );
       });
 
-    getLeaderboardCategoryButtons()
-      .forEach((button) => {
-        const active =
-          button.dataset
-            .leaderboardCategory ===
-          state.leaderboardCategory;
+    if (elements.leaderboardCategorySelect) {
+      elements.leaderboardCategorySelect.value =
+        state.leaderboardCategory;
+    }
 
-        button.classList.toggle(
-          "active",
-          active
-        );
-
-        button.setAttribute(
-          "aria-pressed",
-          String(active)
-        );
-      });
+    updateLeaderboardCategoryControl();
 
     if (
       elements.leaderboardFilterSummary
@@ -2964,6 +3255,8 @@
     elements.leaderboardList
       .replaceChildren();
 
+    renderLeaderboardPodium([]);
+
     elements.leaderboardStatus
       .textContent =
         "Loading leaderboard…";
@@ -2992,6 +3285,8 @@
     elements.leaderboardList
       .replaceChildren();
 
+    renderLeaderboardPodium([]);
+
     elements.leaderboardStatus
       .textContent = message;
 
@@ -3018,6 +3313,8 @@
       .replaceChildren();
 
     if (rows.length === 0) {
+      renderLeaderboardPodium([]);
+
       elements.leaderboardStatus
         .textContent =
           "No scores have been recorded for these filters yet.";
@@ -3032,6 +3329,8 @@
     const fragment =
       document.createDocumentFragment();
 
+    renderLeaderboardPodium(rows);
+
     rows.forEach((row) => {
       fragment.appendChild(
         createLeaderboardRow(row)
@@ -3043,11 +3342,11 @@
 
     elements.leaderboardStatus
       .textContent =
-        `Showing the top ${
+        `${
           rows.length
-        } player${
+        } ranked player${
           rows.length === 1 ? "" : "s"
-        }.`;
+        }`;
 
     elements.leaderboardStatus
       .className =
@@ -3062,26 +3361,97 @@
   }
 
 
+  function renderLeaderboardPodium(rows) {
+    if (!elements.leaderboardPodium) {
+      return;
+    }
+
+    const podiumRows = rows
+      .filter((row) => Number(row.leaderboard_rank) <= 3)
+      .slice(0, 3);
+
+    elements.leaderboardPodium
+      .replaceChildren();
+
+    if (podiumRows.length === 0) {
+      elements.leaderboardPodium.hidden = true;
+      return;
+    }
+
+    const medals = {
+      1: { icon: "🥇", label: "Gold" },
+      2: { icon: "🥈", label: "Silver" },
+      3: { icon: "🥉", label: "Bronze" }
+    };
+
+    const fragment =
+      document.createDocumentFragment();
+
+    podiumRows.forEach((row) => {
+      const rank = Number(row.leaderboard_rank);
+      const medal = medals[rank] || medals[3];
+      const isCurrentPlayer =
+        isLeaderboardCurrentPlayer(row);
+      const card = document.createElement("article");
+      const playerName = escapeHtml(
+        row.display_name || "Unknown player"
+      );
+      const identifier = escapeHtml(
+        formatAccountIdentifier(row.account_number)
+      );
+      const gamesPlayed =
+        formatLeaderboardInteger(row.games_played);
+
+      card.className = `leaderboard-podium-card podium-rank-${rank}${isCurrentPlayer ? " current-player" : ""}`;
+      card.setAttribute(
+        "aria-label",
+        `${medal.label} position, ${row.display_name || "Unknown player"}`
+      );
+      card.innerHTML = `
+        <span class="leaderboard-podium-medal" aria-hidden="true">${medal.icon}</span>
+        <div class="leaderboard-podium-player">
+          <span>#${formatLeaderboardInteger(row.leaderboard_rank)}</span>
+          <div class="leaderboard-player-line">
+            <strong>${playerName}</strong>
+            ${isCurrentPlayer ? '<span class="leaderboard-you-badge">YOU</span>' : ""}
+          </div>
+          <small>${identifier} · ${gamesPlayed} game${Number(row.games_played) === 1 ? "" : "s"}</small>
+        </div>
+        <div class="leaderboard-podium-score">
+          <span>High score</span>
+          <strong>${formatLeaderboardInteger(row.high_score)}</strong>
+        </div>
+      `;
+
+      fragment.appendChild(card);
+    });
+
+    elements.leaderboardPodium.appendChild(fragment);
+    elements.leaderboardPodium.hidden = false;
+  }
+
+
+  function isLeaderboardCurrentPlayer(row) {
+    return (
+      row.is_current_player === true ||
+      Number(row.account_number) ===
+        Number(state.profile?.account_number)
+    );
+  }
+
+
   function createLeaderboardRow(row) {
     const article =
       document.createElement("article");
 
     const isCurrentPlayer =
-      row.is_current_player === true ||
-      (
-        Number(
-          row.account_number
-        ) ===
-        Number(
-          state.profile
-            ?.account_number
-        )
-      );
+      isLeaderboardCurrentPlayer(row);
+
+    const numericRank =
+      Number(row.leaderboard_rank);
 
     article.className =
-      isCurrentPlayer
-        ? "leaderboard-row current-player"
-        : "leaderboard-row";
+      `leaderboard-row${numericRank <= 3 ? ` podium-row rank-${numericRank}` : ""}${isCurrentPlayer ? " current-player" : ""}`;
 
     if (isCurrentPlayer) {
       article.setAttribute(
@@ -3134,23 +3504,22 @@
       </span>
 
       <span class="leaderboard-cell leaderboard-player" data-label="Player">
-        <strong>${playerName}</strong>
-        <small>${gamesPlayed} game${Number(row.games_played) === 1 ? "" : "s"}</small>
-      </span>
-
-      <span class="leaderboard-cell leaderboard-id" data-label="ID">
-        ${identifier}
+        <span class="leaderboard-player-line">
+          <strong>${playerName}</strong>
+          ${isCurrentPlayer ? '<span class="leaderboard-you-badge">YOU</span>' : ""}
+        </span>
+        <small>${identifier} · ${gamesPlayed} game${Number(row.games_played) === 1 ? "" : "s"}</small>
       </span>
 
       <span class="leaderboard-cell leaderboard-score" data-label="High score">
         ${highScore}
       </span>
 
-      <span class="leaderboard-cell" data-label="Accuracy">
+      <span class="leaderboard-cell leaderboard-accuracy" data-label="Accuracy">
         ${accuracy}
       </span>
 
-      <span class="leaderboard-cell" data-label="Streak">
+      <span class="leaderboard-cell leaderboard-streak" data-label="Streak">
         ${streak}
       </span>
     `;
@@ -3191,12 +3560,12 @@
     if (!row) {
       elements.currentPlayerRank
         .innerHTML = `
-          <div>
+          <div class="current-player-stat current-player-position">
             <span>Your rank</span>
             <strong>Unranked</strong>
           </div>
 
-          <p>
+          <p class="current-player-empty">
             ${playerName} ${identifier} has no score for the selected filters yet.
           </p>
         `;
@@ -3206,17 +3575,25 @@
 
     elements.currentPlayerRank
       .innerHTML = `
-        <div>
+        <div class="current-player-stat current-player-position">
           <span>Your rank</span>
           <strong>#${formatLeaderboardInteger(row.leaderboard_rank)}</strong>
         </div>
 
-        <p>
-          ${playerName} ${identifier} ·
-          ${formatLeaderboardInteger(row.high_score)} high score ·
-          ${formatLeaderboardPercent(row.accuracy_percent)} accuracy ·
-          ${formatLeaderboardInteger(row.best_streak)} streak
-        </p>
+        <div class="current-player-stat">
+          <span>High score</span>
+          <strong>${formatLeaderboardInteger(row.high_score)}</strong>
+        </div>
+
+        <div class="current-player-stat">
+          <span>Accuracy</span>
+          <strong>${formatLeaderboardPercent(row.accuracy_percent)}</strong>
+        </div>
+
+        <div class="current-player-stat">
+          <span>Streak</span>
+          <strong>${formatLeaderboardInteger(row.best_streak)}</strong>
+        </div>
       `;
   }
 

@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="mobile-shell-polish.css?v=1">
   <link rel="stylesheet" href="mobile-home-hotfix.css?v=1">
   <link rel="stylesheet" href="mode-navigation.css?v=6">
-  <link rel="stylesheet" href="discord-responsive.css?v=1">
+  <link rel="stylesheet" href="discord-responsive.css?v=4">
 </head>
 <body>
   <div class="background-orb orb-one" aria-hidden="true"></div>
@@ -175,33 +175,40 @@
     </section>
 
     <section id="gameScreen" class="screen" aria-labelledby="questionText">
-      <div class="game-header">
-        <div class="score-box">
-          <span>Score</span>
-          <strong id="scoreValue">0</strong>
-        </div>
-
-        <div class="timer-wrap" aria-label="Time remaining">
-          <svg class="timer-ring" viewBox="0 0 120 120" aria-hidden="true">
-            <circle class="timer-track" cx="60" cy="60" r="52"></circle>
-            <circle id="timerProgress" class="timer-progress" cx="60" cy="60" r="52"></circle>
-          </svg>
-          <div class="timer-value">
-            <strong id="timerValue">60</strong>
-            <span>SEC</span>
-          </div>
-        </div>
-
-        <div class="streak-box">
-          <span>Streak</span>
-          <strong><span aria-hidden="true">🔥</span> <span id="streakValue">0</span></strong>
-        </div>
-      </div>
-
       <article class="question-card">
-        <div class="question-meta">
-          <span id="categoryBadge">General Knowledge</span>
-          <span>Question <strong id="questionNumber">1</strong></span>
+        <div class="game-header">
+          <div class="hud-stat-group hud-score-group">
+            <div class="score-box">
+              <span>Score</span>
+              <strong id="scoreValue">0</strong>
+            </div>
+            <div class="hud-context category-context">
+              <span id="categoryIcon" class="category-context-icon" aria-hidden="true">🧠</span>
+              <span id="categoryBadge">General Knowledge</span>
+            </div>
+          </div>
+
+          <div class="timer-wrap" aria-label="Time remaining">
+            <svg class="timer-ring" viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="timer-track" cx="60" cy="60" r="52"></circle>
+              <circle id="timerProgress" class="timer-progress" cx="60" cy="60" r="52"></circle>
+            </svg>
+            <div class="timer-value">
+              <strong id="timerValue">60</strong>
+              <span>SEC</span>
+            </div>
+          </div>
+
+          <div class="hud-stat-group hud-streak-group">
+            <div class="streak-box">
+              <span>Streak</span>
+              <strong><span aria-hidden="true">🔥</span> <span id="streakValue">0</span></strong>
+            </div>
+            <div class="hud-context question-context">
+              <span>Question</span>
+              <strong id="questionNumber">1</strong>
+            </div>
+          </div>
         </div>
 
         <h2 id="questionText">Question text</h2>
@@ -253,9 +260,9 @@
         </button>
 
         <div class="result-actions">
-          <button id="playAgainButton" class="primary-button" type="button">Play another round</button>
+          <button id="playAgainButton" class="primary-button" type="button">Play again</button>
           <button id="resultsLeaderboardButton" class="secondary-button" type="button">View leaderboard</button>
-          <button id="homeButton" class="secondary-button" type="button">Choose category</button>
+          <button id="homeButton" class="secondary-button" type="button">Change category</button>
         </div>
       </div>
     </section>
@@ -460,41 +467,78 @@
           </button>
         </header>
 
-        <div class="leaderboard-filter-panel">
-          <div class="leaderboard-filter-group">
-            <span class="leaderboard-filter-label">Period</span>
+        <div class="leaderboard-dashboard-row">
+          <div class="leaderboard-filter-panel">
+            <div class="leaderboard-filter-group">
+              <span class="leaderboard-filter-label">Period</span>
 
-            <div class="leaderboard-filter-buttons" role="group" aria-label="Leaderboard period">
-              <button class="leaderboard-filter active" type="button" data-leaderboard-period="all" aria-pressed="true">
-                All time
-              </button>
-              <button class="leaderboard-filter" type="button" data-leaderboard-period="week" aria-pressed="false">
-                This week
-              </button>
-              <button class="leaderboard-filter" type="button" data-leaderboard-period="today" aria-pressed="false">
-                Today
-              </button>
+              <div class="leaderboard-filter-buttons" role="group" aria-label="Leaderboard period">
+                <button class="leaderboard-filter active" type="button" data-leaderboard-period="all" aria-pressed="true">
+                  All time
+                </button>
+                <button class="leaderboard-filter" type="button" data-leaderboard-period="week" aria-pressed="false">
+                  This week
+                </button>
+                <button class="leaderboard-filter" type="button" data-leaderboard-period="today" aria-pressed="false">
+                  Today
+                </button>
+              </div>
+            </div>
+
+            <div class="leaderboard-filter-group">
+              <label
+                id="leaderboardCategoryLabel"
+                class="leaderboard-filter-label"
+                for="leaderboardCategorySelect"
+              >Category</label>
+
+              <!-- Phase 4A: options come from the controlled category RPC,
+                   keeping delivery and leaderboard filters aligned. -->
+              <div class="leaderboard-category-select-wrap">
+                <select
+                  id="leaderboardCategorySelect"
+                  class="leaderboard-category-select"
+                  aria-label="Leaderboard category"
+                  aria-hidden="true"
+                  tabindex="-1"
+                ></select>
+
+                <button
+                  id="leaderboardCategoryButton"
+                  class="leaderboard-category-button"
+                  type="button"
+                  aria-haspopup="listbox"
+                  aria-expanded="false"
+                  aria-controls="leaderboardCategoryMenu"
+                  aria-labelledby="leaderboardCategoryLabel leaderboardCategoryButtonText"
+                >
+                  <span id="leaderboardCategoryButtonText">Overall</span>
+                  <span class="leaderboard-category-chevron" aria-hidden="true"></span>
+                </button>
+
+                <div
+                  id="leaderboardCategoryMenu"
+                  class="leaderboard-category-menu"
+                  role="listbox"
+                  aria-labelledby="leaderboardCategoryLabel"
+                  hidden
+                ></div>
+              </div>
             </div>
           </div>
 
-          <div class="leaderboard-filter-group">
-            <span class="leaderboard-filter-label">Category</span>
-
-            <!-- Phase 4A: category buttons come from the controlled category
-                 RPC, keeping delivery and leaderboard filters aligned. -->
-            <div
-              id="leaderboardCategoryFilters"
-              class="leaderboard-filter-buttons"
-              role="group"
-              aria-label="Leaderboard category"
-            ></div>
-          </div>
+          <section
+            id="currentPlayerRank"
+            class="current-player-rank"
+            aria-label="Your leaderboard position"
+            hidden
+          ></section>
         </div>
 
         <section
-          id="currentPlayerRank"
-          class="current-player-rank"
-          aria-label="Your leaderboard position"
+          id="leaderboardPodium"
+          class="leaderboard-podium"
+          aria-label="Top three players"
           hidden
         ></section>
 
@@ -510,7 +554,6 @@
           <div class="leaderboard-table-header" aria-hidden="true">
             <span>Rank</span>
             <span>Player</span>
-            <span>ID</span>
             <span>High score</span>
             <span>Accuracy</span>
             <span>Streak</span>
@@ -909,7 +952,7 @@
   <script src="progression-ui.js?v=1"></script>
   <script src="category-progression-ui.js?v=2"></script>
   <script src="vendor/discord-embedded-app-sdk.js"></script>
-  <script src="app.js?v=25"></script>
+  <script src="app.js?v=28"></script>
   <script src="social-redesign.js?v=2"></script>
   <script src="home-redesign.js?v=2"></script>
   <script src="unified-shell.js?v=1"></script>

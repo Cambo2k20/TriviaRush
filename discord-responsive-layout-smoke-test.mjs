@@ -5,6 +5,7 @@ const html = readFileSync("./index.html", "utf8");
 const styles = readFileSync("./discord-responsive.css", "utf8");
 const homeStyles = readFileSync("./home-redesign.css", "utf8");
 const script = readFileSync("./discord-layout.js", "utf8");
+const appScript = readFileSync("./app.js", "utf8");
 
 const results = [];
 const assert = (name, condition) => {
@@ -37,13 +38,27 @@ assert("short focused layout hides the footer", /max-height:\s*620px[\s\S]*?foot
 assert("very short landscape compacts the header", /max-height:\s*440px[\s\S]*?\.topbar\s*\{[^}]*padding-block:\s*0/s.test(styles));
 assert("very short landscape removes the optional voice toggle", /max-height:\s*440px[\s\S]*?\.home-host-toggle\s*\{\s*display:\s*none/s.test(styles));
 assert("mobile removes the nested category scrollbar", /max-width:\s*759px[\s\S]*?\.home-category-grid\s*\{[^}]*overflow:\s*visible/s.test(styles));
-assert("game answer grid uses two columns", /\.answer-grid\s*\{[^}]*repeat\(2,/s.test(styles));
-assert("narrow answer grid uses one column", /max-width:\s*620px[\s\S]*?\.answer-grid\s*\{[^}]*grid-template-columns:\s*1fr/s.test(styles));
+assert("solo HUD is inside the question card", /<article class="question-card">\s*<div class="game-header">/s.test(html));
+assert("solo answers stack in one column", /#gameScreen \.answer-grid\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/s.test(styles));
+assert("solo actions use two equal columns", /#gameScreen \.game-actions\s*\{[^}]*repeat\(2,/s.test(styles));
+assert("answer choices use letter markers", appScript.includes("String.fromCharCode(65 + index)"));
+assert("timer uses a full track and progress ring", html.includes('class="timer-track"') && html.includes('class="timer-progress"'));
+assert("timer starts green before warning states", appScript.includes('elements.timerProgress.style.stroke = "var(--green)"'));
 assert("post-match summary has a dedicated overview", html.includes('class="result-overview"'));
-assert("post-match card uses the wider dashboard width", /#resultsScreen \.result-card\s*\{[^}]*width:\s*min\(1080px,/s.test(styles));
-assert("post-match progression uses two dashboard columns", /#resultsScreen \.result-card\s*\{[^}]*grid-template-columns:\s*repeat\(2,/s.test(styles));
-assert("post-match actions remain a full-width row", /#resultsScreen \.result-actions\s*\{[^}]*grid-column:\s*1 \/ -1/s.test(styles));
+assert("post-match card uses the compact reference width", /#resultsScreen \.result-card\s*\{[^}]*width:\s*min\(720px,/s.test(styles));
+assert("post-match card follows one vertical column", /#resultsScreen \.result-card\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/s.test(styles));
+assert("hidden retry control cannot be forced visible", /#resultsScreen \.retry-save-button\[hidden\]\s*\{[^}]*display:\s*none\s*!important/s.test(styles));
+assert("post-match actions use three equal columns", /#resultsScreen \.result-actions\s*\{[^}]*repeat\(3,/s.test(styles));
 assert("mobile post-match removes the nested scrollbar", /max-width:\s*759px[\s\S]*?#resultsScreen \.result-card\s*\{[^}]*max-height:\s*none;[^}]*overflow:\s*visible/s.test(styles));
+assert("leaderboard uses a themed category menu backed by its native select", html.includes('id="leaderboardCategorySelect"') && html.includes('id="leaderboardCategoryButton"') && html.includes('id="leaderboardCategoryMenu"') && !html.includes('id="leaderboardCategoryFilters"'));
+assert("leaderboard filters and personal rank share a dashboard row", /leaderboard-dashboard-row[\s\S]*?leaderboard-filter-panel[\s\S]*?currentPlayerRank/s.test(html));
+assert("leaderboard includes a top-three podium", html.includes('id="leaderboardPodium"') && styles.includes(".leaderboard-podium-card"));
+assert("leaderboard category menu has an internal themed scrollbar", /\.leaderboard-category-menu\)::-webkit-scrollbar-thumb[\s\S]*?linear-gradient/s.test(styles));
+assert("first place has a dedicated gold surface", /\.leaderboard-podium-card\.podium-rank-1\s*\{[^}]*border-color:\s*rgba\(255, 213, 74, 0\.9\);[^}]*radial-gradient/s.test(styles));
+assert("leaderboard desktop table removes the ID column", /leaderboard-table-header[\s\S]*?<span>Player<\/span>\s*<span>High score<\/span>/s.test(html));
+assert("leaderboard table uses five readable columns", /\.leaderboard-table-header,[\s\S]*?\.leaderboard-row\s*\{[^}]*grid-template-columns:[^}]*minmax\(78px,/s.test(styles));
+assert("mobile leaderboard entries use a two-row card layout", /max-width:\s*850px[\s\S]*?grid-template-areas:\s*"rank player score"\s*"rank accuracy streak"/s.test(styles));
+assert("mobile podium cards retain three balanced content columns", /max-width:\s*580px[\s\S]*?\.leaderboard-podium-card\s*\{[^}]*grid-template-columns:\s*46px minmax\(0, 1fr\) minmax\(82px, auto\)/s.test(styles));
 
 const dom = new JSDOM(html, {
   url: "https://triviarush.discordsays.com/?frame_id=test&instance_id=test&platform=desktop",

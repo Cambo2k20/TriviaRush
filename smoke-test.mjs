@@ -144,6 +144,24 @@ window.supabase = {
       if (name === "get_unread_notification_count") {
         return { data: 2, error: null };
       }
+      if (name === "get_leaderboard_v2") {
+        return {
+          data: [
+            { leaderboard_rank: 1, display_name: "Cambo", account_number: 1001, high_score: 4519, accuracy_percent: 83.1, best_streak: 15, games_played: 16 },
+            { leaderboard_rank: 2, display_name: "Jaketh", account_number: 1003, high_score: 2728, accuracy_percent: 81.3, best_streak: 8, games_played: 1 },
+            { leaderboard_rank: 3, display_name: "Tester", account_number: 7, high_score: 1029, accuracy_percent: 59.3, best_streak: 4, games_played: 4, is_current_player: true },
+            { leaderboard_rank: 4, display_name: "Cambo Phone", account_number: 1000, high_score: 955, accuracy_percent: 63.6, best_streak: 3, games_played: 1 },
+            { leaderboard_rank: 5, display_name: "jon", account_number: 1007, high_score: 489, accuracy_percent: 100, best_streak: 4, games_played: 1 }
+          ],
+          error: null
+        };
+      }
+      if (name === "get_my_leaderboard_rank_v2") {
+        return {
+          data: { leaderboard_rank: 3, high_score: 1029, accuracy_percent: 59.3, best_streak: 4 },
+          error: null
+        };
+      }
       return { data: [], error: null };
     }
   })
@@ -170,12 +188,13 @@ const assert = (name, condition) => {
 };
 
 // 1. Category filters generated from the controlled category RPC
-const buttons = [
-  ...window.document.querySelectorAll(
-    "#leaderboardCategoryFilters [data-leaderboard-category]"
-  )
+const leaderboardCategorySelect = window.document.querySelector(
+  "#leaderboardCategorySelect"
+);
+const categoryOptions = [
+  ...leaderboardCategorySelect.options
 ];
-const ids = buttons.map((b) => b.dataset.leaderboardCategory);
+const ids = categoryOptions.map((option) => option.value);
 assert("filters include overall", ids.includes("overall"));
 assert("filters include mixed", ids.includes("mixed"));
 assert("filters include science", ids.includes("science"));
@@ -196,15 +215,29 @@ for (const cat of [
 ]) {
   assert(`filters include ${cat}`, ids.includes(cat));
 }
-assert("no duplicate science button", ids.filter((i) => i === "science").length === 1);
+assert("no duplicate science option", ids.filter((i) => i === "science").length === 1);
 assert(
   "labels keep original casing",
-  buttons.some((b) => b.textContent === "Technology")
+  categoryOptions.some((option) => option.textContent === "Technology")
+);
+assert(
+  "custom category menu mirrors controlled categories",
+  window.document.querySelectorAll(
+    "#leaderboardCategoryMenu [data-leaderboard-category]"
+  ).length === categoryOptions.length
 );
 
-// 2. Clicking a generated filter triggers the v2 RPCs with the right category
-buttons.find((b) => b.dataset.leaderboardCategory === "science").click();
+// 2. Changing the generated select triggers the v2 RPCs with the right category
+leaderboardCategorySelect.value = "science";
+leaderboardCategorySelect.dispatchEvent(new window.Event("change", { bubbles: true }));
 await new Promise((resolve) => setTimeout(resolve, 20));
+assert(
+  "custom category trigger reflects native selection",
+  window.document.querySelector("#leaderboardCategoryButtonText")?.textContent === "Science" &&
+    window.document.querySelector(
+      '#leaderboardCategoryMenu [data-leaderboard-category="science"]'
+    )?.getAttribute("aria-selected") === "true"
+);
 const lbCall = rpcCalls.find((c) => c.name === "get_leaderboard_v2");
 assert("get_leaderboard_v2 called on filter click", Boolean(lbCall));
 assert(
@@ -214,6 +247,47 @@ assert(
 assert(
   "rank RPC also called",
   rpcCalls.some((c) => c.name === "get_my_leaderboard_rank_v2")
+);
+assert(
+  "top three render as podium cards",
+  window.document.querySelectorAll("#leaderboardPodium .leaderboard-podium-card").length === 3
+);
+assert(
+  "current player has a YOU badge",
+  window.document.querySelector("#leaderboardList .current-player .leaderboard-you-badge")?.textContent === "YOU"
+);
+assert(
+  "player ID is secondary information under the player name",
+  window.document.querySelector("#leaderboardList .leaderboard-player small")?.textContent.includes("#1001") &&
+    !window.document.querySelector("#leaderboardList .leaderboard-id")
+);
+assert(
+  "current rank summary uses four stat cells",
+  window.document.querySelectorAll("#currentPlayerRank .current-player-stat").length === 4
+);
+assert(
+  "leaderboard count is a muted caption",
+  window.document.querySelector("#leaderboardStatus")?.textContent === "5 ranked players"
+);
+
+const categoryButton = window.document.querySelector(
+  "#leaderboardCategoryButton"
+);
+categoryButton.click();
+assert(
+  "custom category menu opens from the trigger",
+  categoryButton.getAttribute("aria-expanded") === "true" &&
+    window.document.querySelector("#leaderboardCategoryMenu")?.hidden === false
+);
+window.document.querySelector(
+  '#leaderboardCategoryMenu [data-leaderboard-category="technology"]'
+).click();
+await new Promise((resolve) => setTimeout(resolve, 20));
+assert(
+  "custom category menu updates the authoritative select",
+  leaderboardCategorySelect.value === "technology" &&
+    categoryButton.getAttribute("aria-expanded") === "false" &&
+    window.document.querySelector("#leaderboardCategoryButtonText")?.textContent === "Technology"
 );
 
 // 3. Retry-save button exists and is hidden by default
