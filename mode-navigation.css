@@ -1,13 +1,12 @@
 body.shared-mode-navigation-ready .topbar {
-  display: grid;
-  grid-template-columns: auto auto minmax(0, 1fr);
+  display: flex;
   align-items: center;
   gap: 20px;
 }
 
 body.shared-mode-navigation-ready .mode-navigation {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(112px, 1fr));
+  min-width: 0;
+  display: flex;
   align-items: center;
   gap: 8px;
   padding: 5px;
@@ -21,6 +20,7 @@ body.shared-mode-navigation-ready .mode-nav-button,
 body.shared-mode-navigation-ready #modeNavigation #duelButton {
   --mode-accent: #ffd335;
   min-width: 0;
+  flex: 1 1 0;
   min-height: 44px;
   padding: 0 17px;
   display: inline-flex;
@@ -82,8 +82,10 @@ body.shared-mode-navigation-ready #modeNavigation #duelButton > span:first-child
 
 body.shared-mode-navigation-ready .header-actions {
   min-width: 0;
-  justify-self: end;
+  margin-left: auto;
   justify-content: flex-end;
+  flex-wrap: nowrap;
+  overflow: hidden;
 }
 
 body.shared-mode-navigation-ready #startScreen > .home-quick-actions {
@@ -92,7 +94,6 @@ body.shared-mode-navigation-ready #startScreen > .home-quick-actions {
 
 @media (max-width: 900px) and (min-width: 701px) {
   body.shared-mode-navigation-ready .topbar {
-    grid-template-columns: auto minmax(220px, 0.8fr) minmax(0, 1fr);
     gap: 12px;
   }
 
