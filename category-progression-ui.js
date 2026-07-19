@@ -268,7 +268,8 @@
         color: category.color,
         level: category.level,
         nextLevel: category.nextLevel,
-        xpToNext: category.xpToNext
+        xpToNext: category.xpToNext,
+        progressPercent: category.progressPercent
       }))
     };
 

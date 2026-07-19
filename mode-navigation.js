@@ -171,19 +171,6 @@
     }
   }
 
-  function placeMobileCategoryControl() {
-    const categoryControl = document.querySelector(".home-category-fallback");
-    const selectionRow = document.querySelector(".home-selection-row");
-    const hero = document.querySelector("#startScreen .home-hero-v2");
-
-    if (!categoryControl || !selectionRow || !hero) return;
-
-    categoryControl.classList.add("mobile-category-control");
-    if (categoryControl.parentElement !== hero || categoryControl.nextElementSibling !== selectionRow) {
-      hero.insertBefore(categoryControl, selectionRow);
-    }
-  }
-
   function initialise() {
     const topbar = document.querySelector(".topbar");
     const brand = topbar?.querySelector(".brand");
@@ -217,8 +204,6 @@
     configureUtility(document.querySelector("#leaderboardButton"), "Rankings");
     configureUtility(document.querySelector("#accountButton"), "Account");
     configureUtility(document.querySelector("#soundToggle"), "Sound");
-    placeMobileCategoryControl();
-
     state.mobileQuery.addEventListener?.("change", placeUtilityDock);
     state.mobileQuery.addListener?.(placeUtilityDock);
 
